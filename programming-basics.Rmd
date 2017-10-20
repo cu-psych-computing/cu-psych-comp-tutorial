@@ -1,0 +1,32 @@
+---
+title: "CU Psych R Tutorial - Programming Basics"
+author: "Monica Thieu"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## First off
+
+R is a programming language designed for statistical computing and production of statistical graphics. In other words, **R is for doing stats with code.** With R, you have a lot of power over your stats (statistical power? ha ha ha), once you get a hang on the code part. Before we get to the **stats** part, though, we'll spend a little bit of time on the **code** part.
+
+To be able to make full flexible use of R, we're going to learn some basics of programming. Essentially, you'll learn what your computer hears when you speak to it using R, and strategies for how to tell your computer to do certain things you will often want it to do. We'll also touch on some best practices for code writing: how to write code that's efficient both for your computer (to run) and for humans (to read).
+
+## Defining things
+
+### Variables
+
+Variables are the backbone of programming.
+```{r}
+x = 1
+```
+
+
+## Attributions
+
+Language and layout inspired by [Trevor Page's Programming 101](https://howtoprogramwithjava.com/programming-101-the-5-basic-concepts-of-any-programming-language/).
