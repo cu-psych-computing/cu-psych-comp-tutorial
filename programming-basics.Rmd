@@ -21,12 +21,172 @@ To be able to make full flexible use of R, we're going to learn some basics of p
 
 ### Variables
 
-Variables are the backbone of programming.
+At its base, our goal with programming is to tell a computer to take some input information, do something with it, and give us the output. A **variable** is how we'll store that information in a way that the computer can operate on. A variable has two parts: a **name** and a **value**. A variable's name allows us to specify which piece of information we want the computer to operate on, and its value specifies the information to be operated on itself.
+
+Below, I'll initialize a variable named `x`, and assign it the value 1. **Initializing** is the programming term for creating a new variable that didn't previously exist.
+
 ```{r}
-x = 1
+# In plain English, this translates to "Initialize the variable 'x' and assign to it the value 1" or, more succinctly, "Let 'x' take the value of 1".
+# The <- (left-facing arrow) operator is what you'll use to assign values to variables. Values can be numbers, like here, or they can be much more complex pieces of information (which we'll get to in a bit).
+# You'll specify your inputs on the RIGHT side (shaft) of the arrow, and your desired output location on the LEFT side (head) of the arrow.
+# If you use the framing "Let [left side] take the value of [right side]" you can remember how to assign values to variables. It's like taking the value on the right, and pushing it along the direction of the arrow into the variable name on the left.
+x <- 1
 ```
 
+Now, the computer is holding onto this information, and I can access it and do what I wish with it. This information is being held onto in R's **environment,** or a chunk of computer memory that R uses to store information. When you are working on stored variables in R, this is where they live. It's kind of like R's working memory. Just as in psychology, it's *not* the same as long-term memory--storing variables in the environment is *not* equivalent to saving them to your computer as you would a document or other file. You can ONLY work on your R variables in R.
+
+If I want to know what the value of `x` is, I can ask the computer to output the value of `x` to console. The **console** is where the magic happens: the window where you type commands and run them by pressing Enter. **Commands** are any instruction you give to your computer via your programming language. Typically, one complete command is one line of code.
+
+If your command has an output associated with it, the output will appear below your command in the console. Use outputs to quickly check what the values of variables are.
+
+```{r}
+# Typing the name of a variable, without anything else, and running that command will cause R to output the value of that variable. This is also called "printing" the variable's value to console output.
+# Notice that there's no arrow in this command!
+x
+```
+
+In fact, if you type *any* command with **no arrow** R will print the results of your command to console output.
+
+```{r}
+# This time, we'll do a little bit of calculating. See again that there's no arrow in the command, and that the result of my addition has printed to console.
+2 + 2
+```
+
+Now, we see the output of `2 + 2`, but that information isn't held onto anywhere. If you want to store the results of a command for later, you'll need to set a variable equal to those results. Let's save the results of `2 + 2` into the variable `x`. Since `x` has already been initialized, we're going to be writing OVER the old value of x with new information.
+
+```{r}
+# "Assign to x the result of 2 + 2"
+x <- 2 + 2
+```
+
+Now, just to be sure, let's check the value of x by printing it to console:
+
+```{r}
+x
+```
+
+Great! Now that the results are being stored in the variable `x`, we can do stuff to those results. For example, a little bit more calculating:
+
+```{r}
+x * 2
+```
+
+Now let's do that calculation again, and this time we'll save the results of this new command into a variable.
+
+```{r}
+# Initialize the variable "y"
+y <- x * 2
+```
+
+Again, let's check that the value of `y` is what we'd expect by printing to console.
+
+```{r}
+y
+```
+
+We don't have to create a new variable every time we want to store some information. As you saw, you can write over the existing value of a variable by setting the variable equal to something else. You can even write over the existing value of a variable by doing a calculation on that variable itself:
+
+```{r}
+# Read this as "Assign to NEW y the OLD value of y divided by 2"
+# Whenever you're setting a variable equal to some function of itself, ALL of the commands and calculations will be run using the OLD value of the variable, and it will only be reassigned after the WHOLE command is run.
+y <- y / 2
+```
+
+And now let's check the new value of `y` in console output:
+
+```{r}
+y
+```
+
+
+#### Best practices: naming variables
+
+In each section, we'll touch on best practices. Best practices for programming encompasses the conventions you should follow in writing your code to make it readable to your collaborators, and most importantly, future you! These will be interspersed in their relevant locations, and summarized again for you at the end.
+
+With regards to variables, you can make the name of a variable almost whatever you want, within reason. A variable name can legally contain:
+
+- letters (upper or lowercase, R is case sensitive!)
+- numbers
+- period (.) and underscore (_)
+
+R (and basically all programming languages) require variable names to START with a LETTER. (Try initializing a variable name starting with a number and see what happens.) Other allowed characters can be anywhere in the variable name except for first.
+
+Beyond this, here are some recommendations we strongly urge you to follow as well when naming variables:
+
+- Name variables informatively, not arbitrarily! The name of a variable should tell you something about what information it contains. `raw.data` is better than `d`.
+- Use a period to separate words in multi-word variable names.
+- Name variables succinctly, but informatively. Abbreviations are okay if they are standard throughout your code. `max.val` is okay instead of `maximum.value`.
+- When in doubt, use lowercase letters.
+
+This whole time, we've been using console output to see the values of variables.
+
+Cool! Let's review now:
+
+- A **variable** stores some **value** under a **name** that you can use to refer to that value
+- Variables are stored in the **environment** (like R's working memory)
+- You can do operations on variables (calculator-type and otherwise) by referring to them by name in commands
+- You can print the value of a variable (or the result of any command) by typing it with no `=`
+- You can set the value of a variable to the result of a command
+  - You can set the value of a variable to the result of a command involving another variable
+  - You can set the *new* value of a variable to the result of a command involving the *old* value of that same variable
+  
+### Data types
+
+Thus far, we've created a couple variables and set them equal to a number (either explicitly, or as the result of a calculation). That's not the only type of information R can store, though. R can store all sorts of stuff! What kinds of stuff? Let's take a look.
+
+The different formats of information R understands are called **data types.** Broadly, the type of a piece of data specifies what kind of information it holds, and what kinds of operations might be done on that data. There are different things you would want to do with different pieces of data, and data types allow a programming language to know the sorts of things you want to use a piece of information for.
+
+#### Numeric data
+
+We've been working with numbers thus far, and you'll likely continue to work with numbers in your R travels. (I mean, what else are you gonna do stats on?) The **numeric** data type specifies that your variable is a number, and allows R to do mathematical operations on it.
+
+```{r}
+# I'm going to reassign x here to a number of my own choosing. Not necessarily my favorite number, just what popped into my head.
+x = 16
+
+# Here's the basic arithmetic operations R understands.  
+
+x + 0.5
+# R understands PEMDAS! As should you.
+3 * (x - 7)
+x / 4
+x^2
+```
+
+```{r}
+# Bonus arithmetic!
+
+# What is this!? %% is the "modulo" operator. This operator says "attempt to divide the second value into the first value and output the remainder." So 16 / 8 leaves remainder 0, but 16 / 7 leaves remainder 2 (aka 16 - 14). You might be wondering when on earth this would ever be useful. Just trust us on this one!
+x %% 8
+x %% 7
+# Another goofy operator! %/% is a cousin to modulo: integer divison. This operator says "attempt to divide the second value into the first value and output the integer result without the remainder." So 16 %/% 8 = 2 remainder 0, and 16 %/% 7 = 2 remainder 2, so the remainder info is discarded and these two commands both output 2.
+x %/% 8
+x %/% 7
+```
+
+
+#### Logical data
+
+#### Character data
+
+Another type of data you'll likely need to work with is word-based data. The **character** data type specifies that your variable contains word-based information, and allows R to perform language-y operations on a variable. One piece of character data is called a **string.**
+
+```{r}
+this.string = "words"
+```
+
+
+#### Non-data data
+
+#### Vectors
+
+#### Factor data
+
+#### Lists
+
+#### Data frames
 
 ## Attributions
 
 Language and layout inspired by [Trevor Page's Programming 101](https://howtoprogramwithjava.com/programming-101-the-5-basic-concepts-of-any-programming-language/).
+Basic info about the language referenced from [the official R Language Definition docs](https://cran.r-project.org/doc/manuals/r-release/R-lang.html).

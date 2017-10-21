@@ -229,13 +229,138 @@ div.tocify {
 <h2>Defining things</h2>
 <div id="variables" class="section level3">
 <h3>Variables</h3>
-<p>Variables are the backbone of programming.</p>
-<pre class="r"><code>x = 1</code></pre>
+<p>At its base, our goal with programming is to tell a computer to take some input information, do something with it, and give us the output. A <strong>variable</strong> is how we’ll store that information in a way that the computer can operate on. A variable has two parts: a <strong>name</strong> and a <strong>value</strong>. A variable’s name allows us to specify which piece of information we want the computer to operate on, and its value specifies the information to be operated on itself.</p>
+<p>Below, I’ll initialize a variable named <code>x</code>, and assign it the value 1. <strong>Initializing</strong> is the programming term for creating a new variable that didn’t previously exist.</p>
+<pre class="r"><code># In plain English, this translates to &quot;Initialize the variable 'x' and assign to it the value 1&quot; or, more succinctly, &quot;Let 'x' take the value of 1&quot;.
+# The &lt;- (left-facing arrow) operator is what you'll use to assign values to variables. Values can be numbers, like here, or they can be much more complex pieces of information (which we'll get to in a bit).
+# You'll specify your inputs on the RIGHT side (shaft) of the arrow, and your desired output location on the LEFT side (head) of the arrow.
+# If you use the framing &quot;Let [left side] take the value of [right side]&quot; you can remember how to assign values to variables. It's like taking the value on the right, and pushing it along the direction of the arrow into the variable name on the left.
+x &lt;- 1</code></pre>
+<p>Now, the computer is holding onto this information, and I can access it and do what I wish with it. This information is being held onto in R’s <strong>environment,</strong> or a chunk of computer memory that R uses to store information. When you are working on stored variables in R, this is where they live. It’s kind of like R’s working memory. Just as in psychology, it’s <em>not</em> the same as long-term memory–storing variables in the environment is <em>not</em> equivalent to saving them to your computer as you would a document or other file. You can ONLY work on your R variables in R.</p>
+<p>If I want to know what the value of <code>x</code> is, I can ask the computer to output the value of <code>x</code> to console. The <strong>console</strong> is where the magic happens: the window where you type commands and run them by pressing Enter. <strong>Commands</strong> are any instruction you give to your computer via your programming language. Typically, one complete command is one line of code.</p>
+<p>If your command has an output associated with it, the output will appear below your command in the console. Use outputs to quickly check what the values of variables are.</p>
+<pre class="r"><code># Typing the name of a variable, without anything else, and running that command will cause R to output the value of that variable. This is also called &quot;printing&quot; the variable's value to console output.
+# Notice that there's no arrow in this command!
+x</code></pre>
+<pre><code>## [1] 1</code></pre>
+<p>In fact, if you type <em>any</em> command with <strong>no arrow</strong> R will print the results of your command to console output.</p>
+<pre class="r"><code># This time, we'll do a little bit of calculating. See again that there's no arrow in the command, and that the result of my addition has printed to console.
+2 + 2</code></pre>
+<pre><code>## [1] 4</code></pre>
+<p>Now, we see the output of <code>2 + 2</code>, but that information isn’t held onto anywhere. If you want to store the results of a command for later, you’ll need to set a variable equal to those results. Let’s save the results of <code>2 + 2</code> into the variable <code>x</code>. Since <code>x</code> has already been initialized, we’re going to be writing OVER the old value of x with new information.</p>
+<pre class="r"><code># &quot;Assign to x the result of 2 + 2&quot;
+x &lt;- 2 + 2</code></pre>
+<p>Now, just to be sure, let’s check the value of x by printing it to console:</p>
+<pre class="r"><code>x</code></pre>
+<pre><code>## [1] 4</code></pre>
+<p>Great! Now that the results are being stored in the variable <code>x</code>, we can do stuff to those results. For example, a little bit more calculating:</p>
+<pre class="r"><code>x * 2</code></pre>
+<pre><code>## [1] 8</code></pre>
+<p>Now let’s do that calculation again, and this time we’ll save the results of this new command into a variable.</p>
+<pre class="r"><code># Initialize the variable &quot;y&quot;
+y &lt;- x * 2</code></pre>
+<p>Again, let’s check that the value of <code>y</code> is what we’d expect by printing to console.</p>
+<pre class="r"><code>y</code></pre>
+<pre><code>## [1] 8</code></pre>
+<p>We don’t have to create a new variable every time we want to store some information. As you saw, you can write over the existing value of a variable by setting the variable equal to something else. You can even write over the existing value of a variable by doing a calculation on that variable itself:</p>
+<pre class="r"><code># Read this as &quot;Assign to NEW y the OLD value of y divided by 2&quot;
+# Whenever you're setting a variable equal to some function of itself, ALL of the commands and calculations will be run using the OLD value of the variable, and it will only be reassigned after the WHOLE command is run.
+y &lt;- y / 2</code></pre>
+<p>And now let’s check the new value of <code>y</code> in console output:</p>
+<pre class="r"><code>y</code></pre>
+<pre><code>## [1] 4</code></pre>
+<div id="best-practices-naming-variables" class="section level4">
+<h4>Best practices: naming variables</h4>
+<p>In each section, we’ll touch on best practices. Best practices for programming encompasses the conventions you should follow in writing your code to make it readable to your collaborators, and most importantly, future you! These will be interspersed in their relevant locations, and summarized again for you at the end.</p>
+<p>With regards to variables, you can make the name of a variable almost whatever you want, within reason. A variable name can legally contain:</p>
+<ul>
+<li>letters (upper or lowercase, R is case sensitive!)</li>
+<li>numbers</li>
+<li>period (.) and underscore (_)</li>
+</ul>
+<p>R (and basically all programming languages) require variable names to START with a LETTER. (Try initializing a variable name starting with a number and see what happens.) Other allowed characters can be anywhere in the variable name except for first.</p>
+<p>Beyond this, here are some recommendations we strongly urge you to follow as well when naming variables:</p>
+<ul>
+<li>Name variables informatively, not arbitrarily! The name of a variable should tell you something about what information it contains. <code>raw.data</code> is better than <code>d</code>.</li>
+<li>Use a period to separate words in multi-word variable names.</li>
+<li>Name variables succinctly, but informatively. Abbreviations are okay if they are standard throughout your code. <code>max.val</code> is okay instead of <code>maximum.value</code>.</li>
+<li>When in doubt, use lowercase letters.</li>
+</ul>
+<p>This whole time, we’ve been using console output to see the values of variables.</p>
+<p>Cool! Let’s review now:</p>
+<ul>
+<li>A <strong>variable</strong> stores some <strong>value</strong> under a <strong>name</strong> that you can use to refer to that value</li>
+<li>Variables are stored in the <strong>environment</strong> (like R’s working memory)</li>
+<li>You can do operations on variables (calculator-type and otherwise) by referring to them by name in commands</li>
+<li>You can print the value of a variable (or the result of any command) by typing it with no <code>=</code></li>
+<li>You can set the value of a variable to the result of a command</li>
+<li>You can set the value of a variable to the result of a command involving another variable</li>
+<li>You can set the <em>new</em> value of a variable to the result of a command involving the <em>old</em> value of that same variable</li>
+</ul>
+</div>
+</div>
+<div id="data-types" class="section level3">
+<h3>Data types</h3>
+<p>Thus far, we’ve created a couple variables and set them equal to a number (either explicitly, or as the result of a calculation). That’s not the only type of information R can store, though. R can store all sorts of stuff! What kinds of stuff? Let’s take a look.</p>
+<p>The different formats of information R understands are called <strong>data types.</strong> Broadly, the type of a piece of data specifies what kind of information it holds, and what kinds of operations might be done on that data. There are different things you would want to do with different pieces of data, and data types allow a programming language to know the sorts of things you want to use a piece of information for.</p>
+<div id="numeric-data" class="section level4">
+<h4>Numeric data</h4>
+<p>We’ve been working with numbers thus far, and you’ll likely continue to work with numbers in your R travels. (I mean, what else are you gonna do stats on?) The <strong>numeric</strong> data type specifies that your variable is a number, and allows R to do mathematical operations on it.</p>
+<pre class="r"><code># I'm going to reassign x here to a number of my own choosing. Not necessarily my favorite number, just what popped into my head.
+x = 16
+
+# Here's the basic arithmetic operations R understands.  
+
+x + 0.5</code></pre>
+<pre><code>## [1] 16.5</code></pre>
+<pre class="r"><code># R understands PEMDAS! As should you.
+3 * (x - 7)</code></pre>
+<pre><code>## [1] 27</code></pre>
+<pre class="r"><code>x / 4</code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="r"><code>x^2</code></pre>
+<pre><code>## [1] 256</code></pre>
+<pre class="r"><code># Bonus arithmetic!
+
+# What is this!? %% is the &quot;modulo&quot; operator. This operator says &quot;attempt to divide the second value into the first value and output the remainder.&quot; So 16 / 8 leaves remainder 0, but 16 / 7 leaves remainder 2 (aka 16 - 14). You might be wondering when on earth this would ever be useful. Just trust us on this one!
+x %% 8</code></pre>
+<pre><code>## [1] 0</code></pre>
+<pre class="r"><code>x %% 7</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code># Another goofy operator! %/% is a cousin to modulo: integer divison. This operator says &quot;attempt to divide the second value into the first value and output the integer result without the remainder.&quot; So 16 %/% 8 = 2 remainder 0, and 16 %/% 7 = 2 remainder 2, so the remainder info is discarded and these two commands both output 2.
+x %/% 8</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>x %/% 7</code></pre>
+<pre><code>## [1] 2</code></pre>
+</div>
+<div id="logical-data" class="section level4">
+<h4>Logical data</h4>
+</div>
+<div id="character-data" class="section level4">
+<h4>Character data</h4>
+<p>Another type of data you’ll likely need to work with is word-based data. The <strong>character</strong> data type specifies that your variable contains word-based information, and allows R to perform language-y operations on a variable. One piece of character data is called a <strong>string.</strong></p>
+<pre class="r"><code>this.string = &quot;words&quot;</code></pre>
+</div>
+<div id="non-data-data" class="section level4">
+<h4>Non-data data</h4>
+</div>
+<div id="vectors" class="section level4">
+<h4>Vectors</h4>
+</div>
+<div id="factor-data" class="section level4">
+<h4>Factor data</h4>
+</div>
+<div id="lists" class="section level4">
+<h4>Lists</h4>
+</div>
+<div id="data-frames" class="section level4">
+<h4>Data frames</h4>
+</div>
 </div>
 </div>
 <div id="attributions" class="section level2">
 <h2>Attributions</h2>
-<p>Language and layout inspired by <a href="https://howtoprogramwithjava.com/programming-101-the-5-basic-concepts-of-any-programming-language/">Trevor Page’s Programming 101</a>.</p>
+<p>Language and layout inspired by <a href="https://howtoprogramwithjava.com/programming-101-the-5-basic-concepts-of-any-programming-language/">Trevor Page’s Programming 101</a>. Basic info about the language referenced from <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html">the official R Language Definition docs</a>.</p>
 </div>
 
 
