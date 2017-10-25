@@ -237,17 +237,20 @@ nchar(x = this.string)
 
 **R is not the place to be doing intense textual analysis!** But R CAN handle your run-of-the-mill text labeling/processing needs.
 
+#### Vectors
+
+So now we know that R understands a few different basic data types--numeric, logical, and character. We've operated on single chunks of information thus far--one number or one string. 99.9% of the time, though, your data will not be comprised of one piece of information.
+
 #### Non-data data
 
 Non-data data? What is this business?
 
-#### Vectors
-
 #### Factor data
+
+#### Data frames
 
 #### Lists
 
-#### Data frames
 
 ## Attributions
 
