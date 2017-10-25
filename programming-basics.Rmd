@@ -130,6 +130,39 @@ Cool! Let's review now:
   - You can set the value of a variable to the result of a command involving another variable
   - You can set the *new* value of a variable to the result of a command involving the *old* value of that same variable
   
+### Functions
+
+Before we get further, let's take a brief moment to go over the anatomy of a **function.** If you consider that previously, we learned that our goal with programming is to tell a computer to take some input information, do something with it, and give us the output, a **function** is the *do something with it* part of this sentence. (We just learned that a variable holds that *input info* and also can hold the *output info.*)
+
+You'll use a great many functions to DO STUFF to your variables in R. Let's go over the pieces of a function so you know how to use one.
+
+Below is an example (fake) function call. This function takes the inputs `input1` and `input2`, does the function `function()` to those inputs, and returns an output which can be stored in a variable. Here are the relevant pieces:
+
+`output <- function(argument1 = input1, argument2 = input2)`
+
+- `function()`: This is the function that will DO SOMETHING to your inputs.
+  Whenever you are referencing a function by name, you should always write it with the two parentheses () after the function name so people know you're referring to a function and not a variable.
+  The name of a function will tell you something about what a function does. You can/should look it up if you're not sure though!
+- `argument1`, `argument2`, etc: These are **arguments** to a function--this is the information that a function *expects* and *is prepared to operate on*.
+  The name of an argument will tell you something what an argument represents and how it should be formatted. (More on this later)
+- `input1`, `input2`, etc: These are variables that you created that will actually get fed into your function. This is the information that will actually get operated on. These can be data that live in your environment, or these can be settings (like switches and knobs, if your function was an actual machine) that are turned to a specific value.
+- `output`: This is the variable that will hold your output information.
+  As you can see, we are ASSIGNING the value that's output from `function()` to the variable `output` using the `<-` left-facing arrow operator. Just like before with printing variable values to console, if you run a function without assigning its output to a variable, the output will print to console (so you can read it) but it will not be stored anywhere (so you can't perform any further operations on that output).
+
+#### Best practices: Using & getting help with functions
+
+Most times, if you're having a problem in R, it's because a function that you want to use is not doing the thing that you want it to do to your data. Here's a few best practices for using functions, so that when (not if... trust me) you have a problem with a function, you can resolve your problem with a minimum of hair-pulling.
+
+- Spell out the names of your arguments in all function commands.
+  R understands that `function(input1, input2)` means the same thing as `function(argument1 = input1, argument2 = input2)`. Functions have expected arguments listed in a particular order, and if you don't explicitly name the argument, it will assume you are specifying your input variables in the default argument order. If you want to look back at a function call you used in the past, though, if you don't remember what arguments a function takes, or what order they're expected, *you will get confused!* Always spell out all argument names so that you (or someone else) can look back later and know what you were trying to do.
+- When you need help...
+  - Search the documentation first
+    In RStudio, you can use the "Help" tab in the lower right corner of your window to search for the help page for a function you're having trouble with. You can type the name of your problem function into the search bar and pull up the help page! You can also use the function `help()` in console to pull up the same info. `help()` takes the name of your function as an argument. For example, if I want the help page for the `mean()` function (take arithmetic mean of data), I would run `help(topic = "mean")` in console.
+  - Google it (for real)
+    Googling the answer can save you LOTS of time if the docs don't help first. I usually type something like "R [function name] won't [do the thing I am trying to do]", substituting my problem function and my desired operation into the search term.
+  - Ask a human
+    When asking a human for help via text (email etc.), always refer to your problem function name as `function()` with the parentheses () after the function name. This helps your colleague know that you are referring to a function, and not a variable.
+
 ### Data types
 
 Thus far, we've created a couple variables and set them equal to a number (either explicitly, or as the result of a calculation). That's not the only type of information R can store, though. R can store all sorts of stuff! What kinds of stuff? Let's take a look.
@@ -167,6 +200,15 @@ x %/% 7
 
 #### Logical data
 
+A special case of numeric data is **logical** data, which is essentially binary (0 or 1) numeric data. R will let you represent binary numeric data as TRUE/FALSE, where 0 means FALSE and 1 means TRUE. You can do everything you can do with numeric data on logical data, like:
+
+```{r}
+# this behaves like 1 + 5
+TRUE + 5
+```
+
+Logical data can also do stuff that numeric data can't do. For example, a function can take an argument like  `function(data = my.variable, do.this = TRUE)`, where the argument `do.this` specifies a sort of on/off switch to control what operations you want `function()` to do on `my.variable`.
+
 #### Character data
 
 Another type of data you'll likely need to work with is word-based data. The **character** data type specifies that your variable contains word-based information, and allows R to perform language-y operations on a variable. One piece of character data is called a **string.**
@@ -175,8 +217,29 @@ Another type of data you'll likely need to work with is word-based data. The **c
 this.string = "words"
 ```
 
+In psychology research, you might use string data in the following contexts:
+
+- Coding participant IDs
+- Indicating levels of independent variable conditions (e.g. "Control" vs "Manipulation")
+- Actual textual data (e.g. a participant's written response to a question)
+
+For example, a couple string-specific operations you can do on character data:
+
+```{r}
+# The function toupper() expects an argument called x, where x is any character data. It returns the same character data, but in all caps. This, and its companion function tolower(), can be really handy when you need to standardize text data that comes in different cases.
+toupper(x = this.string)
+```
+
+```{r}
+# nchar() also expects an argument called x (I know, x is not an informative variable name. This only happens with the really basic functions, I promise!). It returns the character count (INCLUDING SPACES AND SPECIAL CHARACTERS) of a character variable. So here, knowing that the input variable is "words", what do we expect the output character count to be?
+nchar(x = this.string)
+```
+
+**R is not the place to be doing intense textual analysis!** But R CAN handle your run-of-the-mill text labeling/processing needs.
 
 #### Non-data data
+
+Non-data data? What is this business?
 
 #### Vectors
 

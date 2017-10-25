@@ -299,6 +299,19 @@ y &lt;- y / 2</code></pre>
 </ul>
 </div>
 </div>
+<div id="functions" class="section level3">
+<h3>Functions</h3>
+<p>Before we get further, let’s take a brief moment to go over the anatomy of a <strong>function.</strong> If you consider that previously, we learned that our goal with programming is to tell a computer to take some input information, do something with it, and give us the output, a <strong>function</strong> is the <em>do something with it</em> part of this sentence. (We just learned that a variable holds that <em>input info</em> and also can hold the <em>output info.</em>)</p>
+<p>You’ll use a great many functions to DO STUFF to your variables in R. Let’s go over the pieces of a function so you know how to use one.</p>
+<p>Below is an example (fake) function call. This function takes the inputs <code>input1</code> and <code>input2</code>, does the function <code>function()</code> to those inputs, and returns an output which can be stored in a variable. Here are the relevant pieces:</p>
+<p><code>output &lt;- function(argument1 = input1, argument2 = input2)</code></p>
+<ul>
+<li><code>function()</code>: This is the function that will DO SOMETHING to your inputs. Whenever you are referencing a function by name, you should always write it with the two parentheses () after the function name so people know you’re referring to a function and not a variable. The name of a function will tell you something about what a function does. You can/should look it up if you’re not sure though!</li>
+<li><code>argument1</code>, <code>argument2</code>, etc: These are <strong>arguments</strong> to a function–this is the information that a function <em>expects</em> and <em>is prepared to operate on</em>. The name of an argument will tell you something what an argument represents and how it should be formatted. (More on this later)</li>
+<li><code>input1</code>, <code>input2</code>, etc: These are variables that you created that will actually get fed into your function. This is the information that will actually get operated on.</li>
+<li><code>output</code>: This is the variable that will hold your output information. As you can see, we are ASSIGNING the value that’s output from <code>function()</code> to the variable <code>output</code> using the <code>&lt;-</code> left-facing arrow operator. Just like before with printing variable values to console, if you run a function without assigning its output to a variable, the output will print to console (so you can read it) but it will not be stored anywhere (so you can’t perform any further operations on that output).</li>
+</ul>
+</div>
 <div id="data-types" class="section level3">
 <h3>Data types</h3>
 <p>Thus far, we’ve created a couple variables and set them equal to a number (either explicitly, or as the result of a calculation). That’s not the only type of information R can store, though. R can store all sorts of stuff! What kinds of stuff? Let’s take a look.</p>
@@ -340,9 +353,13 @@ x %/% 8</code></pre>
 <h4>Character data</h4>
 <p>Another type of data you’ll likely need to work with is word-based data. The <strong>character</strong> data type specifies that your variable contains word-based information, and allows R to perform language-y operations on a variable. One piece of character data is called a <strong>string.</strong></p>
 <pre class="r"><code>this.string = &quot;words&quot;</code></pre>
-</div>
-<div id="non-data-data" class="section level4">
-<h4>Non-data data</h4>
+<p>In psychology research, you might use string data in the following contexts:</p>
+<ul>
+<li>Coding participant IDs</li>
+<li>Indicating levels of independent variable conditions (e.g. “Control” vs “Manipulation”)</li>
+<li>Actual textual data (e.g. a participant’s written response to a question)</li>
+</ul>
+<p><strong>R is not the place to be doing intense textual analysis!</strong> But R CAN handle your run-of-the-mill text labeling/processing needs. #### Non-data data</p>
 </div>
 <div id="vectors" class="section level4">
 <h4>Vectors</h4>
