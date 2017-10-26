@@ -123,7 +123,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1,h2,h3",
+      selectors: "h1,h2,h3,h4,h5",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
@@ -292,7 +292,7 @@ y &lt;- y / 2</code></pre>
 <li>A <strong>variable</strong> stores some <strong>value</strong> under a <strong>name</strong> that you can use to refer to that value</li>
 <li>Variables are stored in the <strong>environment</strong> (like R’s working memory)</li>
 <li>You can do operations on variables (calculator-type and otherwise) by referring to them by name in commands</li>
-<li>You can print the value of a variable (or the result of any command) by typing it with no <code>=</code></li>
+<li>You can print the value of a variable (or the result of any command) by typing it with no <code>&lt;-</code></li>
 <li>You can set the value of a variable to the result of a command</li>
 <li>You can set the value of a variable to the result of a command involving another variable</li>
 <li>You can set the <em>new</em> value of a variable to the result of a command involving the <em>old</em> value of that same variable</li>
@@ -308,9 +308,20 @@ y &lt;- y / 2</code></pre>
 <ul>
 <li><code>function()</code>: This is the function that will DO SOMETHING to your inputs. Whenever you are referencing a function by name, you should always write it with the two parentheses () after the function name so people know you’re referring to a function and not a variable. The name of a function will tell you something about what a function does. You can/should look it up if you’re not sure though!</li>
 <li><code>argument1</code>, <code>argument2</code>, etc: These are <strong>arguments</strong> to a function–this is the information that a function <em>expects</em> and <em>is prepared to operate on</em>. The name of an argument will tell you something what an argument represents and how it should be formatted. (More on this later)</li>
-<li><code>input1</code>, <code>input2</code>, etc: These are variables that you created that will actually get fed into your function. This is the information that will actually get operated on.</li>
+<li><code>input1</code>, <code>input2</code>, etc: These are variables that you created that will actually get fed into your function. This is the information that will actually get operated on. These can be data that live in your environment, or these can be settings (like switches and knobs, if your function was an actual machine) that are turned to a specific value.</li>
 <li><code>output</code>: This is the variable that will hold your output information. As you can see, we are ASSIGNING the value that’s output from <code>function()</code> to the variable <code>output</code> using the <code>&lt;-</code> left-facing arrow operator. Just like before with printing variable values to console, if you run a function without assigning its output to a variable, the output will print to console (so you can read it) but it will not be stored anywhere (so you can’t perform any further operations on that output).</li>
 </ul>
+<div id="best-practices-using-getting-help-with-functions" class="section level4">
+<h4>Best practices: Using &amp; getting help with functions</h4>
+<p>Most times, if you’re having a problem in R, it’s because a function that you want to use is not doing the thing that you want it to do to your data. Here’s a few best practices for using functions, so that when (not if… trust me) you have a problem with a function, you can resolve your problem with a minimum of hair-pulling.</p>
+<ul>
+<li>Spell out the names of your arguments in all function commands. R understands that <code>function(input1, input2)</code> means the same thing as <code>function(argument1 = input1, argument2 = input2)</code>. Functions have expected arguments listed in a particular order, and if you don’t explicitly name the argument, it will assume you are specifying your input variables in the default argument order. If you want to look back at a function call you used in the past, though, if you don’t remember what arguments a function takes, or what order they’re expected, <em>you will get confused!</em> Always spell out all argument names so that you (or someone else) can look back later and know what you were trying to do.</li>
+<li>When you need help…</li>
+<li>Search the documentation first In RStudio, you can use the “Help” tab in the lower right corner of your window to search for the help page for a function you’re having trouble with. You can type the name of your problem function into the search bar and pull up the help page! You can also use the function <code>help()</code> in console to pull up the same info. <code>help()</code> takes the name of your function as an argument. For example, if I want the help page for the <code>mean()</code> function (take arithmetic mean of data), I would run <code>help(topic = &quot;mean&quot;)</code> in console.</li>
+<li>Google it (for real) Googling the answer can save you LOTS of time if the docs don’t help first. I usually type something like “R [function name] won’t [do the thing I am trying to do]”, substituting my problem function and my desired operation into the search term.</li>
+<li>Ask a human When asking a human for help via text (email etc.), always refer to your problem function name as <code>function()</code> with the parentheses () after the function name. This helps your colleague know that you are referring to a function, and not a variable.</li>
+</ul>
+</div>
 </div>
 <div id="data-types" class="section level3">
 <h3>Data types</h3>
@@ -320,7 +331,7 @@ y &lt;- y / 2</code></pre>
 <h4>Numeric data</h4>
 <p>We’ve been working with numbers thus far, and you’ll likely continue to work with numbers in your R travels. (I mean, what else are you gonna do stats on?) The <strong>numeric</strong> data type specifies that your variable is a number, and allows R to do mathematical operations on it.</p>
 <pre class="r"><code># I'm going to reassign x here to a number of my own choosing. Not necessarily my favorite number, just what popped into my head.
-x = 16
+x &lt;- 16
 
 # Here's the basic arithmetic operations R understands.  
 
@@ -340,7 +351,7 @@ x %% 8</code></pre>
 <pre><code>## [1] 0</code></pre>
 <pre class="r"><code>x %% 7</code></pre>
 <pre><code>## [1] 2</code></pre>
-<pre class="r"><code># Another goofy operator! %/% is a cousin to modulo: integer divison. This operator says &quot;attempt to divide the second value into the first value and output the integer result without the remainder.&quot; So 16 %/% 8 = 2 remainder 0, and 16 %/% 7 = 2 remainder 2, so the remainder info is discarded and these two commands both output 2.
+<pre class="r"><code># Another goofy operator! %/% is a cousin to modulo: integer divison. This operator says &quot;attempt to divide the second value into the first value and output the integer result without the remainder.&quot; So 16 %/% 8 &lt;- 2 remainder 0, and 16 %/% 7 &lt;- 2 remainder 2, so the remainder info is discarded and these two commands both output 2.
 x %/% 8</code></pre>
 <pre><code>## [1] 2</code></pre>
 <pre class="r"><code>x %/% 7</code></pre>
@@ -348,30 +359,110 @@ x %/% 8</code></pre>
 </div>
 <div id="logical-data" class="section level4">
 <h4>Logical data</h4>
+<p>A special case of numeric data is <strong>logical</strong> data, which is essentially binary (0 or 1) numeric data. R will let you represent binary numeric data as TRUE/FALSE, where 0 means FALSE and 1 means TRUE. You can do everything you can do with numeric data on logical data, like:</p>
+<pre class="r"><code># this behaves like 1 + 5
+TRUE + 5</code></pre>
+<pre><code>## [1] 6</code></pre>
+<p>Logical data can also do stuff that numeric data can’t do. For example, a function can take an argument like <code>function(data &lt;- my.variable, do.this &lt;- TRUE)</code>, where the argument <code>do.this</code> specifies a sort of on/off switch to control what operations you want <code>function()</code> to do on <code>my.variable</code>.</p>
 </div>
 <div id="character-data" class="section level4">
 <h4>Character data</h4>
 <p>Another type of data you’ll likely need to work with is word-based data. The <strong>character</strong> data type specifies that your variable contains word-based information, and allows R to perform language-y operations on a variable. One piece of character data is called a <strong>string.</strong></p>
-<pre class="r"><code>this.string = &quot;words&quot;</code></pre>
+<pre class="r"><code>this.string &lt;- &quot;words&quot;</code></pre>
 <p>In psychology research, you might use string data in the following contexts:</p>
 <ul>
 <li>Coding participant IDs</li>
 <li>Indicating levels of independent variable conditions (e.g. “Control” vs “Manipulation”)</li>
 <li>Actual textual data (e.g. a participant’s written response to a question)</li>
 </ul>
-<p><strong>R is not the place to be doing intense textual analysis!</strong> But R CAN handle your run-of-the-mill text labeling/processing needs. #### Non-data data</p>
+<p>For example, a couple string-specific operations you can do on character data:</p>
+<pre class="r"><code># If you check the docs, you'll see that the function toupper() expects an argument called x, where x is any character data. We won't specify the arg name here--e.g. toupper(x = this.string)--because base functions like this, that really only take one argument, are self-explanatory enough that you can look back later and know what you were doing. You should name args for more complex functions though! 
+# toupper() returns the same character data that was input, but in all caps. This, and its companion function tolower(), can be really handy when you need to standardize text data that comes in different cases.
+toupper(this.string)</code></pre>
+<pre><code>## [1] &quot;WORDS&quot;</code></pre>
+<pre class="r"><code># nchar() also expects an argument called x (I know, x is not an informative variable name. This only happens with the really basic functions, I promise!). 
+# It returns the character count (INCLUDING SPACES AND SPECIAL CHARACTERS) of a character variable. So here, knowing that the input variable is &quot;words&quot;, what do we expect the output character count to be?
+nchar(this.string)</code></pre>
+<pre><code>## [1] 5</code></pre>
+<p><strong>R is not the place to be doing intense textual analysis!</strong> But R CAN handle your run-of-the-mill text labeling/processing needs.</p>
 </div>
 <div id="vectors" class="section level4">
 <h4>Vectors</h4>
+<p>So now we know that R understands a few different basic data types–numeric, logical, and character. We’ve operated on single chunks of information thus far–one number or one string. 99.9% of the time, though, your data will not be comprised of one piece of information. In these cases, you’ll be using <strong>vectors,</strong> which are sequences of values stored together in one variable.</p>
+<p>For example:</p>
+<pre class="r"><code>this.vector &lt;- 1</code></pre>
+<p>Right now, the variable <code>this.vector</code> is storing ONE piece of information. But if I do this:</p>
+<pre class="r"><code># The function c() will become a very, very close friend of yours. This is the CONCATENATION function. In the context of R, concatenation means &quot;combining multiple distinct values into one vector&quot;. (chaining things together, per the lay definition)
+# You'll see that I didn't name any arguments that passed into c(). I just typed the numbers right in there, separated with commas. c() doesn't actually take named arguments--it can take any type of information that is concatenate-able.
+this.vector &lt;- c(1, 2, 3)
+this.vector</code></pre>
+<pre><code>## [1] 1 2 3</code></pre>
+<p><code>this.vector</code> now is storing the THREE values: 1, 2, and 3. Each of these values in the vector is called an <strong>element.</strong> We will spend more time later looking at all the fantastic things you can do with vectors. A couple examples here:</p>
+<pre class="r"><code># You can do vectorized math: R understands this as &quot;take ALL the values in this.vector, and add 7 to each of them individually.&quot;
+this.vector + 7</code></pre>
+<pre><code>## [1]  8  9 10</code></pre>
+<pre class="r"><code># You can do summarizing operations using the values in a vector as a group:
+# Again, see that some basic functions like sum() don't take named arguments. In these cases, it's okay because reading the function is pretty self-explanatory re: what your intention was in writing the function.
+
+sum(this.vector)</code></pre>
+<pre><code>## [1] 6</code></pre>
+<pre class="r"><code># You can do vector-to-vector math:
+# WHENEVER you are doing mathematical operations with vectors, R will ASSUME you want these vectorized (e.g. do the operation using the first element of both vectors, then the second element of both, etc)
+# This is critical to remember in R. For the types of operations you'll likely be doing, this is the &quot;common sense&quot; way of operating on things, but not all programming languages behave this way, so this doesn't necessarily generalize.
+this.other.vector &lt;- c(10, 20, 30)
+this.vector + this.other.vector</code></pre>
+<pre><code>## [1] 11 22 33</code></pre>
+<p>One type of vector you might need to deal with is a series of numbers increasing by 1. You can use the <code>:</code> colon operator to create a vector of numbers spanning any range, increasing by 1. For example, if you need to number a series of 15 observations 1 through 15, you might want to create a vector containing the numbers 1, 2, 3 … 15 to label those observations. See below:</p>
+<pre class="r"><code># Use the colon between the start and the end numbers!
+yet.another.vector &lt;- c(1:15)
+yet.another.vector</code></pre>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15</code></pre>
+<pre class="r"><code># You can use c() to create a vector containing colon-generated sequences along with other numbers too.
+# We'll reassign yet.another.vector below. Say I want to make a vector holding numbers from 1 to 25, but I want to skip 16 and 18. I can do that this way:
+yet.another.vector &lt;- c(1:15, 17, 19:25)
+yet.another.vector</code></pre>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 17 19 20 21 22 23 24 25</code></pre>
+<div id="indexing-into-vectors" class="section level5">
+<h5>Indexing into vectors</h5>
+<p>If you want to extract specific elements from a vector, you can do that too, by typing the “address” of the element you want into hard brackets [] after hte name of the vector. The “address” of an element in a vector is called its <strong>index.</strong> A vector has only one dimension (length), so the index of an element is a single number specifying its location in the vector.</p>
+<p>If you are coming from other languages, note that <strong>indexing in R starts at 1, not 0.</strong> So to get the first element of a vector, you use the index 1, and so on. It’s more common-sensey for the usual user, but this is a deviation from how most programming languages handle indexing.</p>
+<pre class="r"><code># Return the first element of this.vector to console
+this.vector[1]</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code># Return the second element of this.other.vector to console
+this.other.vector[2]</code></pre>
+<pre><code>## [1] 20</code></pre>
+<pre class="r"><code># What if you want to index multiple elements of a vector at once? You sure can. How? With...
+# VECTOR-CEPTION!
+# You can index into a vector using a VECTOR of indices, and return a vector of all indexed values.
+# Below, I am using c() to create a vector containing the values 1 through 5, and feeding that into the indexing brackets, to call the values at all requested indices.
+# See that the output to console is also a vector. This time it's a shorter vector, since I only requested a subset of the values of the original.
+yet.another.vector[c(1:5)]</code></pre>
+<pre><code>## [1] 1 2 3 4 5</code></pre>
+<pre class="r"><code># Or if you want to request all values of a vector EXCEPT certain values, you can do that too.
+# Use the minus sign in front of an index value to indicate to R that you want NOT that value.
+# Below, I am asking for ALL values of this.vector EXCEPT the 3rd one.
+this.vector[-3]</code></pre>
+<pre><code>## [1] 1 2</code></pre>
+<pre class="r"><code># You can also use the minus except syntax for multiple indices, per below.
+# Notice that the below syntax, &quot;all values of this.other.vector EXCEPT the first AND second one,&quot; is equivalent to saying &quot;only the first value of this.other.vector .&quot;
+# Since there are multiple different ways to index desired values of a vector (specify the ones you want, or minus-specify the ones you don't want), you can choose the way that requires the least amount of typing.
+this.other.vector[-c(1, 2)]</code></pre>
+<pre><code>## [1] 30</code></pre>
+</div>
+</div>
+<div id="non-data-data" class="section level4">
+<h4>Non-data data</h4>
+<p>Non-data data? What is this business?</p>
 </div>
 <div id="factor-data" class="section level4">
 <h4>Factor data</h4>
 </div>
-<div id="lists" class="section level4">
-<h4>Lists</h4>
-</div>
 <div id="data-frames" class="section level4">
 <h4>Data frames</h4>
+</div>
+<div id="lists" class="section level4">
+<h4>Lists</h4>
 </div>
 </div>
 </div>

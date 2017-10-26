@@ -5,6 +5,7 @@ output:
   html_document:
     toc: true
     toc_float: true
+    toc_depth: 5
 ---
 
 ```{r setup, include=FALSE}
@@ -125,7 +126,7 @@ Cool! Let's review now:
 - A **variable** stores some **value** under a **name** that you can use to refer to that value
 - Variables are stored in the **environment** (like R's working memory)
 - You can do operations on variables (calculator-type and otherwise) by referring to them by name in commands
-- You can print the value of a variable (or the result of any command) by typing it with no `=`
+- You can print the value of a variable (or the result of any command) by typing it with no `<-`
 - You can set the value of a variable to the result of a command
   - You can set the value of a variable to the result of a command involving another variable
   - You can set the *new* value of a variable to the result of a command involving the *old* value of that same variable
@@ -175,7 +176,7 @@ We've been working with numbers thus far, and you'll likely continue to work wit
 
 ```{r}
 # I'm going to reassign x here to a number of my own choosing. Not necessarily my favorite number, just what popped into my head.
-x = 16
+x <- 16
 
 # Here's the basic arithmetic operations R understands.  
 
@@ -192,7 +193,7 @@ x^2
 # What is this!? %% is the "modulo" operator. This operator says "attempt to divide the second value into the first value and output the remainder." So 16 / 8 leaves remainder 0, but 16 / 7 leaves remainder 2 (aka 16 - 14). You might be wondering when on earth this would ever be useful. Just trust us on this one!
 x %% 8
 x %% 7
-# Another goofy operator! %/% is a cousin to modulo: integer divison. This operator says "attempt to divide the second value into the first value and output the integer result without the remainder." So 16 %/% 8 = 2 remainder 0, and 16 %/% 7 = 2 remainder 2, so the remainder info is discarded and these two commands both output 2.
+# Another goofy operator! %/% is a cousin to modulo: integer divison. This operator says "attempt to divide the second value into the first value and output the integer result without the remainder." So 16 %/% 8 <- 2 remainder 0, and 16 %/% 7 <- 2 remainder 2, so the remainder info is discarded and these two commands both output 2.
 x %/% 8
 x %/% 7
 ```
@@ -207,14 +208,14 @@ A special case of numeric data is **logical** data, which is essentially binary 
 TRUE + 5
 ```
 
-Logical data can also do stuff that numeric data can't do. For example, a function can take an argument like  `function(data = my.variable, do.this = TRUE)`, where the argument `do.this` specifies a sort of on/off switch to control what operations you want `function()` to do on `my.variable`.
+Logical data can also do stuff that numeric data can't do. For example, a function can take an argument like  `function(data <- my.variable, do.this <- TRUE)`, where the argument `do.this` specifies a sort of on/off switch to control what operations you want `function()` to do on `my.variable`.
 
 #### Character data
 
 Another type of data you'll likely need to work with is word-based data. The **character** data type specifies that your variable contains word-based information, and allows R to perform language-y operations on a variable. One piece of character data is called a **string.**
 
 ```{r}
-this.string = "words"
+this.string <- "words"
 ```
 
 In psychology research, you might use string data in the following contexts:
@@ -226,31 +227,219 @@ In psychology research, you might use string data in the following contexts:
 For example, a couple string-specific operations you can do on character data:
 
 ```{r}
-# The function toupper() expects an argument called x, where x is any character data. It returns the same character data, but in all caps. This, and its companion function tolower(), can be really handy when you need to standardize text data that comes in different cases.
-toupper(x = this.string)
+# If you check the docs, you'll see that the function toupper() expects an argument called x, where x is any character data. We won't specify the arg name here--e.g. toupper(x = this.string)--because base functions like this, that really only take one argument, are self-explanatory enough that you can look back later and know what you were doing. You should name args for more complex functions though! 
+# toupper() returns the same character data that was input, but in all caps. This, and its companion function tolower(), can be really handy when you need to standardize text data that comes in different cases.
+toupper(this.string)
 ```
 
 ```{r}
-# nchar() also expects an argument called x (I know, x is not an informative variable name. This only happens with the really basic functions, I promise!). It returns the character count (INCLUDING SPACES AND SPECIAL CHARACTERS) of a character variable. So here, knowing that the input variable is "words", what do we expect the output character count to be?
-nchar(x = this.string)
+# nchar() also expects an argument called x (I know, x is not an informative variable name. This only happens with the really basic functions, I promise!). 
+# It returns the character count (INCLUDING SPACES AND SPECIAL CHARACTERS) of a character variable. So here, knowing that the input variable is "words", what do we expect the output character count to be?
+nchar(this.string)
 ```
 
 **R is not the place to be doing intense textual analysis!** But R CAN handle your run-of-the-mill text labeling/processing needs.
 
 #### Vectors
 
-So now we know that R understands a few different basic data types--numeric, logical, and character. We've operated on single chunks of information thus far--one number or one string. 99.9% of the time, though, your data will not be comprised of one piece of information.
+So now we know that R understands a few different basic data types--numeric, logical, and character. We've operated on single chunks of information thus far--one number or one string. 99.9% of the time, though, your data will not be comprised of one piece of information. In these cases, you'll be using **vectors,** which are sequences of values stored together in one variable.
 
-#### Non-data data
+For example:
 
-Non-data data? What is this business?
+```{r}
+this.vector <- 1
+```
+
+Right now, the variable `this.vector` is storing ONE piece of information. But if I do this:
+
+```{r}
+# The function c() will become a very, very close friend of yours. This is the CONCATENATION function. In the context of R, concatenation means "combining multiple distinct values into one vector". (chaining things together, per the lay definition)
+# You'll see that I didn't name any arguments that passed into c(). I just typed the numbers right in there, separated with commas. c() doesn't actually take named arguments--it can take any type of information that is concatenate-able.
+this.vector <- c(1, 2, 3)
+this.vector
+```
+
+`this.vector` now is storing the THREE values: 1, 2, and 3. Each of these values in the vector is called an **element.** We will spend more time later looking at all the fantastic things you can do with vectors. A couple examples here:
+
+```{r}
+# You can do vectorized math: R understands this as "take ALL the values in this.vector, and add 7 to each of them individually."
+this.vector + 7
+```
+
+```{r}
+# You can do summarizing operations using the values in a vector as a group:
+# Again, see that some basic functions like sum() don't take named arguments. In these cases, it's okay because reading the function is pretty self-explanatory re: what your intention was in writing the function.
+
+sum(this.vector)
+```
+
+```{r}
+# You can do vector-to-vector math:
+# WHENEVER you are doing mathematical operations with vectors, R will ASSUME you want these vectorized (e.g. do the operation using the first element of both vectors, then the second element of both, etc)
+# This is critical to remember in R. For the types of operations you'll likely be doing, this is the "common sense" way of operating on things, but not all programming languages behave this way, so this doesn't necessarily generalize.
+this.other.vector <- c(10, 20, 30)
+this.vector + this.other.vector
+```
+
+One type of vector you might need to deal with is a series of numbers increasing by 1. You can use the `:` colon operator to create a vector of numbers spanning any range, increasing by 1. For example, if you need to number a series of 15 observations 1 through 15, you might want to create a vector containing the numbers 1, 2, 3 ... 15 to label those observations. See below:
+
+```{r}
+# Use the colon between the start and the end numbers!
+yet.another.vector <- c(1:15)
+yet.another.vector
+```
+
+```{r}
+# You can use c() to create a vector containing colon-generated sequences along with other numbers too.
+# We'll reassign yet.another.vector below. Say I want to make a vector holding numbers from 1 to 25, but I want to skip 16 and 18. I can do that this way:
+yet.another.vector <- c(1:15, 17, 19:25)
+yet.another.vector
+```
+
+
+##### Indexing into vectors
+If you want to extract specific elements from a vector, you can do that too, by typing the "address" of the element you want into hard brackets [] after hte name of the vector. The "address" of an element in a vector is called its **index.** A vector has only one dimension (length), so the index of an element is a single number specifying its location in the vector.
+
+If you are coming from other languages, note that **indexing in R starts at 1, not 0.** So to get the first element of a vector, you use the index 1, and so on. It's more common-sensey for the usual user, but this is a deviation from how most programming languages handle indexing.
+
+```{r}
+# Return the first element of this.vector to console
+this.vector[1]
+```
+
+```{r}
+# Return the second element of this.other.vector to console
+this.other.vector[2]
+```
+
+```{r}
+# What if you want to index multiple elements of a vector at once? You sure can. How? With...
+# VECTOR-CEPTION!
+# You can index into a vector using a VECTOR of indices, and return a vector of all indexed values.
+# Below, I am using c() to create a vector containing the values 1 through 5, and feeding that into the indexing brackets, to call the values at all requested indices.
+# See that the output to console is also a vector. This time it's a shorter vector, since I only requested a subset of the values of the original.
+yet.another.vector[c(1:5)]
+```
+
+```{r}
+# Or if you want to request all values of a vector EXCEPT certain values, you can do that too.
+# Use the minus sign in front of an index value to indicate to R that you want NOT that value.
+# Below, I am asking for ALL values of this.vector EXCEPT the 3rd one.
+this.vector[-3]
+```
+
+```{r}
+# You can also use the minus except syntax for multiple indices, per below.
+# Notice that the below syntax, "all values of this.other.vector EXCEPT the first AND second one," is equivalent to saying "only the first value of this.other.vector ."
+# Since there are multiple different ways to index desired values of a vector (specify the ones you want, or minus-specify the ones you don't want), you can choose the way that requires the least amount of typing.
+this.other.vector[-c(1, 2)]
+```
+
+##### Numeric vectors
+
+Vectors come in different flavors based on the type of data stored in the elements of the vector. All the vectors we've just been looking at are **numeric vectors**--vectors with numbers in them. You can do math and stats on the numbers in a vector. You can index subsets of those numbers and do stats on those. You can combine vectors into longer vectors and do more stats on those. **The numeric vector is the core of research data in R!**
+
+##### Character vectors
+
+But, numeric vectors aren't the ONLY super cool fun vector you'll need. **Character vectors**, vectors containing strings as their elements, are handy as well. You create this the same way as you create a numeric vector...
+
+```{r}
+# with our best friend c() !
+# See how the output that prints to console looks similar / different to the output of numeric vectors.
+this.char.vector <- c("jackfruit", "coconut", "lychee", "rambutan")
+this.char.vector
+```
+
+You can index into a character vector just like you would with a numeric vector.
+
+```{r}
+# Is this prounced lee-chee or lye-chee? Real question.
+this.char.vector[3]
+```
+
+You can also apply string functions like the ones we saw before to character vectors.
+
+```{r}
+# Using a string function on a character vector will return another vector, with the function applied to each of the original elements individually.
+# if you think about it, previously we were just doing all these operations on vectors of length 1. So the vector operation is the broad case, and a vector of length 1 is a special case.
+toupper(this.char.vector)
+```
+
+It's important to remember that a character vector containing a series of strings is NOT the same as ONE string containing the same "words." For example,
+
+```{r}
+these.words <- "jackfruit coconut lychee rambutan"
+# nchar() here returns 33, because that's the number of characters in the whole ONE string.
+nchar(these.words)
+```
+
+The above is not the same as our original character vector!
+
+```{r}
+# meanwhile here, nchar() returns a value for the character count of EACH ELEMENT SEPARATELY.
+nchar(this.char.vector)
+```
+
+Vectors can contain as many elements as your heart desires, but **all of the elements of a single vector must be the same data type.** This assumption/requirement is what gives vectors their magical efficient powers. "But what if I need to have a vector with different data types together?" Soon, friends. We'll get there!
 
 #### Factor data
 
 #### Data frames
 
+Ahhhh, my favorite of the data structures. This is where the magic happens!
+A **data frame** is a 2D array-like rectangular structure with rows and columns, where each column is a vector, and each row corresponds to the element at the same index of each column vector. Sounds like... real data! Let's look at a sample data frame.
+
+```{r}
+this.df <- data.frame(subjects = sprintf(fmt = "sub%02d", c(1:20)),
+                      age = sample(x = c(18:35), size = 20, replace = TRUE),
+                      condition = c(rep(x = "control", times = 10), rep(x = "manipulation", times = 10)),
+                      score = rnorm(n = 20, mean = 75, sd = 10),
+                      stringsAsFactors = FALSE)
+this.df
+```
+
+You'll see that when dealing with dataframes, using print-to-console to visually inspect your data starts to get unwieldy. Large data frames are quite cumbersome to print to console and examine. If you're in RStudio, however, you can make use of TECHNOLOGY!
+
+```{r}
+# Use View() WITH A CAPITAL V! to pop a dataframe up in your viewer window (likely in the top left of RStudio).
+# You can use View() with most data types--vectors, matrices, whatever. But View() is truly best for visually inspecting dataframes.
+# If you like the visual inspection capabilities of Excel (and I do, I will admit), View() should do you just fine. Note that the viewer window is just that--a viewer! NOT an editor. So you can ONLY change values using commands to console. (This is better for data safety. No more accidentally changing data because you clicked in an Excel cell you weren't supposed to!)
+# Please be aware that in data frames with very many columns, View() will not show you all the columns! There are other ways of looking for what you want in that case.
+View(this.df)
+```
+
+Remember that each column of a dataframe is a vector. Hence, you can do all of the vector things to a dataframe column. 
+
+How do we index values of a dataframe? There are a few ways; each will be useful in some situations but not others.
+
+```{r}
+# The first way is by using the hard brackets [] that we used to index into vectors before. Remember that a dataframe is a collection of vectors!
+# Consider that a dataframe has two dimensions: length and width. This means that we have up to TWO locations to specify to index values in a dataframe: which row and which column. (A simple vector can be considered as just ONE column, such that indexing into the vector requires only the row index.)
+
+# To extract one specific value, use the following syntax:
+# data.frame[ROW, COLUMN]
+# Below, we are indexing the value in the 8th row and 1st column of this.df
+# It is easy to get mixed up as to whether the order is [row, column] or [column, row]. Frankly, if I'm not sure, I will just try putting the indices in both orders and seeing which one actually gives me the value I was looking for.
+
+this.df[8,1]
+```
+
+
+#### Non-data data
+
+Non-data data? What is this business? Why would we bother with this?
+
+It's important to be able to have a data type to mark non-data as a placeholder in vectors, especially in vectors within dataframes. When (not if) you collect a dataset where some subjects have missing data for some reason, you need to be able to use a non-data indicator to mark elements of a dataframe as empty without having to totally delete that subject's row.
+
 #### Lists
 
+## Logical & relational operators
+
+## Conditional statements
+
+## Loops
+
+## Summary of best practices
 
 ## Attributions
 
