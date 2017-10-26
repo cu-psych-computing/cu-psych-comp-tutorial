@@ -335,9 +335,23 @@ this.vector[-3]
 this.other.vector[-c(1, 2)]
 ```
 
+You can also index into vectors using logical data, instead of explicitly specifying index numbers. **Logical indexing** involves indexing using hard brackets [] just as before, but instead of feeding in a vector of numbers corresponding to desired indices, you feed in a vector that is the same length as your vector, where every value is a piece of logical data: TRUE or FALSE. What you're essentially doing with logical indexing is telling R "Yes index this one" or "No don't index this one" for every single value in your vector. The resultant vector you get from logical indexing is all of the values of your original vector to which you said TRUE ("Yes index this one").
+
+```{r}
+# Below, I'm telling R I want the first and the second value but not the third value.
+# Note that this REQUIRES logical data to be represented as TRUE/FALSE. It does NOT work if data is represented as 0/1. If you use 0/1 here, R will assume that the number 1 means that you want to index element #1 (which is not your intention with logical indexing).
+this.other.vector[c(TRUE, TRUE, FALSE)]
+```
+
+Right now, you might be thinking "sure, logical indexing seems cool, but it seems so much more time-consuming to type out a full-length vector of TRUEs and FALSEs." You're absolutely right! Later, we'll learn how to construct logical vectors of all sorts using code, and this will become perhaps your favorite way to index.
+
 ##### Numeric vectors
 
 Vectors come in different flavors based on the type of data stored in the elements of the vector. All the vectors we've just been looking at are **numeric vectors**--vectors with numbers in them. You can do math and stats on the numbers in a vector. You can index subsets of those numbers and do stats on those. You can combine vectors into longer vectors and do more stats on those. **The numeric vector is the core of research data in R!**
+
+##### Logical vectors
+
+We learned about these a bit ago when we learned about logical indexing. As a vector, a **logical vector** is to a numeric vector what a single piece of logical data is to a number. It behaves as a numeric vector might, but also does logical things as well. We'll come back to these later :)
 
 ##### Character vectors
 
@@ -444,7 +458,36 @@ It's important to be able to have a data type to mark non-data as a placeholder 
 
 #### Lists
 
+## Pseudocode
+
+**Pseudocoding** is the process of writing out what you want a computer program to do, but in human language. **This is the first step to any and all successful code writing.** Before you can tell a computer to do *anything,* you have to know *what you intend to tell it to do.* Programming languages work--computers will do what you ask them to. When a computer isn't doing what you wanted it to, most of the time it's because *you didn't actually ask it to do what you wanted it to do!* So, in order to be sure that you're giving your computer the proper instructions, *you need to know what the instructions are supposed to be.* So, we pseudocode!
+
+You'll generally be doing this by writing pseudocode as **comments** in your code. A comment is anything that's typed out but is tagged as being non-code, so your computer doesn't try to run it. This is how you leave notes to yourself and other people while programming.
+
+In R, you comment by using the pound sign # as the FIRST character in your command. ANY command that starts with a # will NOT BE EVALUATED. If you look back at previous code examples in this sheet, you'll see that I have commented almost every command, by adding some explanatory text before my command with the # symbol.
+
 ## Logical & relational operators
+
+As you're writing R code to perform various operations on your data, you'll often find that you want to perform particular operations under SOME conditions but NOT others.
+
+For example, if I have a bunch of subjects' ages (ranging from 18-35) in a column vector of a dataframe, and then test scores for those subjects in another column, I might calculate the mean test score for all subjects by calling `mean(dataframe$score)` to mean across all values in that column. But what if I only want to calculate the mean for subjects whose ages are between 18-22, how can I tell R to only calculate the mean for those values of the vector but not all?
+
+I could look up the specific row indices of those subjects in the age range I want, and call my function as `mean(dataframe$score[c(1, 2, 4, 7)])` or something like that. But manually looking up the numerical indices of your desired data is cumbersome. Ain't nobody got time for that.
+
+This is where logical & relational operators come in. These are ways that you can specify conditions under which particular operations should be done. In the prior example, this is how we would tell R "Calculate the mean of the "score" column of my dataframe, but only include scores for subjects between the ages of 18 and 22." Let's break this down into its components:
+
+These are the things you need to tell R:
+- find which rows of your dataframe belong to subjects aged 18-22
+- get those rows out of the column "score" of your dataframe
+- calculate a mean using those values
+
+We know how to do the second thing (vector indexing to retrieve specific values!) and the third thing (use the function that does what we want!), but what about the first thing? As above, you could physically look and record which rows belong to subjects aged 18-22, but again, this is time-consuming and sub-optimal. How about we ask R to do the work for us? All of the values R needs are there.
+
+We need to figure out how to make R understand the phrase "subjects aged between 18 and 22." How can we translate this human phrase into R?
+
+
+
+
 
 ## Conditional statements
 

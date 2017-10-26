@@ -449,22 +449,147 @@ this.vector[-3]</code></pre>
 # Since there are multiple different ways to index desired values of a vector (specify the ones you want, or minus-specify the ones you don't want), you can choose the way that requires the least amount of typing.
 this.other.vector[-c(1, 2)]</code></pre>
 <pre><code>## [1] 30</code></pre>
+<p>You can also index into vectors using logical data, instead of explicitly specifying index numbers. <strong>Logical indexing</strong> involves indexing using hard brackets [] just as before, but instead of feeding in a vector of numbers corresponding to desired indices, you feed in a vector that is the same length as your vector, where every value is a piece of logical data: TRUE or FALSE. What you’re essentially doing with logical indexing is telling R “Yes index this one” or “No don’t index this one” for every single value in your vector. The resultant vector you get from logical indexing is all of the values of your original vector to which you said TRUE (“Yes index this one”).</p>
+<pre class="r"><code># Below, I'm telling R I want the first and the second value but not the third value.
+# Note that this REQUIRES logical data to be represented as TRUE/FALSE. It does NOT work if data is represented as 0/1. If you use 0/1 here, R will assume that the number 1 means that you want to index element #1 (which is not your intention with logical indexing).
+this.other.vector[c(TRUE, TRUE, FALSE)]</code></pre>
+<pre><code>## [1] 10 20</code></pre>
+<p>Right now, you might be thinking “sure, logical indexing seems cool, but it seems so much more time-consuming to type out a full-length vector of TRUEs and FALSEs.” You’re absolutely right! Later, we’ll learn how to construct logical vectors of all sorts using code, and this will become perhaps your favorite way to index.</p>
 </div>
+<div id="numeric-vectors" class="section level5">
+<h5>Numeric vectors</h5>
+<p>Vectors come in different flavors based on the type of data stored in the elements of the vector. All the vectors we’ve just been looking at are <strong>numeric vectors</strong>–vectors with numbers in them. You can do math and stats on the numbers in a vector. You can index subsets of those numbers and do stats on those. You can combine vectors into longer vectors and do more stats on those. <strong>The numeric vector is the core of research data in R!</strong></p>
 </div>
-<div id="non-data-data" class="section level4">
-<h4>Non-data data</h4>
-<p>Non-data data? What is this business?</p>
+<div id="logical-vectors" class="section level5">
+<h5>Logical vectors</h5>
+<p>We learned about these a bit ago when we learned about logical indexing. As a vector, a <strong>logical vector</strong> is to a numeric vector what a single piece of logical data is to a number. It behaves as a numeric vector might, but also does logical things as well. We’ll come back to these later :)</p>
+</div>
+<div id="character-vectors" class="section level5">
+<h5>Character vectors</h5>
+<p>But, numeric vectors aren’t the ONLY super cool fun vector you’ll need. <strong>Character vectors</strong>, vectors containing strings as their elements, are handy as well. You create this the same way as you create a numeric vector…</p>
+<pre class="r"><code># with our best friend c() !
+# See how the output that prints to console looks similar / different to the output of numeric vectors.
+this.char.vector &lt;- c(&quot;jackfruit&quot;, &quot;coconut&quot;, &quot;lychee&quot;, &quot;rambutan&quot;)
+this.char.vector</code></pre>
+<pre><code>## [1] &quot;jackfruit&quot; &quot;coconut&quot;   &quot;lychee&quot;    &quot;rambutan&quot;</code></pre>
+<p>You can index into a character vector just like you would with a numeric vector.</p>
+<pre class="r"><code># Is this prounced lee-chee or lye-chee? Real question.
+this.char.vector[3]</code></pre>
+<pre><code>## [1] &quot;lychee&quot;</code></pre>
+<p>You can also apply string functions like the ones we saw before to character vectors.</p>
+<pre class="r"><code># Using a string function on a character vector will return another vector, with the function applied to each of the original elements individually.
+# if you think about it, previously we were just doing all these operations on vectors of length 1. So the vector operation is the broad case, and a vector of length 1 is a special case.
+toupper(this.char.vector)</code></pre>
+<pre><code>## [1] &quot;JACKFRUIT&quot; &quot;COCONUT&quot;   &quot;LYCHEE&quot;    &quot;RAMBUTAN&quot;</code></pre>
+<p>It’s important to remember that a character vector containing a series of strings is NOT the same as ONE string containing the same “words.” For example,</p>
+<pre class="r"><code>these.words &lt;- &quot;jackfruit coconut lychee rambutan&quot;
+# nchar() here returns 33, because that's the number of characters in the whole ONE string.
+nchar(these.words)</code></pre>
+<pre><code>## [1] 33</code></pre>
+<p>The above is not the same as our original character vector!</p>
+<pre class="r"><code># meanwhile here, nchar() returns a value for the character count of EACH ELEMENT SEPARATELY.
+nchar(this.char.vector)</code></pre>
+<pre><code>## [1] 9 7 6 8</code></pre>
+<p>Vectors can contain as many elements as your heart desires, but <strong>all of the elements of a single vector must be the same data type.</strong> This assumption/requirement is what gives vectors their magical efficient powers. “But what if I need to have a vector with different data types together?” Soon, friends. We’ll get there!</p>
+</div>
 </div>
 <div id="factor-data" class="section level4">
 <h4>Factor data</h4>
 </div>
 <div id="data-frames" class="section level4">
 <h4>Data frames</h4>
+<p>Ahhhh, my favorite of the data structures. This is where the magic happens! A <strong>data frame</strong> is a 2D array-like rectangular structure with rows and columns, where each column is a vector, and each row corresponds to the element at the same index of each column vector. Sounds like… real data!</p>
+<p>Let’s look at a sample data frame.</p>
+<pre class="r"><code># Do not mind the functions I am calling here to create this fake data. If you'd like to look them up, though, you can check them out in the docs!
+this.df &lt;- data.frame(subjects = sprintf(fmt = &quot;sub%02d&quot;, c(1:20)),
+                      age = sample(x = c(18:35), size = 20, replace = TRUE),
+                      condition = c(rep(x = &quot;control&quot;, times = 10), rep(x = &quot;manipulation&quot;, times = 10)),
+                      score = rnorm(n = 20, mean = 75, sd = 10),
+                      stringsAsFactors = FALSE)
+this.df</code></pre>
+<pre><code>##    subjects age    condition    score
+## 1     sub01  31      control 73.79860
+## 2     sub02  22      control 89.18504
+## 3     sub03  27      control 61.75448
+## 4     sub04  21      control 76.64061
+## 5     sub05  35      control 77.44669
+## 6     sub06  24      control 83.02982
+## 7     sub07  31      control 76.62928
+## 8     sub08  20      control 71.82552
+## 9     sub09  28      control 62.98690
+## 10    sub10  27      control 63.29759
+## 11    sub11  18 manipulation 65.73021
+## 12    sub12  26 manipulation 90.19613
+## 13    sub13  33 manipulation 70.37925
+## 14    sub14  20 manipulation 78.47071
+## 15    sub15  22 manipulation 88.28398
+## 16    sub16  33 manipulation 80.58480
+## 17    sub17  22 manipulation 61.12639
+## 18    sub18  18 manipulation 83.50349
+## 19    sub19  28 manipulation 80.52103
+## 20    sub20  29 manipulation 78.75756</code></pre>
+<p>Because dataframes must be rectangular, all column vectors of a dataframe must be the same length, as must all rows. If you think about the structure of a dataset, this makes sense. If each row corresponds to the info from one subject, for example, and each column corresponds to some metric you’re collecting data on, each subject should have an observation of every metric (each row is the same length). And each column should contain every subject’s data (each column is the same length).</p>
+<p>You’ll see that when dealing with dataframes, using print-to-console to visually inspect your data starts to get unwieldy. Large data frames are quite cumbersome to print to console and examine. If you’re in RStudio, however, you can make use of TECHNOLOGY!</p>
+<pre class="r"><code># Use View() WITH A CAPITAL V! to pop a dataframe up in your viewer window (likely in the top left of RStudio).
+# You can use View() with most data types--vectors, matrices, whatever. But View() is truly best for visually inspecting dataframes.
+# If you like the visual inspection capabilities of Excel (and I do, I will admit), View() should do you just fine. Note that the viewer window is just that--a viewer! NOT an editor. So you can ONLY change values using commands to console. (This is better for data safety. No more accidentally changing data because you clicked in an Excel cell you weren't supposed to!)
+# Please be aware that in data frames with very many columns, View() will not show you all the columns! There are other ways of looking for what you want in that case.
+View(this.df)</code></pre>
+<p>Remember that each column of a dataframe is a vector. Hence, you can do all of the vector things to a dataframe column.</p>
+<p>How do we index values of a dataframe? There are a few ways; each will be useful in some situations but not others.</p>
+<pre class="r"><code># The first way is by using the hard brackets [] that we used to index into vectors before. Remember that a dataframe is a collection of vectors!
+# Consider that a dataframe has two dimensions: length and width. This means that we have up to TWO locations to specify to index values in a dataframe: which row and which column. (A simple vector can be considered as just ONE column, such that indexing into the vector requires only the row index.)
+
+# To extract one specific value, use the following syntax:
+# data.frame[ROW, COLUMN]
+# Below, we are indexing the value in the 8th row and 1st column of this.df
+# It is easy to get mixed up as to whether the order is [row, column] or [column, row]. Frankly, if I'm not sure, I will just try putting the indices in both orders and seeing which one actually gives me the value I was looking for.
+
+# Note that when indexing ONE value, the data type of my output is the pure data type of that one value (numeric or character).
+this.df[8,1]</code></pre>
+<pre><code>## [1] &quot;sub08&quot;</code></pre>
+<pre class="r"><code># Just as before, when we used vectors of indices to index multiple elements of a vector, we can index multiple elements of a dataframe. Observe:
+
+this.df[c(8:10), c(1:3)]</code></pre>
+<pre><code>##    subjects age condition
+## 8     sub08  20   control
+## 9     sub09  28   control
+## 10    sub10  27   control</code></pre>
+</div>
+<div id="non-data-data" class="section level4">
+<h4>Non-data data</h4>
+<p>Non-data data? What is this business? Why would we bother with this?</p>
+<p>It’s important to be able to have a data type to mark non-data as a placeholder in vectors, especially in vectors within dataframes. When (not if) you collect a dataset where some subjects have missing data for some reason, you need to be able to use a non-data indicator to mark elements of a dataframe as empty without having to totally delete that subject’s row.</p>
 </div>
 <div id="lists" class="section level4">
 <h4>Lists</h4>
 </div>
 </div>
+</div>
+<div id="pseudocode" class="section level2">
+<h2>Pseudocode</h2>
+<p><strong>Pseudocoding</strong> is the process of writing out what you want a computer program to do, but in human language. <strong>This is the first step to any and all successful code writing.</strong> Before you can tell a computer to do <em>anything,</em> you have to know <em>what you intend to tell it to do.</em> Programming languages work–computers will do what you ask them to. When a computer isn’t doing what you wanted it to, most of the time it’s because <em>you didn’t actually ask it to do what you wanted it to do!</em> So, in order to be sure that you’re giving your computer the proper instructions, <em>you need to know what the instructions are supposed to be.</em> So, we pseudocode!</p>
+<p>You’ll generally be doing this by writing pseudocode as <strong>comments</strong> in your code. A comment is anything that’s typed out but is tagged as being non-code, so your computer doesn’t try to run it. This is how you leave notes to yourself and other people while programming.</p>
+<p>In R, you comment by using the pound sign # as the FIRST character in your command. ANY command that starts with a # will NOT BE EVALUATED. If you look back at previous code examples in this sheet, you’ll see that I have commented almost every command, by adding some explanatory text before my command with the # symbol.</p>
+</div>
+<div id="logical-relational-operators" class="section level2">
+<h2>Logical &amp; relational operators</h2>
+<p>As you’re writing R code to perform various operations on your data, you’ll often find that you want to perform particular operations under SOME conditions but NOT others.</p>
+<p>For example, if I have a bunch of subjects’ ages (ranging from 18-35) in a column vector of a dataframe, and then test scores for those subjects in another column, I might calculate the mean test score for all subjects by calling <code>mean(dataframe$score)</code> to mean across all values in that column. But what if I only want to calculate the mean for subjects whose ages are between 18-22, how can I tell R to only calculate the mean for those values of the vector but not all?</p>
+<p>I could look up the specific row indices of those subjects in the age range I want, and call my function as <code>mean(dataframe$score[c(1, 2, 4, 7)])</code> or something like that. But manually looking up the numerical indices of your desired data is cumbersome. Ain’t nobody got time for that.</p>
+<p>This is where logical &amp; relational operators come in. These are ways that you can specify conditions under which particular operations should be done. In the prior example, this is how we would tell R “Calculate the mean of the”score&quot; column of my dataframe, but only include scores for subjects between the ages of 18 and 22.&quot; Let’s break this down into its components:</p>
+<p>These are the things you need to tell R: - find which rows of your dataframe belong to subjects aged 18-22 - get those rows out of the column “score” of your dataframe - calculate a mean using those values</p>
+<p>We know how to do the second thing (vector indexing to retrieve specific values!) and the third thing (use the function that does what we want!), but what about the first thing? As above, you could physically look and record which rows belong to subjects aged 18-22, but again, this is time-consuming and sub-optimal. How about we ask R to do the work for us? All of the values R needs are there.</p>
+<p>We need to figure out how to make R understand the phrase “subjects aged between 18 and 22.” How can we translate this human phrase into R?</p>
+</div>
+<div id="conditional-statements" class="section level2">
+<h2>Conditional statements</h2>
+</div>
+<div id="loops" class="section level2">
+<h2>Loops</h2>
+</div>
+<div id="summary-of-best-practices" class="section level2">
+<h2>Summary of best practices</h2>
 </div>
 <div id="attributions" class="section level2">
 <h2>Attributions</h2>
