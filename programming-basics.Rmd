@@ -387,9 +387,12 @@ Vectors can contain as many elements as your heart desires, but **all of the ele
 #### Data frames
 
 Ahhhh, my favorite of the data structures. This is where the magic happens!
-A **data frame** is a 2D array-like rectangular structure with rows and columns, where each column is a vector, and each row corresponds to the element at the same index of each column vector. Sounds like... real data! Let's look at a sample data frame.
+A **data frame** is a 2D array-like rectangular structure with rows and columns, where each column is a vector, and each row corresponds to the element at the same index of each column vector. Sounds like... real data! 
+
+Let's look at a sample data frame.
 
 ```{r}
+# Do not mind the functions I am calling here to create this fake data. If you'd like to look them up, though, you can check them out in the docs!
 this.df <- data.frame(subjects = sprintf(fmt = "sub%02d", c(1:20)),
                       age = sample(x = c(18:35), size = 20, replace = TRUE),
                       condition = c(rep(x = "control", times = 10), rep(x = "manipulation", times = 10)),
@@ -397,6 +400,8 @@ this.df <- data.frame(subjects = sprintf(fmt = "sub%02d", c(1:20)),
                       stringsAsFactors = FALSE)
 this.df
 ```
+
+Because dataframes must be rectangular, all column vectors of a dataframe must be the same length, as must all rows. If you think about the structure of a dataset, this makes sense. If each row corresponds to the info from one subject, for example, and each column corresponds to some metric you're collecting data on, each subject should have an observation of every metric (each row is the same length). And each column should contain every subject's data (each column is the same length).
 
 You'll see that when dealing with dataframes, using print-to-console to visually inspect your data starts to get unwieldy. Large data frames are quite cumbersome to print to console and examine. If you're in RStudio, however, you can make use of TECHNOLOGY!
 
@@ -421,9 +426,15 @@ How do we index values of a dataframe? There are a few ways; each will be useful
 # Below, we are indexing the value in the 8th row and 1st column of this.df
 # It is easy to get mixed up as to whether the order is [row, column] or [column, row]. Frankly, if I'm not sure, I will just try putting the indices in both orders and seeing which one actually gives me the value I was looking for.
 
+# Note that when indexing ONE value, the data type of my output is the pure data type of that one value (numeric or character).
 this.df[8,1]
 ```
 
+```{r}
+# Just as before, when we used vectors of indices to index multiple elements of a vector, we can index multiple elements of a dataframe. Observe:
+
+this.df[c(8:10), c(1:3)]
+```
 
 #### Non-data data
 
