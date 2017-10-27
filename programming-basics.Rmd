@@ -419,7 +419,7 @@ Because dataframes must be rectangular, all column vectors of a dataframe must b
 
 You'll see that when dealing with dataframes, using print-to-console to visually inspect your data starts to get unwieldy. Large data frames are quite cumbersome to print to console and examine. If you're in RStudio, however, you can make use of TECHNOLOGY!
 
-```{r}
+```{r, eval = FALSE}
 # Use View() WITH A CAPITAL V! to pop a dataframe up in your viewer window (likely in the top left of RStudio).
 # You can use View() with most data types--vectors, matrices, whatever. But View() is truly best for visually inspecting dataframes.
 # If you like the visual inspection capabilities of Excel (and I do, I will admit), View() should do you just fine. Note that the viewer window is just that--a viewer! NOT an editor. So you can ONLY change values using commands to console. (This is better for data safety. No more accidentally changing data because you clicked in an Excel cell you weren't supposed to!)
@@ -466,34 +466,374 @@ You'll generally be doing this by writing pseudocode as **comments** in your cod
 
 In R, you comment by using the pound sign # as the FIRST character in your command. ANY command that starts with a # will NOT BE EVALUATED. If you look back at previous code examples in this sheet, you'll see that I have commented almost every command, by adding some explanatory text before my command with the # symbol.
 
+The lovely thing about pseudocode is that you can write out what you want your code to do *even before you know how to write that code.* If you get to a point while pseudocoding where you don't know how to actual-code the thing you're planning to do, very specific pseudocode will make it easier for you to get the help you need, from Google or other people.
+
+See some example pseudocode below, for a problem you might encounter: Let's say you have survey data from college student participants, where you've asked them to type their major into a text box. Now that you're ready to analyze your data, you realize you need to code the majors to do some group-wise analyses by major type. You could do this by manually reading through and labeling each major with a coded value, or you could do this with code, maybe like below:
+
+```{r}
+# Pseudocode to clean undergrad major text-entry data from survey
+
+# 1. Load in CSV of survey data
+# 2. Identify which column contains majors
+# 3. Make sure majors are spelled in a standard way, with same capitalization
+  # 3a. Render all responses in lowercase to get rid of capitalization differences
+  # 3b. Remove extraneous words from free responses
+  # 3c. Correct spelling mistakes
+# 4. Specify majors coding scheme, perhaps as below
+# 5. Label each subject's (text-cleaned) major with its coded category
+
+# Example coding scheme
+# SS: Social sciences
+  # Psychology, sociology, anthropology
+# HUM: Humanities
+  # History, English, women's studies
+# AS: Applied sciences/engineering
+  # Electrical engineering, computer science, mechanical engineering
+# NS: Natural sciences
+  # Biology, chemistry, physics
+
+```
+
+The key, that pseudocode forces you to do BEFORE you start actually writing any code at all, is that you must *operationalize your desired task* before you can write the code for it. Just like you can't measure a variable until you've operationalized it, you can't write code for a task until you've operationalized the exact things that need to happen for the task to be completed.
+
+In programming, this is considered thinking algorithmically--developing a strategy for completing a task, and breaking that strategy down into code-able steps. There's a really clear analogy to variable operationalization in psychology research. In order to decide how to do something, you have to decide what exact something you'll try to do.
+
+Now that we've spent a bit of time thinking about the component pieces of data in R and what we can do with them, we're going to move forward to  basic tools and strategies of programming. As we learn these things, we'll begin to think about the logical frameworks you can use to construct code--what kinds of strategies will you be able to employ?
+
 ## Logical & relational operators
 
 As you're writing R code to perform various operations on your data, you'll often find that you want to perform particular operations under SOME conditions but NOT others.
 
-For example, if I have a bunch of subjects' ages (ranging from 18-35) in a column vector of a dataframe, and then test scores for those subjects in another column, I might calculate the mean test score for all subjects by calling `mean(dataframe$score)` to mean across all values in that column. But what if I only want to calculate the mean for subjects whose ages are between 18-22, how can I tell R to only calculate the mean for those values of the vector but not all?
+For example, if I have a bunch of subjects' ages (ranging from 18-35) in a column vector of a dataframe, and then test scores for those subjects in another column, I might calculate the mean test score for all subjects by calling `mean(dataframe$score)` to mean across all values in that column. But what if I only want to calculate the mean for subjects aged 22 and younger, how can I tell R to only calculate the mean for those values of the vector but not all?
 
 I could look up the specific row indices of those subjects in the age range I want, and call my function as `mean(dataframe$score[c(1, 2, 4, 7)])` or something like that. But manually looking up the numerical indices of your desired data is cumbersome. Ain't nobody got time for that.
 
-This is where logical & relational operators come in. These are ways that you can specify conditions under which particular operations should be done. In the prior example, this is how we would tell R "Calculate the mean of the "score" column of my dataframe, but only include scores for subjects between the ages of 18 and 22." Let's break this down into its components:
+This is where logical & relational operators come in. These are ways that you can specify conditions under which particular operations should be done. In the prior example, this is how we would tell R "Calculate the mean of the "score" column of my dataframe, but only include scores for subjects 22 and younger." Let's break this down into its pseudocode components:
 
-These are the things you need to tell R:
-- find which rows of your dataframe belong to subjects aged 18-22
-- get those rows out of the column "score" of your dataframe
-- calculate a mean using those values
+```{r}
+# Pseudocode:
 
-We know how to do the second thing (vector indexing to retrieve specific values!) and the third thing (use the function that does what we want!), but what about the first thing? As above, you could physically look and record which rows belong to subjects aged 18-22, but again, this is time-consuming and sub-optimal. How about we ask R to do the work for us? All of the values R needs are there.
-
-We need to figure out how to make R understand the phrase "subjects aged between 18 and 22." How can we translate this human phrase into R?
-
+# 1. identify rows of your dataframe that belong to subjects aged 22 and below
+# 2. pull data from those corresponding rows out of the column "score" of your dataframe
+# 3. calculate a mean using just those values
+```
 
 
+We know how to do #2 (vector indexing to retrieve specific values!) and the #3 (use the function that does what we want!), but what about #1? As above, you could physically look and record which rows belong to subjects aged 22 and younger, but again, this is time-consuming and sub-optimal. How about we ask R to do the work for us? All of the values R needs are there.
 
+We can use relational operators to tell R to find exactly the values we want. **Relational operators** are operators used to generate logical data based on whether a value meets a condition. We need to specify a value to check and a condition that can either be met or unmet for that value. The output of the conditional statement would then evaluate to TRUE if the value met the condition, and FALSE if the value did not meet the condition.
+
+Here, our value is age: we want the subject's age to meet a certain condition. Our condition is the that the numeric value has to be 22 or below. We now have pseudocode for this relational statement!
+
+```{r}
+# Pseudocode of my relational statement:
+# Age is 22 or below
+# also written as:
+# Age is less than or equal to 22
+# Code written as:
+this.df$age <= 22
+
+# You can imagine that this value would evaluate as TRUE or FALSE for every value of this.df$age. The age either IS less than or equal to 22, or it ISN'T.
+```
+
+Relational operators should mostly look familiar from inequalities in algebra. Here they are:
+
+- `==` is equal to.
+  Note that it's a DOUBLE equals sign, not a single equals! A single equals is a totally different operator.
+- `!=` is NOT equal to.
+  The exclamation point on its own also serves a more general purpose which you'll see in a bit.
+- `<` is less than
+- `>` is greater than
+- `<=` is less than or equal to.
+  Don't confuse this with the `<-` left-facing arrow assignment operator!
+- `>=`is greater than or equal to
+- `%in%` is contained by
+  This operates just like "is contained by" operates in set theory. The condition for `%in%` is typically a VECTOR of possible matching values. This will return TRUE if the value of x is equal to any one of the values inside the vector on the right side.
+
+
+All of these read from LEFT to RIGHT, where the value is on the left, and the condition is on the right.
+
+Most of these relational operators apply only to numeric data, but some of them apply to character data as well. You can figure that the greater than/less than type operators only work for numbers. `==` and `%in%` can often serve you well with character data, where your relational statement is something like "if this particular string matches this subject ID" or something.
+
+NOW... remember logical indexing before? We can index values of a vector using a logical vector indicating TRUE or FALSE to whether we should index each value.
+
+If you input a vector into a relational command, you will get a vector as output. So if I have one value:
+
+```{r}
+this.age <- 27
+# Do I expect this to evaluate TRUE or FALSE?
+this.age <= 22
+```
+
+But if I input a vector, EACH INDIVIDUAL VALUE will be evaluated in the condition, and you'll get a vector of EACH VALUE'S TRUE/FALSE STATUS.
+
+```{r}
+# I've output the values of this.df$age AND the relational statement, so you can see for yourself that when the nth element of age is less than or equal to 22, the nth element of the relational output vector is TRUE, otherwise it's FALSE.
+this.df$age
+this.df$age <= 22
+```
+
+Now, earlier we said that manually creating a logical vector the same length as your vector of interest would be prohibitively time-consuming. But with relational statements, you can use one command to create that logical vector! So let's say I want to index all the values for which the condition is true, and output them:
+
+```{r}
+# The inside of the hard brackets [] evaluates to a logical vector. That logical vector is then used to index this.df$age
+# Check it out: The output is a vector containing all the ages that met the condition, in the same order as they were in the original vector
+this.df$age[this.df$age <= 22]
+```
+
+This logical vector that we get is in fact quite powerful. Because all column vectors of a dataframe must be the same length by definition, the logical vector that you get from a relational statement involving one column of a dataframe can be used to logical-index ANY column of the dataframe!
+
+So if we cycle back to our pseudocode:
+```{r}
+# Pseudocode:
+
+# 1. identify rows of your dataframe that belong to subjects aged 22 and below
+# 2. pull data from those corresponding rows out of the column "score" of your dataframe
+# 3. calculate a mean using just those values
+```
+
+We now have the ability to generate a logical vector that completes step #1 of our pseudocode. We knew that we would use vector indexing to complete step #2, but now we have the ability to use logical indexing in particular to execute this step.
+
+```{r}
+# Zooming in on pseudocode--
+# 2. pull data from those corresponding rows out of the column "score" of your dataframe
+# This can also be rewritten as:
+# Find all rows of "score" where the corresponding row in "age" is less than or equal to 22
+# We know how to write this in code!!!
+# We know how to write the relational statement for finding age <= 22, and we know how to use that output to logical-index into score.
+
+this.df$score[this.df$age <= 22]
+```
+
+Now, we have the vector output we need to complete step #3! We have a vector containing just the values we want, and we can feed this into the function that will do what we like.
+
+```{r}
+mean(this.df$score[this.df$age <= 22])
+```
+
+**Relational statements + logical indexing = very useful tool.**
+
+We can also create more complex relational statements using logical operators as well. For example, what if we want to do the same task we just did, but instead of calculating the mean score for subjects aged 22 and younger, what if we want the mean score for subjects aged between 22 and 26? There isn't properly a "between" relational operator, but we can construct a statement for this using what we do have.
+
+```{r}
+# Pseudocoding this more complex relational statement:
+# Age between 22 and 26 -- this breaks down to...
+# Age greater than or equal to 22 and also less than or equal to 26
+
+this.df$age >= 22 & this.df$age <= 26
+```
+
+We've just created a relational statement with TWO conditions. These statements are connected by a **logical operator** that indicates HOW these two conditions should be combined. Here are the logical operators you can use:
+
+- `!` is NOT (general).
+  You can use the `!` operator before ANY relational statement to NEGATE that statement. So for example, `x <= y` means "x is less than or equal to y", and `!(x <= y)` means "NEGATIVE OF x is less than or equal to y," or "x is NOT less than or equal to y" in plainer language.
+- `&` ampersand: AND.
+  `x & y` returns TRUE if x is TRUE and y is also TRUE at the same time. Equivalent to INTERSECTION from set theory.
+- `|` pipe (Shift-backslash): OR.
+  `x OR y` returns TRUE if either x is TRUE or y is TRUE (at least one has to be true. Both can be true too). Equivalent to UNION from set theory.
+- `xor()`: exclusive OR.
+  `xor(x, y)` returns TRUE if x is TRUE and y is FALSE, or if x is FALSE and y is TRUE. Said another way, `xor(x, y)` returns true if either x or y is TRUE but NOT if both are true at the same time. Thus, `xor(x, y) == (x & !y) | (!x & y)`. 
+
+Let's look at a couple toy examples of how we might deploy relational statements with logical operators to do all manner of data sorting.
+
+```{r}
+
+```
+
+Now, the relational operators we just learned about are NOT the only ways to generate useful logical data. Here are some other useful functions that will tell you if a condition is TRUE or FALSE:
+
+- `is.na()` returns TRUE if the value inside is `NA`. If you need to get the indices of non-data data, this is extremely useful! You cannot do `x == NA` to achieve the same result--this code will not run. `NA` is special and cannot be used in relational statements like that.
+- `exists()` takes a string that specifies a variable name, and returns TRUE if that variable exists in the environment. This is useful to check whether you have created a certain variable yet.
 
 ## Conditional statements
+
+We've just spent some time learning about relational/logical statements, and how logical indexing is the smart way to filter your data. That's a key use for relational/logical statements, but not the only use for these statements.
+
+Zooming out a bit: A logical statement (something that evaluates to TRUE or FALSE) is used to tell a computer to do something in SOME situations (when the statement is TRUE) but not other situations (when the statement is FALSE).
+
+Logical indexing is a special case of this: we want to index a value if the statement is TRUE, and we don't want to index that value if the statement is FALSE. There will be times when you don't just want to index vectors using conditions: There will also be times when you want *whole blocks of code* to only run in some situations but not others.
+
+For this broader case, we need some programming lingo that we can use to wrap around our code. Let's start with another typical problem, pseudocode a strategy to solve that problem, and then actual-code it.
+
+This time, let's tackle a (frustratingly) common issue in dealing with psychological data: QUALITY CHECKING. I'm sure you can think of a time when you, as a young research assistant, or perhaps a not-so-young graduate student, had to manually scroll through some obscenely huge dataset (perhaps free-response paragraphs from hundreds of MTurk participants, or hundreds of fMRI volumes from a 2-hour scan session) and visually inspect for problems. We know as psychologists that humans are uniquely good at this kind of task, but we also know as researchers that this kind of task is uniquely good at being painfully boring. Let's consider a hypothetical quality checking task where we might be able to get the computer to help us out.
+
+Let's say we have a bunch of data from MTurk subjects, and we've asked them to report their handedness: right- or left-handed. (Ambidextrous was not an option.) Hardyck & Petrinovich (1977) report that about 10% of the population identifies as left-handed. Perhaps we want to verify that the incidence of left-handedness in our data replicates this.
+
+```{r}
+# Pseudocode:
+# 1. Get column of handedness values
+# 2. Calculate proportion of lefties
+  # 2a. Get number of lefties
+  # 2b. Get total number of subjects
+  # Calculate proportion: # lefties / # total
+# 3. Output a message to console describing whether the proportion is within "expected bounds"
+  # 3a. (arbitrarily for the purposes of this exercise) Define "expected bounds" as 10% +- 2.5%
+  # 3b. Relational statement to test: Proportion of lefties is within 10% +- 2.5%
+  # 3c. If relational statement is TRUE, output a relevant message
+  # 3d. If relational statement is FALSE, output a different, but still relevant, message
+
+# Here, we're also going to learn how to output custom messages to console. Oftentimes, if you're feeling lazy, you can manually check whether one value satisfies a condition or not. However, in many cases, you will need to do this in a more automated manner, so outputting a message to console contingent on a result can save you some time (and also be more fun).
+```
+
+```{r, include = FALSE}
+# Generating some sample datasets... with different population probabilities of left-handedness
+hands1 <- sample(x = c("Right", "Left"), size = 500, replace = TRUE, prob = c(0.9, 0.1))
+hands2 <- sample(x = c("Right", "Left"), size = 500, replace = TRUE, prob = c(0.95, 0.05))
+hands3 <- sample(x = c("Right", "Left"), size = 500, replace = TRUE, prob = c(0.87, 0.13))
+```
+
+
+```{r}
+# Pseudocode:
+# 1. Get column of handedness values
+head(hands1)
+```
+```{r}
+# 2. Calculate proportion of lefties
+  # 2a. Get number of lefties
+    # 2a1. Create a logical vector where value is TRUE if subject is left-handed and FALSE if subject is right-handed
+logical.lefties <- hands1 == "Left"
+    # 2a2. Leverage the fact that logical vectors can behave as numeric vectors where TRUE is 1 and FALSE is 0
+    # 2a3. If left-handed is 1 and right-handed is 0 in the logical vector, then taking the sum of the logical vector (which would add 1 for every lefty) should yield a count of lefties in the dataset
+n.lefties1 <- sum(logical.lefties)
+    # 2a4. There is another way to do this, using length() instead of sum()
+    # 2a5. Remember that logical indexing into a vector will yield a vector containing only the indexed values--thus, a vector whose length is equal to the number of indexed values
+n.lefties2 <- length(hands1[logical.lefties])
+  # 2b. Get total number of subjects
+    # 2b1. The length of the whole dataset will be equal to the total n, because there is one row per subject
+n.total <- length(hands1)
+  # Calculate proportion: # lefties / # total
+prop.lefties1 <- n.lefties1 / n.total
+prop.lefties2 <- n.lefties2 / n.total
+```
+```{r}
+# For sanity's sake, let's make sure that both proportions that we calculated using the different methods of getting n.lefties are equal. Then we can use either one if they're equal
+prop.lefties1 == prop.lefties2
+```
+
+Below, we are going to use an if-else statement to actual-code step #3 of our pseudocode. At its simplest, an **if statement** tells your computer:
+
+- IF a condition is TRUE, do something
+- OTHERWISE (if the condition is FALSE), don't do anything
+
+Essentially, what we're doing is setting up a decision tree in our code, where we are instructing R to follow a certain decision path based on whether certain conditions are TRUE or FALSE.
+
+The basic syntax of an if-statement is the following:
+
+```{r}
+# Start with a single piece of logical data (length 1, NOT a logical vector)
+pointless.condition <- TRUE
+# That logical value passes into the IF statement, syntax below.
+# if (condition) {run this code}
+# The curly braces {} allow you to group multiple lines of code to be executed with the if statement. If you try to run multiple lines of code after an if statement without enclosing all relevant code in curly braces, it will NOT work.
+# What we've done here is set off the curly braces with line breaks, for readability.
+if (pointless.condition) {
+  # cat() is a function that will print any message to console. cat() can output the value of variables in the message.
+  cat("Duh.")
+}
+```
+
+```{r}
+# You can write out un-evaluated conditions inside the if () parentheses too.
+if (2 + 2 == 4) {
+  cat("We can do math!")
+}
+```
+
+```{r}
+# You'll see that if the  condition inside evaluates to FALSE, the enclosed code does NOT run.
+if (2 + 2 == 5) {
+  cat("We can do math!")
+}
+```
+
+Sometimes, you want an if statement that does a little more, like the following:
+
+- IF a condition is TRUE, do something
+- OTHERWISE (if the condition is FALSE), do something ELSE
+
+We can use **if-else statements** to execute some code if a condition is TRUE, and some different code if that condition is FALSE.
+
+```{r}
+if (2 + 2 == 4) {
+  cat("We can do math!")
+} else {
+  cat("What is math, anyway?")
+}
+```
+
+```{r}
+if (2 + 2 == 5) {
+  cat("We can do math!")
+} else {
+  cat("What is math, anyway?")
+}
+```
+
+
+```{r}
+# 3. Output a message to console describing whether the proportion is within "expected bounds"
+  # 3a. (arbitrarily for the purposes of this exercise) Define "expected bounds" as 10% +- 2.5%
+    # 3a1. Create a vector of length 2, where each of the values is lower and upper bound respectively
+bounds <- c(.1 - .025, .1 + .025)
+  # 3b. Relational statement to test: Proportion of lefties is within bounds
+    # 3b1. We can break this down:
+      # prop.lefties is greater than or equal to lower bound AND prop.lefties is less than or equal to upper bound
+  # 3c. If relational statement is TRUE, output a relevant message
+    # 3c1. We'll use cat() to print our custom message to console
+if (prop.lefties1 >= bounds[1] & prop.lefties1 <= bounds[2]) {
+  cat("The proportion of lefties is ", prop.lefties1, " and is within the bounds of ", bounds[1], " and ", bounds[2], ". All is well.",
+      sep = "")
+  # 3d. If relational statement is FALSE, output a different, but still relevant, message
+} else {
+    cat("The proportion of lefties is ", prop.lefties1, " and is OUTSIDE the bounds of ", bounds[1], " and ", bounds[2], ". Something is fishy!",
+        sep = "")
+}
+```
+
+Okay, looks good here! But let's make sure the code does what it's supposed to when the proportion of lefties is actually outside the bounds. We can test it with another simulated dataset (where the generating parameters are different...).
+
+```{r}
+# Abbreviated; copied code from before. without pseudocode annotations
+logical.lefties <- hands2 == "Left"
+n.lefties1 <- sum(logical.lefties)
+n.total <- length(hands2)
+prop.lefties1 <- n.lefties1 / n.total
+
+if (prop.lefties1 >= bounds[1] & prop.lefties1 <= bounds[2]) {
+  cat("The proportion of lefties is ", prop.lefties1, " and is within the bounds of ", bounds[1], " and ", bounds[2], ". All is well.",
+      sep = "")
+  # 3d. If relational statement is FALSE, output a different, but still relevant, message
+} else {
+    cat("The proportion of lefties is ", prop.lefties1, " and is OUTSIDE the bounds of ", bounds[1], " and ", bounds[2], ". Something is fishy!",
+        sep = "")
+}
+```
 
 ## Loops
 
 ## Summary of best practices
+
+## Now you try
+
+In the below code chunk, initialize a variable and set its value to any integer of your choice. Initialize another variable, whose value will be TRUE if your integer is an ODD number, and FALSE if your integer is an EVEN number. Test your code using both positive and negative as well as both odd and even numbers.
+
+```{r}
+# Demonstrate that it works for a POSITIVE ODD number
+
+# Demonstrate that it works for a POSITIVE EVEN number
+
+# Demonstrate that it works for a NEGATIVE ODD number
+
+# Demonstrate that it works for a NEGATIVE EVEN number
+
+# Demonstrate that it works for ZERO
+```
+
+Hint (will show if you open the source code):
+```{r, echo = FALSE}
+# Consider the definition of an odd vs even number. What mathematical operation could you do that would always return one value if your number was odd (the same value for any odd number), and a different value if your number was even (the same value for any even number)?
+```
 
 ## Attributions
 
