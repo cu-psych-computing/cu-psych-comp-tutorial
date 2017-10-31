@@ -518,7 +518,6 @@ This is where logical & relational operators come in. These are ways that you ca
 # 3. calculate a mean using just those values
 ```
 
-
 We know how to do #2 (vector indexing to retrieve specific values!) and the #3 (use the function that does what we want!), but what about #1? As above, you could physically look and record which rows belong to subjects aged 22 and younger, but again, this is time-consuming and sub-optimal. How about we ask R to do the work for us? All of the values R needs are there.
 
 We can use relational operators to tell R to find exactly the values we want. **Relational operators** are operators used to generate logical data based on whether a value meets a condition. We need to specify a value to check and a condition that can either be met or unmet for that value. The output of the conditional statement would then evaluate to TRUE if the value met the condition, and FALSE if the value did not meet the condition.
@@ -625,14 +624,14 @@ this.df$age >= 22 & this.df$age <= 26
 
 We've just created a relational statement with TWO conditions. These statements are connected by a **logical operator** that indicates HOW these two conditions should be combined. Here are the logical operators you can use:
 
-- `!` is NOT (general).
-  You can use the `!` operator before ANY relational statement to NEGATE that statement. So for example, `x <= y` means "x is less than or equal to y", and `!(x <= y)` means "NEGATIVE OF x is less than or equal to y," or "x is NOT less than or equal to y" in plainer language.
-- `&` ampersand: AND.
-  `x & y` returns TRUE if x is TRUE and y is also TRUE at the same time. Equivalent to INTERSECTION from set theory.
-- `|` pipe (Shift-backslash): OR.
-  `x OR y` returns TRUE if either x is TRUE or y is TRUE (at least one has to be true. Both can be true too). Equivalent to UNION from set theory.
-- `xor()`: exclusive OR.
-  `xor(x, y)` returns TRUE if x is TRUE and y is FALSE, or if x is FALSE and y is TRUE. Said another way, `xor(x, y)` returns true if either x or y is TRUE but NOT if both are true at the same time. Thus, `xor(x, y) == (x & !y) | (!x & y)`. 
+* `!` is NOT (general).
+    + You can use the `!` operator before ANY relational statement to NEGATE that statement. So for example, `x <= y` means "x is less than or equal to y", and `!(x <= y)` means "NEGATIVE OF x is less than or equal to y," or "x is NOT less than or equal to y" in plainer language.
+* `&` ampersand: AND.
+    + `x & y` returns TRUE if x is TRUE and y is also TRUE at the same time. Equivalent to INTERSECTION from set theory.
+* `|` pipe (Shift-backslash): OR.
+    + `x OR y` returns TRUE if either x is TRUE or y is TRUE (at least one has to be true. Both can be true too). Equivalent to UNION from set theory.
+* `xor()`: exclusive OR.
+    + `xor(x, y)` returns TRUE if x is TRUE and y is FALSE, or if x is FALSE and y is TRUE. Said another way, `xor(x, y)` returns true if either x or y is TRUE but NOT if both are true at the same time. Thus, `xor(x, y) == (x & !y) | (!x & y)`. 
 
 Let's look at a couple toy examples of how we might deploy relational statements with logical operators to do all manner of data sorting.
 
@@ -644,6 +643,37 @@ Now, the relational operators we just learned about are NOT the only ways to gen
 
 - `is.na()` returns TRUE if the value inside is `NA`. If you need to get the indices of non-data data, this is extremely useful! You cannot do `x == NA` to achieve the same result--this code will not run. `NA` is special and cannot be used in relational statements like that.
 - `exists()` takes a string that specifies a variable name, and returns TRUE if that variable exists in the environment. This is useful to check whether you have created a certain variable yet.
+
+### Summary
+
+You can use logical statements to specify **the conditions under which you want to perform a certain command.** One frequent use of logical statements is **logical indexing,** where you select certain values from a vector that satisfy a condition.
+
+#### Relational operators
+
+These are all inherently **comparative** and return TRUE or FALSE based on the relationship between TWO pieces of data.
+
+- `==` is equal to
+- `!=` is NOT equal to
+- `<` is less than
+- `>` is greater than
+- `<=` is less than or equal to
+- `>=` is greater than or equal to
+- `%in%` is contained by
+
+#### Other useful functions that return TRUE or FALSE
+
+- `is.na()` returns TRUE if the value inside is `NA`
+- `exists()` takes a string that specifies a variable name, and returns TRUE if that variable exists in the environment. This is useful to check whether you have created a certain variable yet.
+
+#### Logical operators
+
+
+* `!` NOT
+* `&` AND
+* `|` (Shift-backslash) OR
+* `xor()` exclusive OR
+
+### Best practices
 
 ## Conditional statements
 
@@ -734,7 +764,7 @@ if (pointless.condition) {
 ```
 
 ```{r}
-# You can write out un-evaluated conditions inside the if () parentheses too.
+# You can write out un-evaluated conditions inside the if () parentheses too. R will evaluate the condition inside the parentheses and then pass that TRUE/FALSE to the if ().
 if (2 + 2 == 4) {
   cat("We can do math!")
 }
@@ -755,6 +785,9 @@ Sometimes, you want an if statement that does a little more, like the following:
 We can use **if-else statements** to execute some code if a condition is TRUE, and some different code if that condition is FALSE.
 
 ```{r}
+# Basic syntax of an if-else statement:
+# if (condition) {run this code} else {run this other code}
+# Again, we set off the curly braces onto a new line for readability. The "else" has to be on the SAME line as the closing curly brace of the if () {}, though, otherwise R will not know that the "else" is connected to that "if."
 if (2 + 2 == 4) {
   cat("We can do math!")
 } else {
@@ -763,6 +796,7 @@ if (2 + 2 == 4) {
 ```
 
 ```{r}
+# See that here, the condition evaluates to FALSE, so the "else" code runs, NOT the "if" code.
 if (2 + 2 == 5) {
   cat("We can do math!")
 } else {
@@ -770,6 +804,7 @@ if (2 + 2 == 5) {
 }
 ```
 
+Now, to complete step #3 of our pseudocode, we'll use the if-else statement that we just learned about.
 
 ```{r}
 # 3. Output a message to console describing whether the proportion is within "expected bounds"
@@ -791,7 +826,9 @@ if (prop.lefties1 >= bounds[1] & prop.lefties1 <= bounds[2]) {
 }
 ```
 
-Okay, looks good here! But let's make sure the code does what it's supposed to when the proportion of lefties is actually outside the bounds. We can test it with another simulated dataset (where the generating parameters are different...).
+Okay, looks good here! But let's make sure the code does what it's supposed to when the proportion of lefties is actually outside the bounds. It's critical to test that your code behaves as expected when your condition evaluates TRUE as well when it evaluates FALSE.
+
+We can test it with another simulated dataset (where the generating parameters are different...).
 
 ```{r}
 # Abbreviated; copied code from before. without pseudocode annotations
@@ -810,7 +847,182 @@ if (prop.lefties1 >= bounds[1] & prop.lefties1 <= bounds[2]) {
 }
 ```
 
+The if-else statement will serve you for most of your if-statement needs. Sometimes you might need to execute different commands based on more than one condition, perhaps. Like "if x is true, do this, but if x is false and y is true, do this instead, and otherwise do a third thing".
+
+Essentially, your condition might take a series of cases, and you might have different commands to run if the first case is true, the second case is true, etc. for any number of cases. Like in the following situation:
+
+```{r}
+# Data has been collected on students from different class years (freshman, sophomore, etc)
+# For each metric, z-score students' scores, but only relative to people from their class year
+# e.g. see below
+# If freshman, z-score based on all freshmen's scores
+# Otherwise if sophomore, z-score based on all sophomores' scores
+# Otherwise if junior, z-score based on all juniors' scores
+# Otherwise if senior, z-score based on all seniors' scores
+```
+
+
+To do this, you would use an if-else-if statement. An **if-else-if statement** will execute some code if a condition is TRUE, and some different code if that condition is FALSE AND another condition is TRUE, etc. for any number of conditions you need.
+
+The conditions of if-else-if statements are tested in order, so it's important to be deliberate about the order of your conditions. In order for the nth condition of an if-else-if statement to be activated, all n-1 prior conditions HAVE TO BE FALSE.
+
+```{r}
+x <- TRUE
+y <- FALSE
+z <- TRUE
+
+# To demonstrate the assumptions of if-else-if statements:
+if (x) {
+  cat("x is true")
+} else if (y) {
+  cat("x is false and y is true")
+} else if (z) {
+  cat("x is false and y is false and z is true")
+}
+```
+
+```{r}
+# the above is functionally equivalent to:
+if (x) {
+  cat("x is true")
+}
+if (!x & y) {
+  cat("x is false and y is true")
+}
+if(!x & !y & z) {
+  cat("x is false and y is false and z is true")
+}
+```
+
+```{r}
+# So because x was TRUE before, the FIRST case of the if-else-if statement was the one that evaluated, because once x was TRUE the statement DOES NOT CHECK ANY FURTHER CONDITIONS.
+# Further conditions of an if-else-if statement will only be evaluated IF THE PRECEDING CONDITION(S) ARE ALL FALSE.
+# So if we reassign some of these logical values:
+x <- FALSE
+# now x and y are both FALSE, and z is TRUE. which code will output?
+if (x) {
+  cat("x is true")
+} else if (y) {
+  cat("x is false and y is true")
+} else if (z) {
+  cat("x is false and y is false and z is true")
+}
+```
+```{r}
+y <- TRUE
+# now x is FALSE, and y and z are both TRUE. which bit of code will actually output?
+if (x) {
+  cat("x is true")
+} else if (y) {
+  cat("x is false and y is true")
+} else if (z) {
+  cat("x is false and y is false and z is true")
+}
+```
+
+If your conditions are mutually exclusive, then it doesn't matter which condition is tested first (because by definition only one condition can be true at a time), but if they aren't, you should take care to order your conditions in a sensible way. Here's a case where you might need to watch out for this (this has actually happened to me):
+
+```{r}
+# Say you have text data, where participants were assigned to write a sentence about one of three fruits: apples, grapes, and grapefruit.
+# If each piece of data is one string containing a sentence-long response, how might we try to code each data based on whether it was about apples, grapes, or grapefruit?
+
+# We might try the following:
+# if ("apple" is in the string) {code it as apple}
+# else if ("grape" is in the string) {code it as grape}
+# else if ("grapefruit" is in the string) {code it as grapefruit}
+
+# This seems sensible. BUT! Consider that every instance of the string "grapefruit" does in fact contain the string "grape". This means that according to the current pseudocode, all grapefruit sentences will be mistakenly coded as grape, because the "grape" condition will be true AND the "grapefruit" condition will be true, and the "grape" condition code will get evaluated because it was listed FIRST.
+
+# To avoid this, you can reorder your else if conditions:
+# if ("apple" is in the string) {code it as apple}
+# else if ("grapefruit" is in the string) {code it as grapefruit}
+# else if ("grape" is in the string) {code it as grape}
+
+# This will work, because for grapefruit sentences, both "grapefruit" and "grape" conditions are true, and the desired condition for grapefruit sentences will evaluate FIRST. For grape sentences, only the "grape" condition is true, so the appropriate condition for grape sentences will evaluate no matter where it's placed in the if-else-if statement.
+```
+
+
 ## Loops
+
+The last basic piece of coding logic we'll talk about is looping. A common task you'll want to do with code is to run the same command on a series of different pieces of data. (This is what programming can be great for--automating! So you don't have to do the same thing manually a bunch of times.) You can either do this by copying and pasting a command a bunch of times and then running them all, OR you can use loops!
+
+A **loop** is a method of specifying conditions under which to repeat a series of commands. You might want to write a loop to do something like the following:
+
+```{r}
+# If I have a file folder containing some number of CSV data files, all of which I want to import into R, I could use the function read.csv() to read each of these files in.
+
+# This could be by having individual commands, like:
+# read.csv(the first file)
+# read.csv(the second file)
+# read.csv(etc... till the last file)
+
+# If it's just two or three files, all right. But what if there are tens? Hundreds? We can't be typing each of these out. We CAN, however, loop this:
+# Specify a character vector where every element is a string containing the file name
+# Call read.csv() on every element in this vector in order
+# Soon we'll find out how to write this!
+```
+
+There are two main types of loops we'll learn about here, each with its own best use case.
+
+A **for loop** repeats a command *for* a finite, predefined set of instances. For example, you might use this if you have a set number of subjects, and you want to run a set of commands on each subject's data.
+
+A finite, predefined set of instances... don't we have a data type that stores sequences of instances? YES! Vectors! For loops will allow you to run the same command on every value in a vector.
+
+We'll learn below about the mechanics of for loops and how you can use them. Afterward, we'll talk about the pros and cons of for loops, and situations where you *should* and *should not* use for loops.
+
+```{r}
+# Here's a toy example of a for loop using our good old friend cat() to print a new message to console for each element of a vector.
+values <- 13:23
+for (this.value in values) {
+  cat("The current value is", this.value, "\n")
+}
+```
+
+```{r}
+# The variable letters is one of a pre-defined set of constants that comes standard with R that you can just call like any old variable even if you can't see it in your environment.
+
+for (this.letter in letters) {
+  cat("The current letter is", this.letter, "\n")
+}
+```
+
+
+```{r}
+for (i in 1:length(letters)) {
+  cat("The ", i, "th letter is ", letters[i], "\n", sep = "")
+}
+```
+
+```{r}
+# We can now capture info about each value's index in the vector and use that info.
+# As an additional exercise, let's see if we can make this toy function a little nicer.
+# I notice that using the heuristic "append th to every number to make it ordinal" doesn't work in every case. In particular, 1, 2, 3, 21, 22, and 23 all have an alternate ordinal suffix.
+# Can we clean up our code and get it to output the correct ordinal endings for some values in the vector?
+# Sure we can! This involves integrating info we learned before about if-else-if statements with the info we've just learned about for loops.
+
+# Pseudocode:
+
+# For the i'th element in the vector letters:
+  # Print the general form "The i'th letter is [insert appropriate letter]"
+    # Get appropriate letter by indexing into the i'th element of letters
+  # Specifically, print certain messages based on what the suffix is supposed to be
+    # For numbers ending in 1 (EXCEPT 11), print "st"
+    # For numbers ending in 2 (EXCEPT 12), print "nd"
+    # For numbers ending in 3 (EXCEPT 13), print "rd"
+    # For all other numbers, print "th"
+
+for (i in 1:length(letters)) {
+  if (i != 11 & i %% 10 == 1) {
+    cat("The ", i, "st letter is ", letters[i], "\n", sep = "")
+  } else if (i != 12 & i %% 10 == 2) {
+    cat("The ", i, "nd letter is ", letters[i], "\n", sep = "")
+  } else if (i != 13 & i %% 10 == 3) {
+    cat("The ", i, "rd letter is ", letters[i], "\n", sep = "")
+  } else {
+    cat("The ", i, "th letter is ", letters[i], "\n", sep = "")
+  }
+}
+```
 
 ## Summary of best practices
 
