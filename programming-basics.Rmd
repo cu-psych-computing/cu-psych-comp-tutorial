@@ -998,7 +998,7 @@ for (i in 1:length(letters)) {
 # As an additional exercise, let's see if we can make this toy function a little nicer.
 # I notice that using the heuristic "append th to every number to make it ordinal" doesn't work in every case. In particular, 1, 2, 3, 21, 22, and 23 all have an alternate ordinal suffix.
 # Can we clean up our code and get it to output the correct ordinal endings for some values in the vector?
-# Sure we can! This involves integrating info we learned before about if-else-if statements with the info we've just learned about for loops.
+# Sure we can!
 
 # Pseudocode:
 
@@ -1010,6 +1010,8 @@ for (i in 1:length(letters)) {
     # For numbers ending in 2 (EXCEPT 12), print "nd"
     # For numbers ending in 3 (EXCEPT 13), print "rd"
     # For all other numbers, print "th"
+
+# One way you could do this is by using a series of if-else-if statements INSIDE your for loop. For each item in the loop, do a particular command based on whether that item satisfies a particular condition.
 
 for (i in 1:length(letters)) {
   if (i != 11 & i %% 10 == 1) {
@@ -1023,6 +1025,7 @@ for (i in 1:length(letters)) {
   }
 }
 ```
+
 
 ## Summary of best practices
 

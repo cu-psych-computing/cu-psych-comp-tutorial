@@ -508,26 +508,26 @@ this.df &lt;- data.frame(subjects = sprintf(fmt = &quot;sub%02d&quot;, c(1:20)),
                       stringsAsFactors = FALSE)
 this.df</code></pre>
 <pre><code>##    subjects age    condition    score
-## 1     sub01  33      control 73.26718
-## 2     sub02  20      control 79.93845
-## 3     sub03  26      control 85.23710
-## 4     sub04  20      control 64.84320
-## 5     sub05  28      control 74.05130
-## 6     sub06  20      control 73.46119
-## 7     sub07  33      control 86.67474
-## 8     sub08  19      control 82.16076
-## 9     sub09  28      control 66.24146
-## 10    sub10  24      control 70.41901
-## 11    sub11  29 manipulation 92.65089
-## 12    sub12  20 manipulation 77.62087
-## 13    sub13  22 manipulation 89.37940
-## 14    sub14  26 manipulation 77.27566
-## 15    sub15  19 manipulation 89.62117
-## 16    sub16  28 manipulation 77.36152
-## 17    sub17  33 manipulation 73.70749
-## 18    sub18  30 manipulation 67.26627
-## 19    sub19  25 manipulation 87.15538
-## 20    sub20  27 manipulation 84.27075</code></pre>
+## 1     sub01  32      control 74.33884
+## 2     sub02  29      control 82.58444
+## 3     sub03  28      control 85.97457
+## 4     sub04  30      control 76.42332
+## 5     sub05  26      control 71.19176
+## 6     sub06  22      control 75.19753
+## 7     sub07  20      control 76.45639
+## 8     sub08  27      control 78.53154
+## 9     sub09  20      control 65.92014
+## 10    sub10  26      control 52.65895
+## 11    sub11  29 manipulation 59.35876
+## 12    sub12  29 manipulation 71.44615
+## 13    sub13  28 manipulation 60.45503
+## 14    sub14  19 manipulation 77.73548
+## 15    sub15  24 manipulation 86.68641
+## 16    sub16  24 manipulation 62.42307
+## 17    sub17  23 manipulation 90.97462
+## 18    sub18  19 manipulation 87.41091
+## 19    sub19  23 manipulation 77.78917
+## 20    sub20  19 manipulation 92.16443</code></pre>
 <p>Because dataframes must be rectangular, all column vectors of a dataframe must be the same length, as must all rows. If you think about the structure of a dataset, this makes sense. If each row corresponds to the info from one subject, for example, and each column corresponds to some metric you’re collecting data on, each subject should have an observation of every metric (each row is the same length). And each column should contain every subject’s data (each column is the same length).</p>
 <p>You’ll see that when dealing with dataframes, using print-to-console to visually inspect your data starts to get unwieldy. Large data frames are quite cumbersome to print to console and examine. If you’re in RStudio, however, you can make use of TECHNOLOGY!</p>
 <pre class="r"><code># Use View() WITH A CAPITAL V! to pop a dataframe up in your viewer window (likely in the top left of RStudio).
@@ -552,9 +552,9 @@ this.df[8,1]</code></pre>
 
 this.df[c(8:10), c(1:3)]</code></pre>
 <pre><code>##    subjects age condition
-## 8     sub08  19   control
-## 9     sub09  28   control
-## 10    sub10  24   control</code></pre>
+## 8     sub08  27   control
+## 9     sub09  20   control
+## 10    sub10  26   control</code></pre>
 </div>
 <div id="non-data-data" class="section level4">
 <h4>Non-data data</h4>
@@ -617,8 +617,8 @@ this.df[c(8:10), c(1:3)]</code></pre>
 # Age is less than or equal to 22
 # Code written as:
 this.df$age &lt;= 22</code></pre>
-<pre><code>##  [1] FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE
-## [12]  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<pre><code>##  [1] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE
+## [12] FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE</code></pre>
 <pre class="r"><code># You can imagine that this value would evaluate as TRUE or FALSE for every value of this.df$age. The age either IS less than or equal to 22, or it ISN'T.</code></pre>
 <p>Relational operators should mostly look familiar from inequalities in algebra. Here they are:</p>
 <ul>
@@ -641,15 +641,15 @@ this.age &lt;= 22</code></pre>
 <p>But if I input a vector, EACH INDIVIDUAL VALUE will be evaluated in the condition, and you’ll get a vector of EACH VALUE’S TRUE/FALSE STATUS.</p>
 <pre class="r"><code># I've output the values of this.df$age AND the relational statement, so you can see for yourself that when the nth element of age is less than or equal to 22, the nth element of the relational output vector is TRUE, otherwise it's FALSE.
 this.df$age</code></pre>
-<pre><code>##  [1] 33 20 26 20 28 20 33 19 28 24 29 20 22 26 19 28 33 30 25 27</code></pre>
+<pre><code>##  [1] 32 29 28 30 26 22 20 27 20 26 29 29 28 19 24 24 23 19 23 19</code></pre>
 <pre class="r"><code>this.df$age &lt;= 22</code></pre>
-<pre><code>##  [1] FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE
-## [12]  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<pre><code>##  [1] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE
+## [12] FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE</code></pre>
 <p>Now, earlier we said that manually creating a logical vector the same length as your vector of interest would be prohibitively time-consuming. But with relational statements, you can use one command to create that logical vector! So let’s say I want to index all the values for which the condition is true, and output them:</p>
 <pre class="r"><code># The inside of the hard brackets [] evaluates to a logical vector. That logical vector is then used to index this.df$age
 # Check it out: The output is a vector containing all the ages that met the condition, in the same order as they were in the original vector
 this.df$age[this.df$age &lt;= 22]</code></pre>
-<pre><code>## [1] 20 20 20 19 20 22 19</code></pre>
+<pre><code>## [1] 22 20 20 19 19 19</code></pre>
 <p>This logical vector that we get is in fact quite powerful. Because all column vectors of a dataframe must be the same length by definition, the logical vector that you get from a relational statement involving one column of a dataframe can be used to logical-index ANY column of the dataframe!</p>
 <p>So if we cycle back to our pseudocode:</p>
 <pre class="r"><code># Pseudocode:
@@ -666,10 +666,10 @@ this.df$age[this.df$age &lt;= 22]</code></pre>
 # We know how to write the relational statement for finding age &lt;= 22, and we know how to use that output to logical-index into score.
 
 this.df$score[this.df$age &lt;= 22]</code></pre>
-<pre><code>## [1] 79.93845 64.84320 73.46119 82.16076 77.62087 89.37940 89.62117</code></pre>
+<pre><code>## [1] 75.19753 76.45639 65.92014 77.73548 87.41091 92.16443</code></pre>
 <p>Now, we have the vector output we need to complete step #3! We have a vector containing just the values we want, and we can feed this into the function that will do what we like.</p>
 <pre class="r"><code>mean(this.df$score[this.df$age &lt;= 22])</code></pre>
-<pre><code>## [1] 79.57501</code></pre>
+<pre><code>## [1] 79.14748</code></pre>
 <p><strong>Relational statements + logical indexing = very useful tool.</strong></p>
 <p>We can also create more complex relational statements using logical operators as well. For example, what if we want to do the same task we just did, but instead of calculating the mean score for subjects aged 22 and younger, what if we want the mean score for subjects aged between 22 and 26? There isn’t properly a “between” relational operator, but we can construct a statement for this using what we do have.</p>
 <pre class="r"><code># Pseudocoding this more complex relational statement:
@@ -677,24 +677,430 @@ this.df$score[this.df$age &lt;= 22]</code></pre>
 # Age greater than or equal to 22 and also less than or equal to 26
 
 this.df$age &gt;= 22 &amp; this.df$age &lt;= 26</code></pre>
-<pre><code>##  [1] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
-## [12] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE</code></pre>
+<pre><code>##  [1] FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE  TRUE FALSE
+## [12] FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE</code></pre>
 <p>We’ve just created a relational statement with TWO conditions. These statements are connected by a <strong>logical operator</strong> that indicates HOW these two conditions should be combined. Here are the logical operators you can use:</p>
 <ul>
-<li><code>!</code> is NOT (general). You can use the <code>!</code> operator before ANY relational statement to NEGATE that statement. So for example, <code>x &lt;= y</code> means “x is less than or equal to y”, and <code>!(x &lt;= y)</code> means “NEGATIVE OF x is less than or equal to y,” or “x is NOT less than or equal to y” in plainer language.</li>
-<li><code>&amp;</code> ampersand: AND. <code>x &amp; y</code> returns TRUE if x is TRUE and y is also TRUE at the same time. Equivalent to INTERSECTION from set theory.</li>
-<li><code>|</code> pipe (Shift-backslash): OR. <code>x OR y</code> returns TRUE if either x is TRUE or y is TRUE (at least one has to be true. Both can be true too). Equivalent to UNION from set theory.</li>
-<li><code>xor()</code>: exclusive OR. <code>xor(x, y)</code> returns TRUE if x is TRUE and y is FALSE, or if x is FALSE and y is TRUE. Said another way, <code>xor(x, y)</code> returns true if either x or y is TRUE but NOT if both are true at the same time. Thus, <code>xor(x, y) == (x &amp; !y) | (!x &amp; y)</code>.</li>
+<li><code>!</code> is NOT (general).
+<ul>
+<li>You can use the <code>!</code> operator before ANY relational statement to NEGATE that statement. So for example, <code>x &lt;= y</code> means “x is less than or equal to y”, and <code>!(x &lt;= y)</code> means “NEGATIVE OF x is less than or equal to y,” or “x is NOT less than or equal to y” in plainer language.</li>
+</ul></li>
+<li><code>&amp;</code> ampersand: AND.
+<ul>
+<li><code>x &amp; y</code> returns TRUE if x is TRUE and y is also TRUE at the same time. Equivalent to INTERSECTION from set theory.</li>
+</ul></li>
+<li><code>|</code> pipe (Shift-backslash): OR.
+<ul>
+<li><code>x OR y</code> returns TRUE if either x is TRUE or y is TRUE (at least one has to be true. Both can be true too). Equivalent to UNION from set theory.</li>
+</ul></li>
+<li><code>xor()</code>: exclusive OR.
+<ul>
+<li><code>xor(x, y)</code> returns TRUE if x is TRUE and y is FALSE, or if x is FALSE and y is TRUE. Said another way, <code>xor(x, y)</code> returns true if either x or y is TRUE but NOT if both are true at the same time. Thus, <code>xor(x, y) == (x &amp; !y) | (!x &amp; y)</code>.</li>
+</ul></li>
 </ul>
+<p>Let’s look at a couple toy examples of how we might deploy relational statements with logical operators to do all manner of data sorting.</p>
+<p>Now, the relational operators we just learned about are NOT the only ways to generate useful logical data. Here are some other useful functions that will tell you if a condition is TRUE or FALSE:</p>
+<ul>
+<li><code>is.na()</code> returns TRUE if the value inside is <code>NA</code>. If you need to get the indices of non-data data, this is extremely useful! You cannot do <code>x == NA</code> to achieve the same result–this code will not run. <code>NA</code> is special and cannot be used in relational statements like that.</li>
+<li><code>exists()</code> takes a string that specifies a variable name, and returns TRUE if that variable exists in the environment. This is useful to check whether you have created a certain variable yet.</li>
+</ul>
+<div id="summary" class="section level3">
+<h3>Summary</h3>
+<p>You can use logical statements to specify <strong>the conditions under which you want to perform a certain command.</strong> One frequent use of logical statements is <strong>logical indexing,</strong> where you select certain values from a vector that satisfy a condition.</p>
+<div id="relational-operators" class="section level4">
+<h4>Relational operators</h4>
+<p>These are all inherently <strong>comparative</strong> and return TRUE or FALSE based on the relationship between TWO pieces of data.</p>
+<ul>
+<li><code>==</code> is equal to</li>
+<li><code>!=</code> is NOT equal to</li>
+<li><code>&lt;</code> is less than</li>
+<li><code>&gt;</code> is greater than</li>
+<li><code>&lt;=</code> is less than or equal to</li>
+<li><code>&gt;=</code> is greater than or equal to</li>
+<li><code>%in%</code> is contained by</li>
+</ul>
+</div>
+<div id="other-useful-functions-that-return-true-or-false" class="section level4">
+<h4>Other useful functions that return TRUE or FALSE</h4>
+<ul>
+<li><code>is.na()</code> returns TRUE if the value inside is <code>NA</code></li>
+<li><code>exists()</code> takes a string that specifies a variable name, and returns TRUE if that variable exists in the environment. This is useful to check whether you have created a certain variable yet.</li>
+</ul>
+</div>
+<div id="logical-operators" class="section level4">
+<h4>Logical operators</h4>
+<ul>
+<li><code>!</code> NOT</li>
+<li><code>&amp;</code> AND</li>
+<li><code>|</code> (Shift-backslash) OR</li>
+<li><code>xor()</code> exclusive OR</li>
+</ul>
+</div>
+</div>
+<div id="best-practices" class="section level3">
+<h3>Best practices</h3>
+</div>
 </div>
 <div id="conditional-statements" class="section level2">
 <h2>Conditional statements</h2>
+<p>We’ve just spent some time learning about relational/logical statements, and how logical indexing is the smart way to filter your data. That’s a key use for relational/logical statements, but not the only use for these statements.</p>
+<p>Zooming out a bit: A logical statement (something that evaluates to TRUE or FALSE) is used to tell a computer to do something in SOME situations (when the statement is TRUE) but not other situations (when the statement is FALSE).</p>
+<p>Logical indexing is a special case of this: we want to index a value if the statement is TRUE, and we don’t want to index that value if the statement is FALSE. There will be times when you don’t just want to index vectors using conditions: There will also be times when you want <em>whole blocks of code</em> to only run in some situations but not others.</p>
+<p>For this broader case, we need some programming lingo that we can use to wrap around our code. Let’s start with another typical problem, pseudocode a strategy to solve that problem, and then actual-code it.</p>
+<p>This time, let’s tackle a (frustratingly) common issue in dealing with psychological data: QUALITY CHECKING. I’m sure you can think of a time when you, as a young research assistant, or perhaps a not-so-young graduate student, had to manually scroll through some obscenely huge dataset (perhaps free-response paragraphs from hundreds of MTurk participants, or hundreds of fMRI volumes from a 2-hour scan session) and visually inspect for problems. We know as psychologists that humans are uniquely good at this kind of task, but we also know as researchers that this kind of task is uniquely good at being painfully boring. Let’s consider a hypothetical quality checking task where we might be able to get the computer to help us out.</p>
+<p>Let’s say we have a bunch of data from MTurk subjects, and we’ve asked them to report their handedness: right- or left-handed. (Ambidextrous was not an option.) Hardyck &amp; Petrinovich (1977) report that about 10% of the population identifies as left-handed. Perhaps we want to verify that the incidence of left-handedness in our data replicates this.</p>
+<pre class="r"><code># Pseudocode:
+# 1. Get column of handedness values
+# 2. Calculate proportion of lefties
+  # 2a. Get number of lefties
+  # 2b. Get total number of subjects
+  # Calculate proportion: # lefties / # total
+# 3. Output a message to console describing whether the proportion is within &quot;expected bounds&quot;
+  # 3a. (arbitrarily for the purposes of this exercise) Define &quot;expected bounds&quot; as 10% +- 2.5%
+  # 3b. Relational statement to test: Proportion of lefties is within 10% +- 2.5%
+  # 3c. If relational statement is TRUE, output a relevant message
+  # 3d. If relational statement is FALSE, output a different, but still relevant, message
+
+# Here, we're also going to learn how to output custom messages to console. Oftentimes, if you're feeling lazy, you can manually check whether one value satisfies a condition or not. However, in many cases, you will need to do this in a more automated manner, so outputting a message to console contingent on a result can save you some time (and also be more fun).</code></pre>
+<pre class="r"><code># Pseudocode:
+# 1. Get column of handedness values
+head(hands1)</code></pre>
+<pre><code>## [1] &quot;Right&quot; &quot;Right&quot; &quot;Right&quot; &quot;Right&quot; &quot;Right&quot; &quot;Right&quot;</code></pre>
+<pre class="r"><code># 2. Calculate proportion of lefties
+  # 2a. Get number of lefties
+    # 2a1. Create a logical vector where value is TRUE if subject is left-handed and FALSE if subject is right-handed
+logical.lefties &lt;- hands1 == &quot;Left&quot;
+    # 2a2. Leverage the fact that logical vectors can behave as numeric vectors where TRUE is 1 and FALSE is 0
+    # 2a3. If left-handed is 1 and right-handed is 0 in the logical vector, then taking the sum of the logical vector (which would add 1 for every lefty) should yield a count of lefties in the dataset
+n.lefties1 &lt;- sum(logical.lefties)
+    # 2a4. There is another way to do this, using length() instead of sum()
+    # 2a5. Remember that logical indexing into a vector will yield a vector containing only the indexed values--thus, a vector whose length is equal to the number of indexed values
+n.lefties2 &lt;- length(hands1[logical.lefties])
+  # 2b. Get total number of subjects
+    # 2b1. The length of the whole dataset will be equal to the total n, because there is one row per subject
+n.total &lt;- length(hands1)
+  # Calculate proportion: # lefties / # total
+prop.lefties1 &lt;- n.lefties1 / n.total
+prop.lefties2 &lt;- n.lefties2 / n.total</code></pre>
+<pre class="r"><code># For sanity's sake, let's make sure that both proportions that we calculated using the different methods of getting n.lefties are equal. Then we can use either one if they're equal
+prop.lefties1 == prop.lefties2</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>Below, we are going to use an if-else statement to actual-code step #3 of our pseudocode. At its simplest, an <strong>if statement</strong> tells your computer:</p>
+<ul>
+<li>IF a condition is TRUE, do something</li>
+<li>OTHERWISE (if the condition is FALSE), don’t do anything</li>
+</ul>
+<p>Essentially, what we’re doing is setting up a decision tree in our code, where we are instructing R to follow a certain decision path based on whether certain conditions are TRUE or FALSE.</p>
+<p>The basic syntax of an if-statement is the following:</p>
+<pre class="r"><code># Start with a single piece of logical data (length 1, NOT a logical vector)
+pointless.condition &lt;- TRUE
+# That logical value passes into the IF statement, syntax below.
+# if (condition) {run this code}
+# The curly braces {} allow you to group multiple lines of code to be executed with the if statement. If you try to run multiple lines of code after an if statement without enclosing all relevant code in curly braces, it will NOT work.
+# What we've done here is set off the curly braces with line breaks, for readability.
+if (pointless.condition) {
+  # cat() is a function that will print any message to console. cat() can output the value of variables in the message.
+  cat(&quot;Duh.&quot;)
+}</code></pre>
+<pre><code>## Duh.</code></pre>
+<pre class="r"><code># You can write out un-evaluated conditions inside the if () parentheses too. R will evaluate the condition inside the parentheses and then pass that TRUE/FALSE to the if ().
+if (2 + 2 == 4) {
+  cat(&quot;We can do math!&quot;)
+}</code></pre>
+<pre><code>## We can do math!</code></pre>
+<pre class="r"><code># You'll see that if the  condition inside evaluates to FALSE, the enclosed code does NOT run.
+if (2 + 2 == 5) {
+  cat(&quot;We can do math!&quot;)
+}</code></pre>
+<p>Sometimes, you want an if statement that does a little more, like the following:</p>
+<ul>
+<li>IF a condition is TRUE, do something</li>
+<li>OTHERWISE (if the condition is FALSE), do something ELSE</li>
+</ul>
+<p>We can use <strong>if-else statements</strong> to execute some code if a condition is TRUE, and some different code if that condition is FALSE.</p>
+<pre class="r"><code># Basic syntax of an if-else statement:
+# if (condition) {run this code} else {run this other code}
+# Again, we set off the curly braces onto a new line for readability. The &quot;else&quot; has to be on the SAME line as the closing curly brace of the if () {}, though, otherwise R will not know that the &quot;else&quot; is connected to that &quot;if.&quot;
+if (2 + 2 == 4) {
+  cat(&quot;We can do math!&quot;)
+} else {
+  cat(&quot;What is math, anyway?&quot;)
+}</code></pre>
+<pre><code>## We can do math!</code></pre>
+<pre class="r"><code># See that here, the condition evaluates to FALSE, so the &quot;else&quot; code runs, NOT the &quot;if&quot; code.
+if (2 + 2 == 5) {
+  cat(&quot;We can do math!&quot;)
+} else {
+  cat(&quot;What is math, anyway?&quot;)
+}</code></pre>
+<pre><code>## What is math, anyway?</code></pre>
+<p>Now, to complete step #3 of our pseudocode, we’ll use the if-else statement that we just learned about.</p>
+<pre class="r"><code># 3. Output a message to console describing whether the proportion is within &quot;expected bounds&quot;
+  # 3a. (arbitrarily for the purposes of this exercise) Define &quot;expected bounds&quot; as 10% +- 2.5%
+    # 3a1. Create a vector of length 2, where each of the values is lower and upper bound respectively
+bounds &lt;- c(.1 - .025, .1 + .025)
+  # 3b. Relational statement to test: Proportion of lefties is within bounds
+    # 3b1. We can break this down:
+      # prop.lefties is greater than or equal to lower bound AND prop.lefties is less than or equal to upper bound
+  # 3c. If relational statement is TRUE, output a relevant message
+    # 3c1. We'll use cat() to print our custom message to console
+if (prop.lefties1 &gt;= bounds[1] &amp; prop.lefties1 &lt;= bounds[2]) {
+  cat(&quot;The proportion of lefties is &quot;, prop.lefties1, &quot; and is within the bounds of &quot;, bounds[1], &quot; and &quot;, bounds[2], &quot;. All is well.&quot;,
+      sep = &quot;&quot;)
+  # 3d. If relational statement is FALSE, output a different, but still relevant, message
+} else {
+    cat(&quot;The proportion of lefties is &quot;, prop.lefties1, &quot; and is OUTSIDE the bounds of &quot;, bounds[1], &quot; and &quot;, bounds[2], &quot;. Something is fishy!&quot;,
+        sep = &quot;&quot;)
+}</code></pre>
+<pre><code>## The proportion of lefties is 0.104 and is within the bounds of 0.075 and 0.125. All is well.</code></pre>
+<p>Okay, looks good here! But let’s make sure the code does what it’s supposed to when the proportion of lefties is actually outside the bounds. It’s critical to test that your code behaves as expected when your condition evaluates TRUE as well when it evaluates FALSE.</p>
+<p>We can test it with another simulated dataset (where the generating parameters are different…).</p>
+<pre class="r"><code># Abbreviated; copied code from before. without pseudocode annotations
+logical.lefties &lt;- hands2 == &quot;Left&quot;
+n.lefties1 &lt;- sum(logical.lefties)
+n.total &lt;- length(hands2)
+prop.lefties1 &lt;- n.lefties1 / n.total
+
+if (prop.lefties1 &gt;= bounds[1] &amp; prop.lefties1 &lt;= bounds[2]) {
+  cat(&quot;The proportion of lefties is &quot;, prop.lefties1, &quot; and is within the bounds of &quot;, bounds[1], &quot; and &quot;, bounds[2], &quot;. All is well.&quot;,
+      sep = &quot;&quot;)
+  # 3d. If relational statement is FALSE, output a different, but still relevant, message
+} else {
+    cat(&quot;The proportion of lefties is &quot;, prop.lefties1, &quot; and is OUTSIDE the bounds of &quot;, bounds[1], &quot; and &quot;, bounds[2], &quot;. Something is fishy!&quot;,
+        sep = &quot;&quot;)
+}</code></pre>
+<pre><code>## The proportion of lefties is 0.05 and is OUTSIDE the bounds of 0.075 and 0.125. Something is fishy!</code></pre>
+<p>The if-else statement will serve you for most of your if-statement needs. Sometimes you might need to execute different commands based on more than one condition, perhaps. Like “if x is true, do this, but if x is false and y is true, do this instead, and otherwise do a third thing”.</p>
+<p>Essentially, your condition might take a series of cases, and you might have different commands to run if the first case is true, the second case is true, etc. for any number of cases. Like in the following situation:</p>
+<pre class="r"><code># Data has been collected on students from different class years (freshman, sophomore, etc)
+# For each metric, z-score students' scores, but only relative to people from their class year
+# e.g. see below
+# If freshman, z-score based on all freshmen's scores
+# Otherwise if sophomore, z-score based on all sophomores' scores
+# Otherwise if junior, z-score based on all juniors' scores
+# Otherwise if senior, z-score based on all seniors' scores</code></pre>
+<p>To do this, you would use an if-else-if statement. An <strong>if-else-if statement</strong> will execute some code if a condition is TRUE, and some different code if that condition is FALSE AND another condition is TRUE, etc. for any number of conditions you need.</p>
+<p>The conditions of if-else-if statements are tested in order, so it’s important to be deliberate about the order of your conditions. In order for the nth condition of an if-else-if statement to be activated, all n-1 prior conditions HAVE TO BE FALSE.</p>
+<pre class="r"><code>x &lt;- TRUE
+y &lt;- FALSE
+z &lt;- TRUE
+
+# To demonstrate the assumptions of if-else-if statements:
+if (x) {
+  cat(&quot;x is true&quot;)
+} else if (y) {
+  cat(&quot;x is false and y is true&quot;)
+} else if (z) {
+  cat(&quot;x is false and y is false and z is true&quot;)
+}</code></pre>
+<pre><code>## x is true</code></pre>
+<pre class="r"><code># the above is functionally equivalent to:
+if (x) {
+  cat(&quot;x is true&quot;)
+}</code></pre>
+<pre><code>## x is true</code></pre>
+<pre class="r"><code>if (!x &amp; y) {
+  cat(&quot;x is false and y is true&quot;)
+}
+if(!x &amp; !y &amp; z) {
+  cat(&quot;x is false and y is false and z is true&quot;)
+}</code></pre>
+<pre class="r"><code># So because x was TRUE before, the FIRST case of the if-else-if statement was the one that evaluated, because once x was TRUE the statement DOES NOT CHECK ANY FURTHER CONDITIONS.
+# Further conditions of an if-else-if statement will only be evaluated IF THE PRECEDING CONDITION(S) ARE ALL FALSE.
+# So if we reassign some of these logical values:
+x &lt;- FALSE
+# now x and y are both FALSE, and z is TRUE. which code will output?
+if (x) {
+  cat(&quot;x is true&quot;)
+} else if (y) {
+  cat(&quot;x is false and y is true&quot;)
+} else if (z) {
+  cat(&quot;x is false and y is false and z is true&quot;)
+}</code></pre>
+<pre><code>## x is false and y is false and z is true</code></pre>
+<pre class="r"><code>y &lt;- TRUE
+# now x is FALSE, and y and z are both TRUE. which bit of code will actually output?
+if (x) {
+  cat(&quot;x is true&quot;)
+} else if (y) {
+  cat(&quot;x is false and y is true&quot;)
+} else if (z) {
+  cat(&quot;x is false and y is false and z is true&quot;)
+}</code></pre>
+<pre><code>## x is false and y is true</code></pre>
+<p>If your conditions are mutually exclusive, then it doesn’t matter which condition is tested first (because by definition only one condition can be true at a time), but if they aren’t, you should take care to order your conditions in a sensible way. Here’s a case where you might need to watch out for this (this has actually happened to me):</p>
+<pre class="r"><code># Say you have text data, where participants were assigned to write a sentence about one of three fruits: apples, grapes, and grapefruit.
+# If each piece of data is one string containing a sentence-long response, how might we try to code each data based on whether it was about apples, grapes, or grapefruit?
+
+# We might try the following:
+# if (&quot;apple&quot; is in the string) {code it as apple}
+# else if (&quot;grape&quot; is in the string) {code it as grape}
+# else if (&quot;grapefruit&quot; is in the string) {code it as grapefruit}
+
+# This seems sensible. BUT! Consider that every instance of the string &quot;grapefruit&quot; does in fact contain the string &quot;grape&quot;. This means that according to the current pseudocode, all grapefruit sentences will be mistakenly coded as grape, because the &quot;grape&quot; condition will be true AND the &quot;grapefruit&quot; condition will be true, and the &quot;grape&quot; condition code will get evaluated because it was listed FIRST.
+
+# To avoid this, you can reorder your else if conditions:
+# if (&quot;apple&quot; is in the string) {code it as apple}
+# else if (&quot;grapefruit&quot; is in the string) {code it as grapefruit}
+# else if (&quot;grape&quot; is in the string) {code it as grape}
+
+# This will work, because for grapefruit sentences, both &quot;grapefruit&quot; and &quot;grape&quot; conditions are true, and the desired condition for grapefruit sentences will evaluate FIRST. For grape sentences, only the &quot;grape&quot; condition is true, so the appropriate condition for grape sentences will evaluate no matter where it's placed in the if-else-if statement.</code></pre>
 </div>
 <div id="loops" class="section level2">
 <h2>Loops</h2>
+<p>The last basic piece of coding logic we’ll talk about is looping. A common task you’ll want to do with code is to run the same command on a series of different pieces of data. (This is what programming can be great for–automating! So you don’t have to do the same thing manually a bunch of times.) You can either do this by copying and pasting a command a bunch of times and then running them all, OR you can use loops!</p>
+<p>A <strong>loop</strong> is a method of specifying conditions under which to repeat a series of commands. You might want to write a loop to do something like the following:</p>
+<pre class="r"><code># If I have a file folder containing some number of CSV data files, all of which I want to import into R, I could use the function read.csv() to read each of these files in.
+
+# This could be by having individual commands, like:
+# read.csv(the first file)
+# read.csv(the second file)
+# read.csv(etc... till the last file)
+
+# If it's just two or three files, all right. But what if there are tens? Hundreds? We can't be typing each of these out. We CAN, however, loop this:
+# Specify a character vector where every element is a string containing the file name
+# Call read.csv() on every element in this vector in order
+# Soon we'll find out how to write this!</code></pre>
+<p>There are two main types of loops we’ll learn about here, each with its own best use case.</p>
+<p>A <strong>for loop</strong> repeats a command <em>for</em> a finite, predefined set of instances. For example, you might use this if you have a set number of subjects, and you want to run a set of commands on each subject’s data.</p>
+<p>A finite, predefined set of instances… don’t we have a data type that stores sequences of instances? YES! Vectors! For loops will allow you to run the same command on every value in a vector.</p>
+<p>We’ll learn below about the mechanics of for loops and how you can use them. Afterward, we’ll talk about the pros and cons of for loops, and situations where you <em>should</em> and <em>should not</em> use for loops.</p>
+<pre class="r"><code># Here's a toy example of a for loop using our good old friend cat() to print a new message to console for each element of a vector.
+values &lt;- 13:23
+for (this.value in values) {
+  cat(&quot;The current value is&quot;, this.value, &quot;\n&quot;)
+}</code></pre>
+<pre><code>## The current value is 13 
+## The current value is 14 
+## The current value is 15 
+## The current value is 16 
+## The current value is 17 
+## The current value is 18 
+## The current value is 19 
+## The current value is 20 
+## The current value is 21 
+## The current value is 22 
+## The current value is 23</code></pre>
+<pre class="r"><code># The variable letters is one of a pre-defined set of constants that comes standard with R that you can just call like any old variable even if you can't see it in your environment.
+
+for (this.letter in letters) {
+  cat(&quot;The current letter is&quot;, this.letter, &quot;\n&quot;)
+}</code></pre>
+<pre><code>## The current letter is a 
+## The current letter is b 
+## The current letter is c 
+## The current letter is d 
+## The current letter is e 
+## The current letter is f 
+## The current letter is g 
+## The current letter is h 
+## The current letter is i 
+## The current letter is j 
+## The current letter is k 
+## The current letter is l 
+## The current letter is m 
+## The current letter is n 
+## The current letter is o 
+## The current letter is p 
+## The current letter is q 
+## The current letter is r 
+## The current letter is s 
+## The current letter is t 
+## The current letter is u 
+## The current letter is v 
+## The current letter is w 
+## The current letter is x 
+## The current letter is y 
+## The current letter is z</code></pre>
+<pre class="r"><code>for (i in 1:length(letters)) {
+  cat(&quot;The &quot;, i, &quot;th letter is &quot;, letters[i], &quot;\n&quot;, sep = &quot;&quot;)
+}</code></pre>
+<pre><code>## The 1th letter is a
+## The 2th letter is b
+## The 3th letter is c
+## The 4th letter is d
+## The 5th letter is e
+## The 6th letter is f
+## The 7th letter is g
+## The 8th letter is h
+## The 9th letter is i
+## The 10th letter is j
+## The 11th letter is k
+## The 12th letter is l
+## The 13th letter is m
+## The 14th letter is n
+## The 15th letter is o
+## The 16th letter is p
+## The 17th letter is q
+## The 18th letter is r
+## The 19th letter is s
+## The 20th letter is t
+## The 21th letter is u
+## The 22th letter is v
+## The 23th letter is w
+## The 24th letter is x
+## The 25th letter is y
+## The 26th letter is z</code></pre>
+<pre class="r"><code># We can now capture info about each value's index in the vector and use that info.
+# As an additional exercise, let's see if we can make this toy function a little nicer.
+# I notice that using the heuristic &quot;append th to every number to make it ordinal&quot; doesn't work in every case. In particular, 1, 2, 3, 21, 22, and 23 all have an alternate ordinal suffix.
+# Can we clean up our code and get it to output the correct ordinal endings for some values in the vector?
+# Sure we can! This involves integrating info we learned before about if-else-if statements with the info we've just learned about for loops.
+
+for (i in 1:length(letters)) {
+  if (i != 11 &amp; i %% 10 == 1) {
+    cat(&quot;The &quot;, i, &quot;st letter is &quot;, letters[i], &quot;\n&quot;, sep = &quot;&quot;)
+  } else if (i != 12 &amp; i %% 10 == 2) {
+    cat(&quot;The &quot;, i, &quot;nd letter is &quot;, letters[i], &quot;\n&quot;, sep = &quot;&quot;)
+  } else if (i != 13 &amp; i %% 10 == 3) {
+    cat(&quot;The &quot;, i, &quot;rd letter is &quot;, letters[i], &quot;\n&quot;, sep = &quot;&quot;)
+  } else {
+    cat(&quot;The &quot;, i, &quot;th letter is &quot;, letters[i], &quot;\n&quot;, sep = &quot;&quot;)
+  }
+}</code></pre>
+<pre><code>## The 1st letter is a
+## The 2nd letter is b
+## The 3rd letter is c
+## The 4th letter is d
+## The 5th letter is e
+## The 6th letter is f
+## The 7th letter is g
+## The 8th letter is h
+## The 9th letter is i
+## The 10th letter is j
+## The 11th letter is k
+## The 12th letter is l
+## The 13th letter is m
+## The 14th letter is n
+## The 15th letter is o
+## The 16th letter is p
+## The 17th letter is q
+## The 18th letter is r
+## The 19th letter is s
+## The 20th letter is t
+## The 21st letter is u
+## The 22nd letter is v
+## The 23rd letter is w
+## The 24th letter is x
+## The 25th letter is y
+## The 26th letter is z</code></pre>
 </div>
 <div id="summary-of-best-practices" class="section level2">
 <h2>Summary of best practices</h2>
+</div>
+<div id="now-you-try" class="section level2">
+<h2>Now you try</h2>
+<p>In the below code chunk, initialize a variable and set its value to any integer of your choice. Initialize another variable, whose value will be TRUE if your integer is an ODD number, and FALSE if your integer is an EVEN number. Test your code using both positive and negative as well as both odd and even numbers.</p>
+<pre class="r"><code># Demonstrate that it works for a POSITIVE ODD number
+
+# Demonstrate that it works for a POSITIVE EVEN number
+
+# Demonstrate that it works for a NEGATIVE ODD number
+
+# Demonstrate that it works for a NEGATIVE EVEN number
+
+# Demonstrate that it works for ZERO</code></pre>
+<p>Hint (will show if you open the source code):</p>
 </div>
 <div id="attributions" class="section level2">
 <h2>Attributions</h2>
