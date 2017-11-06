@@ -754,7 +754,9 @@ The basic syntax of an if-statement is the following:
 # Start with a single piece of logical data (length 1, NOT a logical vector)
 pointless.condition <- TRUE
 # That logical value passes into the IF statement, syntax below.
+
 # if (condition) {run this code}
+
 # The curly braces {} allow you to group multiple lines of code to be executed with the if statement. If you try to run multiple lines of code after an if statement without enclosing all relevant code in curly braces, it will NOT work.
 # What we've done here is set off the curly braces with line breaks, for readability.
 if (pointless.condition) {
@@ -970,7 +972,20 @@ A finite, predefined set of instances... don't we have a data type that stores s
 
 We'll learn below about the mechanics of for loops and how you can use them. Afterward, we'll talk about the pros and cons of for loops, and situations where you *should* and *should not* use for loops.
 
+The basic syntax of a for loop is similar to that of an if statement.
+
+for (variable in vector) {run some code}
+
+The specification for a for loop contains two things:
+- the loop variable that will represent the CURRENT value inside the loop
+- the vector that contains all the values that will be looped over
+
+The loop variable can take any name (that makes sense to you). The loop variable is what you'll use as a placeholder in your loop code So, if I want to run code on the values 13, 14, 15 ... 23, I would specify the vector to be `c(13:23)`.
+
 ```{r}
+
+
+
 # Here's a toy example of a for loop using our good old friend cat() to print a new message to console for each element of a vector.
 values <- 13:23
 for (this.value in values) {
@@ -1025,6 +1040,17 @@ for (i in 1:length(letters)) {
   }
 }
 ```
+
+### When to use a for loop
+
+
+
+### When NOT to use a for loop
+For loops can be really great for repeating a function multiple times. However, for loops have some drawbacks:
+
+- They can be slow. For datasets of <1000 observations, this isn't so big of a deal. But if you are dealing with large datasets (lots of subjects, longitudinal observations, imaging data, etc), this will start to annoy you greatly when your code takes several minutes to run something small.
+- As soon as you start using a for loop to do more than a couple commands, you run the risk of introducing typos that you didn't expect.
+
 
 
 ## Summary of best practices
