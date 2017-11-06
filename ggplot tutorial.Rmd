@@ -7,7 +7,9 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-setwd("~/Documents/Columbia/Courses/Gelman_Communicating/Project")
+# Paul's path: setwd("~/Documents/Columbia/Courses/Gelman_Communicating/Project")
+# Monica's path:
+
 knitr::opts_chunk$set(echo = TRUE)
 require(ggplot2)
 ```
