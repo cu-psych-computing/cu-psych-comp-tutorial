@@ -1,0 +1,264 @@
+---
+title: "Programming Lesson Plan"
+author: "Monica Thieu"
+date: "November 26, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Intro
+
+Programming is telling a computer to do some action to some input info to get output info that you want. We will learn about this info that goes in and out, as well as the actions that transform info into what we want.
+
+# WHAT
+## Variables
+
++ a **variable** is how we store information in a way that the computer can operate on
+  + it has a **value:** the info itself
+  + and a **name:** the cue by which we call upon the info to the computer
+  
+It's sort of like algebra but not
+
+Variables can contain numbers. We *assign* a value to a name.
+```{r make some vars}
+# define variables, set them equal to numbers
+# only use the left facing arrow operator!!!
+
+```
+
+They can also contain other stuff (literally almost anything) but we'll talk about this later
+
+Variables live in the environment
+```{r explain what the environment is}
+
+```
+
+Information doesn't just exist in the environment--it can also be printed to console
+```{r console is a special place}
+# You cannot access anything that was not saved to a variable!
+# Console is great for checking stuff out
+# But you have to remember to save stuff to vars if you wanna manipulate it in any way
+
+```
+
+You can assign the output of functions to variables. Should this come later?
+```{r}
+
+```
+
+You can use variable names in function calls just as you would the value stored inside
+```{r}
+
+```
+
+You can overwrite the values of variables
+```{r}
+# With the values of other variables
+# OR of the current value of the variable
+```
+
+
+Variable naming has to obey certain rules
+```{r var naming dos and donts}
+# Name must start with a letter, can only contain certain permissible characters (a-z, 0-9, ., _)
+# Try some stuff that works and some stuff that returns errors
+# Name variables with the best combo of informative and concise
+```
+
+## Data types
+### Numeric data
+Literally... any (real) number
+
+```{r}
+# set some vars to numbers, integral and fractional
+# do some arithmetic on em
+```
+
+#### Arithmetic operators
+
+Here are (some of) the things you can do with numeric data
+```{r}
+# + - * / ^ %% %/%
+# PEMDAS 4 lyfe
+```
+
+
+### Logical data
+It's like numbers, but represents `TRUE` and `FALSE`. Can be mathed on as if it were numeric; TRUE is 1 and FALSE is 0.
+```{r}
+# Do math on logical data
+```
+
+Also you can use logical data as informational flags. TO BE REVISITED IN LATER SECTIONS
+
+### Character data
+Strings on strings on strings man
+
+```{r}
+# Set a variable to a string
+# Also discuss the situations in which you might encounter character data
+```
+
+```{r}
+# Do some functions that operate on character data
+# Do math on it, it won't work
+```
+
+
+
+## Data structures
+With all the data types we just talked about... just with more data now yee
+
+### Vectors
+A sequence of pieces of information that are **all the same data type** (for the computer) and meaningfully related (for you). Has length (can consider as one column). So powerful!
+
+```{r}
+# the function of the day is c()
+```
+
+The individual pieces of data inside one vector are called **elements.**
+
+Vectors can be any of the data types
+```{r}
+# Demonstrate said
+```
+
+
+You can do two types of operations on vectors
+#### Vectorized operations (n element input, n element output)
+This takes a thing and does it individually to each element in your vector, returning an analogous vector where the nth element of the output vector is the result of performing the operation on the nth element of the input vector
+If you wanna do one thing to a bunch of data this is the way to do it fast
+
+```{r}
+# Basically all the arithmetic operations are vectorized
+```
+
+#### Summarizing operations (n element input, 1 element output)
+This does a thing which requires multiple pieces of data and returns one piece of data.
+
+```{r}
+# Like, mean() for example. Stats operations are typically of this type.
+```
+
+#### Indexing into vectors
+
+Numerical indexing is great. actual numerical addresses
+```{r}
+# With one index or a vector of indices
+# Or minus indexing
+```
+
+Logical indexing. Use a logical vector of equal length to your vector of interest; all TRUE values will be indexed and all FALSE values will not be
+```{r}
+# Demonstrate it with a straight up logical vector
+# But this will be better later
+```
+
+
+### Data frames
+This is the data structure where it happens! A bunch of vectors of equal length stuck together in a meaningful way. Has rows and columns. Each column is a vector, containing all the observations of a particular meaningful grouping. Each row is the nth element across vectors, containing one complete observation from all the vectors. Each observation can be a subject, a trial, a group, whatever--any one meaningful something.
+
+```{r}
+# Get an example dataframe somehow. Maybe make it by stitching vectors together
+```
+
+General behaviors of data frame
+```{r}
+# Each column behaves as a vector
+# But each row does NOT. each row behaves as a dataframe of nrow 1
+# We can index using numerical bracket indexing
+# We can also index using colnames and $
+```
+
+###Non-data data (sorta fits here)
+When you need to pad shit out. V useful in data frames when you are missing observations
+
+```{r}
+# NA means MISSING data
+# Show em how it do
+
+```
+
+
+# HOW
+Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things and doing stuff
+
+## Pseudocode
+It's so important!!! Be able to talk through what you want to do in plain English before you actually try to code it. This is how you will actually figure out what functions you need to do the things you want
+
+```{r}
+# Just a whole example pseudocode
+```
+
+## Functions
+Should this go here?
+
+Anatomy of a function:
+```{r}
+# Output, function name, argument names, argument inputs
+# Don't forget to assign function outputs to a variable if you want to use them later
+```
+
+Things to know:
++ name thy args
++ when in doubt, search the help!
++ Googling for help is great too
++ Be precise when asking for help from a human
+
+## Relational operators
+Most of the time, when you want to do things in R, you want to do them in some conditions but not others. Relational operators are the first key to making this happen
+
+Get into an example
+```{r}
+# First pseudocode what you want to do (get example from other markdown)
+# Then do it, observing that you need to use relational statements
+# Relational statements: == != < > <= >= %in%
+# Relational operators are vectorized
+```
+
+Logical indexing is the best, and a frequent use case of relational statements
+```{r}
+# Show how it works
+```
+
+## Logical operators
+You can combine TRUEs and FALSEs of relational operators and other things together using Boolean logical operators
+
+```{r}
+# ! & | xor()
+# Relational operators also obey order of operations re: parentheses ()
+```
+
+Other useful functions will also output TRUE or FALSE, so you can use these similarly to relational statements to generate logical output based on the content of some data
+
+```{r}
+# is.na() for example
+```
+
+
+## Conditional statements
+When you want to evaluate whole blocks of code only when certain things are true
+Do this with flowcharts on a whiteboard if you can
+
+All of this (if statements / if-else statements / if-elseif statements) can be done with one big code exercise example. See what was written in other markdown
+
+```{r}
+# But be mindful that if-elseif statements evaluate in ORDER
+```
+
+## (For) loops
+For some cases where you need to do the same operation to each element in a list
+
+Anatomy of a for loop
+```{r}
+# You can advance over indices
+# Or over the actual elements of a vector
+```
+
+```{r}
+# Sometimes you have fencepost conditions; this is a great time to use for loops and not something like a vectorized function
+```
+

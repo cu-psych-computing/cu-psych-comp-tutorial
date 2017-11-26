@@ -1,0 +1,36 @@
+---
+title: "Programming Challenge"
+author: "Monica Thieu"
+date: "November 26, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+# Don't worry about what's in here
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# In this chunk:
+# In the below code chunk, initialize a variable and set its value to any integer of your choice.
+# Initialize another variable, which will "check" the value of your first integer variable using some code, and have this variable's value be TRUE if your integer is an ODD number, and FALSE if your integer is an EVEN number.
+# Test your code using both positive and negative as well as both odd and even numbers, and zero.
+```
+
+```{r}
+# Some string manipulation task
+```
+
+
+```{r}
+# Some logical indexing/if-else task
+```
+
+
+```{r}
+# In this chunk:
+# Write code to generate a vector of the first n Fibonacci numbers, where n is any number greater than or equal to 2.
+# Demonstrate that you can set any value of n at the beginning of your code and output the appropriate n-length Fibonacci vector, without needing to change any other code you wrote.
+# Test your code with at least 3 values of n.
+```
+
