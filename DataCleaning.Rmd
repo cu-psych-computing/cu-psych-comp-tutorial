@@ -20,6 +20,7 @@ name <- c("Monica", "Michelle", "Paul", "Ellen")
 
 year <- c(1, 1, 4, 3)
 
+# MT: do we need to clarify that not specifying colnames when initializing using data.frame() will make the colnames be the varnames from the global env? I think I want to teach people to explicitly name their args whenever possible, though sometimes it's obvious enough that you don't have to
 dataframe <- data.frame(name, score, year)
 
 ```
@@ -27,7 +28,7 @@ dataframe <- data.frame(name, score, year)
 
 ## Reading data into R
 
-It's also easy to introduce errors this way, and with a lot of data it would get tedious. Most of the time, you'll be reading data from an external file, or opening up an exiting dataset in R. Once you find the location of your files, what you do next will depend on the file format.
+It's also easy to introduce errors this way, and with a lot of data it would get tedious. Most of the time, you'll be reading data from an external file, or opening up an existing dataset in R. Once you find the location of your files, what you do next will depend on the file format.
 
 ```{r}
 
@@ -52,10 +53,10 @@ mydata <- read.table("Study1.csv", header=TRUE, sep=",")
 # better!
 
 # Other options include:
-# read.csv, just like read.table but with better defaults fo .csv
-# read.delim, for when you have a seperator that's not standard
+# read.csv, just like read.table but with better defaults for .csv
+# read.delim, for when you have a separator that's not standard
 
-## For getting data that's already in R
+## For getting data that's already in R-format
 
 load("Study1.rda")
 
@@ -77,14 +78,17 @@ Now you have data, time to get some results! But wait! Are you sure this data is
 Start by checking that you have the correct number of rows and columns in your data frame. You can do this by looking at the Environment window, or by asking R.
 
 ```{r}
+# By "correct" do you mean "expected"?
 
 # Number of rows and number of columns
 nrow(mydata)
 ncol(mydata)
+
+# Names of columns
 names(mydata)
 
 # look at the first few rows
-head(mydata,10)
+head(mydata, 10)
 
 ```
 
@@ -93,8 +97,9 @@ head(mydata,10)
 Ok, looks good. But what is that fifth variable? What does that even mean? Luckily, this is your study and you know that it's a personality questionnaire measuring neuroticism. Let's fix that.
 
 ```{r}
-
 # These do the same thing, but the second one is more explanatory, and better for reproducibility
+# MT: Maybe only show people how to do it the second way then?
+
 names(mydata)[5] <- 'Neuroticism'
 names(mydata)[names(mydata) == 'Personality'] <- 'Neuroticism'
 names(mydata)
@@ -111,7 +116,6 @@ is.na(mydata)
 # that's a lot to go through, just tell me if there are any
 sum(is.na(mydata))
 # that's better, now I know there's 1 missing value
-
 
 ```
 
@@ -138,12 +142,16 @@ table(mydata$Sex)
 ```
 This looks like another data entry problem. We have a third category that should really be another case of "Female".We can fix all of these at once, but sometimes messing with factors is more complicated than numeric variables.
 
+MT: In my experience it's best to ALWAYS read CSVs with read.csv(stringsAsFactors = FALSE). Since factor levels can be such a bitch, I find that it's safer to only render columns as factor AFTER you've cleaned problems with factor level naming in the character vector. and also, can get around another data cleaning issue where numeric cols render as factor because there's one random character element in there. so this might change a couple of things you do here?
+
 ```{r}
 
+# MT: I'm fine with this, esp cause the mutate alternative involves using an ifelse() call. But should we use dplyr::mutate?
 mydata$Sex[mydata$Sex=="Femle"] <- "Female"
 
 table(mydata$Sex)
 
+# MT: wouldn't have to use droplevels() (which is v useful when you do need it) if the data were loaded in with StringsAsFactors = FALSE and it wouldn't have been factor type to begin with
 mydata$Sex <- droplevels(mydata$Sex)
 
 ```
@@ -165,7 +173,7 @@ Now that we've gone through and cleaned up the problems, you can think ahead to 
 
 ### Recoding variables
 
-Sometimes we want to treat categorical variables as factors, but sometimes we want to pretend their numeric (as in a regression, when binary variables can be coded as 0 and 1). Right now, Condition is coded as a binary numeric variable, but we'd like to use it as a factor, and it would be good if the values were actually labelled. However, rather than overwriting the variable, let's make a second one.
+Sometimes we want to treat categorical variables as factors, but sometimes we want to pretend they're numeric (as in a regression, when binary variables can be coded as 0 and 1). Right now, Condition is coded as a binary numeric variable, but we'd like to use it as a factor, and it would be good if the values were actually labelled. However, rather than overwriting the variable, let's make a second one.
 
 ```{r}
 
@@ -173,6 +181,8 @@ Sometimes we want to treat categorical variables as factors, but sometimes we wa
 mydata$ConditionF <- as.factor(mydata$Condition)
 
 # Specify labels for the factor levels
+# MT: Should we use plyr::mapvalues here? Doesn't require coercing to factor first! Also... just better?
+# mapvalues(mydata$ConditionF, from = c(0, 1), to = c("Control", "Treatment"))
 mydata$ConditionF <- factor(mydata$ConditionF, levels=c("0", "1"), labels=c("Control", "Treatment"))
 
 ```
@@ -184,12 +194,16 @@ You may also want to recalculate or rescale some variables. For example, we can 
 ```{r}
 
 # calculate Z scores
+# MT: You can use the scale() function to do this. like: scale(mydata$Neuroticism, center = TRUE, scale = TRUE). center = TRUE mean-centers the data, and scale = TRUE scales by standard dev if center = TRUE and the data was mean-centered.
+
 mydata$NeuroticismZ <- (mydata$Neuroticism - mean(mydata$Neuroticism)) / sd(mydata$Neuroticism)
 hist(mydata$NeuroticismZ)
 
 # one way to average multiple columns
+# Food for thought: Why can't we just use the mean() function here? (added by MT)
 mydata$Average <- rowMeans(mydata[c("T1", "T2", "T3", "T4")])
 # another way
+# MT: I think let's not show them this way because hard-coding the n to divide by is less reproducible
 mydata$Average <- (mydata$T1 + mydata$T2 + mydata$T3 + mydata$T4)/4
 
 ```
@@ -211,7 +225,7 @@ mydata_Wide <- spread(mydata_Long, key="Time", value="Score")
 
 ## Saving your work
 
-Once you've created a data clearning script like this one, you'll have a record of all the edits you've made on the raw data, and you can recreate your cleaned data just by running script again. However, it's often easier to save your cleaned data as it's own file (never overwrite the raw data), so when you come back to do analysis you don't have to bother with all the cleaning steps. 
+Once you've created a data cleaning script like this one, you'll have a record of all the edits you've made on the raw data, and you can recreate your cleaned data just by running the script again. However, it's often easier to save your cleaned data as its own file **(never overwrite the raw data)**, so when you come back to do analysis you don't have to bother with all the cleaning steps. 
 
 You can always save data frames as a .csv for easy sharing and viewing outside of R.
 
@@ -221,7 +235,7 @@ write.csv(mydata, file="Study1_Clean.csv")
 
 ```
 
-However, you can also save in an R format that lets you bundle multiple objects together. For example, you might want to have a long and wide format, or one dataframe with all the data and one with just subject information. Saving as a .rda file allows you to save multiple objects at once for easy loading into R. You can also have the outputs of statistical models saved in these, along with their data.
+However, you can also save in an R format that lets you save multiple variables/objects in the same file. For example, you might want to have a long and wide format, or one dataframe with all the data and one with just subject information. Saving as a .rda file allows you to save multiple objects at once for easy loading into R. You can also have the outputs of statistical models saved in these, along with their data.
 
 ```{r}
 
@@ -274,13 +288,3 @@ Now it's your turn to try opening and cleaning a new data set. There are issues 
 Congratulations! You've now cleaned some data in R and you're ready to start the real analysis. This tutorial only went over some basic cleaning steps, as you work with your own data, you may find yourself needing other tools. We used functions that come with the basic level of R, but there are many specialized packages that can be used for cleaning and manipulating data structures.
 
 Put more here about dplyr, tidyverse, etc.
-
-
-
-
-
-
-
-
-
-```
