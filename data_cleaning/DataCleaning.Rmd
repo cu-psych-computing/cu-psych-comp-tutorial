@@ -2,11 +2,18 @@
 title: "Data Cleaning Draft"
 author: "Ellen Tedeschi"
 date: "October 21, 2017"
-output: html_document
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 5
 ---
+## Goals of this lesson
 
 
-## Entering data directly
+## Getting your Data into R
+
+### Entering data directly
 
 In some cases, you may want to enter data directly into R. This is easy with a small number of cases.
 
@@ -26,7 +33,7 @@ dataframe <- data.frame(name, score, year)
 ```
 
 
-## Reading data into R
+### Reading data into R
 
 It's also easy to introduce errors this way, and with a lot of data it would get tedious. Most of the time, you'll be reading data from an external file, or opening up an existing dataset in R. Once you find the location of your files, what you do next will depend on the file format.
 
@@ -245,7 +252,7 @@ save(mydata_Long, mydata_Wide, file="Study1_clean.rda")
 
 ```
 
-# Your turn!
+## Your turn!
 
 Now it's your turn to try opening and cleaning a new data set. There are issues with the raw data, so make sure to inspect the variables and make changes when needed. Below is a rough outline you can follow, in the end, you should have a file in the long format with XX rows and XX columns.
 
@@ -287,4 +294,3 @@ Now it's your turn to try opening and cleaning a new data set. There are issues 
 
 Congratulations! You've now cleaned some data in R and you're ready to start the real analysis. This tutorial only went over some basic cleaning steps, as you work with your own data, you may find yourself needing other tools. We used functions that come with the basic level of R, but there are many specialized packages that can be used for cleaning and manipulating data structures.
 
-Put more here about dplyr, tidyverse, etc.
