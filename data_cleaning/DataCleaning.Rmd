@@ -37,17 +37,19 @@ dataframe <- data.frame(name, score, year)
 
 It's also easy to introduce errors this way, and with a lot of data it would get tedious. Most of the time, you'll be reading data from an external file, or opening up an existing dataset in R. Once you find the location of your files, what you do next will depend on the file format.
 
+#### What's your working directory and where is the file you want?
 ```{r}
 
-# What's your working directory and where is the file you want?
-
-#getwd()
+getwd()
 
 list.files()
 
-#setwd(#Set you working directory) 
+setwd("~/Desktop/Gelman R Project/data_cleaning") 
 
-# What kind of file do you have?
+```
+
+#### What kind of file do you have?
+```{r}
 
 ## For .txt, .csv and tab-deliminated files
 
@@ -74,10 +76,10 @@ load("Study1.rda")
 
 #read.spss("<Path to file>")
 #read.dta("<Path to file>")
-# remember, all these may take more arguments to get your data exactly the way you want
-# Use the help functions to get more details
 
 ```
+
+Remember, all of these commands can have arguments that will help R make sense of your data. To find out what arguments are possible, put a question mark in front of the name of the function (e.g. ?read.table). For options not listed here, Google "<your data type> into R" and you should find instructions.
 
 ## Inspecting your data
 
@@ -85,6 +87,7 @@ Now you have data, time to get some results! But wait! Are you sure this data is
 
 Start by checking that you have the expected number of rows and columns in your data frame. You can do this by looking at the Environment window, or by asking R.
 
+### How is your data frame structured?
 ```{r}
 
 # Number of rows and number of columns
@@ -112,14 +115,12 @@ names(mydata)
 
 ### Check for missing data
 
-On problem you may have is missing data. Sometimes this is something you already know about, but you should check your data frame anyway to make sure nothing got missed in a data entry error.
+On problem you may have is missing data. Sometimes this is something you already know about, but you should check your data frame anyway to make sure nothing got missed in a data entry error. For small datasets, you can do this visually, but for larger ones you can ask R.
 
 ```{r}
 
-is.na(mydata)
-# that's a lot to go through, just tell me if there are any
-sum(is.na(mydata))
-# that's better, now I know there's 1 missing value
+# This command asks for rows that are not complete. 
+mydata[!complete.cases(mydata),]
 
 ```
 
