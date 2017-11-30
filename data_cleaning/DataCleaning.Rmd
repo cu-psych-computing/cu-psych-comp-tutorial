@@ -11,6 +11,7 @@ output:
 ## Goals of this lesson
 
 
+
 ## Getting your Data into R
 
 ### Entering data directly
@@ -27,7 +28,6 @@ name <- c("Monica", "Michelle", "Paul", "Ellen")
 
 year <- c(1, 1, 4, 3)
 
-# MT: do we need to clarify that not specifying colnames when initializing using data.frame() will make the colnames be the varnames from the global env? I think I want to teach people to explicitly name their args whenever possible, though sometimes it's obvious enough that you don't have to
 dataframe <- data.frame(name, score, year)
 
 ```
@@ -41,7 +41,7 @@ It's also easy to introduce errors this way, and with a lot of data it would get
 
 # What's your working directory and where is the file you want?
 
-getwd()
+#getwd()
 
 list.files()
 
@@ -52,12 +52,13 @@ list.files()
 ## For .txt, .csv and tab-deliminated files
 
 ?read.table
- 
-mydata <- read.table("Study1.csv")
-# well that didn't work...
 
-mydata <- read.table("Study1.csv", header=TRUE, sep=",")
-# better!
+# Try this one, and then look at the data
+mydata <- read.table("Study1.csv")
+
+# Add arguments to help R figure out how your data is organized
+mydata <- read.table("Study1.csv", header=TRUE, sep=",", stringsAsFactors=FALSE)
+
 
 # Other options include:
 # read.csv, just like read.table but with better defaults for .csv
@@ -68,11 +69,11 @@ mydata <- read.table("Study1.csv", header=TRUE, sep=",")
 load("Study1.rda")
 
 ## For getting data from another program:
-install.packages("foreign")
-library(foreign)
+#install.packages("foreign")
+#library(foreign)
 
-read.spss("<Path to file>")
-read.dta("<Path to file>")
+#read.spss("<Path to file>")
+#read.dta("<Path to file>")
 # remember, all these may take more arguments to get your data exactly the way you want
 # Use the help functions to get more details
 
@@ -82,10 +83,9 @@ read.dta("<Path to file>")
 
 Now you have data, time to get some results! But wait! Are you sure this data is ok? Doing some basic steps to inspect your data now can save you lots of headaches later, and R makes it really easy.
 
-Start by checking that you have the correct number of rows and columns in your data frame. You can do this by looking at the Environment window, or by asking R.
+Start by checking that you have the expected number of rows and columns in your data frame. You can do this by looking at the Environment window, or by asking R.
 
 ```{r}
-# By "correct" do you mean "expected"?
 
 # Number of rows and number of columns
 nrow(mydata)
@@ -104,10 +104,7 @@ head(mydata, 10)
 Ok, looks good. But what is that fifth variable? What does that even mean? Luckily, this is your study and you know that it's a personality questionnaire measuring neuroticism. Let's fix that.
 
 ```{r}
-# These do the same thing, but the second one is more explanatory, and better for reproducibility
-# MT: Maybe only show people how to do it the second way then?
 
-names(mydata)[5] <- 'Neuroticism'
 names(mydata)[names(mydata) == 'Personality'] <- 'Neuroticism'
 names(mydata)
 
@@ -130,9 +127,6 @@ In this case, the missing value is the Age value in row 39. You know you have th
 
 ```{r}
 
-# Again, these do the same thing, but the second one is more reliable and easier to interpret.
-mydata[39, 2] <- 30
-
 mydata$Age[mydata$ID==39] <- 30
 
 ```
@@ -143,23 +137,18 @@ To look at some of the other variables, let's use the table function. This works
 ```{r}
 
 table(mydata$Condition)
-# looks good
+
 table(mydata$Sex)
 
 ```
-This looks like another data entry problem. We have a third category that should really be another case of "Female".We can fix all of these at once, but sometimes messing with factors is more complicated than numeric variables.
 
-MT: In my experience it's best to ALWAYS read CSVs with read.csv(stringsAsFactors = FALSE). Since factor levels can be such a bitch, I find that it's safer to only render columns as factor AFTER you've cleaned problems with factor level naming in the character vector. and also, can get around another data cleaning issue where numeric cols render as factor because there's one random character element in there. so this might change a couple of things you do here?
+When we look at the table for the Sex variable, we see another data entry problem. We have a third category that should really be another case of "Female".We can fix all of these at once, but sometimes messing with factors is more complicated than numeric variables.
 
 ```{r}
 
-# MT: I'm fine with this, esp cause the mutate alternative involves using an ifelse() call. But should we use dplyr::mutate?
 mydata$Sex[mydata$Sex=="Femle"] <- "Female"
 
 table(mydata$Sex)
-
-# MT: wouldn't have to use droplevels() (which is v useful when you do need it) if the data were loaded in with StringsAsFactors = FALSE and it wouldn't have been factor type to begin with
-mydata$Sex <- droplevels(mydata$Sex)
 
 ```
 
@@ -180,38 +169,28 @@ Now that we've gone through and cleaned up the problems, you can think ahead to 
 
 ### Recoding variables
 
-Sometimes we want to treat categorical variables as factors, but sometimes we want to pretend they're numeric (as in a regression, when binary variables can be coded as 0 and 1). Right now, Condition is coded as a binary numeric variable, but we'd like to use it as a factor, and it would be good if the values were actually labelled. However, rather than overwriting the variable, let's make a second one.
+Sometimes we want to treat categorical variables as factors, but sometimes we want to pretend they're numeric (as in a regression, when binary variables can be coded as 0 and 1). Right now, Condition is coded as a binary numeric variable, but that's not very informative, so you'd rather have the values be descriptive. Here, the function mapvalues from the plyr package is really useful. We'll create a second variable instead of overwriting Condition
 
 ```{r}
 
-# Transform into factor
-mydata$ConditionF <- as.factor(mydata$Condition)
-
-# Specify labels for the factor levels
-# MT: Should we use plyr::mapvalues here? Doesn't require coercing to factor first! Also... just better?
-# mapvalues(mydata$ConditionF, from = c(0, 1), to = c("Control", "Treatment"))
-mydata$ConditionF <- factor(mydata$ConditionF, levels=c("0", "1"), labels=c("Control", "Treatment"))
+library(plyr)
+# Transform into factor with labels
+mydata$ConditionF <- mapvalues(mydata$Condition, from = c("0", "1"), to = c("Control", "Treatment"))
 
 ```
 
 ### Calculating new variables
 
-You may also want to recalculate or rescale some variables. For example, we can turn Neuroticism into a Z score, or calculate an average response across the four time points.
+You may also want to recalculate or rescale some variables. For example, we can turn Neuroticism into a Z score, or calculate an average response across the four time points. For Z scores, you can use the scale() function. You can also use this to just mean-center the data.
 
 ```{r}
 
 # calculate Z scores
-# MT: You can use the scale() function to do this. like: scale(mydata$Neuroticism, center = TRUE, scale = TRUE). center = TRUE mean-centers the data, and scale = TRUE scales by standard dev if center = TRUE and the data was mean-centered.
-
-mydata$NeuroticismZ <- (mydata$Neuroticism - mean(mydata$Neuroticism)) / sd(mydata$Neuroticism)
+mydata$NeuroticismZ <- scale(mydata$Neuroticism, center = TRUE, scale = TRUE)
 hist(mydata$NeuroticismZ)
 
 # one way to average multiple columns
-# Food for thought: Why can't we just use the mean() function here? (added by MT)
 mydata$Average <- rowMeans(mydata[c("T1", "T2", "T3", "T4")])
-# another way
-# MT: I think let's not show them this way because hard-coding the n to divide by is less reproducible
-mydata$Average <- (mydata$T1 + mydata$T2 + mydata$T3 + mydata$T4)/4
 
 ```
 
