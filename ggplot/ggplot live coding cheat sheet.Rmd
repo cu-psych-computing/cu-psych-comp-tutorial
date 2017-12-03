@@ -1,0 +1,240 @@
+---
+title: "ggplot Live Coding Cheat Sheet"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## 1: First Install/load ggplot2
+
+install.packages('ggplot2')
+```{r}
+#load the package
+require(ggplot2)
+```
+
+
+
+## 2: Load in Sample Data (NHANES)
+
+Region  -  Geographic region in the USA: Northeast (1), Midwest (2), South (3), and West (4)
+
+Sex     -  Biological sex: Male (1), Female (2)
+
+Age     -  Age measured in months
+
+Urban   -  Residential population density: Metropolital Area (1), Other (2)
+
+Weight  -  Weight in pounds
+
+Height  -  Height in inches
+
+BMI     -  BMI, measured in kg/(m^2)
+
+```{r}
+nhanes <- read.csv("NHANES1990.csv", stringsAsFactors = F)
+nhanes$Age <- nhanes$Age/12
+View(nhanes)
+```
+
+## 3: Scatter Plot & Basic ggplot Syntax
+
+-Show `ggplot()` command usage including saving to a variable with `a <- ggplot()`
+
+-Then describe the general `ggplot(data, aes(x = [x axis variable], y = [y axis variable])` format
+    - talk about how the x and y variables are always specified in this `aes()` subfunction
+
+Run this line of code 
+--show that axes are set up the way we'd expect, and seem to have sensible values
+--ask people **why nothing appears on the graph**? **where's the data?**
+```{r}
+ggplot(nhanes, aes(x = Age, y = Weight))
+```
+
+Explain that we need to tell `ggplot()` what kind of graphic to put on the axis
+
+A lot of the time, the syntax is `geom_[something]`
+
+So lets do scatter with `geom_point()` first: 
+
+```{r}
+ggplot(nhanes, aes(x = Age, y = Weight)) + geom_point()
+
+# Wow, lots of data, maybe show the students how to make the points smaller to see better
+
+ggplot(nhanes, aes(x = Age, y = Weight)) + geom_point(size = .1)
+
+# Remind students it's a good habbit to save your plots to objects, not just draw them! 
+
+a <- ggplot(nhanes, aes(x = Age, y = Weight)) + geom_point(size = .1)
+a
+
+```
+
+## 4: Dot Plot Organized by Grouping Factor
+
+**Question for students**
+what if we want to look at distribution of weights by region in the nhanes data
+
+Explain that with ggplot, if x is a factor (discrete, not continuous) we can plot dots as a function of the fact
+
+```{r}
+b <- ggplot(nhanes, aes(x = Region, y = Weight)) + geom_point()
+b
+
+# Woah! So much data, hard to see anything, let's use geom_jitter() with size = .05, width = .1 instead
+
+b <- ggplot(nhanes, aes(x = Region, y = Weight)) + geom_jitter(size = .05, width = .1)
+b
+```
+
+## 5: Summary Plots
+
+Plotting data points is all well and good, but what if we want to use our plots to summarize distributions?
+
+```{r}
+c <- ggplot(nhanes, aes(x = Region, y = Weight, group = Region)) + stat_summary(fun.y= "mean", geom = "point")
+  #stat_summary(fun.data = "mean") 
+c
+
+
+# bar plots if you must, and teaching that you can plot overlapping elements -- IN ORDER
+d <- ggplot(nhanes, aes(x = Region, y = Weight, group = Region)) + stat_summary(fun.y= "mean", geom = "bar") +
+  stat_summary(fun.y= "median", geom = "point")
+d
+
+e <- ggplot(nhanes, aes(x = Region, y = Weight, group = Region)) + stat_summary(fun.y= "mean", geom = "bar") +
+  geom_point()
+e
+
+# People might want to know how to add a confidence interval
+f <- ggplot(nhanes, aes(x = Region, y = Weight, group = Region)) + stat_summary(fun.data = "mean_cl_boot", geom = "pointrange",fun.args=list(conf.int=.95))
+f
+```
+
+## 6: Fitting Lines To The Data
+
+Let's say we think there might be a linear relationship between height and weight
+
+Tell students we can use `geom_smooth` for this and `method = 'lm` specifically for a linear model
+Also that `level = .95` can specify confidence interval about the estimate at each x value
+
+```{r}
+g <- ggplot(nhanes, aes(x = Height, y = Weight)) + geom_point() + geom_smooth(method = 'lm')
+g
+```
+Hmm, this actually looks like it's giving us some pretty bad predictions. We're not going to get into the stats of this now, but we can also plot using `auto` which is a mix of models, and might be a bit smarter
+
+
+
+
+```{r}
+h <- ggplot(nhanes, aes(x = Height, y = Weight)) + geom_point() + geom_smooth(method = 'auto', level = .99)
+h
+```
+
+## 7: Titles, Axis Labels
+
+
+Show students that the `labs()` command can be added to ggplot with different arguments, lke `x`, `y`, or `title` to make the plots clearer
+
+```{r}
+b + labs(x = 'Region of US', y = 'Weight (lbs)', title = 'Weight by Region')
+```
+
+Note, if we want to change labels for FACTORS, not just axes, it's easier to do that using the tidyverse 
+
+```{r}
+require(tidyverse)
+
+nhanes$Region <- recode(nhanes$Region, '1' = 'Northeast', '2' = 'Midwest', '3' = 'South', '4' = 'West')
+b <- ggplot(nhanes, aes(x = Region, y = Weight)) + geom_point() + 
+  labs(x = 'Region of US', y = 'Weight (lbs)', title = 'Weight by Region')
+b
+```
+
+## 7: Facetting
+
+Talk about how its useful to have several plots in a panel sometimes, not just one. 
+
+So for this data set, say we want to plot relationships between height and weight, but by region
+
+We can do this with `facet_wrap('Region')`
+
+```{r}
+j <- ggplot(nhanes, aes(x = Height, y = Weight)) + geom_point() + geom_smooth(method = 'lm') + facet_wrap('Region')
+j
+```
+
+We can even do multiple factors
+
+```{r}
+#Recode Urban
+
+nhanes$Urban <- recode(nhanes$Urban, '1' = 'Metro Area', '2' = 'Non-Metro Area')
+
+#Optional to explain the scales = 'free_x' part
+
+j <- ggplot(nhanes, aes(x = Height, y = Weight)) + geom_point() + geom_smooth(method = 'lm') + facet_wrap(c('Region', 'Urban'), scales = 'free_x')
+j
+```
+
+## 8: Color
+
+Tell students that we can color either continuously or discretely, depending on how a variable is represented in r
+
+Be clear in explaining that we put `col = Height` into the `aes()` function because it's a grouping factor
+
+Continous Example
+```{r}
+b <- ggplot(nhanes, aes(x = Region, y = Weight, col = Height)) + geom_point() + 
+  labs(x = 'Region of US', y = 'Weight (lbs)', title = 'Weight by Region')
+b
+```
+
+Discrete Example
+```{r}
+h <- ggplot(nhanes, aes(x = Height, y = Weight, col = Region)) + geom_point() 
+h
+```
+
+Tell students that it is EASY to choose your own custom colors (as well as using R presets), but we're not going to get into that right at this moment
+
+## 9: Themes
+
+Tell students we can use themes to make our plots prettier, and also customize the gridlines a lot 
+
+
+```{r}
+b
+b + theme_bw()
+b + theme_minimal()
+b + theme_void()
+b + theme_classic()
+
+h + theme_bw() + labs(title = 'Weight by Height and Region')
+```
+
+## 10 - Saving To Files
+
+Talk about the arguments for `file` , `plot`, `dpi`, `width`, and `height`
+
+Explain that we can use a variety of file formats
+
+```{r}
+ggsave('newPlot.png', plot = h, dpi = 300, width = 5, height = 5)
+```
+
+
+
+## 11 Final Points (hehe)
+
+Tell students that these ggplot basic will get them a LONG way.
+
+Also, there is much more ggplot can do for making your plots very pretty, and also plotting lots of complex models
+
+Unlike excel and spss, which can often be cranky and difficult to bend to your will in customizing plots, ggplot is really easy to work with to make your graph look the way you want 
