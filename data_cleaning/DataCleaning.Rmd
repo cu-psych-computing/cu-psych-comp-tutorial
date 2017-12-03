@@ -10,6 +10,7 @@ output:
 ---
 ## Goals of this lesson
 
+Goal goes here
 
 
 ## Getting your Data into R
