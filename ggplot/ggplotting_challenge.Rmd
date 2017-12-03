@@ -13,7 +13,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Testing Out Editing Features
 ```{r}
-x <- c(1,2,3,4)
+x <- c(1,2,5,4)
 x
+```
+
+## Okay, now load in data!
+```{r}
+data2 <= c(2,3,4,5,6)
+data2
 ```
 
