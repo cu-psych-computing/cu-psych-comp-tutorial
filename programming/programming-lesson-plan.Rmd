@@ -31,7 +31,7 @@ Variables can contain numbers. We *assign* a value to a name.
 
 They can also contain other stuff (literally almost anything) but we'll talk about this later
 
-Variables live in the environment
+Variables live in the environment PAB -- are you going to explain directories and how to get/set paths? I think this is important
 ```{r explain what the environment is}
 
 ```
@@ -44,7 +44,7 @@ Information doesn't just exist in the environment--it can also be printed to con
 
 ```
 
-You can assign the output of functions to variables. Should this come later?
+You can assign the output of functions to variables. Should this come later? PAB -- Yes I think this should come later
 ```{r}
 
 ```
@@ -54,7 +54,7 @@ You can use variable names in function calls just as you would the value stored 
 
 ```
 
-You can overwrite the values of variables
+You can overwrite the values of variables 
 ```{r}
 # With the values of other variables
 # OR of the current value of the variable
@@ -66,7 +66,26 @@ Variable naming has to obey certain rules
 # Name must start with a letter, can only contain certain permissible characters (a-z, 0-9, ., _)
 # Try some stuff that works and some stuff that returns errors
 # Name variables with the best combo of informative and concise
+# teach them about camelCase? 
 ```
+
+## Functions
+Should this go here?
+
+Anatomy of a function:
+```{r}
+# Output, function name, argument names, argument inputs
+# Don't forget to assign function outputs to a variable if you want to use them later
+```
+
+Things to know:
++ name thy args
++ when in doubt, search the help!
+
+PAB -- I think 'getting programming help' could be it's own section at the end of the class
++ Googling for help is great too
++ Be precise when asking for help from a human
+
 
 ## Data types
 ### Numeric data
@@ -107,8 +126,6 @@ Strings on strings on strings man
 # Do math on it, it won't work
 ```
 
-
-
 ## Data structures
 With all the data types we just talked about... just with more data now yee
 
@@ -126,8 +143,23 @@ Vectors can be any of the data types
 # Demonstrate said
 ```
 
+#### Indexing into vectors
+
+Numerical indexing is great. actual numerical addresses
+```{r}
+# With one index or a vector of indices
+# Or minus indexing
+```
+
+Logical indexing. Use a logical vector of equal length to your vector of interest; all TRUE values will be indexed and all FALSE values will not be
+```{r}
+# Demonstrate it with a straight up logical vector
+# But this will be better later PAB -- what does better later mean? 
+
+```
 
 You can do two types of operations on vectors
+
 #### Vectorized operations (n element input, n element output)
 This takes a thing and does it individually to each element in your vector, returning an analogous vector where the nth element of the output vector is the result of performing the operation on the nth element of the input vector
 If you wanna do one thing to a bunch of data this is the way to do it fast
@@ -143,35 +175,44 @@ This does a thing which requires multiple pieces of data and returns one piece o
 # Like, mean() for example. Stats operations are typically of this type.
 ```
 
-#### Indexing into vectors
-
-Numerical indexing is great. actual numerical addresses
-```{r}
-# With one index or a vector of indices
-# Or minus indexing
-```
-
-Logical indexing. Use a logical vector of equal length to your vector of interest; all TRUE values will be indexed and all FALSE values will not be
-```{r}
-# Demonstrate it with a straight up logical vector
-# But this will be better later
-```
-
-
 ### Data frames
 This is the data structure where it happens! A bunch of vectors of equal length stuck together in a meaningful way. Has rows and columns. Each column is a vector, containing all the observations of a particular meaningful grouping. Each row is the nth element across vectors, containing one complete observation from all the vectors. Each observation can be a subject, a trial, a group, whatever--any one meaningful something.
 
 ```{r}
 # Get an example dataframe somehow. Maybe make it by stitching vectors together
+# PAB -- emphasize that vectors in a dataframe are of equal length -- and why this makes sense
 ```
 
 General behaviors of data frame
 ```{r}
 # Each column behaves as a vector
 # But each row does NOT. each row behaves as a dataframe of nrow 1
-# We can index using numerical bracket indexing
-# We can also index using colnames and $
 ```
+
+#### Indexing into dataframes
+
+Like indexing into vectors, but with more to love!
+You can index whole rows, whole columns, and portions of both
+
+You can index by NAME, or by NUMBER. We will only talk about indexing by NAME here, because this is the reproducible way to do it (other people don't know col number but they can gather what's in a col by the name)
+
+Indexing columns:
+With brackets:
+```{r}
+
+```
+
+With the dollar sign:
+```{r}
+
+```
+
+Indexing rows:
+With brackets:
+```{r}
+
+```
+
 
 ###Non-data data (sorta fits here)
 When you need to pad shit out. V useful in data frames when you are missing observations
@@ -182,7 +223,6 @@ When you need to pad shit out. V useful in data frames when you are missing obse
 
 ```
 
-
 # HOW
 Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things and doing stuff
 
@@ -192,21 +232,6 @@ It's so important!!! Be able to talk through what you want to do in plain Englis
 ```{r}
 # Just a whole example pseudocode
 ```
-
-## Functions
-Should this go here?
-
-Anatomy of a function:
-```{r}
-# Output, function name, argument names, argument inputs
-# Don't forget to assign function outputs to a variable if you want to use them later
-```
-
-Things to know:
-+ name thy args
-+ when in doubt, search the help!
-+ Googling for help is great too
-+ Be precise when asking for help from a human
 
 ## Relational operators
 Most of the time, when you want to do things in R, you want to do them in some conditions but not others. Relational operators are the first key to making this happen
@@ -228,7 +253,7 @@ Logical indexing is the best, and a frequent use case of relational statements
 You can combine TRUEs and FALSEs of relational operators and other things together using Boolean logical operators
 
 ```{r}
-# ! & | xor()
+# ! & |
 # Relational operators also obey order of operations re: parentheses ()
 ```
 
@@ -248,17 +273,28 @@ All of this (if statements / if-else statements / if-elseif statements) can be d
 ```{r}
 # But be mindful that if-elseif statements evaluate in ORDER
 ```
+## PAB -- Packages!
 
-## (For) loops
-For some cases where you need to do the same operation to each element in a list
+Packages are bundles of functions in R, usually made by experienced programmers, that you can use to make life easier! 
+They often do things in easy ways that would be harder to do otherwise
 
-Anatomy of a for loop
+They have to be installed first. This is simple
 ```{r}
-# You can advance over indices
-# Or over the actual elements of a vector
+# Show students install.packages() -- maybe with something from tidyverse or ggplot since we'll need those later?
 ```
 
+Then you load them in your script
 ```{r}
-# Sometimes you have fencepost conditions; this is a great time to use for loops and not something like a vectorized function
+# Show students library() and require()
 ```
 
+
+## PAB -- Programming Is A Process!
+-Help communitites on the internet
+-Learning how to google your problem
+-Help communities at Columbia -- your lab mates and fellow grad students
+-Columbia R user slack?
+
+
+## PAB Other Thoughts
+As I read through this, I think it will take students a long time to get through. Especially vectors and onward, I remember that stuff being difficult to pick up. Maybe when we're thinking about how we buget time for each modules (or after we practice), we can adjust for this? Or split some of this material into other modules when it becomes relevant? 

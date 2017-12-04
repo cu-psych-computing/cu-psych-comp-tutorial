@@ -13,24 +13,77 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 # In this chunk:
 # In the below code chunk, initialize a variable and set its value to any integer of your choice.
-# Initialize another variable, which will "check" the value of your first integer variable using some code, and have this variable's value be TRUE if your integer is an ODD number, and FALSE if your integer is an EVEN number.
+# Initialize another variable, which will "check" the value of your first integer variable using some code, and have this variable's value be TRUE if your integer is an ODD number, and FALSE if your integer is an EVEN number. 
+
+#PAB - this second part is pretty tricky! Do you think we should have a question that demonstrates the basics of the mod operator first? (Assuming that's how you'd expect them to solve this)
+
 # Test your code using both positive and negative as well as both odd and even numbers, and zero.
 ```
 
-```{r}
-# Some string manipulation task
-```
-
+Here's a dataframe containing a bit of information about Shakespeare's plays. Let's find out some information about this! The answer to each question should be expressed as the output of a command or a series of commands. "I looked and this is what the answer was" does not count!
 
 ```{r}
-# Some logical indexing/if-else task
+load("programming-challenge-data.rda")
 ```
 
-
+How many total plays did Shakespeare write?
 ```{r}
-# In this chunk:
-# Write code to generate a vector of the first n Fibonacci numbers, where n is any number greater than or equal to 2.
-# Demonstrate that you can set any value of n at the beginning of your code and output the appropriate n-length Fibonacci vector, without needing to change any other code you wrote.
-# Test your code with at least 3 values of n.
+
 ```
 
+What genres of plays did he write?
+How many different genres of plays did he write, according to this data?
+```{r}
+
+```
+
+How many plays of each genre did he write? Be able to express this both as the number of plays, and the proportion of his total plays.
+```{r}
+
+```
+
+On average, how many words were in a Shakespeare play?
+
+Try rounding this to the nearest word! If you don't know what function to use, you can look it up :)
+```{r}
+
+```
+
+How many words were in each genre of play? Which genre has the greatest mean number of words per play?
+```{r}
+
+```
+
+How many plays have fewer than twenty thousand words?
+```{r}
+
+```
+
+Show the names of all plays that are either comedies or tragedies.
+```{r}
+
+```
+
+As you can see, this list is sorted alphabetically. What are the 5th through 8th plays alphabetically?
+```{r}
+
+```
+
+Create a new column on the dataframe shakes where all the titles are in all caps. Name the column something sensible.
+```{r}
+
+```
+
+Write code that will do the following.
+If you give the code the name of a play, written as a string, it should do the following:
+
+- If the play is a **comedy,** output the number of words in the play
+- If the play is a **tragedy,** output the index of the play's row in the dataframe
+- If the play is a **history,** output the number of characters in the play's name (spaces count)
+
+Bonus: Can you make your code case-insensitive to the play name that's fed into the code? (assume it's still spelled correctly)
+```{r}
+
+```
+
+PAB: I think this is great -- a mixture of things that beginning coders will find intuitive/hard. I think this will work well as long as we are going around to help people when they get stuck

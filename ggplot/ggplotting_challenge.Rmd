@@ -1,0 +1,68 @@
+---
+title: "ggplotting_challenge"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+## Welcome, plotters!
+
+In this challenge, you'll get the 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+garcia <- read.csv('garcia.csv')
+```
+Today's data is a from paper by Garcia and colleagues (2015). In it, there is data from 116 Swedish high school students.
+
+For the purposes of this data challenge, we'll be looking at how **regulatory mode** -- as represented by the **locomotion** and **assessment** variables -- predicts psychological well-being and academic achievement. 
+
+**gender:** Whether students were coded as female (gender==1) or male (gender==2)  
+**age:** Age in years.  
+**PWB:** This is a "Psychological Well-Being" scale. Higher scores (on a scale of 0-6) indicated higher psychological well-being  
+**Locomotion:**   This measures a form of "regulatory mode," and is a personality measure related to goal-directed behavior. High-locomotion people favor taking action over waiting for opportunities to present themselves.  
+**Assessment:** This is also a form of "regulatory mode." High-assessment people place a high value on close observation, data collection, and critical thinking. Importantly, locomotion and assessment are designed to be uncorrelated, so someone can have low scores in both (and be hesitant and inattentive) or high scores in both (and be prone to action and hypervigilant).  
+**Excercise:**    This is a composite measure of exercise behavior. Higher scores denote a more active student overall.  
+**AcademAchieve:** This is a measure of academic achievement using the 20-point scale that is thenorm in Sweden. Thus, this can be thought of as analogous to a GPA.
+
+
+
+
+    
+
+
+## First, load ggplot!
+```{r}
+require(ggplot2)
+```
+
+## Descriptives
+
+Before we start plotting variables with ggplot, let's first use some basic histograms to visualize them. Let's do this for PWB, Locomotion, Assessment, Exercise, and AcademAchieve.
+```{r}
+
+```
+
+
+
+## Scatter
+
+Let's look at how locomoation and assessment each predict psychological well-being (PWB)
+First, make 2 scatter plots with locomotion score/assessment score (respectively) on the x axis and PWB on the y axis. 
+
+
+*Bonus*: Make the points purple on the scatter plot for locomotion
+```{r}
+assess <- ggplot(garcia, aes(x = Assessment, y = SWB)) + geom_point() 
+loco <- ggplot(garcia, aes(x = Locomotion, y = SWB)) + geom_point(col = 'purple') 
+
+```
+
+Does it look like there's a relationship? Let's test this further by fitting a line to these points, with a 95% confidence interval. 
+```{r}
+
+```
+
+
+
