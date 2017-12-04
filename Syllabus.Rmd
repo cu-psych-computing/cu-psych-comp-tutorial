@@ -5,6 +5,14 @@ output: html_document
 
 ## Course Goals
 
+1.	Emphasize the benefits of using R for data analysis. 
+2.	Teach students the basics of programming and graphing in R
+3.	Help students to feel empowered and inspired to learn more R on their own/within a community of scientists/R users
+
+## Intended Audience
+
+Graduate students, advanced undergraduates and post-bacs in the psychology department who are interested in learning R or building on existing R skills. We expect a variety of backgrounds in terms of R experience and statistics experience.
+
 ## Course Elements
 
 ### Modules
@@ -35,11 +43,11 @@ This is an optional module aimed at students who have no previous experience wit
 
 ### Data Cleaning
 
-This module will cover the basics of data cleaning. We start with loading data into R from various formats, and cover data inspection (e.g. looking for missing values, checking data types), calculation of new variables, and how to change and manipulate data structures (e.g. merging data frames, long and wide formats). The data challenge for this module gives students a data set and asks them to identify and fix several issues and then prepare data for analysis through a series of restructuring steps.
+This module will cover the basics of data cleaning, including loading data into R from various formats, data inspection (e.g. looking for missing values, checking data types), calculation of new variables, and how to change and manipulate data structures (e.g. merging data frames, long and wide formats). 
 
 ### Descriptive Statistics
 
-This module teaches students how to calculate and display basic descriptive statistics, and how to divide and aggregate data in different ways.
+This module teaches students how to calculate and display basic descriptive statistics, and how to divide and aggregate data in different ways. It will also cover basic visualization tools.
 
 ### Basics of Graphing
 
