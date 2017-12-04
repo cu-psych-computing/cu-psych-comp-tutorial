@@ -17,10 +17,14 @@ library(moments)
 library(tidyverse)
 ```
 
-# Let's explore a sample dataset: mtcars, available in base R
-The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).
-For more information, click here: https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html
+# Let's explore a sample dataset! 
+We will use mtcars, available in base R. The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models). For more information, click here: https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html
 
+Frst we will check the data to make sure 
+(a) it's a dataframe
+(b) what the column names are 
+(c) how many rows and columns 
+(d) snapshot of the data itself
 ```{r}
 class(mtcars) # it's a data frame! 
 names(mtcars) # lists out column names (Variable names)
@@ -29,14 +33,15 @@ ncol(mtcars) # number of columns
 str(mtcars) # get a snaphot of the data inside the dataframe 
 
 ```
-# 1. SKEW  / NORMALITY OF VARIABLES
-
+# 1. skew/ normality of variables 
+Pplot histogram of a continuous variable, miles per gallon:
 ```{r}
-# plot histogram of a continuous variable, miles per gallon: 
+ 
 hist(mtcars$mpg)
+```
 
-# Next, make your histogram prettier with some extra arguments
-# base R graphics have many more options, these are just a few. 
+Next, make your histogram prettier with some extra arguments. base R graphics have many more options, these are just a few to get you started.
+```{r}
 hist(mtcars$mpg, col= "light blue", main = "", ylab = "Frequency", xlab = "miles per gallon")
 ```
 
@@ -49,10 +54,8 @@ kurtosis(mtcars$mpg) # positive kurtosis means that the tails are thinner than n
 shapiro.test(mtcars$mpg)  # tests the null hypothesis that the samples came from a normal distribution.
 ```
  
-# 2.BOXPLOTS 
-We will use the basic boxplot function available in base R. 
-Boxplots can be created for individual variables quite easily. 
-Let's make a boxplot for HP (horsepower).
+# 2.Boxplots 
+We will use the basic boxplot function available in base R. Boxplots can be created for individual variables quite easily and give you a quick idea of the spread of your data. Here, we will make a boxplot for HP (horsepower).
 
 ```{r}
 boxplot(mtcars$hp)
@@ -65,7 +68,7 @@ boxplot(mtcars$hp, outline = F)
 boxplot(mtcars$hp, horizontal = TRUE)
 ```
 
-We can also use grouping variables in boxplots. Let's look at horsepower by transmission type 
+We can also use grouping variables in boxplots.
 ```{r}
 # hp = y variable, am (Transmission) is our grouping (x) variable
 boxplot(hp ~ am, data = mtcars)
@@ -78,7 +81,7 @@ boxplot(hp~ am,data=mtcars,
 
 
 # 3. Basic Descriptives
-
+Frst let's learn how to get range, mean, sd, minimum, maximum, etc.
 ```{r, include = FALSE}
 
 # if you only care about the range
@@ -123,33 +126,27 @@ summarise(grouped, mean=mean(mpg), sd = sd(mpg),  min=min(mpg), max=max(mpg))
 ```
 
 
-# 5. Correlations between two continuous variables
+# 5. Relationships between two continuous variables
 
 ```{r}
 plot (mpg ~ wt, data = mtcars)
 
-cor(mtcars$mpg, mtcars$wt)
-
-# a taste of statistical inference! 
-cor.test(mtcars$mpg,mtcars$wt)
 ```
 
-# 6. Correlations of many variables
-We can use scatterplot matrices  which are a handy & quick way of visualizing relationships between multiple variables in a dataset.
+# 6. Relationships of many variables
+We can use scatterplot matrices  which are a handy & quick way of visualizing relationships between multiple variables in a dataset. This works best when you have 3-5 variables (it gets too hard to read after that) - so let's look at the first 4 variables of mtcars dataset. We can see some nice patterns here right away, mainly that cyl, disp and hp all appear to be correlated with mpg.
+
 ```{r}
 
-# this works best when you have 3-5 variables (it gets too hard to read after that)
-# so let's look at the first 4 variables of mtcars dataset
+# 
 pairs (mtcars[1:4])
-
-#We can see some nice patterns here right away, mainly that cyl, disp and hp all appear to be correlated with mpg.
 
 ```
 
 
 # Data challenge:
-Now it's your turn to check out some demographic information. Here is a pretend dataset from a behavioral task. 
-This is just one subject's data, across many variables. 
+Now it's your turn!.
+This is just one subject's data collected from the behavioral tsask. 
 ```{r}
 
 # make a histogram of the variable called "Accuracy". 

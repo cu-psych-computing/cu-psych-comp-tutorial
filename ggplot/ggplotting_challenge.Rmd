@@ -8,15 +8,15 @@ output:
 
 ## Welcome, plotters!
 
-In this challenge, you'll get the 
+In this challenge, you'll get the opportunity to plot data from paper by Garcia and colleagues (2015). In it, there is data from 116 Swedish high school students.
+
+For the purposes of this data challenge, we'll be looking at how **regulatory mode** -- as represented by the **locomotion** and **assessment** variables -- predicts psychological well-being and academic achievement.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 garcia <- read.csv('garcia.csv')
 ```
-Today's data is a from paper by Garcia and colleagues (2015). In it, there is data from 116 Swedish high school students.
-
-For the purposes of this data challenge, we'll be looking at how **regulatory mode** -- as represented by the **locomotion** and **assessment** variables -- predicts psychological well-being and academic achievement. 
+ 
 
 **gender:** Whether students were coded as female (gender==1) or male (gender==2)  
 **age:** Age in years.  
@@ -54,15 +54,82 @@ First, make 2 scatter plots with locomotion score/assessment score (respectively
 
 *Bonus*: Make the points purple on the scatter plot for locomotion
 ```{r}
-assess <- ggplot(garcia, aes(x = Assessment, y = SWB)) + geom_point() 
-loco <- ggplot(garcia, aes(x = Locomotion, y = SWB)) + geom_point(col = 'purple') 
+assess <- ggplot(garcia, aes(x = Assessment, y = PWB)) + geom_point() 
+loco <- ggplot(garcia, aes(x = Locomotion, y = PWB)) + geom_point(col = 'purple') 
 
 ```
 
+Remember to save your plots to variables!
+
 Does it look like there's a relationship? Let's test this further by fitting a line to these points, with a 95% confidence interval. 
+```{r}
+assess + stat_smooth(method = 'lm')
+loco + stat_smooth(method = 'lm')
+```
+
+Lets say we want to plot but with a 98% confidence interval instead. Modify the code from the last plots to accomplish this!
 ```{r}
 
 ```
 
+Hmm, 'PWB' and 'Locomotion/Assessment' aren't very descriptive axis titles...can you make them something more helpful, and also title the plots?
+
+```{r}
+
+```
+
+Okay, so let's just think about locomotion for now. Maybe there's a difference in locomoation as a function of gender. Plot a bar plot showing the average locomotion score and 95% CI for each gender. Make the bars different colors for men/women.
+
+Remember, you might have to recode the variable to get your plot to show descriptive factor levels!
+
+```{r}
+require(tidyverse)
+garcia$gender <- as.factor(garcia$gender)
+garcia$gender <- recode(garcia$gender, '1' = 'Female', '2' = 'Male')
+
+ggplot(garcia, aes(x = gender, y= Locomotion)) + stat_summary(fun.y = 'mean', geom = 'bar', aes(fill = gender)) + stat_summary(fun.data = 'mean_cl_boot', geom = "errorbar")
+```
+
+Great! Sometimes bar plots can hide the distribution of the raw data though. Let's see these bar plots PLUS the individual points! Use geom_jitter() to plot the points so overlaps don't interfere with our interpretation.
+
+*Bonus*: Make the points slightly darker than the bars so they're visible
+```{r}
+ggplot(garcia, aes(x = gender, y= Locomotion)) + stat_summary(fun.y = 'mean', geom = 'bar', aes(fill = gender), alpha = .4) + 
+  stat_summary(fun.data = 'mean_cl_boot', geom = "errorbar") + geom_jitter(aes(col = gender), width = .05) 
+```
 
 
+Hmm, this is getting a bit cluttered! Maybe better to just plot the mean and 95% CI, plus the jittered points. Do that using stat_summary(), and also make the jittered points smaller.
+
+```{r}
+ggplot(garcia, aes(x = gender, y= Locomotion))  + geom_jitter(aes(col = gender), width = .02, size = .5) + stat_summary(fun.data = 'mean_cl_boot', fun.args=list(conf.int=.95))
+```
+
+
+# Facetting! 
+Okay, so while there might not be huge gender difference in this dataset on locomotion, maybe locomotion predicts different things in males and females.
+
+Make a scatter plot + linear regression line (with confidence interval) with locomoation on the x axis and PWB on the y axis, but this time facet by gender
+
+```{r}
+loco <- ggplot(garcia, aes(x = Locomotion, y = PWB)) + geom_point(col = 'purple') 
+
+loco + stat_smooth(method = 'lm') + facet_wrap('gender') + theme_bw()
+
+```
+
+Okay, let's switch it up and look at how PWB predicts academic achievement. Do this with a scatter plot.
+Also, let's say we want the y axis to range the entire range of possible academic achievement scores [0,20]. How can we make ggplot do this?
+
+
+```{r}
+ggplot(garcia, aes(x = PWB, y = AcademAchieve)) + geom_point() + ylim(0,20) + stat_smooth(method = 'lm') + facet_wrap('gender')
+```
+
+Okay, now let's say we want to make this one look nice! Facet it by gender, give it a nice theme and informative labels!
+
+```{r}
+ggplot(garcia, aes(x = PWB, y = AcademAchieve)) + geom_point() + stat_smooth(method = 'lm') + facet_wrap('gender') + 
+  theme_bw()
+  labs(x = 'Scale of Psychological Well-Being (1-6)', y = 'Academic Achievement (0-20)', title = 'Academic Achievement as a Factor of PWB/Gender')
+```
