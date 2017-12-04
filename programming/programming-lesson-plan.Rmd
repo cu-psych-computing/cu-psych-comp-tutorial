@@ -31,7 +31,7 @@ Variables can contain numbers. We *assign* a value to a name.
 
 They can also contain other stuff (literally almost anything) but we'll talk about this later
 
-Variables live in the environment
+Variables live in the environment PAB -- are you going to explain directories and how to get/set paths? I think this is important
 ```{r explain what the environment is}
 
 ```
@@ -44,7 +44,7 @@ Information doesn't just exist in the environment--it can also be printed to con
 
 ```
 
-You can assign the output of functions to variables. Should this come later?
+You can assign the output of functions to variables. Should this come later? PAB -- Yes I think this should come later
 ```{r}
 
 ```
@@ -54,7 +54,7 @@ You can use variable names in function calls just as you would the value stored 
 
 ```
 
-You can overwrite the values of variables
+You can overwrite the values of variables 
 ```{r}
 # With the values of other variables
 # OR of the current value of the variable
@@ -66,6 +66,7 @@ Variable naming has to obey certain rules
 # Name must start with a letter, can only contain certain permissible characters (a-z, 0-9, ., _)
 # Try some stuff that works and some stuff that returns errors
 # Name variables with the best combo of informative and concise
+# teach them about camelCase? 
 ```
 
 ## Functions
@@ -80,6 +81,8 @@ Anatomy of a function:
 Things to know:
 + name thy args
 + when in doubt, search the help!
+
+PAB -- I think 'getting programming help' could be it's own section at the end of the class
 + Googling for help is great too
 + Be precise when asking for help from a human
 
@@ -151,7 +154,8 @@ Numerical indexing is great. actual numerical addresses
 Logical indexing. Use a logical vector of equal length to your vector of interest; all TRUE values will be indexed and all FALSE values will not be
 ```{r}
 # Demonstrate it with a straight up logical vector
-# But this will be better later
+# But this will be better later PAB -- what does better later mean? 
+
 ```
 
 You can do two types of operations on vectors
@@ -176,6 +180,7 @@ This is the data structure where it happens! A bunch of vectors of equal length 
 
 ```{r}
 # Get an example dataframe somehow. Maybe make it by stitching vectors together
+# PAB -- emphasize that vectors in a dataframe are of equal length -- and why this makes sense
 ```
 
 General behaviors of data frame
@@ -268,3 +273,28 @@ All of this (if statements / if-else statements / if-elseif statements) can be d
 ```{r}
 # But be mindful that if-elseif statements evaluate in ORDER
 ```
+## PAB -- Packages!
+
+Packages are bundles of functions in R, usually made by experienced programmers, that you can use to make life easier! 
+They often do things in easy ways that would be harder to do otherwise
+
+They have to be installed first. This is simple
+```{r}
+# Show students install.packages() -- maybe with something from tidyverse or ggplot since we'll need those later?
+```
+
+Then you load them in your script
+```{r}
+# Show students library() and require()
+```
+
+
+## PAB -- Programming Is A Process!
+-Help communitites on the internet
+-Learning how to google your problem
+-Help communities at Columbia -- your lab mates and fellow grad students
+-Columbia R user slack?
+
+
+## PAB Other Thoughts
+As I read through this, I think it will take students a long time to get through. Especially vectors and onward, I remember that stuff being difficult to pick up. Maybe when we're thinking about how we buget time for each modules (or after we practice), we can adjust for this? Or split some of this material into other modules when it becomes relevant? 
