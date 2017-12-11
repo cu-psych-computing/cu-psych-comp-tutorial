@@ -13,6 +13,17 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Programming is telling a computer to do some action to some input info to get output info that you want. We will learn about this info that goes in and out, as well as the actions that transform info into what we want.
 
+## Working directories, file paths, etc
+
+Before we actually get started with messing in R, we need to understand how R interacts with files on your computer. Any data that gets loaded in or saved out is saved on your computer proper, and you can access all of these files through R.
+```{r explain working directories}
+
+```
+
+```{r explain file paths}
+
+```
+
 # WHAT
 ## Variables
 
@@ -31,7 +42,7 @@ Variables can contain numbers. We *assign* a value to a name.
 
 They can also contain other stuff (literally almost anything) but we'll talk about this later
 
-Variables live in the environment PAB -- are you going to explain directories and how to get/set paths? I think this is important
+Variables live in the environment
 ```{r explain what the environment is}
 
 ```
@@ -154,7 +165,7 @@ Numerical indexing is great. actual numerical addresses
 Logical indexing. Use a logical vector of equal length to your vector of interest; all TRUE values will be indexed and all FALSE values will not be
 ```{r}
 # Demonstrate it with a straight up logical vector
-# But this will be better later PAB -- what does better later mean? 
+# Logical indexing makes sense to present now, but you might not realize how useful it is until later in the tutorial
 
 ```
 
@@ -273,6 +284,7 @@ All of this (if statements / if-else statements / if-elseif statements) can be d
 ```{r}
 # But be mindful that if-elseif statements evaluate in ORDER
 ```
+
 ## PAB -- Packages!
 
 Packages are bundles of functions in R, usually made by experienced programmers, that you can use to make life easier! 
@@ -281,6 +293,7 @@ They often do things in easy ways that would be harder to do otherwise
 They have to be installed first. This is simple
 ```{r}
 # Show students install.packages() -- maybe with something from tidyverse or ggplot since we'll need those later?
+# Or do it through GUI
 ```
 
 Then you load them in your script
@@ -290,6 +303,7 @@ Then you load them in your script
 
 
 ## PAB -- Programming Is A Process!
+
 -Help communitites on the internet
 -Learning how to google your problem
 -Help communities at Columbia -- your lab mates and fellow grad students
@@ -297,4 +311,4 @@ Then you load them in your script
 
 
 ## PAB Other Thoughts
-As I read through this, I think it will take students a long time to get through. Especially vectors and onward, I remember that stuff being difficult to pick up. Maybe when we're thinking about how we buget time for each modules (or after we practice), we can adjust for this? Or split some of this material into other modules when it becomes relevant? 
+As I read through this, I think it will take students a long time to get through. Especially vectors and onward, I remember that stuff being difficult to pick up. Maybe when we're thinking about how we budget time for each modules (or after we practice), we can adjust for this? Or split some of this material into other modules when it becomes relevant? 
