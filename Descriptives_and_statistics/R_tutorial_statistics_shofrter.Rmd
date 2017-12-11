@@ -1,0 +1,193 @@
+---
+title: "R_TUTORIAL_DESCRIPTIVES"
+output: 
+  html_document: 
+    toc: true
+    toc_float: true
+--- 
+
+# Welcome to the tutorial on statistics in R! 
+Goals: 
+1. Learn how to run simple statistical tests in R 
+2. Learn how to visualize  the results of the models
+
+# First things first:
+let's open some packages we need for this tutorial.
+```{r, include = F}
+# packages needed for this tutorial
+library(car)
+library(effects)
+```
+
+#1. Correlations
+Correlations are as simple as it gets in R. Use the cor() function with your two variables to get the correlation coefficient. or use the cor.test() function to get the t, df, and p-value associated with your correlaton coefficient. 
+```{r}
+cor(mtcars$mpg, mtcars$wt)
+cor.test(mtcars$mpg, mtcars$wt)
+
+```
+
+# 2. T-tests
+First, let's check that our variance is not heterogenous between the two groups. We can do this by calling the leveneTest() function, which performs the Levene's test of Equality of Variances.
+```{r}
+
+
+leveneTest(mtcars$mpg, mtcars$vs) # we do not reject the null
+```
+
+Next, let's run the actual t-test using the t.test() function. The first argument is the y variable, followed by the grouping variable. R's default for t-test is a welch two-sample t-test, which assumes heterogenous variance between groups. 
+```{r}
+t.test(mtcars$mpg, mtcars$vs)
+```
+In the case you want to use a 'Students' t-test (SPSS default, asumes homogenous variances) you can specify that with the argument var.equal=TRUE.There are many other options here, including a paired samples t-test (more on that in the data challenge!)
+```{r}
+t.test(mtcars$mpg, mtcars$vs, var.equal=TRUE)
+```
+
+#3. Anova 
+A word of cauton using statistics in R: there are many ways to run each statistical test. For an ANOVA, there are several didfferent packages that have different ways of running the ANOVA 'under the hood', or just use different conventions in reporting the results. To start with, we will show you how to run simple one-way and two-way anovas.
+```{r}
+# first we have to convert these binary variables into factors, instead of "numeric"
+class(mtcars$vs)
+class(mtcars$am)
+mtcars$vs.factor <- as.factor(mtcars$vs)
+mtcars$am.factor <- as.factor(mtcars$am)
+class(mtcars$am.factor)
+class(mtcars$vs.factor)
+```
+
+one -way anova 
+```{r}
+mtcars$am.factor <- as.factor(mtcars$am)
+aov_1 <- aov(mpg ~ am.factor, data = mtcars )
+summary(aov_1) # anova output
+coefficients(aov_1) # coefficients (betas) 
+```
+two -way anova 
+```{r}
+aov_2 <- aov(mpg ~ am.factor*vs.factor, data = mtcars )
+summary(aov_2)
+coefficients(aov_2)
+plot(allEffects(aov_2))
+```
+
+Post-hoc comparisons for 2x2 anova. Again, note there are many options for posthoc tests depending on the assumptions of your data. Here we will learn Tukey's post-hoc, which is commonly used in the ANOVA framework in psychology. We will get the post-hoc contrasts for each level of the interaction using the function TukeyHSD(). The argument for the function is the model, whch we just created above.
+```{r}
+post_hoc <- TukeyHSD(aov_2)
+```
+
+We can now look at the 6 contrasts of the 2x2 interaction by indexing the results of the TukeyHSD() function.
+```{r}
+post_hoc$`am.factor:vs.factor`
+
+```
+# 4. linear regression 
+Linear regression follow this formula: lm( y ~ x, data) where lm() is the function of the linear model. We will use the summary() function, with our model as input, to easly view a table of the results of the model.
+```{r}
+
+model1 <- lm(mpg ~ wt, data = mtcars )
+
+summary(model1)
+```
+
+The effect package provides a simple way to visualize the results of your model. we can quicky plot the linear regression slope with a 95% confidence interval. Like many R functions, there are many addtional arguments that will allow you to customize the plot and make it prettier. 
+```{r}
+plot(effect("wt", model1))
+
+plot(effect("wt", model1), main = "", xlab = "miles per gallon", ylab = "weight of the car", rug = F)
+
+```
+
+# 5. Multiple regression using lm ()
+ Let's estimate the effect of weight on mpg, controlling for displacement and transmission. We will use the lm() function again. 
+First, we will change our transmission variable into a factor. 
+```{r}
+
+mtcars$am.factor <- as.factor(mtcars$am)
+```
+
+Now we are ready to run the model
+```{r}
+#lm( y ~ x + m + z, data)
+model2 <- lm(mpg ~ wt + disp + am.factor , data = mtcars )
+summary(model2) # so we see that weight still predicts mpg, even when controlling for gear and displacement
+```
+
+The effect package also allows you to plot all of the model coefficients, each controllig for all other variables in the model.
+```{r}
+plot(allEffects(model2))
+```
+
+
+# 6. interactions with continuous x continous variables
+These can be fun but also tricky in R. First, let's visualize how two continuous variables might interact. We will use the coplot() function where: y ~ x | m
+```{R}
+coplot(mpg ~ wt | disp, data = mtcars,number = 3,
+       col = "black", bg = "blue", pch = 21) 
+```
+
+Next, let's run the linear model using lm (). The * indicates an interaction, where R will include the individual coefficienets for each variable automatically.
+```{r}
+model4 <- lm(mpg ~ wt* disp, data = mtcars )
+summary(model4) 
+```
+
+The effect plot automatically choses specific levels of the variables to display your interactions. 
+```{r}
+plot(effect("wt:disp", model4), rug = F, main = "", ylab= "miles per gallon", xlab = "weight")
+```
+
+You can also just plot the linesin a single plot (without CI) using the multiline=T option. 
+```{r}
+plot(effect("wt:disp", model4), multiline=T, rug = F, main = "", ylab= "miles per gallon", xlab = "weight")
+
+
+```
+
+# 7. more on model visualizations:
+
+what about viewing the actual fitted data points (instead of the regression lines) ?
+Added Variable plots (or partial regression plot) allow us to look at the fitted data of our variable of interest, controlling for all of the other stuff in your model. 
+```{r}
+
+avPlot(model4, "wt")
+
+# make it prettier!
+avPlot(model4, "wt", col = "Black", col.lines = "Blue", pch = 18, lwd= 3, 
+       ylab = "miles per gallon",
+       xlab ="weight", grid = FALSE,
+       main = "Partial Regression Plot: Miles per gallon by Weight")
+
+
+```
+
+if you want to really make beautiful graphs and customizations of your models, 
+we encourage you to experiment with ggplot!
+
+This was only a brief introduction to the statistical modeling world of R. There are many more options available: mixed-effects modeling, mediations, structural equation models, bayesian estimation.
+
+# Data Challenge:
+Now it's your turn! There are two data setsfor this challenge. One is data from a single subjects task performance across all trials (repeated measures). The second dataset consists of summary data from each subject on this task (between subjects).
+
+```{r}
+
+#1. Perform a paired-samples t-test to determine whether subject 001 is more accurate when matching faces or shapes.
+
+#2. Perform a t-test to determine whether there are group differences in Accuracy.
+
+#3. perform a linear regression to test the effects of age on accuracy. 
+
+```
+
+# Bonus Data Challenge
+Design your own research question from this data and use the appropriate test to analyze it. Use ggplot to plot the raw data & the fitted results of your model.
+
+```{r}
+
+
+
+
+
+
+
+```

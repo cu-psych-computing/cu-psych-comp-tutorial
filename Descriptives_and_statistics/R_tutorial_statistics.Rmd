@@ -1,0 +1,184 @@
+---
+title: "R_TUTORIAL_DESCRIPTIVES"
+output: 
+  html_document: 
+    toc: true
+    toc_float: true
+--- 
+
+# Welcome to the tutorial on statistics in R! 
+Goals: 
+1. Learn how to run simple statistical tests in R 
+2. Learn how to visualize  the results of the models
+
+
+```{r, include = F}
+# packages needed for this tutorial
+library(car)
+library(effects)
+```
+
+#1. Correlations
+```{r}
+# as simple as it gets.... 
+cor.test(mtcars$mpg, mtcars$wt)
+
+```
+
+# 2. T-tests
+```{r}
+
+# first let's check that our variance is homogenous using the Levene's test of Equality of Variances
+leveneTest(mtcars$mpg, mtcars$vs) # we do not reject the null
+
+# t.test= y, x (categorical)
+t.test(mtcars$mpg, mtcars$vs)
+```
+
+#3. Anova 
+Caution!!! there are many ways to run an anova and post-hoc tests in R. 
+this is ONE way. please think about your data and model accordingly.
+```{r}
+# first we have to convert these binary variables into factors, instead of "numeric"
+class(mtcars$vs)
+class(mtcars$am)
+mtcars$vs.factor <- as.factor(mtcars$vs)
+mtcars$am.factor <- as.factor(mtcars$am)
+class(mtcars$am.factor)
+class(mtcars$vs.factor)
+
+# one -way anova 
+mtcars$am.factor <- as.factor(mtcars$am)
+aov_1 <- aov(mpg ~ am.factor, data = mtcars )
+summary(aov_1) # anova output
+coefficients(aov_1) # coefficients (betas) 
+
+# two -way anova 
+aov_2 <- aov(mpg ~ am.factor*vs.factor, data = mtcars )
+summary(aov_2)
+coefficients(aov_2)
+
+# post-hoc comparisons for 2x2 anova 
+post_hoc <- TukeyHSD(aov_2)
+
+# now let's take a look at the 6 contrasts of the 2x2 interaction: 
+post_hoc$`am.factor:vs.factor`
+```
+#4. linear regression 
+```{r}
+
+#lm( y ~ x, data)
+model1 <- lm(mpg ~ wt, data = mtcars )
+
+# summary provides the useful output that you actually want to see: 
+summary(model1)
+
+# the effect package provides a simple way to visualize the results of your model
+# here, we can quicky plot the linear regression slope with a 95% confidence interval
+plot(effect("wt", model1))
+
+# we can also make this plot prettier using similar base R arguments:
+plot(effect("wt", model1), main = "", xlab = "miles per gallon", ylab = "weight of the car", rug = F)
+
+```
+
+# 5. Multiple regression using lm ()
+```{r}
+#Let's estimate the effect of weight on mpg, controlling for displacement and transmission.
+
+# first, let's change our transmission variable into a factor. 
+mtcars$am.factor <- as.factor(mtcars$am)
+
+#lm( y ~ x + m + z, data)
+model2 <- lm(mpg ~ wt + disp + am.factor , data = mtcars )
+summary(model2) # so we see that weight still predicts mpg, even when controlling for gear and displacement
+
+# you can also plot all of the model coefficients at once. The am.factor plot shows the group effect, with 95% CI.
+plot(allEffects(model2))
+```
+
+# 6. interactions using lm()
+```{r}
+#FORMULA: lm( y ~ x:m + x + m + z, data)
+model3 <- lm(mpg ~ wt:am.factor + wt + am.factor + disp, data = mtcars )
+summary(model3) # so we see that weight still predicts mpg, even when controlling for gear and displacement
+```
+
+ wait, there's a shortcut! 
+```{r}
+#FORMULA: lm( y ~ x*m + z, data)
+model3b <- lm(mpg ~ wt*am.factor + disp, data = mtcars )
+summary(model3b) 
+
+# notice that the output of model 3 and model3b are exactly the same!
+```
+
+a note about interactions using lm in R ...
+My factor (am.factor) is coded as  a dummy variable in this model. is this a regression? Or an ANCOVA? 
+R is very flexible; and linear models can be reported in ANOVA format: 
+If you are confused, don't worry. It's confusing. 
+for more detail on this topic, take Niall's Introduction to Statistical modeling! 
+google is also quite useful as well. 
+```{r}
+# but wait, 
+anova(model3b) #thanks to the car package, this will give you the type III anova results of your model
+```
+
+#7. plotting interactions
+... this gets fun! 
+```{r}
+# here is a cool way to visualize whether 2 variabless might interact 
+coplot(mpg ~ wt | am.factor, data = mtcars,
+       col = "black", bg = "blue", pch = 21)
+
+# we can also plot the actual model output for this interaction, controlling for displacement.
+plot(effect("wt:am.factor", model3b))
+```
+
+# 8. continuous x continous interactions 
+```{R}
+# let's visualize whether 2 continuous variables might interact 
+coplot(mpg ~ wt | disp, data = mtcars,number = 3,
+       col = "black", bg = "blue", pch = 21) 
+
+# let's run our model
+model4 <- lm(mpg ~ wt* disp + am.factor, data = mtcars )
+summary(model4) 
+
+# the effect plot automatically choses specific levels of the variables to display your interactions: 
+plot(effect("wt:disp", model4), rug = F, main = "", ylab= "miles per gallon", xlab = "weight")
+
+# you can also just plot the lines (without CI) this way: 
+plot(effect("wt:disp", model4), multiline=T, rug = F, main = "", ylab= "miles per gallon", xlab = "weight")
+
+
+```
+
+# 9. more on model visualizations:
+
+what about viewing the actual fitted data points (instead of the regression lines) ?
+Added Variable plots (or partial regression plot) allow us to look at the fitted data of our variable of interest,
+controlling for all of the other stuff in your model. 
+```{r}
+
+# look at partial regression plot (Added Variable Plot), with your X variable of interest.
+avPlot(model4, "wt")
+
+# make it prettier!
+avPlot(model4, "wt", col = "Black", col.lines = "Blue", pch = 18, lwd= 3, 
+       ylab = "miles per gallon",
+       xlab ="weight", grid = FALSE,
+       main = "Partial Regression Plot: Miles per gallon by Weight")
+
+
+```
+
+what if i want to customize my visualizations of the models?
+ggplot to the rescue! 
+```{r}
+
+
+```
+
+# this was only a brief introduction to the statistical modeling world of R. There are many more options available: mix-effects modeling, mediations, structural equation models, bayesian estimation.
+
