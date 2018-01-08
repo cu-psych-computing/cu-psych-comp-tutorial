@@ -18,17 +18,21 @@ Students will test their understanding of:
 
 Now it's your turn to try opening and cleaning a new data set. There are issues with the raw data, so make sure to inspect the variables and make changes when needed. Below is a rough outline you can follow, in the end, you should have a file in the long format with XX rows and XX columns.
 
+NOTE: This is the key for the data challenge, so it has all the code already. If you haven't done the challenge, go to the blank version and try doing it on your own. If you are using this key to check your work, remembere that there are many ways to do things in R, so what you did might not be what we did here, but it can still be right (it might even be better!).
+
 ```{r}
 
 # Read the data into R. The file is called "Study2_Subjects.csv". Check out the separate "README_Study2.txt" file for information on the study and variables.
 
 getwd()
 
-subjects <- read.csv("Study2_Subjects.csv")
+list.files()
 
+subjects <- read.table("Study2_Subjects.csv", header=TRUE, sep=",", stringsAsFactors=FALSE)
 
 # View the first 5 rows of the data frame
 
+head(subjects, 5)
 
 # Examine the data for issues. Some things to look for: are the column names logical? Are there missing values? Do the variable types make sense? (ie does everything that's a factor make sense as a factor, and does everything that's numeric make sense as numeric?) Are there values that don't make sense? Fix any issues you find.
 
