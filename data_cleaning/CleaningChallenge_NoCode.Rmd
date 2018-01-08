@@ -16,7 +16,7 @@ Students will test their understanding of:
 
 ## Your turn!
 
-Now it's your turn to try opening and cleaning a new data set. There are issues with the raw data, so make sure to inspect the variables and make changes when needed. Below is a rough outline you can follow, in the end, you should have a file in the long format with XX rows and XX columns.
+Now it's your turn to try opening and cleaning a new data set. There are issues with the raw data, so make sure to inspect the variables and make changes when needed. Below is a rough outline to follow, try to get as far as you can.
 
 ```{r}
 
@@ -41,7 +41,7 @@ Now it's your turn to try opening and cleaning a new data set. There are issues 
 # Now that you have a one frame with all the data, put it into long format. Each subject should have one row for each trial.
 
 
-# You want to do a separate analysis only on the people who had a high score on the anxiety questionnaire. Create a new data frame with just the individuals who got 50 or higher. (Hint, check out ?subset for help)
+# You want to do a separate analysis only on the people who had a high score on the anxiety questionnaire. Create a new data frame (in long format) with just the individuals who got 25 or higher. (Hint, check out ?subset for help)
 
 
 
