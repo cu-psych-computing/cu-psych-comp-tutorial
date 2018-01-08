@@ -1,5 +1,5 @@
 ---
-title: "R_TUTORIAL_DESCRIPTIVES"
+title: "R TUTORIAL: Descriptives"
 output: 
   html_document: 
     toc: true
@@ -13,27 +13,22 @@ output:
 
 #install and load packages that you'll need
 ```{r setup, include=FALSE}
-library(lme4)
 
-install.packages("car")
+
+#install.packages("car")
 #Companion to Applied Regression
 #Functions and Datasets to Accompany J. Fox and S. Weisberg, An R Companion to Applied Regression, Second Edition, Sage, 2011.
 # https://cran.r-project.org/web/packages/car/car.pdf
 
-install.packages("moments") 
-# useful descriptive calculations
+#install.packages("moments") 
+# useful descriptive calculationss
 #https://cran.r-project.org/web/packages/moments/moments.pdf
 
 
-install.packages("tidyverse") 
-# you should already have this installed
-
-library(scales)
 library(car)
 library(moments)
-library(ggplot2)
-library(tidyverse)
-
+library(tidyr)
+library(dplyr)
 ```
 
 # Let's explore a sample dataset! 
@@ -41,9 +36,10 @@ library(tidyverse)
 # this dataset examines the relationship between multitasking and working memory.
 # original paper by Uncapher et al. 2016:  https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4733435/pdf/nihms712443.pdf
 
-df <- read.csv("uncapher_thieu_wagner_2016_target_memory.csv")
+df <- read.csv("uncapher_thieu_wagner_2016_target_memory_1_condition.csv")
 
 head(df)
+names(df)
 ```
 
 First we will check the data to make sure 
@@ -74,26 +70,35 @@ nrow(df.short)
 # 1.A. graphing skew/ normality of variables 
 plot histogram of continuous variables
 ```{r}
+# plot histogram of media multitasking
+hist(df$mmi)
+# what is the skew?
 
-hist(df$mmi) # slight positive skew 
-
+# plot histogram of ADHD measure
 hist(df$adhd)
 
+# plot histogram of impulsivity measure
 hist(df$bis)
 ```
 
-Next, make your histogram prettier with some extra arguments. base R graphics have many more options, these are just a few to get you started.
+Next, let's make the histogram prettier with some extra arguments.
+base R graphics have many more options, these are just a few to get you started.
 ```{r}
-hist(df$mmi, col= "light blue", main = "", ylab = "Frequency", xlab = "Impulsivity index")
+# add light blue color using col = "light blue"
+# add a yaxis label and an x axis label using ylab and xlab
+
+hist(df$mmi, col= "light blue", main = "", ylab = "Frequency", xlab = "Media Multitasking")
 ```
 
 
 #1.B. Quantative assessments of skew:
 ```{r}
-#skewness 
+#calculate skew and jurtosis for mmi variable 
+
 skewness(df$mmi)# positive skew means the Mean > median.
 kurtosis(df$mni) # positive kurtosis means that the tails are thinner than normal distribution.
 
+# Test whether mmi is normally distributed using the shapiro test
 shapiro.test(df$mmi)  # tests the null hypothesis that the samples came from a normal distribution.
 ```
  
@@ -101,18 +106,19 @@ shapiro.test(df$mmi)  # tests the null hypothesis that the samples came from a n
 # 2. Basic Descriptives
 let's learn how to get range, mean, sd, minimum, maximum, etc.
 ```{r}
-
+# provide the range of mmi variable
 range(df$mmi)
 
-# average score  
+# average score  of mmi 
 mean(df$mmi, na.rm = TRUE)
 
-# standard deviation
+# standard deviation of mmi
 sd(df$mmi, na.rm = TRUE)
 
-# the simplest way to get descriptives on a variable 
+# the simplest way to get summary descriptives on a variable 
 summary(df$mmi)
 
+ 
 # we can also combine them into a table, using the summarise function 
 my_table <- summarise(df, mean=mean(mmi), stdev = sd(mmi),  min=min(mmi), max=max(mmi))
 
@@ -183,8 +189,11 @@ boxplot(bis ~ groupStatus, data=df.group,
 # 5. Relationships between two continuous variables
 
 ```{r}
-# this is the most basic plot you can make. don't worry, later we will show you how to make much prettier graphs! 
-plot (df.short$mmi, df.short$bis)
+# this is the most basic plot you can make. 
+#don't worry, later we will show you how to make much prettier graphs! 
+
+# graph the relationship between mmi (x) and bis (y)
+plot (df$mmi, df$bis)
 ```
 
 # 6. Relationships of many variables
@@ -209,6 +218,7 @@ names(df)
 
 
 # make a boxplot comparing Dprime between high multitaskers (groupStatus: HMM) and low multitaskers (groupStatus: LMM). 
+
 
 # what is the mean ADHD symptom level of high multitaskers and low multitaskers?
 
