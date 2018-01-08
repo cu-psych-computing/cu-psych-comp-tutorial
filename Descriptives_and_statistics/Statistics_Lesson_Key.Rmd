@@ -77,6 +77,13 @@ t.test(df2$bis~ df2$groupStatus, var.equal=TRUE)
 #t = 1.2397, df = 66, p-value = 0.2195
 ```
 
+Paired t-test
+# The only thing you need to change in the code for a paired t-test is add an argument: paired == TRUE
+```{r}
+
+
+
+```
 #3. Anova 
 A word of caution using statistics in R: there are many ways to run each statistical test. For an ANOVA, there are several didfferent packages that have different ways of running the ANOVA 'under the hood', or just use different conventions in reporting the results. To start with, we will show you how to run simple one-way and two-way anovas.
 
