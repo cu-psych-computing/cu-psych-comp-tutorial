@@ -41,7 +41,8 @@ require(ggplot2)
 
 Before we start plotting variables with ggplot, let's first use some basic histograms to visualize them. Let's do this for PWB, Locomotion, Assessment, Exercise, and AcademAchieve.
 ```{r}
-
+hist(garcia$PWB)
+hist(garcia$Locomotion)
 ```
 
 
@@ -69,13 +70,16 @@ loco + stat_smooth(method = 'lm')
 
 Lets say we want to plot but with a 98% confidence interval instead. Modify the code from the last plots to accomplish this!
 ```{r}
-
+assess + stat_smooth(method = 'lm', level = .98)
+loco + stat_smooth(method = 'lm', level = .98)
 ```
 
 Hmm, 'PWB' and 'Locomotion/Assessment' aren't very descriptive axis titles...can you make them something more helpful, and also title the plots?
 
 ```{r}
-
+assess + stat_smooth(method = 'lm', level = .98) + 
+  labs(x = 'Assessment Focus', y = 'Psychological Well-Being', title = 'Assessment')
+loco + stat_smooth(method = 'lm', level = .98)
 ```
 
 Okay, so let's just think about locomotion for now. Maybe there's a difference in locomoation as a function of gender. Plot a bar plot showing the average locomotion score and 95% CI for each gender. Make the bars different colors for men/women.
