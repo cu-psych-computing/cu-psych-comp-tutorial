@@ -22,6 +22,10 @@ Now it's your turn to try opening and cleaning a new data set. There are issues 
 
 # Read the data into R. The file is called "Study2_Subjects.csv". Check out the separate "README_Study2.txt" file for information on the study and variables.
 
+getwd()
+
+subjects <- read.csv("Study2_Subjects.csv")
+
 
 # View the first 5 rows of the data frame
 
