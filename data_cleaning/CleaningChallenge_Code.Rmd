@@ -1,7 +1,6 @@
 ---
-title: "Data Cleaning Draft"
+title: "Getting your data ready for analysis"
 author: "Ellen Tedeschi"
-date: "October 21, 2017"
 output:
   html_document:
     toc: true
@@ -205,7 +204,7 @@ Finally, you may want to change the layout of your data. Right now, our data fra
 ```{r}
 
 library(tidyr)
-# Key is the name for the new column that will identify which observation it is, and value is the name for the new column that will have the actual values in it. You can name these whatever you want.
+# Key is the name for the new column that will identify which observation it is, and value is the name for the new column that will have the actual values in it. In theory, you can name these whatever you want, but to keep everyone on the same page, name the key "Time" and the value "Score".
 mydata_Long <- gather(mydata, key="Time", value="Score", T1:T4)
 
 # Spread lets you go back the other direction. This should be identical to the original mydata 
