@@ -33,9 +33,9 @@ getwd()
 ## Variables
 
 + a **variable** is how we store information in a way that the computer can operate on
-  + it has a **value:** the info itself
-  + and a **name:** the cue by which we call upon the info to the computer
-  
++ it has a **value:** the info itself
++ and a **name:** the cue by which we call upon the info to the computer
+
 If you think about how variables like x and y are used in algebra, calculus, etc, that can be a useful way to conceptualize them.
 
 Variables can contain numbers. We *assign* a value to a name.
@@ -104,13 +104,13 @@ Anatomy of a function:
 `output <- function(argument1 = input1, argument2 = input2)`
 
 + `function()`: This is the function that will DO SOMETHING to your inputs.
-  Whenever you are referencing a function by name, you should always write it with the two parentheses () after the function name so people know you're referring to a function and not a variable.
-  The name of a function will tell you something about what a function does. You can/should look it up if you're not sure though!
+Whenever you are referencing a function by name, you should always write it with the two parentheses () after the function name so people know you're referring to a function and not a variable.
+The name of a function will tell you something about what a function does. You can/should look it up if you're not sure though!
 + `argument1`, `argument2`, etc: These are **arguments** to a function--this is the information that a function *expects* and *is prepared to operate on*.
-  The name of an argument will tell you something what an argument represents and how it should be formatted. (More on this later)
+The name of an argument will tell you something what an argument represents and how it should be formatted. (More on this later)
 + `input1`, `input2`, etc: These are variables that you created that will actually get fed into your function. This is the information that will actually get operated on. These can be data that live in your environment, or these can be settings (like switches and knobs, if your function was an actual machine) that are turned to a specific value.
 + `output`: This is the variable that will hold your output information.
-  As you can see, we are ASSIGNING the value that's output from `function()` to the variable `output` using the `<-` left-facing arrow operator. Just like before with printing variable values to console, if you run a function without assigning its output to a variable, the output will print to console (so you can read it) but it will not be stored anywhere (so you can't perform any further operations on that output).
+As you can see, we are ASSIGNING the value that's output from `function()` to the variable `output` using the `<-` left-facing arrow operator. Just like before with printing variable values to console, if you run a function without assigning its output to a variable, the output will print to console (so you can read it) but it will not be stored anywhere (so you can't perform any further operations on that output).
 
 ```{r}
 # Output, function name, argument names, argument inputs
@@ -423,17 +423,33 @@ mean(data2$hitRate[data2$conf == "hi"])
 ```
 
 ## Logical operators
-You can combine TRUEs and FALSEs of relational operators and other things together using Boolean logical operators
+Relational statements will get you a long way. Sometimes, though, you need to know whether groups of conditions are true or false. You can combine the TRUEs and FALSEs of relational statements using Boolean logical operators.
 
 ```{r}
-# ! & |
-# Relational operators also obey order of operations re: parentheses ()
+# These are the Boolean operators you'll need:
+# ! (NOT operator; this returns the opposite of whatever you put in)
+!TRUE # see what this returns
+!(data2$conf == "hi") # This should return TRUE for all the times where conf is "lo"
+# & (AND operator; this returns TRUE if both statements on either side are both true
+1 == 1 & 2 == 2 # See what this returns
+1 == 1 & 2 != 2 # Versus this
+# | (Pipe, or shift-backslash--OR operator; this returns TRUE if AT LEAST ONE of the statements on either side is true)
+1 == 1 | 2 == 2
+1 == 1 | 2 != 2
+
+# Relational operators also obey order of operations re: parentheses (). try the below statements
+(1 == 1 & 2 != 2)
+!(1 == 1 & 2 != 2)
+(1 == 1) & (2 != 2)
+(1 == 1) & !(2 != 2)
 ```
 
-Other useful functions will also output TRUE or FALSE, so you can use these similarly to relational statements to generate logical output based on the content of some data
+Other useful functions will also output TRUE or FALSE, so you can use these similarly to relational statements to generate logical output based on the content of some data.
 
 ```{r}
-# is.na() for example
+# Remember NA from before? Many times, you will want to know which elements of a dataframe column are missing.
+is.na(data2$conf)
+# There are many more of these is.whatever() functions!
 ```
 
 
@@ -449,31 +465,45 @@ All of this (if statements / if-else statements / if-elseif statements) can be d
 
 ## Packages
 
-Packages are bundles of functions in R, usually made by experienced programmers, that you can use to make life easier! 
-They often do things in easy ways that would be harder to do otherwise
+Packages are bundles of functions in R, usually made by experienced programmers, that you can use to make life easier! Oftentimes, if there's something you want to do in R, there already exists a function to do it, that you can find in a package.
 
-They have to be installed first. This is simple
+Since these packages don't come with base R, you have to install them.
 ```{r}
-# Show students install.packages() -- maybe with something from tidyverse or ggplot since we'll need those later?
-# Or do it through GUI
+# You will need these packages in later parts of the workshop!
+install.packages(pkgs = c("car",
+                          "moments",
+                          "ggplot",
+                          "tidyr",
+                          "dplyr",
+                          "effects"))
+
+# You can also do this through the GUI, using the "Packages" tab in the lower-right window of RStudio.
 ```
 
-Then loaded
+Then, once they're installed, you again have to tell R to LOAD the packages into your active R session. While you only have to install packages once, you have to load them every time you open R. (Why they don't load automatically? I don't know! But if you'd like to configure R to load packages automatically every time you open R, ask us after this)
+
 ```{r}
-# Show students library() and require()
+# Use library() to load a package ONCE IT'S INSTALLED.
+# You can put the package name as a string
+library("car")
+# OR unquoted, as a variable name. Some functions don't care whether you use quotes or not, but some do.
+library(moments)
+library(tidyr)
+library(dplyr)
+library(effects)
 ```
 
 
 ## Getting assistance
 
 + On your own
-  + The help docs!
-  + The internet
+    + The help docs!
+    + The internet
     + Stack Overflow & other Q&A spaces
     + R user blogs
 + Asking someone else
-  + Who to ask
-  + How to ask
+    + Who to ask
+    + How to ask
 
 
 ## PAB Other Thoughts
