@@ -14,6 +14,15 @@ Students will learn:
 2. How to check for missing or problematic data and address issues.
 3. How to rearrange and shape data in preparation for analysis. 
 
+## Install Packages
+
+```{r}
+
+library(dplyr)
+library(tidyr)
+
+```
+
 ## Getting your Data into R
 
 ### Entering data directly
