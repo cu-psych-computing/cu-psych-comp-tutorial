@@ -44,19 +44,21 @@ View(nhanes)
 
 ## 3: Scatter Plot & Basic ggplot Syntax
 
--Show `ggplot()` command usage including saving to a variable with `a <- ggplot()`
+-`ggplot()` command usage including saving to a variable with `a <- ggplot()`
 
--Then describe the general `ggplot(data, aes(x = [x axis variable], y = [y axis variable])` format
-    - talk about how the x and y variables are always specified in this `aes()` subfunction
+-The general format is `ggplot(data, aes(x = [x axis variable], y = [y axis variable])` 
+    - x and y variables are always specified in this `aes()` subfunction
 
 Run this line of code 
---show that axes are set up the way we'd expect, and seem to have sensible values
---ask people **why nothing appears on the graph**? **where's the data?**
+
 ```{r}
 
 ```
+--axes are set up the way we'd expect, and seem to have sensible values
+--why is nothing on this graph yet? we haven't put any graphic actually on the axes yet
 
-Explain that we need to tell `ggplot()` what kind of graphic to put on the axis
+
+We need to tell `ggplot()` what kind of graphic to put on the axis
 
 A lot of the time, the syntax is `geom_[something]`
 
@@ -69,10 +71,9 @@ So lets do scatter with `geom_point()` first:
 
 ## 4: Dot Plot Organized by Grouping Factor
 
-**Question for students**
-what if we want to look at distribution of weights by region in the nhanes data
+Question: what if we want to look at distribution of weights by region in the nhanes data?
 
-Explain that with ggplot, if x is a factor (discrete, not continuous) we can plot dots as a function of the fact
+With ggplot, if x is a factor (discrete, not continuous) we can plot dots as a function of the fact
 
 ```{r}
 
@@ -80,7 +81,7 @@ Explain that with ggplot, if x is a factor (discrete, not continuous) we can plo
 
 ## 5: Summary Plots
 
-Plotting data points is all well and good, but what if we want to use our plots to summarize distributions?
+Plotting data points is all well and good, but what if we want to use our plots to summarize distributions? We'll do that here: 
 
 ```{r}
 ```
@@ -89,8 +90,8 @@ Plotting data points is all well and good, but what if we want to use our plots 
 
 Let's say we think there might be a linear relationship between height and weight
 
-Tell students we can use `geom_smooth` for this and `method = 'lm` specifically for a linear model
-Also that `level = .95` can specify confidence interval about the estimate at each x value
+We can use `geom_smooth` for this and `method = 'lm` specifically for a linear model
+Also `level = .95` can specify confidence interval about the estimate at each x value
 
 ```{r}
 
@@ -107,7 +108,7 @@ Hmm, this actually looks like it's giving us some pretty bad predictions. We're 
 ## 7: Titles, Axis Labels
 
 
-Show students that the `labs()` command can be added to ggplot with different arguments, lke `x`, `y`, or `title` to make the plots clearer
+The `labs()` command can be added to ggplot with different arguments, lke `x`, `y`, or `title` to make the plots clearer
 
 ```{r}
 ```
@@ -122,7 +123,7 @@ require(tidyverse)
 
 ## 7: Facetting
 
-Talk about how its useful to have several plots in a panel sometimes, not just one. 
+Its useful to have several plots in a panel sometimes, not just one. 
 
 So for this data set, say we want to plot relationships between height and weight, but by region
 
@@ -140,9 +141,9 @@ We can even do multiple factors
 
 ## 8: Color
 
-Tell students that we can color either continuously or discretely, depending on how a variable is represented in r
+We can color either continuously or discretely, depending on how a variable is represented in r
 
-Be clear in explaining that we put `col = Height` into the `aes()` function because it's a grouping factor
+We put `col = Height` into the `aes()` function because it's a grouping factor
 
 Continous Example
 ```{r}
@@ -154,11 +155,11 @@ Discrete Example
 
 ```
 
-Tell students that it is EASY to choose your own custom colors (as well as using R presets), but we're not going to get into that right at this moment
+It is EASY to choose your own custom colors (as well as using R presets), but we're not going to get into that right at this moment
 
 ## 9: Themes
 
-Tell students we can use themes to make our plots prettier, and also customize the gridlines a lot 
+We can use themes to make our plots prettier, and also customize the gridlines a lot 
 
 
 ```{r}
@@ -167,9 +168,9 @@ Tell students we can use themes to make our plots prettier, and also customize t
 
 ## 10: Saving To Files
 
-Talk about the arguments for `file` , `plot`, `dpi`, `width`, and `height`
+Arguments for `file` , `plot`, `dpi`, `width`, and `height`
 
-Explain that we can use a variety of file formats
+We can use a variety of file formats
 
 ```{r}
 ```
@@ -178,7 +179,7 @@ Explain that we can use a variety of file formats
 
 ## 11: Final Points
 
-Tell students that these ggplot basic will get them a LONG way.
+Ggplot basic will get you a LONG way.
 
 Also, there is much more ggplot can do for making your plots very pretty, and also plotting lots of complex models
 

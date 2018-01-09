@@ -243,31 +243,32 @@ View(nhanes)</code></pre>
 </div>
 <div id="scatter-plot-basic-ggplot-syntax" class="section level2">
 <h2>3: Scatter Plot &amp; Basic ggplot Syntax</h2>
-<p>-Show <code>ggplot()</code> command usage including saving to a variable with <code>a &lt;- ggplot()</code></p>
-<p>-Then describe the general <code>ggplot(data, aes(x = [x axis variable], y = [y axis variable])</code> format - talk about how the x and y variables are always specified in this <code>aes()</code> subfunction</p>
-<p>Run this line of code –show that axes are set up the way we’d expect, and seem to have sensible values –ask people <strong>why nothing appears on the graph</strong>? <strong>where’s the data?</strong></p>
-<p>Explain that we need to tell <code>ggplot()</code> what kind of graphic to put on the axis</p>
+<p>-<code>ggplot()</code> command usage including saving to a variable with <code>a &lt;- ggplot()</code></p>
+<p>-The general format is <code>ggplot(data, aes(x = [x axis variable], y = [y axis variable])</code> - x and y variables are always specified in this <code>aes()</code> subfunction</p>
+<p>Run this line of code</p>
+<p>–axes are set up the way we’d expect, and seem to have sensible values –why is nothing on this graph yet? we haven’t put any graphic actually on the axes yet</p>
+<p>We need to tell <code>ggplot()</code> what kind of graphic to put on the axis</p>
 <p>A lot of the time, the syntax is <code>geom_[something]</code></p>
 <p>So lets do scatter with <code>geom_point()</code> first:</p>
 </div>
 <div id="dot-plot-organized-by-grouping-factor" class="section level2">
 <h2>4: Dot Plot Organized by Grouping Factor</h2>
-<p><strong>Question for students</strong> what if we want to look at distribution of weights by region in the nhanes data</p>
-<p>Explain that with ggplot, if x is a factor (discrete, not continuous) we can plot dots as a function of the fact</p>
+<p>Question: what if we want to look at distribution of weights by region in the nhanes data?</p>
+<p>With ggplot, if x is a factor (discrete, not continuous) we can plot dots as a function of the fact</p>
 </div>
 <div id="summary-plots" class="section level2">
 <h2>5: Summary Plots</h2>
-<p>Plotting data points is all well and good, but what if we want to use our plots to summarize distributions?</p>
+<p>Plotting data points is all well and good, but what if we want to use our plots to summarize distributions? We’ll do that here:</p>
 </div>
 <div id="fitting-lines-to-the-data" class="section level2">
 <h2>6: Fitting Lines To The Data</h2>
 <p>Let’s say we think there might be a linear relationship between height and weight</p>
-<p>Tell students we can use <code>geom_smooth</code> for this and <code>method = 'lm</code> specifically for a linear model Also that <code>level = .95</code> can specify confidence interval about the estimate at each x value</p>
+<p>We can use <code>geom_smooth</code> for this and <code>method = 'lm</code> specifically for a linear model Also <code>level = .95</code> can specify confidence interval about the estimate at each x value</p>
 <p>Hmm, this actually looks like it’s giving us some pretty bad predictions. We’re not going to get into the stats of this now, but we can also plot using <code>auto</code> which is a mix of models, and might be a bit smarter</p>
 </div>
 <div id="titles-axis-labels" class="section level2">
 <h2>7: Titles, Axis Labels</h2>
-<p>Show students that the <code>labs()</code> command can be added to ggplot with different arguments, lke <code>x</code>, <code>y</code>, or <code>title</code> to make the plots clearer</p>
+<p>The <code>labs()</code> command can be added to ggplot with different arguments, lke <code>x</code>, <code>y</code>, or <code>title</code> to make the plots clearer</p>
 <p>Note, if we want to change labels for FACTORS, not just axes, it’s easier to do that using the tidyverse</p>
 <pre class="r"><code>require(tidyverse)</code></pre>
 <pre><code>## Loading required package: tidyverse</code></pre>
@@ -287,31 +288,31 @@ View(nhanes)</code></pre>
 </div>
 <div id="facetting" class="section level2">
 <h2>7: Facetting</h2>
-<p>Talk about how its useful to have several plots in a panel sometimes, not just one.</p>
+<p>Its useful to have several plots in a panel sometimes, not just one.</p>
 <p>So for this data set, say we want to plot relationships between height and weight, but by region</p>
 <p>We can do this with <code>facet_wrap('Region')</code></p>
 <p>We can even do multiple factors</p>
 </div>
 <div id="color" class="section level2">
 <h2>8: Color</h2>
-<p>Tell students that we can color either continuously or discretely, depending on how a variable is represented in r</p>
-<p>Be clear in explaining that we put <code>col = Height</code> into the <code>aes()</code> function because it’s a grouping factor</p>
+<p>We can color either continuously or discretely, depending on how a variable is represented in r</p>
+<p>We put <code>col = Height</code> into the <code>aes()</code> function because it’s a grouping factor</p>
 <p>Continous Example</p>
 <p>Discrete Example</p>
-<p>Tell students that it is EASY to choose your own custom colors (as well as using R presets), but we’re not going to get into that right at this moment</p>
+<p>It is EASY to choose your own custom colors (as well as using R presets), but we’re not going to get into that right at this moment</p>
 </div>
 <div id="themes" class="section level2">
 <h2>9: Themes</h2>
-<p>Tell students we can use themes to make our plots prettier, and also customize the gridlines a lot</p>
+<p>We can use themes to make our plots prettier, and also customize the gridlines a lot</p>
 </div>
 <div id="saving-to-files" class="section level2">
 <h2>10: Saving To Files</h2>
-<p>Talk about the arguments for <code>file</code> , <code>plot</code>, <code>dpi</code>, <code>width</code>, and <code>height</code></p>
-<p>Explain that we can use a variety of file formats</p>
+<p>Arguments for <code>file</code> , <code>plot</code>, <code>dpi</code>, <code>width</code>, and <code>height</code></p>
+<p>We can use a variety of file formats</p>
 </div>
 <div id="final-points" class="section level2">
 <h2>11: Final Points</h2>
-<p>Tell students that these ggplot basic will get them a LONG way.</p>
+<p>Ggplot basic will get you a LONG way.</p>
 <p>Also, there is much more ggplot can do for making your plots very pretty, and also plotting lots of complex models</p>
 <p>Unlike excel and spss, which can often be cranky and difficult to bend to your will in customizing plots, ggplot is really easy to work with to make your graph look the way you want</p>
 </div>
