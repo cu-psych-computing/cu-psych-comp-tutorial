@@ -34,6 +34,9 @@ garcia <- read.csv('garcia.csv')
 
 ## First, load ggplot!
 ```{r}
+
+
+
 ```
 
 ## Descriptives
@@ -41,18 +44,20 @@ garcia <- read.csv('garcia.csv')
 Before we start plotting variables with ggplot, let's first use some basic histograms to visualize them. Let's do this for PWB, Locomotion, Assessment, Exercise, and AcademAchieve.
 ```{r}
 
+
 ```
 
 
 
 ## Scatter
 
-Let's look at how locomoation and assessment each predict psychological well-being (PWB)
-First, make 2 scatter plots with locomotion score/assessment score (respectively) on the x axis and PWB on the y axis. 
+Let's look at how locomotion and assessment each relate to psychological well-being (PWB)
+First, make 2 scatter plots in ggplot with locomotion score/assessment score (respectively) on the x axis and PWB on the y axis. 
 
 
 *Bonus*: Make the points purple on the scatter plot for locomotion
 ```{r}
+
 
 ```
 
@@ -60,6 +65,8 @@ Remember to save your plots to variables!
 
 Does it look like there's a relationship? Let's test this further by fitting a line to these points, with a 95% confidence interval. 
 ```{r}
+
+
 
 ```
 
@@ -79,6 +86,8 @@ Okay, so let's just think about locomotion for now. Maybe there's a difference i
 Remember, you might have to recode the variable to get your plot to show descriptive factor levels!
 
 ```{r}
+
+
 
 ```
 
