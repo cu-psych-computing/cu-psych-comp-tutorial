@@ -49,9 +49,8 @@ hist(garcia$Locomotion)
 
 ## Scatter
 
-Let's look at how locomoation and assessment each predict psychological well-being (PWB)
-First, make 2 scatter plots with locomotion score/assessment score (respectively) on the x axis and PWB on the y axis. 
-
+Let's look at how locomotion and assessment each relate to psychological well-being (PWB)
+First, make 2 scatter plots in ggplot with locomotion score/assessment score (respectively) on the x axis and PWB on the y axis. 
 
 *Bonus*: Make the points purple on the scatter plot for locomotion
 ```{r}
@@ -61,8 +60,6 @@ loco <- ggplot(garcia, aes(x = Locomotion, y = PWB)) + geom_point(col = 'purple'
 ```
 
 Remember to save your plots to variables!
-
-## Fitting a Line
 
 Does it look like there's a relationship? Let's test this further by fitting a line to these points, with a 95% confidence interval. 
 ```{r}
@@ -85,9 +82,8 @@ loco + stat_smooth(method = 'lm', level = .98)
 ```
 
 
-## Bar Plots
-
 Okay, so let's just think about locomotion for now. Maybe there's a difference in locomoation as a function of gender. Plot a bar plot showing the average locomotion score and 95% CI for each gender. Make the bars different colors for men/women.
+
 
 Remember, you might have to recode the variable to get your plot to show descriptive factor levels!
 
@@ -102,13 +98,11 @@ ggplot(garcia, aes(x = gender, y= Locomotion)) + stat_summary(fun.y = 'mean', ge
 Great! Sometimes bar plots can hide the distribution of the raw data though. Let's see these bar plots PLUS the individual points! Use geom_jitter() to plot the points so overlaps don't interfere with our interpretation.
 
 *Bonus*: Make the points slightly darker than the bars so they're visible
+
 ```{r}
 ggplot(garcia, aes(x = gender, y= Locomotion)) + stat_summary(fun.y = 'mean', geom = 'bar', aes(fill = gender), alpha = .4) + 
   stat_summary(fun.data = 'mean_cl_boot', geom = "errorbar") + geom_jitter(aes(col = gender), width = .05) 
 ```
-
-
-## Stat_Summary
 
 Hmm, this is getting a bit cluttered! Maybe better to just plot the mean and 95% CI, plus the jittered points. Do that using stat_summary(), and also make the jittered points smaller.
 
