@@ -27,7 +27,7 @@ library(effects)
 ```{r}
 # this dataset examines the relationship between multitasking and working memory.  original paper by Uncapher et al. 2016:  https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4733435/pdf/nihms712443.pdf
 
-df <- read.csv("uncapher_thieu_wagner_2016_target_memory.csv")
+df <- read.csv("unarget_memory.csv")
 
 # let's refresh our memory on the variables in this dataset
 names(df) 
