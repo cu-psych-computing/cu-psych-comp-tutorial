@@ -10,16 +10,6 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
-# In this chunk:
-# In the below code chunk, initialize a variable and set its value to any integer of your choice.
-# Initialize another variable, which will "check" the value of your first integer variable using some code, and have this variable's value be TRUE if your integer is an ODD number, and FALSE if your integer is an EVEN number. 
-
-#PAB - this second part is pretty tricky! Do you think we should have a question that demonstrates the basics of the mod operator first? (Assuming that's how you'd expect them to solve this)
-
-# Test your code using both positive and negative as well as both odd and even numbers, and zero.
-```
-
 Here's a dataframe containing a bit of information about Shakespeare's plays. Let's find out some information about this! The answer to each question should be expressed as the output of a command or a series of commands. "I looked and this is what the answer was" does not count!
 
 ```{r}
@@ -69,7 +59,7 @@ As you can see, this list is sorted alphabetically. What are the 5th through 8th
 
 ```
 
-Create a new column on the dataframe shakes where all the titles are in all caps. Name the column something sensible.
+Create a new column on the dataframe `shakes` where all the titles are in all caps. Name the column something sensible.
 ```{r}
 
 ```
