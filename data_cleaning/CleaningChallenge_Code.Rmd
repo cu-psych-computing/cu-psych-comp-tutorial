@@ -53,12 +53,12 @@ names(subjects)[names(subjects) == 'Q2'] <- 'Depression'
 names(subjects)[names(subjects) == 'Q3'] <- 'Stress'
 
 # The sex variable is coded in a non-intuitive way, change to male/female
-library(plyr)
-subjects$Sex <- mapvalues(subjects$Sex, from=c(1, 2), to=c("Female", "Male"))
+library(dplyr)
+subjects$Sex <- recode(subjects$Sex, '1'='Female', '2'='Male')
 
 # This study has three conditions, based on how long the subject kept their hand in cold water. Right now this is categorical, but you may want to look at it continuously. Make a new condition variable that's numeric.
 
-subjects$ConditionNum <- mapvalues(subjects$Condition, from=c("A", "B", "C"), to=c(1,2,4))
+subjects$ConditionNum <- recode(subjects$Condition, 'A'='1', 'B'='2', 'C'='3')
 subjects$ConditionNum <- as.numeric(subjects$ConditionNum)
 
 # Each subject in this study filled out three related questionnaires, but these scores can be combined into a composite score but taking the sum. Create a new variable for this score.
