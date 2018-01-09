@@ -17,14 +17,14 @@ Programming is telling a computer to do some action to some input info to get ou
 
 Before we actually get started with messing in R, we need to understand how R interacts with files on your computer. Any data that gets loaded in or saved out is saved on your computer proper, and you can access all of these files through R.
 ```{r explain working directories}
-getwd()
+
 ```
 
 ```{r explain file paths}
-# Absolute, e.g. the following
-"/Users/mthieu/Dropbox"
+# Absolute
+
 # Relative
-"mthieu/Dropbox"
+
 # Note that absolute file paths will typically START with a forward-slash / character, while relative paths will NEVER start with / . Why is this the case?
 # When would you want to use either one?
 ```
@@ -40,10 +40,8 @@ If you think about how variables like x and y are used in algebra, calculus, etc
 
 Variables can contain numbers. We *assign* a value to a name.
 ```{r make some vars}
-# We are storing the number 20 under the variable name first.var by using the left-arrow operator. It's like 20 is going "into" the label first.var
-first.var <- 20
-# And again with second.var
-second.var <- 0.5
+# Use the left-facing arrow <- operator to assign values to varaible names
+
 ```
 
 They can also contain other stuff (literally almost anything) but we'll talk about this later!
@@ -62,25 +60,23 @@ Information doesn't just exist in the environment--it can also be printed to **c
 
 Since variables are labels for pieces of information, a variable name can be used to refer to any piece of data where you would otherwise call that data directly. For example:
 ```{r}
-# This outputs the result to console
-20 + 10
-# Since first.var contains the value 20, this outputs the SAME result to console
-first.var + 10
+# Any piece of info that is being called but not assigned to a variable will show up in console
+
 ```
 
 Variables don't just have to contain pure numbers; you can assign the output of commands to variables.
 ```{r}
-third.var <- first.var + 10
+
 ```
 
-You can overwrite the values of variables 
+You can overwrite the values of variables
 ```{r}
 # With the values of other variables
-third.var <- second.var + 10
+
 # OR of the current value of the variable. Note that R will ALWAYS use the PREVIOUS value of a variable in all the calculations BEFORE re-assigning the final result to the variable name.
-third.var <- third.var + 10
+
 # You can also delete variables from your environment
-rm(third.var)
+
 ```
 
 Variable naming has to obey certain rules. In addition, name your variables to maximize both informativeness and conciseness.
@@ -129,8 +125,7 @@ So what kind of data can be stored and manipulated in R? There are different "ty
 Literally... any (real) number
 
 ```{r}
-first.var <- 280
-second.var <- 41.5
+
 ```
 
 #### Arithmetic operators
@@ -138,8 +133,6 @@ second.var <- 41.5
 Here are (some of) the things you can do with numeric data
 ```{r}
 # Maths!
-first.var + second.var
-first.var - second.var
 
 # All the arithmetic operators:
 # + (add) - (subtract) * (multiply) / (divide) ^ (exponent)
@@ -148,21 +141,17 @@ first.var - second.var
 
 ```{r}
 # Bonus arithmetic operator; you may need someday
-10 %% 2 # The modulo operator returns the remainder of dividing two numbers. Observe the results for the following modulo operations
-10 %% 3
-10 %% 4
-10 %% 5
+# The modulo %% operator returns the remainder of dividing two numbers
+
 ```
 
 ### Logical data
 It's like numbers, but represents `TRUE` and `FALSE`. Can be mathed on as if it were numeric; `TRUE` is 1 and `FALSE` is 0. Note that this is case-sensitive: R requires `TRUE` and `FALSE` to be written in all caps!
 ```{r}
-TRUE + 1
-FALSE + 1
+# You can do basic stuff like adding with logicals
 
-# But what's more interesting & useful is...
-TRUE * 10 # Like multiplying by 1. the other number stays the same!
-FALSE * 10 # Like multiplying by 0. the other number becomes 0!
+# But what's more interesting & useful is multiplying by TRUE or FALSE
+
 ```
 
 Also you can use logical data as informational flags. To be revisited...
@@ -173,17 +162,18 @@ This is letter/word-based data. A piece of character data is called a **string.*
 R understands that this data is made up of text, and treats it in a special way. You might encounter this if you are storing free-response text data in R, or perhaps if you have a list of word-based stimuli stored in R as part of your task data.
 
 ```{r}
-text.var <- "statistics"
-text.var.2 <- "my favorite number is 7" # Disclaimer: Not actually my favorite number
+
 ```
 
 Here are a couple of the functions that specifically operate on character data
 ```{r}
-toupper(statistics) # You can coerce things to upper or lowercase with the right function
-nchar(statistics) # You can also count the number of characters 
+# You can coerce things to upper or lowercase with the right function
+
+# You can also count the number of characters
+
 # Of note is that you canNOT do arithmetic on strings
-not.a.number <- "7"
-# Try to do arithmetic on this variable... what happens?
+
+# Try to do arithmetic on a string variable that appears to contain a number. what happens?
 ```
 
 ## Data structures
@@ -193,27 +183,26 @@ With all the data types we just talked about... just with more than one piece of
 A sequence of pieces of information that are **all the same data type** (for the computer) and meaningfully related (for you). Has length (can consider as one column). So powerful!
 
 ```{r}
-num.vector <- c(1, 2, 3, 4, 5)
-length(num.vector)
+# Create a vector using c()
 
 # a single piece of data is also a vector with length 1!
-length(first.var)
+
 ```
 
 The individual pieces of data inside one vector are called **elements.**
 
 Vectors can be any of the data types.
 ```{r}
-char.vector <- c("apple", "banana", "cantaloupe", "dragonfruit")
-length(char.vector)
+# You can have character vectors
 
-logical.vector <- c(TRUE, TRUE, FALSE, TRUE)
+# Or logical vectors
 ```
 
 ```{r}
 # As you can see, the function c() is the primary way to construct vectors, by listing out all the pieces of data you want to put into the vector inside the function.
 # BUT, R lets you do some special stuff to create certain useful numeric vectors...
-num.vector.2 <- 1:5
+# Use the colon operator to create a numeric vector
+
 ```
 
 #### Indexing into vectors
@@ -222,27 +211,23 @@ To tell R that you are indexing into a vector, you put the index inside hard bra
 
 ```{r}
 # You can index one piece of data
-char.vector[1]
+
 # You can also index multiple pieces of data out of a vector. This returns another, shorter, vector! You do this by putting a valid numeric vector inside the brackets.
 # Remember the colon : operator from above
-char.vector[1:3]
+
 # Or another valid numeric vector, using c()
-char.vector[c(1, 4)]
+
 # R starts indexing at 1; the first element in your vector is at index 1.
 # You can only index into your vector using VALID indices; that is, indices that actually correspond to elements in the vector. Essentially, you can't index using a number that is larger than the length of your vector.
 # You can also index to exclude elements from a vector, using negative numbers
-char.vector[-2]
+
 ```
 
 Logical indexing. Use a logical vector of equal length to your vector of interest; all TRUE values will be indexed and all FALSE values will not be indexed.
 ```{r}
-# Remember this vector? It should be of use here...
-logical.vector
-length(logical.vector)
-length(char.vector)
-# Which elements do you expect to be indexed here?
-char.vector[logical.vector]
-# We'll come back to this later
+# You can either use vectors you made earlier, or make two new vectors of EQUAL LENGTH: one character or numeric vector and one logical vector
+
+# Now use bracket-indexing to logical-index your first vector using your logical vector
 ```
 
 You can do two types of operations on vectors
@@ -253,8 +238,7 @@ If you wanna do the same thing to a bunch of data this is the way to do it fast!
 
 ```{r}
 # Basically all the arithmetic operations are vectorized, for example
-num.vector + 1
-num.vector * 12
+
 # and many other operations
 ```
 
@@ -263,9 +247,7 @@ These operations require multiple pieces of data (a vector) and returns one piec
 
 ```{r}
 # Stats operations are typically of this type
-mean(num.vector)
-min(num.vector)
-max(num.vector)
+
 ```
 
 ### Data frames
@@ -301,7 +283,7 @@ This is similar to indexing a single vector using brackets, but this time, a dat
 ```{r}
 # When you want ALL rows, you leave the row index BLANK. BUT you still need the comma!
 # Notice that I am calling the column name as a STRING.
-data[, "subjNum"]
+
 ```
 
 With the dollar sign:
@@ -311,7 +293,7 @@ Remember how dataframes are column-optimized? There's a special way to index col
 # You first write the name of your dataframe, then the $, to tell R to go "inside" of that dataframe and look for the column you're about to specify.
 # Then you write the column name, WITHOUT QUOTATION MARKS. NOT A STRING!
 # This is why $ indexing is special: A word without quotes is a VARIABLE NAME, but a word in quotes is a STRING. These behave two very different ways in R.
-data$subjNum
+
 ```
 
 Indexing rows:
@@ -319,11 +301,11 @@ Indexing rows:
 Indexing rows works similarly to indexing columns in some ways. But, while columns of a dataframe have names, *rows of a dataframe do not have names, ONLY numerical indices.* So we CANNOT use dollar-sign indexing to index rows, ONLY bracket indexing. And we cannot use words to call rows, ONLY numbers.
 ```{r}
 # Do we expect to call rows using the space BEFORE the comma, or AFTER the comma?
-data[1, ]
+
 # Observe that indexing a single row of a dataframe returns a dataframe with one row in it. Because R knows that each row of a dataframe is a complete observation of data, R keeps that observation in dataframe form even when there's only one observation, so that you can continue doing special dataframe stuff on it.
 
 # Remember that you can use a VECTOR in the numerical index to index MULTIPLE indices, here calling multiple rows
-data[1:4, ]
+
 ```
 
 Now, we're going to step out of talking about dataframes directly, and we're going to talk about other data types that are useful inside of dataframes.
@@ -337,8 +319,9 @@ data2 <- data # Duplicating my original dataframe into a new variable, so I can 
 # For example, here it might be useful for the column "groupStatus", which refers to a between-subjects labeling, to be in factor form.
 # I'll keep working on data2 here to keep data as the raw copy.
 # the function as.factor() is a COERCING function; we won't focus on these today, but these are a family of functions that take data of one type and change them into another type. Like, you could do as.numeric("9") to change it into the number 9.
-data2$groupStatus <- as.factor(data2$groupStatus)
-data2$groupStatus
+
+
+
 # Observe how this column now has LEVELS; these are the different categories of the variable.
 # They are organized alphabetically by default; you can reorganize the levels into a more meaningful way if you want
 # We won't worry too much more about factor data for now, but here are a couple of factor data's pros and cons relative to regular character data:
@@ -351,11 +334,9 @@ data2$groupStatus
 You know what's the worst? Missing data! But it happens to the best of us. When you have a missing data point in an Excel spreadsheet, you might leave that cell blank. But in R, you need to put a placeholder in that spot. There's a special data type, `NA`, used as the missing data placeholder.
 
 ```{r}
-# This dataframe column has missing data in it. When a participant didn't have any false alarms, there weren't any trials to calculate RT, for, so this data point is missing in that situation!
-data2$rtFA
+# The dataframe column rtFA already has missing data in it. When a participant didn't have any false alarms, there weren't any trials to calculate RT, for, so this data point is missing in that situation!
 
-mean(data2$rtFA, na.rm = TRUE)
-# Try running the above command after deleting the na.rm argument, aka mean(data2$rtFA)
+# Try calculating the mean of the values in the rtFA column. what happens?
 ```
 
 # HOW
@@ -383,21 +364,15 @@ Most of the time, when you want to do things in R, you want to do them in *some 
 ```{r}
 # The following is a RELATIONAL STATEMENT. This is a command involving a relational operator that returns TRUE or FALSE based on whether the statement is true or false.
 2 > 1
-# Or try this
-2 < 1
-# Or these
-99 == 99
-99 != 100
+# You can try some of your own!
+
 # All the relational operators:
 # > (greater than) < (less than) >= (greater than or equal to) <= (less than or equal to) # == (is equal to, NOTE that it is TWO equals signs, ONE equals sign does something different)
 # != (is not equal to)
 # In most cases, you can use == and != to compare character data too--if you want to see if one piece of character data is the same as another piece
-"word" == "word"
-text.var == "statistics"
+
 # %in% (is contained by; this is useful when you need to see whether the element on the left matches any of a vector of elements on the right)
-1 %in% 1:5
-"apple" %in% char.vector
-"orange" %in% char.vector
+
 # Note that %in% takes a VECTOR on the right side, and looks for FULL MATCHES from the element on the left to the elements on the right. To match a piece of character data into a single, LONGER piece of character data on the right (e.g. matching one word into a sentence), you have to use other strategies we won't get into here.
 ```
 
@@ -406,7 +381,9 @@ If we think about the pseudocode from earlier...
 # The first step of the pseudocode:
 # call HIT RATE, but only the ones for HIGH CONFIDENCE
 # We want to know which values of the column groupStatus are equal to "HMM"
-data2$groupStatus == "HMM"
+
+
+
 # Relational operators are vectorized--see that feeding in a vector on the left of the relational statement returns a logical vector, not just one logical!
 ```
 
@@ -415,9 +392,13 @@ Logical indexing is the best! and a frequent use case of relational statements. 
 # Now that we see that we get a logical vector from calling data2$conf == "hi"
 # Remember that a vector can be used inside bracket indexing
 # And if you call a logical vector inside brackets, only the values that are TRUE will be indexed
-data2$hitRate[data2$groupStatus == "HMM"]
+
+
+
 # Now, I can complete my code! Because I have just identified all the values I'd like to calculate the mean on.
-mean(data2$hitRate[data2$groupStatus == "HMM"])
+
+
+
 ```
 
 ## Logical operators
@@ -426,28 +407,26 @@ Relational statements will get you a long way. Sometimes, though, you need to kn
 ```{r}
 # These are the Boolean operators you'll need:
 # ! (NOT operator; this returns the opposite of whatever you put in)
-!TRUE # see what this returns
-!(data2$groupStatus == "HMM") # This should return TRUE for all the times where conf is "lo"
-# & (AND operator; this returns TRUE if both statements on either side are both true
-1 == 1 & 2 == 2 # See what this returns
-1 == 1 & 2 != 2 # Versus this
-# | (Pipe, or shift-backslash--OR operator; this returns TRUE if AT LEAST ONE of the statements on either side is true)
-1 == 1 | 2 == 2
-1 == 1 | 2 != 2
 
-# Relational operators also obey order of operations re: parentheses (). try the below statements
-(1 == 1 & 2 != 2)
-!(1 == 1 & 2 != 2)
-(1 == 1) & (2 != 2)
-(1 == 1) & !(2 != 2)
+
+# & (AND operator; this returns TRUE if both statements on either side are both true
+
+
+# | (Pipe, or shift-backslash--OR operator; this returns TRUE if AT LEAST ONE of the statements on either side is true)
+
+
+# Relational operators also obey order of operations re: parentheses ().
+
+
+
 ```
 
 Other useful functions will also output TRUE or FALSE, so you can use these similarly to relational statements to generate logical output based on the content of some data.
 
 ```{r}
 # Remember NA from before? Many times, you will want to know which elements of a dataframe column are missing.
-is.na(data2$conf)
-# There are many more of these is.whatever() functions!
+
+# There are many of these is.whatever() functions!
 ```
 
 
@@ -464,13 +443,7 @@ Packages are bundles of functions in R, usually made by experienced programmers,
 
 Since these packages don't come with base R, you have to install them.
 ```{r}
-# You will need these packages in later parts of the workshop!
-install.packages(pkgs = c("car",
-                          "moments",
-                          "ggplot",
-                          "tidyr",
-                          "dplyr",
-                          "effects"))
+# You will need these packages in later parts of the workshop! We'll do this using a function first, so you can tell R to install packages in the console.
 
 # You can also do this through the GUI, using the "Packages" tab in the lower-right window of RStudio.
 ```
@@ -480,12 +453,11 @@ Then, once they're installed, you again have to tell R to LOAD the packages into
 ```{r}
 # Use library() to load a package ONCE IT'S INSTALLED.
 # You can put the package name as a string
-library("car")
+
+
 # OR unquoted, as a variable name. Some functions don't care whether you use quotes or not, but some do.
-library(moments)
-library(tidyr)
-library(dplyr)
-library(effects)
+
+
 ```
 
 

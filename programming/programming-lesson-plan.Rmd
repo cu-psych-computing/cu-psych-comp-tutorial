@@ -148,7 +148,7 @@ first.var - second.var
 
 ```{r}
 # Bonus arithmetic operator; you may need someday
-10 %% 2 # The modulo operator returns the remainder of dividing two numbers. Observe the results for the following modulo operations
+10 %% 2 # The modulo %% operator returns the remainder of dividing two numbers. Observe the results for the following modulo operations
 10 %% 3
 10 %% 4
 10 %% 5
@@ -427,7 +427,7 @@ Relational statements will get you a long way. Sometimes, though, you need to kn
 # These are the Boolean operators you'll need:
 # ! (NOT operator; this returns the opposite of whatever you put in)
 !TRUE # see what this returns
-!(data2$groupStatus == "HMM") # This should return TRUE for all the times where conf is "lo"
+!(data2$groupStatus == "HMM") # This should return TRUE for all the times where groupStatus is "LMM"
 # & (AND operator; this returns TRUE if both statements on either side are both true
 1 == 1 & 2 == 2 # See what this returns
 1 == 1 & 2 != 2 # Versus this
