@@ -278,9 +278,9 @@ Each column is a vector, containing all the observations of a particular meaning
 ```{r}
 # This command will load a dataframe in from a study I worked in undergrad. It's saved externally as a CSV file (one that you could open in Excel if you wanted to), so you can see the commonalities between your garden-variety study data Excel spreadsheet and an R dataframe.
 # Quick review question: Am I calling the below file path using an ABSOLUTE or RELATIVE path? How can you tell?
-data <- read.csv(file = "../Descriptives_and_statistics/original_study/uncapher_thieu_wagner_2016_target_memory.csv", header = TRUE, stringsAsFactors = FALSE)
-# Don't worry about the command below; I'm just shortening the dataframe to only include data from a single subject. You'll understand what this means later! Just run it now.
-data <- data[data$subjNum == 2, ]
+data <- read.csv(file = "../Descriptives/uncapher_2016_one_condition_dataset.csv", header = TRUE, stringsAsFactors = FALSE)
+# Don't worry about the command below; I'm just shortening the dataframe. You'll understand what this means later! Just run it now.
+data <- data[data$groupStatus == "", -c(1:4, 22:26)]
 # PAB -- emphasize that vectors in a dataframe are of equal length -- and why this makes sense
 ```
 
@@ -454,13 +454,10 @@ is.na(data2$conf)
 
 
 ## Conditional statements
-When you want to evaluate whole blocks of code only when certain things are true
-Do this with flowcharts on a whiteboard if you can
-
-All of this (if statements / if-else statements / if-elseif statements) can be done with one big code exercise example. See what was written in other markdown
+Sometimes, you want to run entire commands based on whether certain things are true or false. We can use what we've learned about logical statements so far, in conjunction with some new commands!
 
 ```{r}
-# But be mindful that if-elseif statements evaluate in ORDER
+# MKT: I actually think maybe we shouldn't include conditional statements... it hurts me in my soul but upon reflection, perhaps this isn't necessary since most basic things people can do using logical indexing.
 ```
 
 ## Packages
