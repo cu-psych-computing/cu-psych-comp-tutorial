@@ -280,7 +280,7 @@ Each column is a vector, containing all the observations of a particular meaning
 # Quick review question: Am I calling the below file path using an ABSOLUTE or RELATIVE path? How can you tell?
 data <- read.csv(file = "../Descriptives/uncapher_2016_one_condition_dataset.csv", header = TRUE, stringsAsFactors = FALSE)
 # Don't worry about the command below; I'm just shortening the dataframe. You'll understand what this means later! Just run it now.
-data <- data[data$groupStatus == "", -c(1:4, 22:26)]
+data <- data[data$groupStatus != "", -c(1:4, 22:26)]
 # PAB -- emphasize that vectors in a dataframe are of equal length -- and why this makes sense
 ```
 
@@ -332,11 +332,13 @@ Now, we're going to step out of talking about dataframes directly, and we're goi
 Remember character data from earlier? That's R's all-purpose data type for text-based data. But R knows that sometimes, especially in a dataframe, you might have a column composed of text to label your within-subject task conditions, between-subject groups, etc. **Factor data** is a datatype built on top of character data that gives you special properties that are useful when a column/vector contains grouping information.
 
 ```{r}
-# For example, here it might be useful for the column "conf", which refers to each response confidence condition (high or low confidence), to be in factor form.
+data2 <- data # Duplicating my original dataframe into a new variable, so I can keep an original copy!
+
+# For example, here it might be useful for the column "groupStatus", which refers to a between-subjects labeling, to be in factor form.
 # I'll keep working on data2 here to keep data as the raw copy.
 # the function as.factor() is a COERCING function; we won't focus on these today, but these are a family of functions that take data of one type and change them into another type. Like, you could do as.numeric("9") to change it into the number 9.
-data2$conf <- as.factor(data2$conf)
-data2$conf
+data2$groupStatus <- as.factor(data2$groupStatus)
+data2$groupStatus
 # Observe how this column now has LEVELS; these are the different categories of the variable.
 # They are organized alphabetically by default; you can reorganize the levels into a more meaningful way if you want
 # We won't worry too much more about factor data for now, but here are a couple of factor data's pros and cons relative to regular character data:
@@ -349,13 +351,9 @@ data2$conf
 You know what's the worst? Missing data! But it happens to the best of us. When you have a missing data point in an Excel spreadsheet, you might leave that cell blank. But in R, you need to put a placeholder in that spot. There's a special data type, `NA`, used as the missing data placeholder.
 
 ```{r}
-data2 <- data # Duplicating my original dataframe into a new variable, so I can keep an original copy!
-# Remember that one column of a dataframe is a vector. This means that if I call one column using $ indexing, I can THEN [] index into that column like any old vector!
-# Here I am accessing some of the cells of my original data frame, and changing their values to NA. This is what it might have looked like if the code to run my original task malfunctioned, and wasn't recording RT for some of the key presses.
-data2$rtFA[c(2, 4, 6, 8)] <- NA
-# Now let's take a look at what this dataframe looks like now in the console
-data2
-# The NA placeholder allows R to work around missing data in all sorts of functions. For example:
+# This dataframe column has missing data in it. When a participant didn't have any false alarms, there weren't any trials to calculate RT, for, so this data point is missing in that situation!
+data2$rtFA
+
 mean(data2$rtFA, na.rm = TRUE)
 # Try running the above command after deleting the na.rm argument, aka mean(data2$rtFA)
 ```
@@ -368,10 +366,10 @@ It's so important!!! Be able to talk through what you want to do in plain Englis
 
 ```{r}
 # Let's say I want to...
-# Calculate the mean hit rate for this subject across all distractor conditions, but only for high confidence responses.
+# Calculate the mean hit rate for all subjects in the group "HMM".
 # I need to OPERATIONALIZE this statement into a series of pieces that can be directly translated into R commands
 
-# First, call HIT RATE, but only the ones for HIGH CONFIDENCE
+# First, call HIT RATE, but only the ones for "HMM" subjects
 # Then, calculate the mean of that
 
 # This one was pretty brief. Pseudocoding can be quick, but it can often be quite complex for larger tasks!
@@ -407,8 +405,8 @@ If we think about the pseudocode from earlier...
 ```{r}
 # The first step of the pseudocode:
 # call HIT RATE, but only the ones for HIGH CONFIDENCE
-# We want to know which values of the column conf are equal to "hi"
-data2$conf == "hi"
+# We want to know which values of the column groupStatus are equal to "HMM"
+data2$groupStatus == "HMM"
 # Relational operators are vectorized--see that feeding in a vector on the left of the relational statement returns a logical vector, not just one logical!
 ```
 
@@ -417,9 +415,9 @@ Logical indexing is the best! and a frequent use case of relational statements. 
 # Now that we see that we get a logical vector from calling data2$conf == "hi"
 # Remember that a vector can be used inside bracket indexing
 # And if you call a logical vector inside brackets, only the values that are TRUE will be indexed
-data2$hitRate[data2$conf == "hi"]
+data2$hitRate[data2$groupStatus == "HMM"]
 # Now, I can complete my code! Because I have just identified all the values I'd like to calculate the mean on.
-mean(data2$hitRate[data2$conf == "hi"])
+mean(data2$hitRate[data2$groupStatus == "HMM"])
 ```
 
 ## Logical operators
@@ -429,7 +427,7 @@ Relational statements will get you a long way. Sometimes, though, you need to kn
 # These are the Boolean operators you'll need:
 # ! (NOT operator; this returns the opposite of whatever you put in)
 !TRUE # see what this returns
-!(data2$conf == "hi") # This should return TRUE for all the times where conf is "lo"
+!(data2$groupStatus == "HMM") # This should return TRUE for all the times where conf is "lo"
 # & (AND operator; this returns TRUE if both statements on either side are both true
 1 == 1 & 2 == 2 # See what this returns
 1 == 1 & 2 != 2 # Versus this
