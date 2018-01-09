@@ -1,0 +1,73 @@
+---
+title: "Descriptives_Data_Challenge"
+output: html_document
+---
+
+# Data challenge for descriptive statistics
+```{r}
+
+library(car)
+library(moments)
+library(tidyr)
+library(dplyr)
+
+```
+
+Using the same dataset, complete the following exercises. 
+```{r}
+# this dataset examines the relationship between multitasking and working memory.
+# original paper by Uncapher et al. 2016:  https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4733435/pdf/nihms712443.pdf
+
+# open the data from csv 
+df <- read.csv("uncapher_2016_one_condition_dataset.csv")
+```
+
+1. Make a histogram of the variable called "Dprime". Add colors and labels. This variable represents (normed) hit rate /(normed) false alarm rate during the working memory task. 
+
+```{r}
+
+hist(df$dprime, col = "blue", breaks = 20)
+
+
+```
+
+
+
+2. What is the skew and kurtosis of Dprime? Is it normally distributed? 
+```{r}
+
+skewness(df$dprime, na.rm = TRUE)
+
+kurtosis(df$dprime, na.rm = TRUE)
+
+shapiro.test(df$dprime)
+```
+
+3.Make a boxplot comparing Dprime between high multitaskers (groupStatus: HMM) and low multitaskers (groupStatus: LMM). 
+```{r}
+
+boxplot(df$dprime, df$groupStatus)
+
+```
+
+4. what is the mean dprime score for high multitaskers and low multitaskers?
+```{r}
+
+grouped <- group_by(dprime, groupStatus)
+
+# now we will extract summary statistics from the grouped data
+summarise(grouped, mean=mean(dprime), sd = sd(dprime),  min=min(dprime), max=max(dprime)))
+
+
+```
+
+5. Make a plot showing the relationship between multitasking and dprime.
+Is this relationship positive or negative?  
+
+```{r}
+
+plot(df$dprime ~ df$mmi) # negative. 
+
+
+```
+

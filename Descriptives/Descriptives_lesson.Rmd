@@ -1,0 +1,213 @@
+---
+title: "R TUTORIAL: Descriptives"
+output: 
+  html_document: 
+    toc: true
+    toc_float: true
+---
+
+# Goals for this tutorial:
+1. Learn basics of plotting descriptives in R 
+2. Learn tools to generate descriptive statistics in R 
+
+
+#install and load packages that you'll need
+```{r setup, include=FALSE}
+
+
+#install.packages("car")
+#Companion to Applied Regression
+#Functions and Datasets to Accompany J. Fox and S. Weisberg, An R Companion to Applied Regression, Second Edition, Sage, 2011.
+# https://cran.r-project.org/web/packages/car/car.pdf
+
+#install.packages("moments") 
+# useful descriptive calculationss
+#https://cran.r-project.org/web/packages/moments/moments.pdf
+
+
+library(car)
+library(moments)
+library(tidyr)
+library(dplyr)
+```
+
+# Let's explore a sample dataset! 
+```{r}
+# this dataset examines the relationship between multitasking and working memory.
+# original paper by Uncapher et al. 2016:  https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4733435/pdf/nihms712443.pdf
+
+# open the data from csv 
+df <- read.csv("uncapher_2016_one_condition_dataset.csv")
+
+
+```
+
+First we will check the data to make sure 
+(a) it's a dataframe
+(b) what the column names are 
+(c) how many rows and columns 
+(d) snapshot of the data itself
+```{r}
+# check that it's a dataframe 
+
+
+# list out column names (Variable names)
+
+# how many rows ?
+
+
+# how many columns? 
+
+# get a snaphot of the data inside the dataframe
+
+# how many subjects are in this dataframe?
+
+```
+
+# 1.A. graphing skew/ normality of variables 
+plot histogram of continuous variables
+```{r}
+# plot histogram of media multitasking
+hist(df$mmi)
+# what is the skew?
+
+# plot histogram of ADHD measure
+hist(df$adhd)
+
+# plot histogram of impulsivity measure
+hist(df$bis)
+```
+
+Next, let's make the histogram prettier with some extra arguments.
+base R graphics have many more options, these are just a few to get you started.
+```{r}
+# add light blue color using col = "light blue"
+# add a yaxis label and an x axis label using ylab and xlab
+
+hist(df$mmi, col= "light blue", main = "", ylab = "Frequency", xlab = "Media Multitasking")
+```
+
+
+#1.B. Quantative assessments of skew:
+```{r}
+#calculate skew for mmi. is it positive or negative? 
+
+skewness(df$mmi)
+
+#calculate kurtosis for mmi. is it positive or negative? 
+kurtosis(df$mni) 
+# hint: positive kurtosis means that the tails are thinner than normal distribution.
+
+#Use the shapiro test, which tests null hypothesis that the samples came from a normal distribution.
+shapiro.test(df$mmi)  
+```
+ 
+
+# 2. Basic Descriptives
+let's learn how to get range, mean, sd, minimum, maximum, etc.
+```{r}
+# provide the range of mmi variable
+range(df$mmi)
+
+# average score  of mmi 
+mean(df$mmi, na.rm = TRUE)
+
+# standard deviation of mmi
+sd(df$mmi, na.rm = TRUE)
+
+# the simplest way to get summary descriptives on a variable 
+summary(df$mmi)
+
+ 
+# we can also combine them into a table, using the summarise function 
+my_table <- summarise(df, mean=mean(mmi), stdev = sd(mmi),  min=min(mmi), max=max(mmi))
+
+# if you want to save this table for later, write to a csv ! 
+write.csv(my_table, "multitasking_summary_table.csv" )
+
+
+#notes: it will automatically save to your working directory unless you specify otherise 
+# remember to check your working directory, use gwd() 
+# to change your working directory, use setwd() 
+# or, add the path manually "/dir/dir/dir/filename.csv"
+```
+
+Quantiles 
+```{r}
+
+#The GroupStatus variable represents the 1st and 4th quartiles of media multitasking score (variable: mmi, LMM and HMM)
+
+# Let's extract the mmi value at the 1st and 4th quartiles 
+quantile(df$mmi, (0.25), na.rm = TRUE)
+
+quantile(df$mmi, (0.75), na.rm = TRUE)
+
+```
+
+# 2B. Descriptives with grouping
+We can also generate descriptive statistics based on grouping variables. 
+Here we will look at impulsitivity (bis) by group: high or low media multitasking (HMM or LMM)
+
+```{r}
+# the group_by function is from our friend, from tidyverse.
+
+# the first argument is your variable of interest (mmi)
+# second & third arguments are your grouping variables (factors)
+# group by the between subject variable: groupStatus (high, low media multitasking))
+grouped <- group_by(mmi, groupStatus)
+
+# now we will extract summary statistics from the grouped data
+summarise(grouped, mean=mean(mmi), sd = sd(mmi),  min=min(mmi), max=max(mmi))
+
+```
+
+# 3.Boxplots 
+We will use the basic boxplot function available in base R. Boxplots can be created for individual variables quite easily and give you a quick idea of the spread of your data. Here, we will make a boxplot for self-reported media multitasking (mmi).
+
+```{r}
+# make a boxplot using R base plots
+
+# outliers are automatically labeled as dots.
+# you can exclude them if you want with a simple argument 
+# notice that the y axis also automatically changes!
+
+
+# what if you prefer horizonal plots? 
+```
+
+#3B. Boxplots with grouping 
+We can also use grouping variables in boxplots. Here we will plot ADHD symptoms by group: high or low media multitasking (HMM or LMM)
+```{r}
+#mmi = y variable, groupStatus is our (x) variable
+# we are only interested in the high multitasking and and low multitasking groups, so we will filter the data to remove those in the middle (and therefore not labeled for groupStatus)
+
+
+# let's make this one prettier by adding axis labels and colors 
+boxplot(adhd ~ groupStatus, data=df.group,
+  	xlab="Multitasking Group", ylab="ADHD", col = c("light blue", "light green"))
+```
+
+# 5. Relationships between two continuous variables
+
+```{r}
+
+# graph the relationship between ADHD (x) and impulsivity (y)
+
+# this is the most basic plot you can make. 
+#don't worry, later we will show you how to make much prettier graphs! 
+
+```
+
+# 6. Relationships of many variables
+We can use scatterplot matrices  which are a handy & quick way of visualizing relationships between multiple variables in a dataset. This works best when you have 3-5 variables (it gets too hard to read after that).
+Let's look at the relationships between multitasking, impulsitivity, and adhd symptoms.
+
+```{r}
+
+# We will use the pairs function 
+# in order to isolate the 3 variables we want, indexing [16:18] variables 
+
+# There are positive relationships evident between each pair of variables! 
+# We will explore these relationshisp more in the statistics tutorial.
+```
+
