@@ -1,4 +1,4 @@
-This is study of how stress affects performance on a perceptual task. Participants completed a cold-pressor task, in which they place their hand in near freezing water for a certain amount of time. This task has been reliably shown to induce a stress response. Participants then completed a perceptual task were reaction time was measured.  
+This is study of how stress affects performance on a perceptual task. Participants completed a cold-pressor task, in which they place their hand in near freezing water for a certain amount of time. This task has been reliably shown to induce a stress response. Participants then completed a perceptual task where reaction time was measured.  
 
 You have the data from the first 10 subjects in the file Study2_Subjects.csv. Variables included are:
 
