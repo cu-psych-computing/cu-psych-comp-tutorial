@@ -131,7 +131,7 @@ post_hoc <- TukeyHSD(aov_3)
 post_hoc # view the output.
 
 #We can extract the 6 contrasts of the 2x2 interaction by indexing the results of the TukeyHSD() function.
-ph_table <- post_hoc$'groupStatus:bisGroups'
+ph_table <- post_hoc$'groupStatus:Gender'
 ph_table # view the output.  
 ```
 
