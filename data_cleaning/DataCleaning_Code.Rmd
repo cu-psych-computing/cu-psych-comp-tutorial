@@ -149,7 +149,7 @@ mydata$Age[mydata$ID==39] <- 30
 
 ### Check for correct values
 
-To look at some of the other variables, let's use the table function. This works well for factors or variables with only a few different values. Our condition and sex variables are good here.
+To look at some of the other variables, let's use the `table()` function. This works well for factors or variables with only a few different values. Our condition and sex variables are good here.
 ```{r}
 
 # Make tables of categorical variables
@@ -159,7 +159,7 @@ table(mydata$Sex)
 
 ```
 
-When we look at the table for the Sex variable, we see another data entry problem. We have a third category that should really be another case of "Female".We can fix all of these at once, but sometimes messing with factors is more complicated than numeric variables.
+When we look at the table for the Sex variable, we see another data entry problem. We have a third category that should really be another case of "Female". We can fix all of these at once, but sometimes messing with factors is more complicated than numeric variables.
 
 ```{r}
 
@@ -170,7 +170,7 @@ table(mydata$Sex)
 
 ```
 
-Now let's look at the continuous variables. You can also look at these with the table function, but sometimes it's easier to visualize. The histogram function is good here.
+Now let's look at the continuous variables. You can also look at these with the table function, but sometimes it's easier to visualize. The `hist()` function, which creates histograms, is good here.
 
 ```{r}
 # Create histograms to see data distribution
@@ -189,7 +189,7 @@ Now that we've gone through and cleaned up the problems, you can think ahead to 
 
 ### Recoding variables
 
-Sometimes we want to treat categorical variables as factors, but sometimes we want to pretend they're numeric (as in a regression, when binary variables can be coded as 0 and 1). Right now, Condition is coded as a binary numeric variable, but that's not very informative, so you'd rather have the values be descriptive. Here, the function mapvalues from the plyr package is really useful. We'll create a second variable instead of overwriting Condition
+Sometimes we want to treat categorical variables as factors, but sometimes we want to pretend they're numeric (as in a regression, when binary variables can be coded as 0 and 1). Right now, Condition is coded as a binary numeric variable, but that's not very informative, so you'd rather have the values be descriptive. Here, the function `recode()` from the `dplyr` package is really useful. We'll create a second variable instead of overwriting Condition
 
 ```{r}
 
@@ -202,7 +202,7 @@ mydata$ConditionF <- recode(mydata$Condition, '0'='Control', '1'='Treatment')
 
 ### Calculating new variables
 
-You may also want to recalculate or rescale some variables. For example, we can turn Neuroticism into a Z score, or calculate an average response across the four time points. For Z scores, you can use the scale() function. You can also use this to just mean-center the data.
+You may also want to recalculate or rescale some variables. For example, we can turn Neuroticism into a Z score, or calculate an average response across the four time points. For Z scores, you can use the `scale()` function. You can also use this to just mean-center the data.
 
 ```{r}
 
@@ -217,7 +217,7 @@ mydata$Average <- rowMeans(mydata[c("T1", "T2", "T3", "T4")])
 
 ### Shaping data
 
-Finally, you may want to change the layout of your data. Right now, our data frame is in "wide" format, which means that each row is a subject, and each observation gets its own column. For some analyses, you'll need to use "long" format, where each row is an observation, and columns specify things like time and ID to differentiate the observations. There are lots of packages that can handle data reshaping, but I'll show the gather and spread functions from tidyr
+Finally, you may want to change the layout of your data. Right now, our data frame is in "wide" format, which means that each row is a subject, and each observation gets its own column. For some analyses, you'll need to use "long" format, where each row is an observation, and columns specify things like time and ID to differentiate the observations. There are lots of packages that can handle data reshaping, but I'll show the `gather()` and `spread()` functions from `tidyr`.
 
 ```{r}
 
