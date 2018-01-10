@@ -28,7 +28,7 @@ library(effects)
 # this dataset examines the relationship between multitasking and working memory.  original paper by Uncapher et al. 2016:  https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4733435/pdf/nihms712443.pdf
 
 # we will download 2 datasets this time. 
-# 1. simple wide-format dataframe, which only includes one condiiton of the task
+# 1. simple wide-format dataframe, which only includes one conditon of the task
 #( therefore there is one line per subject) 
 df <- read.csv("uncapher_2016_one_condition_dataset.csv")
 
@@ -84,9 +84,9 @@ t.test(df.grouponly$adhd ~ df.grouponly$groupStatus, var.equal=TRUE)
 
 Paired t-test: We wil use our repeated measures dataset (df_rm) to test whether dprime (hit rate/false alarm rate) varies based on within-subject condition of distractors in the working memory task (distPresent)
 ```{r}
-# The only thing you need to change in the code for a paired t-test is add an argument: paired == TRUE.
+# The only thing you need to change in the code for a paired t-test is add an argument: paired = TRUE.
 
-t.test(df_rm$dprime ~ df_rm$distPresent, var.equal=TRUE)
+t.test(df_rm$dprime ~ df_rm$distPresent, paired = TRUE)
 
 # surprisngly, no! 
 ```
