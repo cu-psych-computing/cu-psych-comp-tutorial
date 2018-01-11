@@ -430,12 +430,37 @@ Other useful functions will also output TRUE or FALSE, so you can use these simi
 ```
 
 
-## Conditional statements
-Sometimes, you want to run entire commands based on whether certain things are true or false. We can use what we've learned about logical statements so far, in conjunction with some new commands!
+## Conditional operators
+Sometimes, you want to run commands or set values based on whether certain things are true or false. For example, imagine that you have some continuous outcome variable, and you want to recode that continuous outcome variable categorically.
+
+We can use what we've learned about logical statements so far, in conjunction with some new commands!
 
 ```{r}
-# MKT: I actually think maybe we shouldn't include conditional statements... it hurts me in my soul but upon reflection, perhaps this isn't necessary since most basic things people can do using logical indexing.
+# Let's consider the column adhd in data2. This is the participant's score on the ADHD Adult Self-Report Scale (short form). The inventory scoring instructions say that any participant with a score of 4 or above is considered "potentially diagnostic of ADHD". If we wanted to add a variable that indicated whether someone did or did not have a suprathreshold ADHD score, what would we do?
+
+# Pseudocode!
+# First, call the column for ADHD
+# Then, create a new column and fill in the following values based on the corresponding values in ADHD
+# If the ADHD score is 4 or above, then label in the new column as ADHD diagnostic
+# Otherwise (if the ADHD score is less than 4), label in the new column as ADHD non-diagnostic
 ```
+
+Now, our pseudocode has just introduced a word we haven't previously seen: *IF.* What we need here is a command that will direct R to judge whether some condition is true, and then perform some action ONLY if that condition is true. If-based code is great for promoting reproducibility. You can just tell R to check that a certain condition is true, and you'll always get the result you want, no matter the particulars of your data.
+
+```{r}
+# The ifelse() function will allow us to knock out almost all of our pseudocode in one function
+# First, ifelse() takes a TEST: this is any statement that evaluates to LOGICAL data. It's a question in R that must yield a YES or NO answer.
+# then, ifelse() creates a new vector the same length as the test. each element of test is going to be filled in with some value based on whether the test came out as TRUE or FALSE for that element.
+# if the condition is TRUE for an element, ifelse() fills in that spot with the second argument, which is named 'yes'
+# if the condition is FALSE for an element, ifelse() fills in that spot with the third argument, which is named 'no'
+# in plain english, it kind of says:
+# check whether this condition is true or false
+# if the condition is true, create a variable with value A
+# otherwise, create a variable with value B
+# ifelse() is a vectorized function! Remember that this means that if you input a vector in the first argument, you'll get a vector of the same length as your output, because the operation is done on each vector element separately.
+
+```
+
 
 ## Packages
 

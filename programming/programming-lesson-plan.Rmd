@@ -441,12 +441,21 @@ We can use what we've learned about logical statements so far, in conjunction wi
 # Otherwise (if the ADHD score is less than 4), label in the new column as ADHD non-diagnostic
 ```
 
-Now, our pseudocode has just introduced a word we haven't previously seen: *IF.* What we need here is a command that will direct R to judge whether some condition is true, and then perform some action ONLY if that condition is true. If-based code is great for promoting reproducibility. When you don't know the exact numerical index of some information in a dataframe (or something else), you can just tell R to check that a certain condition is true, and you'll always get the result you want, no matter what order your rows are in.
+Now, our pseudocode has just introduced a word we haven't previously seen: *IF.* What we need here is a command that will direct R to judge whether some condition is true, and then perform some action ONLY if that condition is true. If-based code is great for promoting reproducibility. You can just tell R to check that a certain condition is true, and you'll always get the result you want, no matter the particulars of your data.
 
 ```{r}
-
+# The ifelse() function will allow us to knock out almost all of our pseudocode in one function
+# First, ifelse() takes a TEST: this is any statement that evaluates to LOGICAL data. It's a question in R that must yield a YES or NO answer.
+# then, ifelse() creates a new vector the same length as the test. each element of test is going to be filled in with some value based on whether the test came out as TRUE or FALSE for that element.
+# if the condition is TRUE for an element, ifelse() fills in that spot with the second argument, which is named 'yes'
+# if the condition is FALSE for an element, ifelse() fills in that spot with the third argument, which is named 'no'
+# in plain english, it kind of says:
+# check whether this condition is true or false
+# if the condition is true, create a variable with value A
+# otherwise, create a variable with value B
+# ifelse() is a vectorized function! Remember that this means that if you input a vector in the first argument, you'll get a vector of the same length as your output, because the operation is done on each vector element separately.
+data2$adhdCoded <- ifelse(data2$adhd >= 4, "adhd", "no adhd")
 ```
-
 
 ## Packages
 
