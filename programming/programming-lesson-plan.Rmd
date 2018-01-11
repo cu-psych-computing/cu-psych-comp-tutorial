@@ -96,31 +96,6 @@ underscore_separated_var <- 57
 lowerCamelCaseVar <- 1.96
 ```
 
-## Functions
-Should this go here?
-
-Anatomy of a function:
-
-`output <- function(argument1 = input1, argument2 = input2)`
-
-+ `function()`: This is the function that will DO SOMETHING to your inputs.
-Whenever you are referencing a function by name, you should always write it with the two parentheses () after the function name so people know you're referring to a function and not a variable.
-The name of a function will tell you something about what a function does. You can/should look it up if you're not sure though!
-+ `argument1`, `argument2`, etc: These are **arguments** to a function--this is the information that a function *expects* and *is prepared to operate on*.
-The name of an argument will tell you something what an argument represents and how it should be formatted. (More on this later)
-+ `input1`, `input2`, etc: These are variables that you created that will actually get fed into your function. This is the information that will actually get operated on. These can be data that live in your environment, or these can be settings (like switches and knobs, if your function was an actual machine) that are turned to a specific value.
-+ `output`: This is the variable that will hold your output information.
-As you can see, we are ASSIGNING the value that's output from `function()` to the variable `output` using the `<-` left-facing arrow operator. Just like before with printing variable values to console, if you run a function without assigning its output to a variable, the output will print to console (so you can read it) but it will not be stored anywhere (so you can't perform any further operations on that output).
-
-```{r}
-# Output, function name, argument names, argument inputs
-# Don't forget to assign function outputs to a variable if you want to use them later
-```
-
-Things to know:
-+ name thy args
-+ when in doubt, search the help!
-
 ## Data types
 
 So what kind of data can be stored and manipulated in R? There are different "types" of data that programming languages know how to handle. Each is encoded in a slightly different way, and can have different things done to it.
@@ -451,12 +426,27 @@ is.na(data2$conf)
 ```
 
 
-## Conditional statements
-Sometimes, you want to run entire commands based on whether certain things are true or false. We can use what we've learned about logical statements so far, in conjunction with some new commands!
+## Conditional operators
+Sometimes, you want to run commands or set values based on whether certain things are true or false. For example, imagine that you have some continuous outcome variable, and you want to recode that continuous outcome variable categorically.
+
+We can use what we've learned about logical statements so far, in conjunction with some new commands!
 
 ```{r}
-# MKT: I actually think maybe we shouldn't include conditional statements... it hurts me in my soul but upon reflection, perhaps this isn't necessary since most basic things people can do using logical indexing.
+# Let's consider the column adhd in data2. This is the participant's score on the ADHD Adult Self-Report Scale (short form). The inventory scoring instructions say that any participant with a score of 4 or above is considered "potentially diagnostic of ADHD". If we wanted to add a variable that indicated whether someone did or did not have a suprathreshold ADHD score, what would we do?
+
+# Pseudocode!
+# First, call the column for ADHD
+# Then, create a new column and fill in the following values based on the corresponding values in ADHD
+# If the ADHD score is 4 or above, then label in the new column as ADHD diagnostic
+# Otherwise (if the ADHD score is less than 4), label in the new column as ADHD non-diagnostic
 ```
+
+Now, our pseudocode has just introduced a word we haven't previously seen: *IF.* What we need here is a command that will direct R to judge whether some condition is true, and then perform some action ONLY if that condition is true. If-based code is great for promoting reproducibility. When you don't know the exact numerical index of some information in a dataframe (or something else), you can just tell R to check that a certain condition is true, and you'll always get the result you want, no matter what order your rows are in.
+
+```{r}
+
+```
+
 
 ## Packages
 
