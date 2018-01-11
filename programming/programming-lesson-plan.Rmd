@@ -17,6 +17,7 @@ Programming is telling a computer to do some action to some input info to get ou
 
 Before we actually get started with messing in R, we need to understand how R interacts with files on your computer. Any data that gets loaded in or saved out is saved on your computer proper, and you can access all of these files through R.
 ```{r explain working directories}
+install.packages("knitr")
 getwd()
 ```
 
@@ -27,6 +28,8 @@ getwd()
 "mthieu/Dropbox"
 # Note that absolute file paths will typically START with a forward-slash / character, while relative paths will NEVER start with / . Why is this the case?
 # When would you want to use either one?
+
+"../" # This allows you to go up one level, so backwards in your file directory 
 ```
 
 # WHAT
@@ -44,6 +47,8 @@ Variables can contain numbers. We *assign* a value to a name.
 first.var <- 20
 # And again with second.var
 second.var <- 0.5
+
+second.var
 ```
 
 They can also contain other stuff (literally almost anything) but we'll talk about this later!
@@ -58,6 +63,7 @@ Information doesn't just exist in the environment--it can also be printed to **c
 # You cannot access anything that was not saved to a variable!
 # Console is great for checking stuff out
 # But you have to remember to save stuff to vars (into your environment) if you wanna manipulate it in any way
+
 ```
 
 Since variables are labels for pieces of information, a variable name can be used to refer to any piece of data where you would otherwise call that data directly. For example:
