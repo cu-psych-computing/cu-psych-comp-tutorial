@@ -8,7 +8,29 @@ output: ioslides_presentation
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-# Why Use R?
+# Why do I use R?
+
+## The old way {.build}
+Raw data file (Excel)  
+
+"Clean" data file (Excel)  
+
+SPSS data file that matched Clean file (SPSS)  
+
+Report of results (Word/Excel)  
+
+Incomplete written log of data collection and analysis (Excel)  
+
+
+## The new way {.build}
+Raw data file (.csv)  
+
+Cleaning script (R)  
+
+Clean data file (.rda)  
+
+Report containing analysis, graphs and written report (RMarkdown) 
+
 
 ## Streamline your research process {.build}
 
@@ -51,16 +73,20 @@ and textbooks and classes are increasingly incorporating R code
 
 Common language for collaboration  
 
+## It's free!
+
+Free stuff is good.
+
 # Why this class?
 
 ## Course Plan {.build}
 Tutorial has 5 parts, each with a lesson and a data challenge.
 
 Today  
-- 1030-12 Programming Basics  
-- 12-1 Lunch  
-- 1-2:30 Data Cleaning  
-- 2:30-3 Discussion and Questions  
+- 10:30-12:30 Programming Basics  
+- 12:30-1:30 Lunch  
+- 1:30-2:45 Data Cleaning  
+- 2:45-3 Discussion and Questions  
 
 Tomorrow  
 - 10-11 Descriptive Statistics  
@@ -89,6 +115,8 @@ Demonstrate strategies for solving R problems you may encounter in the future.
 Encourage you to start (or continue) using R for your research.  
 
 Grow R community within the psychology department.
+
+Introduce good research practices that you can implement even if you choose not to use R.
 
 ## Disclaimers {.build}
 
