@@ -10,9 +10,93 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+For each of the following questions, the answer should be expressed as the output of a command or a series of commands.
+
+# Paths
+
+Show the file path to R's current working directory on your computer.
+
+```{r}
+
+```
+
+Write out an **absolute** file path to your Desktop folder on your own computer as a **string**.
+
+```{r}
+
+```
+
+
+Write out a **relative** file path to your Desktop folder as a **string**, given that you are in R's current working directory.
+
+```{r}
+
+```
+
+# Numeric data & arithmetic
+
+Here, we'll use R to do some arithmetic. Write code that will do each of the following steps.
+
+Create a variable that represents degrees Fahrenheit; set it to a number corresponding to a temperature of your choosing.
+```{r}
+
+```
+
+Look up the formula for Fahrenheit-to-Celsius conversion, create a new variable corresponding to degrees Celsius, and set its value to the F-to-C conversion of your existing degrees Fahrenheit variable.
+```{r}
+
+```
+
+Time to check our math! Create a third variable and set its value to the C-to-F conversion of your newly created degrees Celsius variable.
+```{r}
+
+```
+
+Output the current value of the first Fahrenheit variable to console.
+```{r}
+
+```
+
+Output the current value of the second Fahrenheit variable to console. Visually verify (just by looking at the numbers for now) that these two values are equal.
+```{r}
+
+```
+
+# Character data, vectors
+
+Here, we'll do some vector stuff! Again, write code that will do each of the following steps.
+
+Create a variable storing a character vector of length 5, where each element is your nth favorite food (1st, 2nd, ..., 5th).
+```{r}
+
+```
+
+Output the 2nd through 4th elements of your favorite foods vector to console.
+```{r}
+
+```
+
+Create a variable storing a logical vector of length 5, where the nth element is `TRUE` if your nth favorite food is savory, and `FALSE` if your nth favorite food is sweet.
+```{r}
+
+```
+
+Output all of the savory elements in your favorite foods vector to console.
+```{r}
+
+```
+
+Bonus: Use the `paste()` function to create another character vector, where each element says "I like to eat <insert nth favorite food here>". Don't forget to check the help!
+```{r}
+
+```
+
+# Dataframes
+
 Here's a dataframe containing a bit of information about Shakespeare's plays. Let's find out some information about this! The answer to each question should be expressed as the output of a command or a series of commands. "I looked and this is what the answer was" does not count!
 
 ```{r}
+# Loading this file should load a dataframe variable called 'shakes' into your environment. This is what you'll be using!
 load("programming-challenge-data.rda")
 ```
 
@@ -32,6 +116,11 @@ How many plays of each genre did he write? Be able to express this both as the n
 
 ```
 
+What is the median number of words in a Shakespeare play?
+```{r}
+
+```
+
 On average, how many words were in a Shakespeare play?
 
 Try rounding this to the nearest word! If you don't know what function to use, you can look it up :)
@@ -39,7 +128,7 @@ Try rounding this to the nearest word! If you don't know what function to use, y
 
 ```
 
-How many words were in each genre of play? Which genre has the greatest mean number of words per play?
+How many words were in each genre of play on average? Which genre has the greatest mean number of words per play?
 ```{r}
 
 ```
@@ -59,21 +148,17 @@ As you can see, this list is sorted alphabetically. What are the 5th through 8th
 
 ```
 
-Create a new column on the dataframe `shakes` where all the titles are in all caps. Name the column something sensible.
+Create a new column on the dataframe `shakes` where all the titles are in all caps. Name the column something sensible. If your column name contains multiple words (up to you), ensure your naming matches the variable naming convention already used in existing column names.
 ```{r}
 
 ```
 
-Write code that will do the following.
-If you give the code the name of a play, written as a string, it should do the following:
+Create another new column on `shakes` that satisfies the following:
 
-- If the play is a **comedy,** output the number of words in the play
-- If the play is a **tragedy,** output the index of the play's row in the dataframe
-- If the play is a **history,** output the number of characters in the play's name (spaces count)
+- If the play in that row has **fewer than the median number of words,** its entry in this column should say "short"
+- If the play in that row has **greater than or equal to the median number of words,** its entry in this column should say "long"
 
-Bonus: Can you make your code case-insensitive to the play name that's fed into the code? (assume it's still spelled correctly)
+Again, name the column something sensible!
 ```{r}
 
 ```
-
-PAB: I think this is great -- a mixture of things that beginning coders will find intuitive/hard. I think this will work well as long as we are going around to help people when they get stuck
