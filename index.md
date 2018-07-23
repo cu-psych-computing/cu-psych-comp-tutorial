@@ -11,8 +11,8 @@
 
 Many of these materials were originally prepared as presentations for Columbia Psychology R club.
 
-*[ggplot2 2018 summer session 1](ggplot/Summer2018/ggplot_summer2018_part1.html)
-*[ggplot2 2018 summer session 2](ggplot/Summer2018/ggplot_summer2018_part2.html)
+* [ggplot2 2018 summer session 1](ggplot/Summer2018/ggplot_summer2018_part1.html)
+* [ggplot2 2018 summer session 2](ggplot/Summer2018/ggplot_summer2018_part2.html)
 
 ## Contact
 
