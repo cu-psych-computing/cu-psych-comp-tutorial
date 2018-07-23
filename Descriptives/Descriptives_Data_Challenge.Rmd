@@ -6,7 +6,8 @@ output: html_document
 # Data challenge for descriptive statistics
 
 
-0. We're going to continue working with the Uncapher et al. (2016) dataset for this challenge!First, load the *uncapher_2016_repeated_measures_dataset.csv* file into a dataframe 
+0. We're going to continue working with the Uncapher et al. (2016) dataset for this challenge! First, load the *uncapher_2016_one_condition_dataset.csv* file into a dataframe 
+
 ```{r}
 
 ```
