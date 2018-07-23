@@ -251,7 +251,7 @@ ggplot(multi, aes(x = lme4preds, y = lme4resids)) +
 First, we basically creat a grid of the values for which we want to predict estimates. So, basically, we'll tell the models to make us a prediction for each possible level of time and netflix
 ```{r}
 newx <- expand.grid(time = 0:10, netflix = c('0', '1'))
-View(newx)
+head(newx)
 
 ```
 
@@ -549,7 +549,6 @@ Let's say we have strong prior evidence for some reason that the coefficient for
 
 
 ```{r, results = 'hide'}
-
 myprior <- normal(location = c(4, 20), scale = c(1,1), autoscale = FALSE)
 mod_rstanarm_priors <- stan_glmer(data = multi, happy ~ time + netflix + (1|subject), chains =4, cores = 4, prior = myprior)
 mod_rstanarm_weak_priors <- stan_glmer(data = multi, happy ~ time + netflix + (1|subject), chains =4, cores = 4)
