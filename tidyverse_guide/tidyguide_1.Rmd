@@ -51,8 +51,6 @@ To see all the functions in each pkg, visit their reference pages at [tidyverse.
     + `mutate()` for your column manipulation workhorse
     + `summarize()` for squishing multiple rows down to summary statistics
     + `arrange()` to sort dfs/tibbles more easily
-* `purrr`
-    + all the `map()` functions: like `apply()` but tidy
     
 # Brief intro to the pipe
 
@@ -108,9 +106,7 @@ raw <- tibble(id = 1L:20L,
                             rbinom(n = n(), size = 1, prob = 0.3)),
          rt = rnorm(n = n(), mean = 3, sd = 1.5)) %>%
   ungroup()
-  
 ```
-
 
 # Loading data
 

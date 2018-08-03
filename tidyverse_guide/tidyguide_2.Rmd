@@ -1,8 +1,12 @@
 ---
-title: "Tidy indoctrination"
+title: "Tidy walkthrough, part 2"
 author: "Monica Thieu"
 date: "July 13, 2018"
-output: html_document
+output:
+  html_document:
+    theme: "journal"
+    toc: true
+    toc_float: true
 ---
 
 ```{r setup, include=FALSE}
@@ -10,364 +14,98 @@ knitr::opts_chunk$set(echo = TRUE)
 require(tidyverse)
 ```
 
-## Goals for this vignette
 
-* Demonstrate (what I think are) core features of the tidyverse
+# Go home
+
+**First of all,** you can click [here](https://cu-psych-r-users.github.io/cu-psych-r-tutorial/) to return to the CU psychology tutorials page.
+
+# Goals for this vignette
+
+Hello (again)! This is a continuation of our tour through base tidyverse. Our goals are the same as before:
+
+* Demonstrate (what I think are) key first-level features of the tidyverse
 * Illustrate psychology use cases for tidyverse functions
 * Hopefully convince you to join the cult of tidy
 
-We shall do this by walking through a day in the life of a tidyverse user (me, I guess). This vignette will be set up in a sort of infomercial style, with a BEFORE TIDY (the grayscale part where the hapless folks in the infomercial cannot do a dang thing) and AFTER TIDY section (the nice color part where the gadget makes their life so much better).
+This time, we'll be moving ahead to some more complex use cases utilizing some more advanced programming tactics. I hope to show you how the tidyverse makes these things a little smoother!
 
-My goal here is twofold:
+Again, please remember that for more exhaustive documentation you can visit the online reference pages for your packae of interest, and for more in-depth self-teaching, please refer to [R for Data Science online textbook](http://r4ds.had.co.nz/) by Garrett Grolemund and Hadley Wickham.
 
-* Map strategies that you already implement in a non-tidy way to their tidy counterparts
-* Demonstrate possible pain points in non-tidy methods that are resolved in the tidyverse
+# Quick cheat-list of key functions from various pkgs
 
-## The tidy mantra
+* `purrr`
+    + all the `map()` functions: like `apply()` but tidy
+* `broom`
+    + `tidy()` etc
 
-[Direct from Hadley](https://tidyverse.tidyverse.org/articles/manifesto.html)
+# Initializing fake data
 
-* Make things work with existing data types/structures
-* Pipe life
-* Lean into functional programming
-    + One function, one job. No ifs, ands, or buts!
-* Human read/writeability plz
+We'll use a simulated dataset for this vignette, so you don't need to worry about any dependencies involving datasets you don't have access to while you're following along.
 
-## Loading data
+If you have `tidyverse` loaded, all this code should run if you try to run it in your R console.
 
-`readr` is great
-
-### Non-tidy way
+If you're coming from part 1 of our tidyverse tour, this is the exact same simulated raw data as before.
 
 ```{r}
-wm_raw_untidy <- read.csv("~/Dropbox/MMT/data/MMT_filterObjs_all_final.csv", header = TRUE, stringsAsFactors = FALSE)
+# 20 fake subjects, 50 fake trials per subject
 
-ltm_raw_untidy <- read.csv("~/Dropbox/MMT/data/MMT_testTargets_all_final.csv", header = TRUE, stringsAsFactors = FALSE)
+# Will simulate the person-level variables FIRST,
+# then expand to simulate the trial-level variables
+raw <- tibble(id = 1L:20L,
+              age = sample(18L:35L, size = 20, replace = TRUE),
+              # assuming binary gender for the purposes of this simulation
+              gender = sample(c("male", "female"), size = 20, replace = TRUE)) %>%
+  # simulating some "questionnaire" scores; person-level
+  mutate(q_1 = rnorm(n = n(), mean = 30, sd = 10),
+              q_2 = rnorm(n = n(), mean = 30, sd = 10),
+              q_3 = rnorm(n = n(), mean = 30, sd = 10)) %>%
+  # slice() subsets rows by position; you can use it to repeat rows by repeating position indices
+  slice(rep(1:n(), each = 50)) %>%
+  # We'll get to this in a bit--this causes every "group"
+  # aka every set of rows with the same value for "id", to behave as an independent df
+  group_by(id) %>%
+  # I just want to have a column for "trial order", I like those in my task data
+  mutate(trial_num = 1:n(),
+         # Each subject sees half OLD and half NEW trials in this recognition memory task
+         is_old = rep(0L:1L, times = n()/2),
+         # I'm shuffling the order of "old" and "new" trials in my fake memory task
+         is_old = sample(is_old),
+         # This will generate binary "old"/"new" responses corresponding roughly to a d' of 1
+         # yep, everyone has the same d' today
+         response = if_else(is_old == 1,
+                            rbinom(n = n(), size = 1, prob = 0.7),
+                            rbinom(n = n(), size = 1, prob = 0.3)),
+         rt = rnorm(n = n(), mean = 3, sd = 1.5)) %>%
+  ungroup()
 ```
 
-### Tidy way
+# Working with nested dfs
 
-Don't forget to plug `read_csv_multi()` from this package
+Nearly all of the tidyverse features we'll be working through in this vignette rely on two key features of R to make their magic happen: **list-columns** and **flexible vectorizing functions.** These are features that you may very well encounter explicitly in casual R usage, so we'll take a bit of time to familiarize ourselves with these concepts before we jump all the way in.
 
-```{r}
-wm_raw_tidy <- read_csv("~/Dropbox/MMT/data/MMT_filterObjs_all_final.csv")
+## A brief (re)view of lists
 
-ltm_raw_tidy <- read_csv("~/Dropbox/MMT/data/MMT_testTargets_all_final.csv")
-```
+Your usual vector, be it character, numeric, or logical, is an _atomic vector_--this means that every element in the vector is required to be _the same data type._ A **list** is also a vector, but it's not bound to be atomic. The different elements of a list _do not have to be the same data type._ They don't even all have to be length 1!
 
-### Key differences
+If you're familiar with data types in Matlab, a list is very similar to a Matlab struct array. Both are objects that contain multiple elements that aren't bound to be the same type, or length 1.
 
-* in `readr`, header always `TRUE`, stringsAsFactors always `FALSE`
-* `readr` always returns a tibble--good habits for later
-
-### A taste of the possible
-
-`googledrive` but it looks like you have to run through a temp mode of downloading the newest version from Google Drive and then reading that in from disk. OH but you could write a wrapper for this...
-
-## Visually inspecting data
-
-### Non-tidy way
-
-To preview the data to see what it looks like briefly, `head()` is a common function that returns the first n rows/elements of a vector, dataframe, etc.
-
-```{r}
-head(wm_raw_untidy)
-```
-
-What happens if you forget to call `head()` and just print the whole dataframe?
-
-```{r}
-wm_raw_untidy
-```
-
-As Charles Barkley would say, turrible. Do you really need to look at the whole dataframe like this?
-
-You may also step up one from `head()` and call `str()`:
-
-```{r}
-str(wm_raw_untidy)
-```
-
-Also, take a moment to talk about the Viewer--I myself used to be a stan for the Viewer but the key issue with the Viewer is that it becomes slow to load for large objects and is unwieldy for visual comparison of data in objects with very many rows and/or columns.
-
-### Tidy way
-
-`tibble` is LIFE
-
-```{r}
-wm_raw_tidy
-```
-
-How does she print this way? She is a tibble and she is beautiful. Note that packages within the tidyverse work together--raw rectangular data read in using `readr` is given the tibble class by default.
-
-```{r}
-class(wm_raw_tidy)
-```
-
-`"tbl_df"` is the class name for tibbles.
-
-```{r}
-class(wm_raw_untidy)
-```
-
-Dataframes can be coerced to tibble, though, if they have been created using base R.
-
-```{r}
-# This will give us the sweet sweet print method. It's like str() but better. And happens by default!
-as_tibble(wm_raw_untidy)
-```
-
-### Key differences
-
-Compared to a dataframe, a tibble:
-
-* has a cleaner & more informative `print()` method
-* is stricter when you create tibbles using `tibble()`, or when you index (with [] or $)
-
-There are a couple other useful things that tibbles do that dataframes don't, but the strictness and the print method are the two most useful things that I find. As you'll see, imposing a bit more strictness on R can have the beneficial side effect of minimizing buggy cases in your own code, since you're forced to be more explicit.
-
-## Subsetting data
-
-We'll deal with subsetting dataframes two ways: choosing a subset of columns and a subset of rows.
-
-### Non-tidy way
-
-Bracket indexing with [ , ] is probably one of the more common ways to subset dataframes in base R.
-
-#### Subsetting by column
-
-To subset columns by name in base R, a character vector of strings corresponding to valid column names can be passed into the column section of the bracket index, after the comma.
-
-I'm not going to even mention subsetting columns by position because I don't recommend it except in moments of dire need.
-
-```{r}
-wm_raw_tidy[, c("subjNum", "NumDistr", "Cond", "resp", "RT", "groupStatus")]
-```
-
-#### Subsetting by row
-
-Most subsetting by row will be logical subsetting, to return only rows that satisfy some condition. Note that in order to construct the logical vector that is used to index, columns that already live inside the dataframe must still be called from said dataframe using $ indexing. Bracket indexing is always done from the global environment (to be explained), which requires quite a bit of extra typing.
-
-Subsetting by row can also be done by position as well, but again, please don't do this in analysis scripts!
-
-```{r}
-wm_raw_tidy[wm_raw_tidy$subjNum == 4, ]
-```
-
-#### Subsetting by row and column simultaneously
-
-```{r}
-wm_raw_tidy[wm_raw_tidy$subjNum == 4, c("subjNum", "groupStatus", "NumDistr", "Cond", "resp", "RT")]
-```
-
-### Tidy way
-
-**Warning:** enter the pipe `%>%`! Remember that the pipe does one simple, but key, thing: takes the object on the left-hand side and feeds it into the first argument of the function on the right-hand side. This means that:
-
-* `a %>% foo()` is equivalent to `foo(a)`. Fine and good
-* `a %>% foo() %>% bar(arg = TRUE)` is equivalent to `bar(foo(a), arg = TRUE)`. Now, nested function calls read left-to-right!
-* Most common use case: `df_new <- df_old %>% foo() %>% bar(arg = TRUE) %>% baz()` is equivalent to `df_new <- baz(bar(foo(df_old), arg = TRUE))`. Now, you can chain a series of preprocessing commands to operate on a dataframe all at once, and easily read those commands as typed in your script. No more accidentally not running some key preprocessing command that causes later code to break!
-
-Note that #pipelife requires functions to:
-
-* take as their first argument the object to be operated upon
-* return the same object (or an analog of said), but now operated upon
-
-Essentially all functions from the tidyverse are pipe-safe, but bear this in mind when trying to incorporate functions from base R or other packages into your tidy new world.
-
-#### Subsetting by column
-
-Note that these are **unquoted** variable names and not a character vector.
-```{r}
-# observe that the first argument is a tibble, and the output is that tibble but with stuff done to it
-select(wm_raw_tidy, subjNum, groupStatus, NumDistr, Cond, resp, RT)
-```
-
-Pipe 4 lyfe tho
-
-```{r}
-# This auto-indenting shit after the pipe works because the pipe is a left-right operator
-wm_raw_tidy %>%
-  select(subjNum, groupStatus, NumDistr, Cond, resp, RT)
-```
-
-Also, just some nice shit that you can do with `select()` etc
-
-```{r}
-# Renaming columns is so smooth! Setting names in base R is such a biznatch
-wm_tidy <- wm_raw_tidy %>%
-  select(subjNum, groupStatus, numDistr = NumDistr, cond = Cond, resp, rt = RT)
-
-wm_tidy
-```
-
-#### Subsetting by row
-
-Notice that we no longer have to index the original dataframe when specifying the logical vector(s) that will be used to subset rows
-
-```{r}
-wm_raw_tidy %>%
-  filter(subjNum == 4)
-```
-
-#### Subsetting by row and column simultaneously
-
-In this case, order doesn't super matter, so it's a matter of personal preference. I would generally recommend putting all renaming calls as early as possible to allow the largest block of code to be consistent with itself.
-
-```{r}
-wm_raw_tidy %>%
-  select(subjNum, groupStatus, numDistr = NumDistr, cond = Cond, resp, rt = RT) %>%
-  filter(subjNum == 4)
-```
-
-```{r}
-# dplyr::filter() takes logical statements with & and | in them like you might use in bracket indexing,
-# but it also has a nice feature: specifying separate logical statements as separate args,
-# separate by commas, implicitly acts like chaining the statements together with &
-# since the intersection of logical vectors is probably the most common use case for row subsetting
-wm_raw_tidy %>%
-  select(subjNum, groupStatus, numDistr = NumDistr, cond = Cond, resp, rt = RT) %>%
-  filter(subjNum == 4, numDistr == 0)
-```
-
-### Key differences
-
-Bracket indexing always happens from the global environment, while `dplyr` column/row subsetting verbs all act first within the local environment of the tibble of interest. For example, this means that when specifying columns for logical subsetting, columns can be named bare, without referencing the home tibble using $. This minimizes typing and also risk of accidentally referencing objects you didn't mean to reference.
-
-## Reshaping data 
-
-### Non-tidy way
-
-Honestly, there are so many ways people can do this using older code--`reshape`, `reshape2`, etc etc.
-
-```{r}
-
-```
-
-
-### Tidy way
-
-`tidyr` goes here, maybe. Since the example starts with trialwise data, maybe not yet? Should wait until we get to summary statistics?
-
-## Manipulating data
-
-`dplyr` goes here
-
-### Non-tidy way
-
-### Tidy way
-
-```{r}
-wm_tidy <- wm_raw_tidy %>%
-  select(subjNum, groupStatus, numDistr = NumDistr, cond = Cond, resp, rt = RT) %>%
-  # A tour of useful functions of sorts
-  # For turning anything into a factor variable, special case of a switch statement where every case in the input has only one case in the output
-  mutate(cond = recode_factor(cond,
-                              `0` = "no_change",
-                              `1` = "change"),
-         # case_when: more general switch statement, can take any logical vector of appropriate length as a condition
-         # remember that all tidyverse functions are evaluated sequentially, so these logical statements are hierarchical per an if-else if situation
-         resp = case_when(resp == "j" ~ "no_change",
-                          resp == "jj" ~ "no_change",
-                          resp == "k" ~ "change",
-                          resp == "kk" ~ "no_change",
-                          TRUE ~ NA_character_),
-         # nice function from the forcats pkg to reorder factor levels
-         resp = fct_relevel(resp, c("no_change", "change")),
-         # slightly more complex logical calls in case_when
-         acc = case_when(cond == "change" & resp == "change" ~ "hit",
-                         cond == "change" & resp == "no_change" ~ "miss",
-                         cond == "no_change" & resp == "no_change" ~ "cr",
-                         cond == "no_change" & resp == "change" ~ "fa",
-                         TRUE ~ NA_character_),
-         # coalesce is nice to fill all NAs in a vector with some other value
-         acc_no_na = coalesce(acc, "no_response"),
-         # conversely, should you need to replace a certain value in a vector with NA
-         rt = na_if(rt, 0)) %>%
-  # enter tidyverse GROUPING, which causes vectorized functions that would ordinarily operate over the whole length of the tibble to operate independently over GROUPS of the tibble defined by all visible levels of grouping variable
-  group_by(groupStatus, subjNum, numDistr) %>%
-  # one thing you can do with grouped tibbles is feed them directly into nest() and the grouping columns will become the label columns in the nested tibble
-  # list-columns-of-tibbles!!!
-  nest(.key = "data") %>%
-  # this is the tibble-sorting function
-  arrange(subjNum, numDistr) %>%
-  # map()!!! we'll get into this
-  # esp because summarize() is nested inside here
-  mutate(overall = map(data, ~.x %>%
-                         summarize(rate_hit = sum(acc_no_na == "hit") / sum(cond == "change"),
-                                   rate_fa = sum(acc_no_na == "fa") / sum(cond == "no_change")) %>%
-                         mutate(k = 2 * (rate_hit - rate_fa)))) %>%
-  # to get out of list-column-of-tibbles format and back into one-long-tibble 
-  unnest(overall, .preserve = "data")
-```
-
-```{r}
-ltm_tidy <- ltm_raw_tidy %>%
-  select(subjNum, groupStatus, numDistr = NumDistractorsStudy, oldNew = OldNew, resp = recogresp, rt = recogRT) %>%
-  mutate(oldNew = recode_factor(oldNew,
-                                New = "new",
-                                Old = "old"),
-         resp = case_when(resp == "j" ~ "old_high",
-                          resp == "jj" ~ "old_high",
-                          resp == "k" ~ "old_low",
-                          resp == "kk" ~ "old_low",
-                          resp == "f" ~ "new_high",
-                          resp == "ff" ~ "new_high",
-                          resp == "d" ~ "new_low",
-                          resp == "dd" ~ "new_low",
-                          TRUE ~ NA_character_)) %>%
-  separate(resp, into = c("resp", "confidence")) %>%
-  mutate(acc = case_when(oldNew == "old" & resp == "old" ~ "hit",
-                         oldNew == "old" & resp == "new" ~ "miss",
-                         oldNew == "new" & resp == "new" ~ "cr",
-                         oldNew == "new" & resp == "old" ~ "fa",
-                         TRUE ~ NA_character_),
-         acc_no_na = coalesce(acc, "no_response"),
-         rt = na_if(rt, 0)) %>%
-  group_by(groupStatus, subjNum) %>%
-  nest(.key = "data") %>%
-  arrange(subjNum) %>%
-  mutate(overall = map(data, ~.x %>%
-                         summarize(rate_hit = sum(acc_no_na == "hit") / sum(oldNew == "old"),
-                                   rate_fa = sum(acc_no_na == "fa") / sum(oldNew == "new")))) %>%
-  unnest(overall, .preserve = "data")
-# given that false alarms are all marked with numDistr == 0 may want to store this a slightly different way
-```
-
-
-## Analyzing data
-
-### Non-tidy way
-
-Essentially, the non-tidy way to do this would be to create a new object containing a model estimated from your data object. This is all well and good, but you really have to trust yourself with clean variable naming etc.
-
-### Tidy way
+# Vectorizing to the high heavens
 
 `purrr::map()` goes here? compare to `apply` family of functions in base R
 
-```{r}
-ltm_tidy <- ltm_tidy %>%
-  mutate(data = map(data, ~.x %>%
-                      mutate(resp_binary = recode(resp,
-                                                  new = 0L,
-                                                  old = 1L),
-                             oldNew_binary = recode(oldNew,
-                                                    new = 0L,
-                                                    old = 1L))),
-         model = map(data, ~glm(resp_binary ~ oldNew_binary,
-                                family = binomial(link = "probit"),
-                                data = .)),
-         coefs = map(model, ~broom::tidy(.)),
-         dprime = map_dbl(coefs, ~.[.$term == "oldNew_binary", "estimate"]))
-```
+## Vectorizing: t's like a for loop, but not
 
-## Plotting data
+## Tidy vectorizing
 
-```{r}
-wm_tidy %>%
-  mutate(groupStatus = coalesce(groupStatus, "")) %>%
-  ggplot(aes(x = numDistr, y = k, color = groupStatus)) +
-  geom_line(aes(group = subjNum), alpha = 0.2) +
-  theme_bw()
-```
+# Working with model objects en masse
+
+## Fitting a whole lotta models
+
+## Extracting model coefficients
+
+# Plotting data
+
+If there are any `tidyverse` packages you were acquainted with before you first jumped into the tidy sea, you likely already knew about `ggplot2`. For this reason, and because Paul Bloom's fantastic `ggplot2` vignettes cover plenty of ground (TODO: link), we won't be getting much into plotting here.
+
+The one thing, though, that I'd like to show you is how I like to use the pipe to pre-process dfs before plotting. Want to plot just a subset of a df? Or maybe re-label some factor levels for the plot, but not save those factor levels back into the main df?
 
