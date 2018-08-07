@@ -79,7 +79,7 @@ raw <- tibble(id = 1L:20L,
   ungroup()
 ```
 
-# Working with nested dfs
+# Nested dfs
 
 Nearly all of the tidyverse features we'll be working through in this vignette rely on two key features of R to make their magic happen: **list-columns** and **flexible vectorizing functions.** These are features that you may very well encounter explicitly in casual R usage, so we'll take a bit of time to familiarize ourselves with these concepts before we jump all the way in.
 
@@ -201,17 +201,114 @@ starwars %>%
   select(name, films, vehicles, starships)
 ```
 
-The last three columns are list type! Now, instead of actually printing the content of the vector, tibble output gives us a blurb about the object contained inside of each list element.
+The last three columns are list type! This makes sense based on the content we might expect to be contained within each column. For example, if each row is one character, but one character appears in multiple movies, you might expect that character's value in the `films` column to contain a vector with one element for each movie that character was in. In this way, a list-column allows you to store multiple observations per subject wrapped up in such a way that the main df still has one row per subject, but you retain the observation-level data because you haven't actually collapsed across any variables.
+
+(You're probably familiar with fully long-form data, where each observation has its own row, and then grouping variables like subject are repeated for all observations that belong to the same subject. We will learn about the relationship between dfs containing list-columns and fully long-form dfs later!)
+
+Now, for list-columns, instead of actually printing the content of the vector, tibble output gives us a blurb about the object contained inside of each list element. To inspect the contents of a list-column, we have to index into the list-column using one of the techniques we reviewed above.
+
+We can index by position, which corresponds to row numbers, using single-bracket indexing to return another, shorter list:
+
+```{r}
+# These should be Luke's starships that he piloted at some point in the series
+# since we saw earlier that he's the first row of the df
+starwars$starships[1]
+```
+
+Or double-bracket indexing, which allows us to actually access the object contained within:
+
+```{r}
+starwars$starships[[1]]
+```
+
+We can also use logical indexing to access list-column elements based on values in other columns.
+
+```{r}
+# This is good when you don't necessarily know the row number of what you're looking for
+starwars$starships[starwars$name == "Han Solo"]
+```
+
+ Note that _logical indexing only works with single-bracket indexing._ If you want to unwrap the object contained within, you have to index twice like below:
+ 
+```{r}
+starwars$starships[starwars$name == "Han Solo"][[1]]
+```
+ 
+This works because single-bracket indexing always returns another list, and you can then double-bracket index into THAT list. It's a lot of brackets, but it does follow a pattern!
 
 ### A df with a list-column still behaves like a df, mostly
 
+If your df contains a list-column, you can do most things with that df that you might do with a fully atomic list-free df. You can:
+
+* subset by column using `select()`
+* reshape your df using `gather()` and `spread()`
+
+There are a couple respects in which list-columns are limited, though. Most of these involve the fact that R makes fewer assumptions about the content of lists (since elements are not bound to be the same type/length 1), and so for your own safety the tidyverse prevents you from doing some things that might yield unexpected results:
+
+* you cannot directly `filter()` or `distinct()` a df by a list-column, but you can do these things to a df containing list-columns by an atomic column
+* you cannot `group_by()` a df by a list-column, but you can `group_by()` atomic columns in a df containing list-columns
+
+What about using `mutate()` to create/modify list-columns? You can do this, but it requires special vectorizing functions like `purrr::map()` that we will cover later. Stay tuned!
+
+### df-ception: df list-columns that contain other dfs
+
+Okay, so now that you've seen list-columns that contain different atomic vectors, it's time to get list-crazy! A list really can contain _basically anything_ in each of its elements. This means that a list can contain a whole df inside of one (or more) of its list elements.
+
+When would you want a df that contains other dfs? Well, remember that list-columns are typically useful to contain multiple observations of information that pertain to one subject/group/etc while allowing your df to take a one-row-per-subject/group structure.
+
+You usually won't be creating dfs with df-containing list-columns from scratch. More likely, you'll start with a fully long df, and condense the repeated measures data by folding it into a list-column using `tidyr::nest()`. Let's try it with the `starwars` df, by creating a df that has one row per species x homeworld, and a list-column containing a df for all of the characters of a particular species/homeworld grouping.
+
+```{r}
+starwars_by_species_home <- starwars %>%
+  group_by(species, homeworld) %>%
+  nest(.key = "characters")
+
+starwars_by_species_home
+```
+
+We've done two things here:
+
+1. We grouped our df using `group_by()` to tell `nest()` what the grouping-level variables are
+2. We folded all the observations into a separate column using `nest()`, using the `.key` argument to specify the name of that new column
+
+`nest()` is what you'll use to create nested dfs, or dfs with columns containing other dfs. `nest()` takes every column that isn't a grouping variable, and folds all of the observations in each group into their own df in the new list-column. All the data we had before is inside this new list-column. Let's look inside one of these sub-dfs to be sure:
+
+```{r}
+starwars_by_species_home$characters[[1]]
+```
+
+In our new nested df, the first row contains all Star Wars characters who are humans from Tatooine. Thus, if we look inside the df stored in the first element of the `characters` list-column using double-bracket indexing, we see all of the original character-level observations belonging to this group. Notice that inside this sub-df, the columns `species` and `homeworld` are absent. This is because these columns are already present in the main df, as the grouping variables.
+
+You can `nest()` with as many or as few grouping variables as you'd like--anything that you can `group_by()` you can `nest()` along.
+
+If you have a nested df that you would like to unnest, and return to fully long form, you can do that using `tidyr::unnest()`. As you might guess, `unnest()` essentially does the exact opposite of `nest()`-- it takes list-columns and unfolds them back out to be one row per observation instead of one row per group.
+
+```{r}
+starwars_by_species_home %>%
+  unnest(characters)
+```
+
+There we go, this should be the same df as before! As shown above, `unnest()` takes the names of columns to be unnested as arguments. I like to always specify the column(s) I'd like to unnest for maximum readability, so it's obvious to future you/other collaborators exactly what you're nesting.
+
+You'll see that the rows have been re-ordered according to the previous nested grouping, so keep this in mind if you're expecting rows to be in a particular order (you may need to re-order your df using `arrange()` after unnesting).
+
+#### What are nested dfs useful for?
+
+For the most part, straightforward data manipulation operations are easier to do on fully long dfs than they are on nested dfs, for reasons we'll get to soon. You won't need to use a nested df all the time, and that's okay! Nested dfs are really great for allowing you to do summarizing and modeling operations _alongside your observation-level data, without discarding it._ We'll be learning about this below, so don't forget about nested dfs because they are coming back!
+
 # Vectorizing to the high heavens
+
+Next, we'll review vectorizing: this is a feature of R that you probably use all the time and don't even know it! We'll learn a little more about what vectorized functions do and how you can vectorize any function you wish.
+
+To read 
 
 `purrr::map()` goes here? compare to `apply` family of functions in base R
 
 ## Vectorizing: it's like a for loop, but not
 
 ## Tidy vectorizing
+
+### Operating on list-columns using map()
 
 # Working with model objects en masse
 
