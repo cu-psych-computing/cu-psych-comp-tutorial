@@ -184,13 +184,32 @@ That's the basics you need to know about lists, summarized here just in case:
 
 ## Lists as df columns
 
-A df is composed of columns, each of which is a vector of identical length. But nobody ever said the columns of a df all have to be atomic vectors!
+A df is composed of columns, each of which is a vector of identical length. But nobody ever said the columns of a df all have to be atomic vectors! A df column can be a list vector, where each element of said list-column can contain objects of different data types and lengths.
+
+This becomes a little easier to wrap your head around if we explicitly look at a df with list-columns in it. Below, we'll take a look at the `starwars` df, which is a toy dataset about Star Wars characters that comes standard with `dplyr`.
+
+```{r}
+starwars
+```
+
+In this df, each row is a "subject" (a character from the movies). Currently, this data is "tidy": each row is a unique observation (subject in this case), and each column is a distinct variable giving information about that observation.
+
+Because this object is a tibble (makes sense since it comes with `dplyr`), we can inspect the nice print output to see the types of the different columns. We can see that the first few columns are atomic vectors, either numeric like `height` and `mass` or character like `homeworld`. But check out the last three columns...
+
+```{r}
+starwars %>%
+  select(name, films, vehicles, starships)
+```
+
+The last three columns are list type! Now, instead of actually printing the content of the vector, tibble output gives us a blurb about the object contained inside of each list element.
+
+### A df with a list-column still behaves like a df, mostly
 
 # Vectorizing to the high heavens
 
 `purrr::map()` goes here? compare to `apply` family of functions in base R
 
-## Vectorizing: t's like a for loop, but not
+## Vectorizing: it's like a for loop, but not
 
 ## Tidy vectorizing
 
