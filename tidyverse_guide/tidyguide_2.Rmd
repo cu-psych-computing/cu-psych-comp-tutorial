@@ -81,6 +81,8 @@ raw <- tibble(id = 1L:20L,
 
 # Joining dfs
 
+Under construction!
+
 # Nested dfs
 
 Nearly all of the tidyverse features we'll be working through in this vignette rely on two key features of R to make their magic happen: **list-columns** and **flexible vectorizing functions.** These are features that you may very well encounter explicitly in casual R usage, so we'll take a bit of time to familiarize ourselves with these concepts before we jump all the way in.
@@ -373,12 +375,9 @@ The nice thing about using a vectorizer function is that it's _designed to retur
 
 The basic tidyverse vectorizer function is `purrr::map()`. (The `purrr` package is so named because its helper functions can make your code purr with contentment, haha) It takes the two arguments you'd expect: an input vector, and the code to run on each element of the input vector.
 
-There are two situations where vectorizer functions come in really handy:
+The main situation where vectorizer functions come in really handy is to vectorize functions to run along every element of a non-atomic list vector. R's default vectorized functions are all intended for atomic vectors, so to vectorize arguments along a list, we need a little help.
 
-* To vectorize functions to run along every element of a list vector (R's default vectorized functions are all intended for atomic vectors)
-* To run more complex, multi-line code on every element of a vector
-
-To illustrate the first use case, we'll use `map()` to vectorize an operation that isn't vectorized by default and run it on every element of a list. Here, I'll create a list where each element is a numeric vector, and then use `map()` to compute the mean of every list element.
+To illustrate this briefly, we'll use `map()` to vectorize an operation that isn't vectorized by default and run it on every element of a list. Here, I'll create a list where each element is a numeric vector, and then use `map()` to compute the mean of every list element.
 
 ```{r}
 my_list <- list(rnorm(20),
@@ -398,27 +397,171 @@ The period `.` that you see inside of `mean(.)` is a placeholder that tells `map
 
 * Take the list `my_list`
 * With every element in that list:
-* Calculate the mean of that list element
+    + Calculate the mean of that list element
 * Return another list where the nth element contains the mean of the nth element of `my_list`
 
-It's important to remember this: **`map()` always returns a list.** Even if each element of the output list contains an element of the same type, and length 1, `map()` is not going to try to guess anything and turn your output into an atomic vector.
+In this way, you can see how similar the pseudo-code of `map()` is to the pseudo-code of a for loop. Not so intimidating, hopefully!
+
+### Special versions of map()
+
+It's important to remember this: **`map()` always returns a list.** Even if each element of the output list contains an element of the same atomic type, and length 1, `map()` is not going to try to guess anything and turn your output into an atomic vector. The philosophy of the tidyverse is to avoid guessing data types of output to err on the conservative side.
+
+If you, the coder, know exactly the data type you expect in your output vector, you can use a specialized version of `map()` that will return an atomic output vector of your desired data type, or else throw an error (at which point you would go and fix the offending code). These are all called `map_*()`, where the suffix indicates the expected data type of your output. There's a version of `map_*()` for every possible atomic vector data type.
 
 ### Using map() on list-columns inside a df
 
+Remember from before when we learned about creating nested dfs, that nesting creates a **list-column** where each list element contains another, smaller df pertaining to just the data from that row's record. What if we wanted to manipulate the data contained inside each sub-df? Since the column of nested data is a list, perhaps `map()` may be of service!
+
+Here, we'll see how we can use `map()` to calculate subject-level summary statistics while keeping trialwise observation-level data in the same df.
+
+First, let's nest our simulated df, `raw`, by all of the subject-level variables we created (demographics + questionnaire scores).
+
 ```{r}
-raw %>%
+nested <- raw %>%
+  # gotta group by all the subject-level variables explicitly
   group_by(id, age, gender, q_1, q_2, q_3) %>%
+  # then I'll rename the column that will contain the trialwise data
   nest(.key = "trials")
 ```
 
+Now, to see what the new, nested df looks like:
+
+```{r}
+nested
+```
+
+And to verify that the trialwise data for the first subject is safe and sound in the first row of the list-column `trials`:
+
+```{r}
+nested$trials[[1]]
+```
+
+Now, because our nested df has one row per subject, it's perfectly set up to contain some additional columns with summary statistics in them. We just need to be able to access the trialwise data inside of the `trials` column in order to compute these summary stats.
+
+We can use `mutate()` to create a new column in our df as per usual. However, this time, we'll call `map()` _inside of_ `mutate()` to create our own vectorized function that can operate on a list-column!
+
+For our first summary statistic, let's calculate each subject's median RT across all of their responses. We'll do this by using `map()` to create a function that will call `median()` on every element in a list, and we'll wrap all of this inside `mutate()` so we can work inside of our main df.
+
+Below is the full function call, so you can see the output first:
+
+```{r}
+nested %>%
+  mutate(rt_median = map_dbl(trials, ~median(.$rt)))
+```
+
+Now to unpack the pieces of this function call:
+
+* Inside of `mutate()`, we follow the same usual syntax of `new_col = function(old_col)`, but this time the function we call is `map()`
+* The first argument of `map()` is the column whose elements we wish to iterate over, in this case `trials`
+* The second argument of `map()` is what we wish to do to each element of `trials`
+    + the function call is preceded by a tilde `~` per `map()`'s expected syntax
+    + we call `median(.$rt)` because `.` refers to the df contained in each element of `trials`, and we actually want to take the median of the `rt` column INSIDE of `.`. If `.` refers to a df, you can dollar-sign index the columns of `.` as you would any other df
+* We actually call `map_dbl()` instead of just `map()` because we expect each vector element to be a double with length 1, and so we use `map_dbl()` to safely unwrap the output vector into an atomic double vector
+
+When you just want to calculate one summary statistic, the above strategy of doing a one-off calculation inside an atomic-izing version of `map()` works well. What if you want to calculate slightly more complex summary statistics? Let's try another way of leveraging `map()` to generate summary stats. This way is a little more flexible if you need to calculate a lot of different stats on subsets of your data.
+
+Here, let's try to calculate different accuracy rates for each subject--specifically, hit rate and false alarm rate. Since our fake data is from a fake memory task, a subject's hit rate is their proportion of responding "old" to truly old stimuli, and their false alarm rate is their proportion of responding "old" to truly new stimuli.
+
+```{r}
+nested_summarized <- nested %>%
+  mutate(summaries = map(trials,
+                         ~.x %>%
+                           # First, will group trials by actually old vs actually new
+                           group_by(is_old) %>%
+                           # Here, because both hits and FAs involve responding "old",
+                           # we can calculate the SAME proportion for the two trial groups
+                           summarize(rate_choose_old = mean(response)) %>%
+                           # now, the summarized data is in semi-long form,
+                           # with one row for the hits group and one row for the FAs group
+                           # we will want these to be in different columns, so we will spread() them
+                           # but first let's recode the grouping column
+                           # because these values will become the new spread colnames
+                           # and here we'll "rename" them before spreading
+                           mutate(is_old = recode(is_old,
+                                                  `0` = "rate_fa",
+                                                  `1` = "rate_hit")) %>%
+                           # now we will spread
+                           spread(is_old, rate_choose_old)))
+```
+
+What we've done here is a little more complex. Essentially, we're calling `summarize()` on the trialwise data to generate summary statistics, and then doing some processing on that summary data--this all should be familiar. What's different here is that we're doing it all _inside_ of `map()` so that these commands are applied to each sub-df of trialwise data inside `trials`.
+
+Here, each of the element-wise summary outputs is a df, which isn't an atomic data type, so we have to use `map()` and keep `summaries` as a list vector. We can peep inside one of the sub-dfs of the `summaries` list-column to make sure the calculated values seem sensible:
+
+```{r}
+nested_summarized$summaries[[1]]
+```
+
+Hey, each of these sub-dfs is only one row long. We could `unnest()` the `summaries` column to get these hit and false alarm rate columns to be exposed in our main df, with the other subject-level variables. We'll still have one row per subject after we unnest, as opposed to repeating rows for repeated observations, because the sub-dfs we're unnesting only have one row each.
+
+```{r}
+nested_summarized %>%
+  unnest(summaries, .preserve = "trials")
+```
+
+There we go! Now, the hit and false alarm rates are in the main df and readily accessible without having to use `map()`, and we still have our trialwise data in the same df should we want to calculate anything else.
+
+This will get you to roughly the same place as calculating summary statistics on an unnested df and saving those summary stats into a second df. The reason I like this setup is that I can keep all of my data in one df and avoid proliferation of dfs. Ultimately, it's a matter of personal taste, but if you find that you like managing your trialwise data/subject-level summary data in this way, then you can use these techniques as you like!
 
 ## When not to vectorize
 
 # Working with model objects en masse
 
+This is another handy way to leverage lists and `map()`. If each element of a list can contain any object, then a list should be able to hold model objects in it as well! And perhaps we can create each model object by using `map()` to fit a model to every sub-df in a list of dfs. And then we can use `map()` again to extract model coefficients from each model in the list of models... the possibilities are many. Let's give it a whirl!
+
 ## Fitting a whole lotta models
 
+In this example, we'll fit a model to each subject's trialwise data and then extract each subject's model coefficients. Because our fake data is memory data, we'll use a logistic regression to estimate each subject's d' (d-prime), which is a measure of memory that takes into account correctly remembering seen items (hits) as well as correctly endorsing unseen items as unseen (NOT making false alarms).
+
+In our nested df, each subject's trialwise data is already packaged into its own sub-df in the `trials` list-column. We can use `map()` inside `mutate()` to create another list-column based on `trials`, but this time each element of our output list-column will contain a separate model object that was fit to its respective df in `trials`.
+
+```{r}
+nested_with_models <- nested %>%
+  mutate(models = map(trials, ~glm(response ~ is_old, family = binomial(link = "probit"), data = .)))
+
+nested_with_models
+```
+
+Here, inside of `map()`, instead of calling df manipulation operations, we call a model fitting function, in this case `glm()` because we will need to fit a logistic-type regression. In fact, we're fitting a probit regression (because d' is based on the normal distribution), so we include the `family = binomial(link = "probit")` argument inside of our `glm()` call as usual. The only difference is what we put in for the last argument, `data = .`. Our old friend the period `.` is back--this time, to tell the `glm()` call inside `map()` to use the current element from the input vector as the source data to fit the model.
+
+```{r}
+summary(nested_with_models$models[[1]])
+```
+
+Each model object can be inspected with `summary()` if you so choose.
+
 ## Extracting model coefficients
+
+Now that we have a list-column in our df where every element contains the same type of model object, we can write another vectorizing loop with `map()` to extract the model coefficients from every model in the list vector.
+
+To extract model coefficients, `broom::tidy()` is a fantastic little helper function. The `broom` package is part of the extended tidyverse, and contains a series of functions that quickly extract info from model objects as a df that can then be manipulated a little more easily than extracting coefficients and such directly from the model object.
+
+We'll call `tidy()` inside of a `map()` call to repeat it over every element of the `models` column, and create a new list-column where every element contains a sub-df with the model coefficients.
+
+```{r}
+nested_with_models <- nested %>%
+  mutate(models = map(trials, ~glm(response ~ is_old, family = binomial(link = "probit"), data = .)),
+         coefs = map(models, ~tidy(.)))
+
+nested_with_models
+```
+
+
+Below, let's inspect the content of the first element of the `coefs` list-column, so you can see how the output of `tidy()` looks.
+
+```{r}
+nested_with_models$coefs[[1]]
+```
+
+As you can see, it's essentially the matrix of coefficients/standard errors/etc that you see when you call `summary()` on a model object, but now it's already been packaged as a df.
+
+In this particular example, we specifically want to extract the coefficient estimate for `is_old`--that value is the d' we're looking for. How can we get that specific value into its own column in the main df? Since each subject has only one value for d', and all of them are the same atomic data type, we should be able to create an atomic vector column in the main df for each subject's d'.
+
+```{r}
+nested_with_models %>%
+  mutate(dprime = map_dbl(coefs, ~.$estimate[.$term == "is_old"]))
+```
+
 
 # Plotting data
 
