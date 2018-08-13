@@ -79,6 +79,8 @@ raw <- tibble(id = 1L:20L,
   ungroup()
 ```
 
+# Joining dfs
+
 # Nested dfs
 
 Nearly all of the tidyverse features we'll be working through in this vignette rely on two key features of R to make their magic happen: **list-columns** and **flexible vectorizing functions.** These are features that you may very well encounter explicitly in casual R usage, so we'll take a bit of time to familiarize ourselves with these concepts before we jump all the way in.
@@ -300,15 +302,117 @@ For the most part, straightforward data manipulation operations are easier to do
 
 Next, we'll review vectorizing: this is a feature of R that you probably use all the time and don't even know it! We'll learn a little more about what vectorized functions do and how you can vectorize any function you wish.
 
-To read 
+To read more in-depth about vectorized functions in R, check out this handy [blog post](http://www.noamross.net/blog/2014/4/16/vectorization-in-r--why.html) from Noam Ross. We won't be getting deep into the nuts and bolts of how vectorization works in R here. We'll just be discussing it at a high level that should orient you enough to be able to make quick use of vectorizing helper functions.
 
 `purrr::map()` goes here? compare to `apply` family of functions in base R
 
 ## Vectorizing: it's like a for loop, but not
 
+As you've likely experienced, much data processing requires writing code to perform a particular action, and then wrapping it in other code to repeat that action many times over many objects. In R, this usually means doing the same operation to every element in a vector or every row in a df column.
+
+In most computing languages, the most sensible way to do one thing a bunch of times is to use a for loop, which (I know you know this but I'll spell it out just to be extra) repeats the code inside the loop once for every element of a vector that's specified at the beginning of the loop code.
+
+To use a for loop to apply some function to every element of a df column, you might write something like:
+
+```{r, eval = FALSE}
+for (i in 1:nrow(df)) {
+  df$new_col[i] = my_function(df$old_col[i])
+}
+```
+
+and that would do the trick. In this case, the vector you iterate along contains the row indices of your df, which means that on every iteration of your loop you're calling `my_function()` on the next row of data until you get to the end of your df.
+
+This is a perfectly functional way to write code! Today, I'll argue that it's prone to typos that might cause you big headaches. Specifically, these typos may cause your code to **fail silently** (ominous organ riff), or do something unintended without throwing an error. This means you wouldn't find out that something was wrong unless you visually inspected the output, which you can't always do after every command (I getcha). Thus, there's a risk of inducing mistakes in the data that you don't catch until it's too late.
+
+For example, once I wrote a for loop just like the above, to perform some functions on every row of a df column, but I wrote `df$old_col[1]` instead of `df$old_col[i]`. I accidentally had the same value in every element of `df$new_col`, because even though the for loop was iterating as usual, on every iteration of the loop it was calling the same value. I didn't discover my typo until weeks later. No bueno!
+
+Enter... vectorizing.
+
+It turns out that R has built-in optimized functionality for repeating functions along every element of a vector, just waiting for you to harness!
+
+Generally, any vectorized function _takes a vector as input, does the same thing to every element of that vector, and returns a vector of the same length as output._ Plenty of functions are already vectorized, and you likely already use them as such, including:
+
+* math operators (R assumes element-wise math as the default, and element-wise == vectorized here)
+    + arithmetic operators: `+`, `-`, and the like
+    + `round()`, for example
+* string manipulation functions
+    + `paste()` always returns a vector equal to the longest input vector
+    + pattern matching functions like `grep()`, `grepl()`, and such
+* statistical distribution functions
+    + the `d*()`, `p*()`, and `q*()` statistical distribution functions (e.g. `qnorm()`) are all vectorized along their main input arguments
+* other stuff too!
+    + `base::ifelse()` is vectorized, as it determines true/false for each pair of elements in the two vector arguments element-wise
+
+In general, it's worth always checking to see if the function you plan to call on a vector is vectorized, and then you can use it on your vector without needing any additional looping.
+
+PS: I know there are other things people often use for loops for, including simulations & bootstrapping--these can be vectorized as well, if you wish it! We'll get to these later though.
+
 ## Tidy vectorizing
 
-### Operating on list-columns using map()
+If you use `mutate()` for your everyday column-wise data manipulation needs, using vectorized functions is smooth. In fact, `mutate()` is built to encourage you to use vectorized functions for column manipulation.
+
+If we go back to our original simulated data, we can see this at work. For example, let's create a new column for RT, but stored in milliseconds, not seconds, by multiplying our original RT column by 1000.
+
+```{r}
+raw %>%
+  mutate(rt_msec = 1000 * rt)
+```
+
+We can write this in one call, without needing to wrap it in a loop, because multiplying by a constant is vectorized, and returns a vector the same length as the input vector. Neat! You can use any vectorized functions "naked" (without any extra looping code) inside of `mutate()` with no problem.
+
+But what about functions that aren't already vectorized? Can we use R magic to make them vectorized, if we so wish? Why yes, we can!
+
+### Intro to map()
+
+At their root, vectorizing helper functions do _very nearly what a for loop does,_ but with a little more specificity in their syntax that can help protect you from tricky typos. With a vectorizing function, you still specify the two main code components that you'd specify in a for loop:
+
+1. The vector you want to iterate along
+2. The code you want to run on every element of that vector
+
+The nice thing about using a vectorizer function is that it's _designed to return a vector of the same length as the input vector,_ so it's perfect for data manipulation on columns in a df. For loops are more flexible in that they can run any code a bunch of times, and don't necessarily need to return a vector. If your goal is to return an output vector of the same length as your input vector, then vectorizer functions can do the trick!
+
+The basic tidyverse vectorizer function is `purrr::map()`. (The `purrr` package is so named because its helper functions can make your code purr with contentment, haha) It takes the two arguments you'd expect: an input vector, and the code to run on each element of the input vector.
+
+There are two situations where vectorizer functions come in really handy:
+
+* To vectorize functions to run along every element of a list vector (R's default vectorized functions are all intended for atomic vectors)
+* To run more complex, multi-line code on every element of a vector
+
+To illustrate the first use case, we'll use `map()` to vectorize an operation that isn't vectorized by default and run it on every element of a list. Here, I'll create a list where each element is a numeric vector, and then use `map()` to compute the mean of every list element.
+
+```{r}
+my_list <- list(rnorm(20),
+                rnorm(20, mean = 1),
+                rnorm(20, mean = 2))
+
+map(my_list, ~mean(.))
+```
+
+Aha! We see in the output that the means are higher for the later list elements, which makes sense because they were generated from normal distributions with higher means.
+
+You can see above that the first argument of `map()` is the vector to be iterated along. The second argument clearly looks like the code that you want run on each element of that vector, but the syntax is a little different than if you were to just call `mean(my_list[[1]])` or something. This particular syntax is how `tidyverse` functions allow you to specify functions inside other functions without confusing R about what code to run where. Let's unpack this a little bit:
+
+The code you put in the second argument is preceded with a tilde `~`, which you may recognize from model formula syntax, or other functions like `dplyr::case_when()`. The tilde essentially tells R not to try to evaluate that code immediately, because it's wrapped in a vectorizer. Don't forget this tilde!
+
+The period `.` that you see inside of `mean(.)` is a placeholder that tells `map()` how to feed your input vector into your looping code. Whenever you see the period inside of `tidyverse` code, you can refer it as "the element I'm currently working with" in your mental pseudo-code. In this case, you can interpret the `map()` call as doing the following:
+
+* Take the list `my_list`
+* With every element in that list:
+* Calculate the mean of that list element
+* Return another list where the nth element contains the mean of the nth element of `my_list`
+
+It's important to remember this: **`map()` always returns a list.** Even if each element of the output list contains an element of the same type, and length 1, `map()` is not going to try to guess anything and turn your output into an atomic vector.
+
+### Using map() on list-columns inside a df
+
+```{r}
+raw %>%
+  group_by(id, age, gender, q_1, q_2, q_3) %>%
+  nest(.key = "trials")
+```
+
+
+## When not to vectorize
 
 # Working with model objects en masse
 
