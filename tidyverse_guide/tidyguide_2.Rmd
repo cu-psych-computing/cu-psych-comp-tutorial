@@ -12,6 +12,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 require(tidyverse)
+require(broom)
 ```
 
 
@@ -33,10 +34,16 @@ Again, please remember that for more exhaustive documentation you can visit the 
 
 # Quick cheat-list of key functions from various pkgs
 
+These are not the only functions in these packages that you may find useful! These are simply the functions from these packages that will be featured in this vignette.
+
+* `dplyr`
+    + the `*_join()` family of functions to join dfs row-wise by key columns
+* `tidyr`
+    + `nest()` and `unnest()` to wrap/unwrap a long-form df to/from a nested df with list-columns of observation-level data
 * `purrr`
-    + all the `map()` functions: like `apply()` but tidy
+    + the `map()` family of vectorizing helper functions
 * `broom`
-    + `tidy()` etc
+    + `tidy()` to extract coefficients/SEs from models as a df
 
 # Initializing fake data
 
@@ -505,6 +512,15 @@ This will get you to roughly the same place as calculating summary statistics on
 
 ## When not to vectorize
 
+Ultimately, I love vectorizing functions like `map()`--they've helped me keep a lot more of my data processing inside of `tidyverse` functions, and often saved me from copying and pasting code. There are, of course, cases when writing your code to work inside of vectorizing helpers isn't necessarily optimal. Here are a couple that I've run into:
+
+* If you need to recursively reference earlier vector elements while looping
+    + Vectorizer functions run every iteration of your vectorizing loop _independently,_ which means that the nth iteration cannot access the output of the (n-1)th iteration or any previous ones. If you need to be able to access previous loop content in later iterations, a for loop is the way to go.
+* If you really need a progress bar to print to console, for iterating over _looooong_ vectors
+    + True console-based progress bars with must recursively access the console to create a progress bar that stays on one line from 0% to 100%, so they work best inside for loops
+    + The good folks at RStudio who maintain `purrr` are still working on building automatic progress bars for `map()`, but as of right now (August 2018) they're not implemented
+    + Check out the [`progress`](https://github.com/r-lib/progress) package, which contains helper functions that work inside for loops to make your own progress bars
+
 # Working with model objects en masse
 
 This is another handy way to leverage lists and `map()`. If each element of a list can contain any object, then a list should be able to hold model objects in it as well! And perhaps we can create each model object by using `map()` to fit a model to every sub-df in a list of dfs. And then we can use `map()` again to extract model coefficients from each model in the list of models... the possibilities are many. Let's give it a whirl!
@@ -528,7 +544,7 @@ Here, inside of `map()`, instead of calling df manipulation operations, we call 
 summary(nested_with_models$models[[1]])
 ```
 
-Each model object can be inspected with `summary()` if you so choose.
+Each model object can be inspected with `summary()` in this way if you so choose.
 
 ## Extracting model coefficients
 
@@ -536,7 +552,7 @@ Now that we have a list-column in our df where every element contains the same t
 
 To extract model coefficients, `broom::tidy()` is a fantastic little helper function. The `broom` package is part of the extended tidyverse, and contains a series of functions that quickly extract info from model objects as a df that can then be manipulated a little more easily than extracting coefficients and such directly from the model object.
 
-We'll call `tidy()` inside of a `map()` call to repeat it over every element of the `models` column, and create a new list-column where every element contains a sub-df with the model coefficients.
+We'll call `tidy()` inside of a `map()` call to repeat it over every element of the `models` column, and create a new list-column where every element contains a sub-df with the model coefficients of its matching model object.
 
 ```{r}
 nested_with_models <- nested %>%
@@ -545,7 +561,6 @@ nested_with_models <- nested %>%
 
 nested_with_models
 ```
-
 
 Below, let's inspect the content of the first element of the `coefs` list-column, so you can see how the output of `tidy()` looks.
 
@@ -557,15 +572,60 @@ As you can see, it's essentially the matrix of coefficients/standard errors/etc 
 
 In this particular example, we specifically want to extract the coefficient estimate for `is_old`--that value is the d' we're looking for. How can we get that specific value into its own column in the main df? Since each subject has only one value for d', and all of them are the same atomic data type, we should be able to create an atomic vector column in the main df for each subject's d'.
 
+We can do this in a variety of ways--any way you might usually use to extract one specific value from a cell of a df works, as long as you can put it inside of `map()` to repeat it over every sub-df in `coefs`!
+
+Here, we'll combine base R bracket & dollar-sign based logical indexing with our tidyverse tools to index the value in the `estimate` column of `coefs` in the row where `term == "is_old"`. Note that we can dollar-sign index the sub-df in each element of `coefs` by using the `.` placeholder.
+
+We also use `map_dbl()` here instead of just `map()` because we expect every output to be a double of length 1, so we wish to return an atomic double vector instead of a list vector.
+
 ```{r}
 nested_with_models %>%
   mutate(dprime = map_dbl(coefs, ~.$estimate[.$term == "is_old"]))
 ```
 
+If you wanted to pull more values out of `coefs`, you could `unnest()` the column directly and create a long-form df that you could manipulate as usual, like below:
+
+```{r}
+nested_with_models %>%
+  unnest(coefs, .preserve = "trials")
+```
+
+Notice that when you use the `.preserve` argument to specify which other list-columns you want to keep in your output df (and thus repeat with the other subject-level variables), any columns of list type that _aren't_ explicitly specified will be _dropped_ from your output. Here, you can see that the `models` column, which was a list-column so that each element could contain a model object, is absent from the output of `unnest()` because we only specified that `trials` should be preserved.
+
+In any case, I hope you can see that if you need to fit the same model repeatedly to different datasets, perhaps to data from individual subjects, using `map()` to vectorize your model-fitting on list-columns in a nested df can do just the trick.
 
 # Plotting data
 
 If there are any `tidyverse` packages you were acquainted with before you first jumped into the tidy sea, you likely already knew about `ggplot2`. For this reason, and because Paul Bloom's fantastic `ggplot2` vignettes cover plenty of ground (TODO: link), we won't be getting much into plotting here.
 
-The one thing, though, that I'd like to show you is how I like to use the pipe to pre-process dfs before plotting. Want to plot just a subset of a df? Or maybe re-label some factor levels for the plot, but not save those factor levels back into the main df?
+The one thing, though, that I'd like to show you is how I like to use the pipe `%>%` to pre-process dfs before plotting. Want to plot just a subset of a df? Or maybe re-label some factor levels for the plot, but not save those factor levels back into the main df? There's no need to save your slightly modified df into another object just to plot, if you don't need it for anything else.
 
+If we remember that the pipe `%>%` takes the object on the _left,_ and inserts it as the first argument of the function call on the _right,_ then `df %>% ggplot(aes(...))` should behave the exact same as `ggplot(df, aes(...))`. Let's try this while plotting some data from our simulated df.
+
+```{r}
+nested_with_models %>%
+  ggplot(aes(x = q_1, y = q_2)) +
+  geom_point() +
+  labs(x = "Fake questionnaire 1 score", y = "Fake questionnaire 2 score")
+```
+
+It works! I also think it reads cleanly, because the very first line of the function call tells you which df you're about to plot. Do be aware, though, that `ggplot`'s layer-building requires that you chain `ggplot` calls with `+`, _not_ `%>%`. It'll throw an error if you try, though, so if you mix it up (as I often do) it's okay.
+
+Now, we can pipe our df through other data manipulation functions before piping it into a `ggplot()` call, and these changes to the df will only apply to the data being plotted.
+
+What if we want to plot our fake subjects' d' values, but with standard error bars using the coefficient standard errors from each individual subject's model? We can `unnest()` the `coefs` column our nested df that contains the individual-subject models and clean the data, just for this plot.
+
+```{r}
+nested_with_models %>%
+  # unnest the coefs column to get it into the main df
+  # DON'T need to .preserve anything, since this data is only going into the plot
+  unnest(coefs) %>%
+  # I only want to plot the estimate values for the term is_old, which is the d' term
+  filter(term == "is_old") %>%
+  ggplot(aes(x = id, y = estimate)) +
+  geom_errorbar(aes(ymin = estimate - std.error, ymax = estimate + std.error), width = 0) +
+  geom_point() +
+  labs(x = "Subject number (arbitrary order)", y = "Fake d' (memory sensitivity)")
+```
+
+Using this syntax, you can smoothly and legibly pipe your data through pre-processing calls before it gets plotted. You can use this to `recode()` factor levels so that you get more informative labels in legends, `filter()` data to plot only certain conditions, or `mutate()` to create a new helper variable just to plot.
