@@ -1,7 +1,6 @@
----
-title: "R Tutorial Syllabus"
-output: html_document
----
+# R Tutorial Syllabus
+
+Current revision: Winter 2018 (pilot workshop)
 
 ## Course Goals
 
@@ -17,7 +16,7 @@ Graduate students, advanced undergraduates and post-bacs in the psychology depar
 
 ### Modules
 
-The course is divided up into modules, each covering a different aspect of R. These lessons will build off of eachother, staring with basic programming and continuing to data cleaning, graphing, and statistical modeling. Each module is made up of several separate components.
+The course is divided up into modules, each covering a different aspect of R. These lessons will build off of each other, staring with basic programming and continuing to data cleaning, graphing, and statistical modeling. Each module is made up of several separate components.
 
 ### Tutorials
 
@@ -39,7 +38,7 @@ The course will begin with a broad explanation of why students should consider l
 
 ### Basic Programming
 
-This is an optional module aimed at students who have no previous experience with programming. It will cover getting R and R studio installed, basic programming commands in R, and an overview of the data types and structures that R uses. A major hurtle to getting people using R is often anxiety regarding programming, so this module is aimed to get students comfortable. Those who already have a background in programming or have used R in the past can either attend or skip this one. The data challenge for this module will be executing simple programming commands.
+This is an optional module aimed at students who have no previous experience with programming. It will cover getting R and R studio installed, basic programming commands in R, and an overview of the data types and structures that R uses. A major hurdle to getting people using R is often anxiety regarding programming, so this module is aimed to get students comfortable. Those who already have a background in programming or have used R in the past can either attend or skip this one. The data challenge for this module will be executing simple programming commands.
 
 ### Data Cleaning
 
