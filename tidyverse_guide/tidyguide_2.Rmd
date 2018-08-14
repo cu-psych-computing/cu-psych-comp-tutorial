@@ -51,7 +51,7 @@ We'll use a simulated dataset for this vignette, so you don't need to worry abou
 
 If you have `tidyverse` loaded, all this code should run if you try to run it in your R console.
 
-If you're coming from part 1 of our tidyverse tour, this is the exact same simulated raw data as before.
+If you're coming from part 1 of our tidyverse tour, this is the exact same simulated raw data as before. As a reminder, this is a simulated recognition memory task, where for a series of objects that were either seen or not seen in a previous learning phase, fake subjects must respond "old" if they think they saw the object before, and "new" if they think they did not.
 
 ```{r}
 # 20 fake subjects, 50 fake trials per subject

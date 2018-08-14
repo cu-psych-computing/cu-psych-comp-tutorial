@@ -44,7 +44,6 @@ To see all the functions in each pkg, visit their reference pages at [tidyverse.
     + `gather()` & `spread()` for making long and wide
     + `separate()` & `unite()` for fixing key columns (pre/post-processing for `gather()`/`spread()`)
     + `expand()`, `crossing()`, etc.-- like `expand.grid()` but a little more predictable
-    + `nest()`/`unnest()` for tibble-ception
 * `dplyr`
     + `select()`, `filter()`, `distinct()` for subsetting and reordering dfs/tibbles
     + `group_by()`/`ungroup()` for setting groups
@@ -72,6 +71,8 @@ Essentially all functions from the tidyverse are pipe-safe, but bear this in min
 # Initializing fake data
 
 We'll use a simulated dataset for this vignette, so you don't need to worry about any dependencies involving datasets you don't have access to while you're following along.
+
+Here, I'll simulate a recognition memory task, where each fake subject sees a series of objects, some they've seen before in a learning phase, and some they haven't. For each object, which is either old (they saw it before) or new (they did not see it before), subjects must respond "old" if they think they saw it before, or "new" if they think they didn't see it before. I'll also simulate some person-level demographic variables (age, gender) and trait variables (questionnaire scores).
 
 If you have `tidyverse` loaded, all this code should run if you try to run it in your R console. I'm using functions that I'll introduce later, so don't worry if you don't fully understand this right now! Feel free to skip past this.
 
