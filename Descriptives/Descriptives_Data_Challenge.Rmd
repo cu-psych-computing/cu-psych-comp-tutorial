@@ -1,0 +1,53 @@
+---
+title: "Descriptives_Data_Challenge"
+output: html_document
+---
+
+# Data challenge for descriptive statistics
+
+
+0. We're going to continue working with the Uncapher et al. (2016) dataset for this challenge! First, load the *uncapher_2016_one_condition_dataset.csv* file into a dataframe 
+
+```{r}
+
+```
+
+
+1. Make a histogram of the variable called "Dprime". This variable represents (normed) hit rate minus (normed) false alarm rate during the working memory task. 
+
+```{r}
+
+```
+
+
+
+2. What is the skew and kurtosis of Dprime? Is it normally distributed? 
+```{r}
+# hint: there is missing data in the dprime variable. how do we get around that?
+
+
+
+```
+
+3. Make a boxplot comparing Dprime between high multitaskers (groupStatus: HMM) and low multitaskers (groupStatus: LMM). 
+```{r}
+
+
+```
+
+4. what is the mean dprime score for high multitaskers and low multitaskers?
+```{r}
+
+
+
+```
+
+5. Make a plot showing the relationship between multitasking and dprime.
+Is this relationship positive or negative?  
+
+
+```{r}
+
+
+```
+

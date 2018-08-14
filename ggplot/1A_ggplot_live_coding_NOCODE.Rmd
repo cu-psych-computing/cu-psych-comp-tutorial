@@ -1,0 +1,186 @@
+---
+title: "ggplot Live Coding Sheet -- No Code"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## 1: First Install/load ggplot2
+
+install.packages('ggplot2')
+
+```{r}
+#load the package
+require(ggplot2)
+```
+
+
+
+## 2: Load in Sample Data (NHANES)
+
+Region  -  Geographic region in the USA: Northeast (1), Midwest (2), South (3), and West (4)
+
+Sex     -  Biological sex: Male (1), Female (2)
+
+Age     -  Age measured in months
+
+Urban   -  Residential population density: Metropolital Area (1), Other (2)
+
+Weight  -  Weight in pounds
+
+Height  -  Height in inches
+
+BMI     -  BMI, measured in kg/(m^2)
+
+```{r}
+nhanes <- read.csv("NHANES1990.csv", stringsAsFactors = F)
+nhanes$Age <- nhanes$Age/12
+View(nhanes)
+```
+
+## 3: Scatter Plot & Basic ggplot Syntax
+
+-`ggplot()` command usage including saving to a variable with `a <- ggplot()`
+
+-The general format is `ggplot(data, aes(x = [x axis variable], y = [y axis variable])` 
+    - x and y variables are always specified in this `aes()` subfunction
+
+Run this line of code 
+
+```{r}
+
+```
+--axes are set up the way we'd expect, and seem to have sensible values
+--why is nothing on this graph yet? we haven't put any graphic actually on the axes yet
+
+
+We need to tell `ggplot()` what kind of graphic to put on the axis
+
+A lot of the time, the syntax is `geom_[something]`
+
+So lets do scatter with `geom_point()` first: 
+
+```{r}
+
+
+```
+
+## 4: Dot Plot Organized by Grouping Factor
+
+Question: what if we want to look at distribution of weights by region in the nhanes data?
+
+With ggplot, if x is a factor (discrete, not continuous) we can plot dots as a function of the fact
+
+```{r}
+
+```
+
+## 5: Summary Plots
+
+Plotting data points is all well and good, but what if we want to use our plots to summarize distributions? We'll do that here: 
+
+```{r}
+```
+
+## 6: Fitting Lines To The Data
+
+Let's say we think there might be a linear relationship between height and weight
+
+We can use `geom_smooth` for this and `method = 'lm` specifically for a linear model
+Also `level = .95` can specify confidence interval about the estimate at each x value
+
+```{r}
+
+```
+Hmm, this actually looks like it's giving us some pretty bad predictions. We're not going to get into the stats of this now, but we can also plot using `auto` which is a mix of models, and might be a bit smarter
+
+
+
+
+```{r}
+
+```
+
+## 7: Titles, Axis Labels
+
+
+The `labs()` command can be added to ggplot with different arguments, lke `x`, `y`, or `title` to make the plots clearer
+
+```{r}
+```
+
+Note, if we want to change labels for FACTORS, not just axes, it's easier to do that using the tidyverse 
+
+```{r}
+require(tidyverse)
+
+
+```
+
+## 7: Facetting
+
+Its useful to have several plots in a panel sometimes, not just one. 
+
+So for this data set, say we want to plot relationships between height and weight, but by region
+
+We can do this with `facet_wrap('Region')`
+
+```{r}
+
+```
+
+We can even do multiple factors
+
+```{r}
+
+```
+
+## 8: Color
+
+We can color either continuously or discretely, depending on how a variable is represented in r
+
+We put `col = Height` into the `aes()` function because it's a grouping factor
+
+Continous Example
+```{r}
+
+```
+
+Discrete Example
+```{r}
+
+```
+
+It is EASY to choose your own custom colors (as well as using R presets), but we're not going to get into that right at this moment
+
+## 9: Themes
+
+We can use themes to make our plots prettier, and also customize the gridlines a lot 
+
+
+```{r}
+
+```
+
+## 10: Saving To Files
+
+Arguments for `file` , `plot`, `dpi`, `width`, and `height`
+
+We can use a variety of file formats
+
+```{r}
+```
+
+
+
+## 11: Final Points
+
+Ggplot basic will get you a LONG way.
+
+Also, there is much more ggplot can do for making your plots very pretty, and also plotting lots of complex models
+
+Unlike excel and spss, which can often be cranky and difficult to bend to your will in customizing plots, ggplot is really easy to work with to make your graph look the way you want 

@@ -1,0 +1,502 @@
+---
+title: "Programming Lesson Plan"
+author: "Monica Thieu"
+date: "November 26, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Intro
+
+Programming is telling a computer to do some action to some input info to get output info that you want. We will learn about this info that goes in and out, as well as the actions that transform info into what we want.
+
+## Working directories, file paths, etc
+
+Before we actually get started with messing in R, we need to understand how R interacts with files on your computer. Any data that gets loaded in or saved out is saved on your computer proper, and you can access all of these files through R.
+```{r explain working directories}
+
+```
+
+```{r explain file paths}
+# Absolute
+
+# Relative
+
+# Note that absolute file paths will typically START with a forward-slash / character, while relative paths will NEVER start with / . Why is this the case?
+# When would you want to use either one?
+```
+
+# WHAT
+## Variables
+
++ a **variable** is how we store information in a way that the computer can operate on
++ it has a **value:** the info itself
++ and a **name:** the cue by which we call upon the info to the computer
+
+If you think about how variables like x and y are used in algebra, calculus, etc, that can be a useful way to conceptualize them.
+
+Variables can contain numbers. We *assign* a value to a name.
+```{r make some vars}
+# Use the left-facing arrow <- operator to assign values to varaible names
+
+```
+
+They can also contain other stuff (literally almost anything) but we'll talk about this later!
+
+Variables live in the **environment**. The environment is your workbench in R: this is where all data are held, so that you can access and manipulate that data using R commands. It's sort of like R's working memory, where information is held for immediate use.
+```{r explain what the environment is}
+
+```
+
+Information doesn't just exist in the environment--it can also be printed to **console.** The console is the place where you talk to R (type in commands), and R talks back to you (shows you the result of those commands).
+```{r console is a special place}
+# You cannot access anything that was not saved to a variable!
+# Console is great for checking stuff out
+# But you have to remember to save stuff to vars (into your environment) if you wanna manipulate it in any way
+```
+
+Since variables are labels for pieces of information, a variable name can be used to refer to any piece of data where you would otherwise call that data directly. For example:
+```{r}
+# Any piece of info that is being called but not assigned to a variable will show up in console
+
+```
+
+Variables don't just have to contain pure numbers; you can assign the output of commands to variables.
+```{r}
+
+```
+
+You can overwrite the values of variables
+```{r}
+# With the values of other variables
+
+# OR of the current value of the variable. Note that R will ALWAYS use the PREVIOUS value of a variable in all the calculations BEFORE re-assigning the final result to the variable name.
+
+# You can also delete variables from your environment
+
+```
+
+Variable naming has to obey certain rules. In addition, name your variables to maximize both informativeness and conciseness.
+```{r var naming dos and donts}
+# Name must start with a letter, can only contain certain permissible characters (a-z, 0-9, ., _)
+```
+
+Sometimes this means you want to make the name of your variable more than one word. There are various accepted ways to handle multi-word variable names. Ultimately this is a matter of taste, but be consistent in what you choose!
+```{r}
+# The numbers being assigned here are just dummies
+period.separated.var <- 1000
+underscore_separated_var <- 57
+lowerCamelCaseVar <- 1.96
+```
+
+## Functions
+Should this go here?
+
+Anatomy of a function:
+
+`output <- function(argument1 = input1, argument2 = input2)`
+
++ `function()`: This is the function that will DO SOMETHING to your inputs.
+Whenever you are referencing a function by name, you should always write it with the two parentheses () after the function name so people know you're referring to a function and not a variable.
+The name of a function will tell you something about what a function does. You can/should look it up if you're not sure though!
++ `argument1`, `argument2`, etc: These are **arguments** to a function--this is the information that a function *expects* and *is prepared to operate on*.
+The name of an argument will tell you something what an argument represents and how it should be formatted. (More on this later)
++ `input1`, `input2`, etc: These are variables that you created that will actually get fed into your function. This is the information that will actually get operated on. These can be data that live in your environment, or these can be settings (like switches and knobs, if your function was an actual machine) that are turned to a specific value.
++ `output`: This is the variable that will hold your output information.
+As you can see, we are ASSIGNING the value that's output from `function()` to the variable `output` using the `<-` left-facing arrow operator. Just like before with printing variable values to console, if you run a function without assigning its output to a variable, the output will print to console (so you can read it) but it will not be stored anywhere (so you can't perform any further operations on that output).
+
+```{r}
+# Output, function name, argument names, argument inputs
+# Don't forget to assign function outputs to a variable if you want to use them later
+```
+
+Things to know:
++ name thy args
++ when in doubt, search the help!
+
+## Data types
+
+So what kind of data can be stored and manipulated in R? There are different "types" of data that programming languages know how to handle. Each is encoded in a slightly different way, and can have different things done to it.
+
+### Numeric data
+Literally... any (real) number
+
+```{r}
+
+```
+
+#### Arithmetic operators
+
+Here are (some of) the things you can do with numeric data
+```{r}
+# Maths!
+
+# All the arithmetic operators:
+# + (add) - (subtract) * (multiply) / (divide) ^ (exponent)
+# R obeys PEMDAS
+```
+
+```{r}
+# Bonus arithmetic operator; you may need someday
+# The modulo %% operator returns the remainder of dividing two numbers
+
+```
+
+### Logical data
+It's like numbers, but represents `TRUE` and `FALSE`. Can be mathed on as if it were numeric; `TRUE` is 1 and `FALSE` is 0. Note that this is case-sensitive: R requires `TRUE` and `FALSE` to be written in all caps!
+```{r}
+# You can do basic stuff like adding with logicals
+
+# But what's more interesting & useful is multiplying by TRUE or FALSE
+
+```
+
+Also you can use logical data as informational flags. To be revisited...
+
+### Character data
+This is letter/word-based data. A piece of character data is called a **string.**
+
+R understands that this data is made up of text, and treats it in a special way. You might encounter this if you are storing free-response text data in R, or perhaps if you have a list of word-based stimuli stored in R as part of your task data.
+
+```{r}
+
+```
+
+Here are a couple of the functions that specifically operate on character data
+```{r}
+# You can coerce things to upper or lowercase with the right function
+
+# You can also count the number of characters
+
+# Of note is that you canNOT do arithmetic on strings
+
+# Try to do arithmetic on a string variable that appears to contain a number. what happens?
+```
+
+## Data structures
+With all the data types we just talked about... just with more than one piece of data!
+
+### Vectors
+A sequence of pieces of information that are **all the same data type** (for the computer) and meaningfully related (for you). Has length (can consider as one column). So powerful!
+
+```{r}
+# Create a vector using c()
+
+# a single piece of data is also a vector with length 1!
+
+```
+
+The individual pieces of data inside one vector are called **elements.**
+
+Vectors can be any of the data types.
+```{r}
+# You can have character vectors
+
+# Or logical vectors
+```
+
+```{r}
+# As you can see, the function c() is the primary way to construct vectors, by listing out all the pieces of data you want to put into the vector inside the function.
+# BUT, R lets you do some special stuff to create certain useful numeric vectors...
+# Use the colon operator to create a numeric vector
+
+```
+
+#### Indexing into vectors
+When you need to access individual pieces of information inside of a vector, you'll do that by calling the vector and adding an additional "address" to specify which piece of data inside the vector you want. This address is called an **index.**
+To tell R that you are indexing into a vector, you put the index inside hard brackets [] after the name of your vector variable.
+
+```{r}
+# You can index one piece of data
+
+# You can also index multiple pieces of data out of a vector. This returns another, shorter, vector! You do this by putting a valid numeric vector inside the brackets.
+# Remember the colon : operator from above
+
+# Or another valid numeric vector, using c()
+
+# R starts indexing at 1; the first element in your vector is at index 1.
+# You can only index into your vector using VALID indices; that is, indices that actually correspond to elements in the vector. Essentially, you can't index using a number that is larger than the length of your vector.
+# You can also index to exclude elements from a vector, using negative numbers
+
+```
+
+Logical indexing. Use a logical vector of equal length to your vector of interest; all TRUE values will be indexed and all FALSE values will not be indexed.
+```{r}
+# You can either use vectors you made earlier, or make two new vectors of EQUAL LENGTH: one character or numeric vector and one logical vector
+
+# Now use bracket-indexing to logical-index your first vector using your logical vector
+```
+
+You can do two types of operations on vectors
+
+#### Vectorized operations (n element input, n element output)
+This takes a thing and does it individually to each element in your vector, returning an analogous vector where the nth element of the output vector is the result of performing the operation on the nth element of the input vector.
+If you wanna do the same thing to a bunch of data this is the way to do it fast!
+
+```{r}
+# Basically all the arithmetic operations are vectorized, for example
+
+# and many other operations
+```
+
+#### Summarizing operations (n element input, 1 element output)
+These operations require multiple pieces of data (a vector) and returns one piece of data.
+
+```{r}
+# Stats operations are typically of this type
+
+```
+
+### Data frames
+This is the data structure where it happens! Imagine your usual rectangular Excel spreadsheet that you might have for your study data, where each column of the spreadsheet contains a meaningful category of information (e.g. subject ID, task condition, trial response), and each row contains one observation of information (one subject, or one trial within subject, etc). A dataframe is basically that.
+
+A **dataframe** is a special rectangular data structure in R that is *column-optimized.* A dataframe is essentially a series of vectors *of equal length* stuck together in a meaningful way. 
+
+Each column is a vector, containing all the observations of a particular meaningful grouping. Each row is the nth element across vectors, containing one complete observation from all the vectors. Each observation can be a subject, a trial, a group, whatever--any one meaningful something.
+
+```{r}
+# This command will load a dataframe in from a study I worked in undergrad. It's saved externally as a CSV file (one that you could open in Excel if you wanted to), so you can see the commonalities between your garden-variety study data Excel spreadsheet and an R dataframe.
+# Quick review question: Am I calling the below file path using an ABSOLUTE or RELATIVE path? How can you tell?
+data <- read.csv(file = "../Descriptives/uncapher_2016_one_condition_dataset.csv", header = TRUE, stringsAsFactors = FALSE)
+# Don't worry about the command below; I'm just shortening the dataframe. You'll understand what this means later! Just run it now.
+data <- data[data$groupStatus != "", -c(1:4, 22:26)]
+# PAB -- emphasize that vectors in a dataframe are of equal length -- and why this makes sense
+```
+
+A dataframe is composed of a series of vectors; you can manipulate individual columns of a dataframe as vectors. But you can NOT manipulate individual rows of a dataframe as vectors. We will try this very soon and you'll see that an individual row of a dataframe behaves as a dataframe with only one row in it. Why might this be the case?
+
+To access these individual columns and rows, we'll index into our dataframe. Indexing is back... with a vengeance!
+
+#### Indexing into dataframes
+
+Like indexing into vectors, but with more to love!
+You can index whole rows, whole columns, and portions of both.
+
+Indexing columns:
+You can index by NAME (each column in a dataframe has a NAME, like the header row in a spreadsheet), or by NUMBER (first column, second column, etc). Today, we'll learn about indexing by NAME, because this is the reproducible way to do it. Consider it this way: other people don't know what order your columns are in, but they can gather what's in a column by the name, so if someone else were reading your code, they'd be able to tell much more easily what column you were referring to.
+
+With brackets:
+This is similar to indexing a single vector using brackets, but this time, a dataframe has **two dimensions: length AND width.** This means that bracket-indexing into a dataframe expects TWO coordinates: which rows you want, *and* which columns you want. The indexing is ALWAYS `[row, column]` where the row index is the one BEFORE the comma, and the column index is AFTER. You can remember this as it's similar to (x, y) coordinates, where x goes horizontally and y goes vertically. 
+```{r}
+# When you want ALL rows, you leave the row index BLANK. BUT you still need the comma!
+# Notice that I am calling the column name as a STRING.
+
+```
+
+With the dollar sign:
+Remember how dataframes are column-optimized? There's a special way to index columns of a dataframe that's optimized for using column names to index. Let's take a look:
+```{r}
+# This returns the exact same column as we got before!
+# You first write the name of your dataframe, then the $, to tell R to go "inside" of that dataframe and look for the column you're about to specify.
+# Then you write the column name, WITHOUT QUOTATION MARKS. NOT A STRING!
+# This is why $ indexing is special: A word without quotes is a VARIABLE NAME, but a word in quotes is a STRING. These behave two very different ways in R.
+
+```
+
+Indexing rows:
+
+Indexing rows works similarly to indexing columns in some ways. But, while columns of a dataframe have names, *rows of a dataframe do not have names, ONLY numerical indices.* So we CANNOT use dollar-sign indexing to index rows, ONLY bracket indexing. And we cannot use words to call rows, ONLY numbers.
+```{r}
+# Do we expect to call rows using the space BEFORE the comma, or AFTER the comma?
+
+# Observe that indexing a single row of a dataframe returns a dataframe with one row in it. Because R knows that each row of a dataframe is a complete observation of data, R keeps that observation in dataframe form even when there's only one observation, so that you can continue doing special dataframe stuff on it.
+
+# Remember that you can use a VECTOR in the numerical index to index MULTIPLE indices, here calling multiple rows
+
+```
+
+Now, we're going to step out of talking about dataframes directly, and we're going to talk about other data types that are useful inside of dataframes.
+
+### Factor data
+Remember character data from earlier? That's R's all-purpose data type for text-based data. But R knows that sometimes, especially in a dataframe, you might have a column composed of text to label your within-subject task conditions, between-subject groups, etc. **Factor data** is a datatype built on top of character data that gives you special properties that are useful when a column/vector contains grouping information.
+
+```{r}
+data2 <- data # Duplicating my original dataframe into a new variable, so I can keep an original copy!
+
+# For example, here it might be useful for the column "groupStatus", which refers to a between-subjects labeling, to be in factor form.
+# I'll keep working on data2 here to keep data as the raw copy.
+# the function as.factor() is a COERCING function; we won't focus on these today, but these are a family of functions that take data of one type and change them into another type. Like, you could do as.numeric("9") to change it into the number 9.
+
+
+
+# Observe how this column now has LEVELS; these are the different categories of the variable.
+# They are organized alphabetically by default; you can reorganize the levels into a more meaningful way if you want
+# We won't worry too much more about factor data for now, but here are a couple of factor data's pros and cons relative to regular character data:
+# PROS: You get special properties that help when graphing, and when creating models for data
+# CONS: While factor data is composed of text, it doesn't behave like character data in every single case, and so you have to be very careful with factor data because sometimes you don't get the outputs you expect if you were to run the same operation on character data
+```
+
+
+### Non-data data
+You know what's the worst? Missing data! But it happens to the best of us. When you have a missing data point in an Excel spreadsheet, you might leave that cell blank. But in R, you need to put a placeholder in that spot. There's a special data type, `NA`, used as the missing data placeholder.
+
+```{r}
+# The dataframe column rtFA already has missing data in it. When a participant didn't have any false alarms, there weren't any trials to calculate RT, for, so this data point is missing in that situation!
+
+# Try calculating the mean of the values in the rtFA column. what happens?
+```
+
+# HOW
+Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things!
+
+## Pseudocode
+It's so important!!! Be able to talk through what you want to do in plain English before you actually try to code it. This is how you will actually figure out what functions you need to do the things you want
+
+```{r}
+# Let's say I want to...
+# Calculate the mean hit rate for all subjects in the group "HMM".
+# I need to OPERATIONALIZE this statement into a series of pieces that can be directly translated into R commands
+
+# First, call HIT RATE, but only the ones for "HMM" subjects
+# Then, calculate the mean of that
+
+# This one was pretty brief. Pseudocoding can be quick, but it can often be quite complex for larger tasks!
+```
+
+## Relational operators
+Most of the time, when you want to do things in R, you want to do them in *some conditions but not others.*
+
+**Relational operators** are the first key to making this happen. These are essentially inequality operators like the ones you would encounter in algebra.
+
+```{r}
+# The following is a RELATIONAL STATEMENT. This is a command involving a relational operator that returns TRUE or FALSE based on whether the statement is true or false.
+2 > 1
+# You can try some of your own!
+
+# All the relational operators:
+# > (greater than) < (less than) >= (greater than or equal to) <= (less than or equal to) # == (is equal to, NOTE that it is TWO equals signs, ONE equals sign does something different)
+# != (is not equal to)
+# In most cases, you can use == and != to compare character data too--if you want to see if one piece of character data is the same as another piece
+
+# %in% (is contained by; this is useful when you need to see whether the element on the left matches any of a vector of elements on the right)
+
+# Note that %in% takes a VECTOR on the right side, and looks for FULL MATCHES from the element on the left to the elements on the right. To match a piece of character data into a single, LONGER piece of character data on the right (e.g. matching one word into a sentence), you have to use other strategies we won't get into here.
+```
+
+If we think about the pseudocode from earlier...
+```{r}
+# The first step of the pseudocode:
+# call HIT RATE, but only the ones for HIGH CONFIDENCE
+# We want to know which values of the column groupStatus are equal to "HMM"
+
+
+
+# Relational operators are vectorized--see that feeding in a vector on the left of the relational statement returns a logical vector, not just one logical!
+```
+
+Logical indexing is the best! and a frequent use case of relational statements. Back to our pseudocode--
+```{r}
+# Now that we see that we get a logical vector from calling data2$conf == "hi"
+# Remember that a vector can be used inside bracket indexing
+# And if you call a logical vector inside brackets, only the values that are TRUE will be indexed
+
+
+
+# Now, I can complete my code! Because I have just identified all the values I'd like to calculate the mean on.
+
+
+
+```
+
+## Logical operators
+Relational statements will get you a long way. Sometimes, though, you need to know whether groups of conditions are true or false. You can combine the TRUEs and FALSEs of relational statements using Boolean logical operators.
+
+```{r}
+# These are the Boolean operators you'll need:
+# ! (NOT operator; this returns the opposite of whatever you put in)
+
+
+# & (AND operator; this returns TRUE if both statements on either side are both true
+
+
+# | (Pipe, or shift-backslash--OR operator; this returns TRUE if AT LEAST ONE of the statements on either side is true)
+
+
+# Relational operators also obey order of operations re: parentheses ().
+
+
+
+```
+
+Other useful functions will also output TRUE or FALSE, so you can use these similarly to relational statements to generate logical output based on the content of some data.
+
+```{r}
+# Remember NA from before? Many times, you will want to know which elements of a dataframe column are missing.
+
+# There are many of these is.whatever() functions!
+```
+
+
+## Conditional operators
+Sometimes, you want to run commands or set values based on whether certain things are true or false. For example, imagine that you have some continuous outcome variable, and you want to recode that continuous outcome variable categorically.
+
+We can use what we've learned about logical statements so far, in conjunction with some new commands!
+
+```{r}
+# Let's consider the column adhd in data2. This is the participant's score on the ADHD Adult Self-Report Scale (short form). The inventory scoring instructions say that any participant with a score of 4 or above is considered "potentially diagnostic of ADHD". If we wanted to add a variable that indicated whether someone did or did not have a suprathreshold ADHD score, what would we do?
+
+# Pseudocode!
+# First, call the column for ADHD
+# Then, create a new column and fill in the following values based on the corresponding values in ADHD
+# If the ADHD score is 4 or above, then label in the new column as ADHD diagnostic
+# Otherwise (if the ADHD score is less than 4), label in the new column as ADHD non-diagnostic
+```
+
+Now, our pseudocode has just introduced a word we haven't previously seen: *IF.* What we need here is a command that will direct R to judge whether some condition is true, and then perform some action ONLY if that condition is true. If-based code is great for promoting reproducibility. You can just tell R to check that a certain condition is true, and you'll always get the result you want, no matter the particulars of your data.
+
+```{r}
+# The ifelse() function will allow us to knock out almost all of our pseudocode in one function
+# First, ifelse() takes a TEST: this is any statement that evaluates to LOGICAL data. It's a question in R that must yield a YES or NO answer.
+# then, ifelse() creates a new vector the same length as the test. each element of test is going to be filled in with some value based on whether the test came out as TRUE or FALSE for that element.
+# if the condition is TRUE for an element, ifelse() fills in that spot with the second argument, which is named 'yes'
+# if the condition is FALSE for an element, ifelse() fills in that spot with the third argument, which is named 'no'
+# in plain english, it kind of says:
+# check whether this condition is true or false
+# if the condition is true, create a variable with value A
+# otherwise, create a variable with value B
+# ifelse() is a vectorized function! Remember that this means that if you input a vector in the first argument, you'll get a vector of the same length as your output, because the operation is done on each vector element separately.
+
+```
+
+
+## Packages
+
+Packages are bundles of functions in R, usually made by experienced programmers, that you can use to make life easier! Oftentimes, if there's something you want to do in R, there already exists a function to do it, that you can find in a package.
+
+Since these packages don't come with base R, you have to install them.
+```{r}
+# You will need these packages in later parts of the workshop! We'll do this using a function first, so you can tell R to install packages in the console.
+
+# You can also do this through the GUI, using the "Packages" tab in the lower-right window of RStudio.
+```
+
+Then, once they're installed, you again have to tell R to LOAD the packages into your active R session. While you only have to install packages once, you have to load them every time you open R. (Why they don't load automatically? I don't know! But if you'd like to configure R to load packages automatically every time you open R, ask us after this)
+
+```{r}
+# Use library() to load a package ONCE IT'S INSTALLED.
+# You can put the package name as a string
+
+
+# OR unquoted, as a variable name. Some functions don't care whether you use quotes or not, but some do.
+
+
+```
+
+
+## Getting assistance
+
++ On your own
+    + The help docs!
+    + The internet
+    + Stack Overflow & other Q&A spaces
+    + R user blogs
++ Asking someone else
+    + Who to ask
+    + How to ask
+
+
+## PAB Other Thoughts
+As I read through this, I think it will take students a long time to get through. Especially vectors and onward, I remember that stuff being difficult to pick up. Maybe when we're thinking about how we budget time for each modules (or after we practice), we can adjust for this? Or split some of this material into other modules when it becomes relevant?

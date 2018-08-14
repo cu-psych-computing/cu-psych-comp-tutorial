@@ -2,6 +2,7 @@
 
 ## Bootcamp materials (self-contained multi-page tutorial)
 
+* [Syllabus](syllabus.html)
 * [Programming basics](programming/programming-basics.html)
 * Data cleaning
 * Descriptive statistics

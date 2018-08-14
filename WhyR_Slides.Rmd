@@ -1,0 +1,129 @@
+---
+title: "Why R?"
+author: "Ellen Tedeschi"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Why do I use R?
+
+## The old way {.build}
+Raw data file (Excel)  
+
+"Clean" data file (Excel)  
+
+SPSS data file that matched Clean file (SPSS)  
+
+Report of results (Word/Excel)  
+
+Incomplete written log of data collection and analysis (Excel)  
+
+
+## The new way {.build}
+Raw data file (.csv)  
+
+Cleaning script (R)  
+
+Clean data file (.rda)  
+
+Report containing analysis, graphs and written report (RMarkdown) 
+
+
+## Streamline your research process {.build}
+
+Once you have some data, you can use R for every step of your research.  
+
+Cleaning, organizing and combining data from multiple sources  
+
+Calculations and data transformations  
+
+Statistical Analysis  
+
+Graphing  
+
+Reports, papers, and presentations  
+
+I made this slide show in R!  
+
+## Reproducibility {.build}
+
+Using scripts provides you with an explicit written record of everything you did with your data.  
+
+Helps you remember what you did, and helps collaborators understand your work.  
+
+Share full analysis with reviewers or other colleagues who might want to replicate or expand on your work.   
+
+## Flexibility {.build}
+
+Data can easily be split, reformatted, rearranged and combined for whatever analysis you need to do.  
+
+No need to edit or alter original raw data.  
+
+New packages are being created by users all the time.  
+
+## R Community {.build}
+
+Lots of people use R  
+
+Many online statistic tutorials are written in R,  
+and textbooks and classes are increasingly incorporating R code  
+
+Common language for collaboration  
+
+## It's free!
+
+Free stuff is good.
+
+# Why this class?
+
+## Course Plan {.build}
+Tutorial has 5 parts, each with a lesson and a data challenge.
+
+Today  
+- 10:30-12:30 Programming Basics  
+- 12:30-1:30 Lunch  
+- 1:30-2:45 Data Cleaning  
+- 2:45-3 Discussion and Questions  
+
+Tomorrow  
+- 10-11 Descriptive Statistics  
+- 11-12:30 Graphing Data  
+- 12:30-1:30 Lunch  
+- 1:30-2:30 Statistical Tests  
+- 2:30-3:30 Discussion, Questions and Future Directions  
+
+## Resources {.build}
+
+All of the course materials are on our Github:  
+cu-psych-r-tutorial  
+
+Lessons and challenges with and without code  
+
+Additional resources   
+
+Slack channel  
+
+## Goals {.build}
+
+Introduce the basics of programming in R, and demonstrate some simple tools and skills.  
+
+Demonstrate strategies for solving R problems you may encounter in the future.    
+
+Encourage you to start (or continue) using R for your research.  
+
+Grow R community within the psychology department.
+
+Introduce good research practices that you can implement even if you choose not to use R.
+
+## Disclaimers {.build}
+
+In this tutorial, you will not  
+- Master R by the end of tomorrow  
+- Actually learn statistics  
+
+R can be overwhelming, even if you're not new to programming, because there are many ways to do any one thing.  
+
+We have tried to focus on 1 way of doing each thing, but that doesn't mean other ways that you know or discover are wrong - they might even be better!
