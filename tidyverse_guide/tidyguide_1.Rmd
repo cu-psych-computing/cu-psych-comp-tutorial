@@ -1,7 +1,6 @@
 ---
 title: "Tidy walkthrough, part 1"
 author: "Monica Thieu"
-date: "July 13, 2018"
 output:
   html_document:
     theme: "journal"
