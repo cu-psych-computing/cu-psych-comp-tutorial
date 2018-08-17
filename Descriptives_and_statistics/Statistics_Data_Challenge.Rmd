@@ -1,4 +1,0 @@
----
-title: "Statistics Data challenge"
-output: html_document
----
