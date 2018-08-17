@@ -1,0 +1,102 @@
+---
+title: "Programming Lesson Plan"
+author: "Monica Thieu"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Programming is telling a computer to do some action to some input info to get output info that you want. When it comes to working with data in R, programming is how we tell R to load data, process it, plot it, fit models to it, and so on (everything!). 
+
+We will learn about this info that goes in and out, as well as the actions that transform info into what we want.
+
+# Intro
+
+## Working with RStudio
+
+### Installing R & RStudio
+
+To install R, visit the [CRAN website](https://mirrors.sorengard.com/cran/) to download the appropriate version of R for your operating system (Linux, Mac, or Windows). Run the installer contained within your downloaded file.
+
+To install RStudio, visit the [RStudio website](https://www.rstudio.com/products/rstudio/download/#download) to download the appropriate version of RStudio for your operating system. Again, run the installer that downloads to your computer.
+
+**When you want to work with R, just open RStudio. You should never need to open R directly.** RStudio requires R to run (which is why you have to download the two programs separately), but gives you a bunch of useful bonus tools that don't come standard with R, so we will only ever be opening RStudio to use R.
+
+### Getting oriented to the RStudio window
+
+#### R project files
+
+Whenever you are working in RStudio, you'll likely be working with a particular set of code scripts, raw data, and other files that are all saved in a particular folder. An [**R project file**](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects) tells RStudio "this folder is a place where I am doing R stuff related to one complete project" and helps you keep your different data analysis projects organized.
+
+You can create an R project file inside of a folder where you plan to do R work, or you can open an existing R project file in a folder you've already set up.
+
+#### Console window
+
+#### Editor window
+
+#### Environment/history window
+
+#### Files/pkgs/help window
+
+### Installing and loading packages
+
+Packages are bundles of functions in R, usually made by experienced programmers, that you can use to make life easier! Oftentimes, if there's something you want to do in R, there already exists a function to do it, that you can find in a package.
+
+Since these packages don't come with base R, you have to install them.
+
+```{r}
+# You will need these packages in later parts of the workshop!
+install.packages(pkgs = c("car",
+                          "moments",
+                          "ggplot",
+                          "tidyr",
+                          "dplyr",
+                          "effects"))
+
+# You can also do this through the GUI, using the "Packages" tab in the lower-right window of RStudio.
+```
+
+Then, once they're installed, you again have to tell R to LOAD the packages into your active R session. While you only have to install packages once, you have to load them every time you open R. (Why they don't load automatically? I don't know! But if you'd like to configure R to load packages automatically every time you open R, see [these instructions](https://www.r-bloggers.com/load-packages-automatically-in-rstudio/).)
+
+```{r}
+# Use library() to load a package ONCE IT'S INSTALLED.
+# You can put the package name as a string
+library("car")
+# OR unquoted, as a variable name. Some functions don't care whether you use quotes or not, but some do.
+library(moments)
+library(tidyr)
+library(dplyr)
+library(effects)
+```
+
+
+In the event that you
+
+## Working directories, file paths, etc
+
+Before we actually get started with messing in R, we need to understand how R interacts with files on your computer. Any data that gets loaded in or saved out is saved on your computer proper, and you can access all of these files through R.
+
+### The working directory
+
+```{r explain working directories}
+install.packages("knitr")
+getwd()
+```
+
+### File paths
+
+```{r explain file paths}
+# Absolute, e.g. the following
+"/Users/mthieu/Dropbox"
+# Relative
+"mthieu/Dropbox"
+# Note that absolute file paths will typically START with a forward-slash / character, while relative paths will NEVER start with / . Why is this the case?
+# When would you want to use either one?
+
+"../" # This allows you to go up one level, so backwards in your file directory 
+```

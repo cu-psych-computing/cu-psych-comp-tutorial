@@ -13,13 +13,56 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Programming is telling a computer to do some action to some input info to get output info that you want. We will learn about this info that goes in and out, as well as the actions that transform info into what we want.
 
+## Working with RStudio
+
+### Installing R & RStudio
+### Getting oriented to the RStudio window
+### Installing and loading packages
+
+Packages are bundles of functions in R, usually made by experienced programmers, that you can use to make life easier! Oftentimes, if there's something you want to do in R, there already exists a function to do it, that you can find in a package.
+
+Since these packages don't come with base R, you have to install them.
+
+```{r}
+# You will need these packages in later parts of the workshop!
+install.packages(pkgs = c("car",
+                          "moments",
+                          "ggplot",
+                          "tidyr",
+                          "dplyr",
+                          "effects"))
+
+# You can also do this through the GUI, using the "Packages" tab in the lower-right window of RStudio.
+```
+
+Then, once they're installed, you again have to tell R to LOAD the packages into your active R session. While you only have to install packages once, you have to load them every time you open R. (Why they don't load automatically? I don't know! But if you'd like to configure R to load packages automatically every time you open R, see [these instructions](https://www.r-bloggers.com/load-packages-automatically-in-rstudio/).)
+
+```{r}
+# Use library() to load a package ONCE IT'S INSTALLED.
+# You can put the package name as a string
+library("car")
+# OR unquoted, as a variable name. Some functions don't care whether you use quotes or not, but some do.
+library(moments)
+library(tidyr)
+library(dplyr)
+library(effects)
+```
+
+
+In the event that you
+
 ## Working directories, file paths, etc
 
 Before we actually get started with messing in R, we need to understand how R interacts with files on your computer. Any data that gets loaded in or saved out is saved on your computer proper, and you can access all of these files through R.
+
+### The working directory
+
 ```{r explain working directories}
 install.packages("knitr")
 getwd()
 ```
+
+### File paths
 
 ```{r explain file paths}
 # Absolute, e.g. the following
@@ -33,6 +76,7 @@ getwd()
 ```
 
 # WHAT
+
 ## Variables
 
 + a **variable** is how we store information in a way that the computer can operate on
@@ -158,19 +202,69 @@ text.var <- "statistics"
 text.var.2 <- "my favorite number is 7" # Disclaimer: Not actually my favorite number
 ```
 
-Here are a couple of the functions that specifically operate on character data
+Here are just a couple of the functions that specifically operate on character data.
+
+You can coerce things to upper or lowercase with the right function:
+
 ```{r}
-toupper(statistics) # You can coerce things to upper or lowercase with the right function
-nchar(statistics) # You can also count the number of characters 
-# Of note is that you canNOT do arithmetic on strings
+toupper(text.var)
+```
+
+You can also count the number of characters. Note that spaces count as characters!
+
+```{r}
+nchar(text.var.2)
+```
+
+Of note is that you canNOT do arithmetic on strings.
+
+```{r}
 not.a.number <- "7"
-# Try to do arithmetic on this variable... what happens?
+```
+
+The following will return an error if you try to run it:
+
+```{r, eval = FALSE}
+not.a.number + 1
+```
+
+### Factor data
+
+Character data is R's all-purpose data type for text-based data. But R knows that sometime you might have a column composed of text to label your within-subject task conditions, between-subject groups, etc. **Factor data** is a datatype built on top of character data that gives you special properties that are useful when a column/vector contains _grouping_ information.
+
+```{r}
+data2 <- data # Duplicating my original dataframe into a new variable, so I can keep an original copy!
+
+# For example, here it might be useful for the column "groupStatus", which refers to a between-subjects labeling, to be in factor form.
+# I'll keep working on data2 here to keep data as the raw copy.
+# the function as.factor() is a COERCING function; we won't focus on these today, but these are a family of functions that take data of one type and change them into another type. Like, you could do as.numeric("9") to change it into the number 9.
+data2$groupStatus <- as.factor(data2$groupStatus)
+data2$groupStatus
+# Observe how this column now has LEVELS; these are the different categories of the variable.
+# They are organized alphabetically by default; you can reorganize the levels into a more meaningful way if you want
+# We won't worry too much more about factor data for now, but here are a couple of factor data's pros and cons relative to regular character data:
+# PROS: You get special properties that help when graphing, and when creating models for data
+# CONS: While factor data is composed of text, it doesn't behave like character data in every single case, and so you have to be very careful with factor data because sometimes you don't get the outputs you expect if you were to run the same operation on character data
+```
+
+### Non-data data
+
+You know what's the worst? Missing data! But it happens to the best of us. When you have a missing data point in an Excel spreadsheet, you might leave that cell blank. But in R, you need to put a placeholder in that spot. There's a special data type, `NA`, used as the missing data placeholder.
+
+```{r}
+# This dataframe column has missing data in it. When a participant didn't have any false alarms, there weren't any trials to calculate RT, for, so this data point is missing in that situation!
+data2$rtFA
+
+mean(data2$rtFA, na.rm = TRUE)
+# Try running the above command after deleting the na.rm argument, aka mean(data2$rtFA)
 ```
 
 ## Data structures
+
 With all the data types we just talked about... just with more than one piece of data!
 
 ### Vectors
+
 A sequence of pieces of information that are **all the same data type** (for the computer) and meaningfully related (for you). Has length (can consider as one column). So powerful!
 
 ```{r}
@@ -184,6 +278,7 @@ length(first.var)
 The individual pieces of data inside one vector are called **elements.**
 
 Vectors can be any of the data types.
+
 ```{r}
 char.vector <- c("apple", "banana", "cantaloupe", "dragonfruit")
 length(char.vector)
@@ -198,8 +293,12 @@ num.vector.2 <- 1:5
 ```
 
 #### Indexing into vectors
+
 When you need to access individual pieces of information inside of a vector, you'll do that by calling the vector and adding an additional "address" to specify which piece of data inside the vector you want. This address is called an **index.**
+
 To tell R that you are indexing into a vector, you put the index inside hard brackets [] after the name of your vector variable.
+
+##### Numeric indexing
 
 ```{r}
 # You can index one piece of data
@@ -215,7 +314,10 @@ char.vector[c(1, 4)]
 char.vector[-2]
 ```
 
-Logical indexing. Use a logical vector of equal length to your vector of interest; all TRUE values will be indexed and all FALSE values will not be indexed.
+##### Logical indexing
+
+Use a logical vector of equal length to your vector of interest; all `TRUE` values will be indexed and all `FALSE` values will not be indexed.
+
 ```{r}
 # Remember this vector? It should be of use here...
 logical.vector
@@ -307,42 +409,13 @@ data[1, ]
 data[1:4, ]
 ```
 
-Now, we're going to step out of talking about dataframes directly, and we're going to talk about other data types that are useful inside of dataframes.
-
-### Factor data
-Remember character data from earlier? That's R's all-purpose data type for text-based data. But R knows that sometimes, especially in a dataframe, you might have a column composed of text to label your within-subject task conditions, between-subject groups, etc. **Factor data** is a datatype built on top of character data that gives you special properties that are useful when a column/vector contains grouping information.
-
-```{r}
-data2 <- data # Duplicating my original dataframe into a new variable, so I can keep an original copy!
-
-# For example, here it might be useful for the column "groupStatus", which refers to a between-subjects labeling, to be in factor form.
-# I'll keep working on data2 here to keep data as the raw copy.
-# the function as.factor() is a COERCING function; we won't focus on these today, but these are a family of functions that take data of one type and change them into another type. Like, you could do as.numeric("9") to change it into the number 9.
-data2$groupStatus <- as.factor(data2$groupStatus)
-data2$groupStatus
-# Observe how this column now has LEVELS; these are the different categories of the variable.
-# They are organized alphabetically by default; you can reorganize the levels into a more meaningful way if you want
-# We won't worry too much more about factor data for now, but here are a couple of factor data's pros and cons relative to regular character data:
-# PROS: You get special properties that help when graphing, and when creating models for data
-# CONS: While factor data is composed of text, it doesn't behave like character data in every single case, and so you have to be very careful with factor data because sometimes you don't get the outputs you expect if you were to run the same operation on character data
-```
-
-
-### Non-data data
-You know what's the worst? Missing data! But it happens to the best of us. When you have a missing data point in an Excel spreadsheet, you might leave that cell blank. But in R, you need to put a placeholder in that spot. There's a special data type, `NA`, used as the missing data placeholder.
-
-```{r}
-# This dataframe column has missing data in it. When a participant didn't have any false alarms, there weren't any trials to calculate RT, for, so this data point is missing in that situation!
-data2$rtFA
-
-mean(data2$rtFA, na.rm = TRUE)
-# Try running the above command after deleting the na.rm argument, aka mean(data2$rtFA)
-```
+There are two specific data types that feature heavily when working with dataframes: [factor data](#factor-data) and [missing data](#non-data-data). If you'd like, you can click the links to go back and review those two data types.
 
 # HOW
 Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things!
 
 ## Pseudocode
+
 It's so important!!! Be able to talk through what you want to do in plain English before you actually try to code it. This is how you will actually figure out what functions you need to do the things you want
 
 ```{r}
@@ -357,6 +430,7 @@ It's so important!!! Be able to talk through what you want to do in plain Englis
 ```
 
 ## Relational operators
+
 Most of the time, when you want to do things in R, you want to do them in *some conditions but not others.*
 
 **Relational operators** are the first key to making this happen. These are essentially inequality operators like the ones you would encounter in algebra.
@@ -383,6 +457,7 @@ text.var == "statistics"
 ```
 
 If we think about the pseudocode from earlier...
+
 ```{r}
 # The first step of the pseudocode:
 # call HIT RATE, but only the ones for HIGH CONFIDENCE
@@ -392,6 +467,7 @@ data2$groupStatus == "HMM"
 ```
 
 Logical indexing is the best! and a frequent use case of relational statements. Back to our pseudocode--
+
 ```{r}
 # Now that we see that we get a logical vector from calling data2$conf == "hi"
 # Remember that a vector can be used inside bracket indexing
@@ -402,6 +478,7 @@ mean(data2$hitRate[data2$groupStatus == "HMM"])
 ```
 
 ## Logical operators
+
 Relational statements will get you a long way. Sometimes, though, you need to know whether groups of conditions are true or false. You can combine the TRUEs and FALSEs of relational statements using Boolean logical operators.
 
 ```{r}
@@ -423,7 +500,7 @@ Relational statements will get you a long way. Sometimes, though, you need to kn
 (1 == 1) & !(2 != 2)
 ```
 
-Other useful functions will also output TRUE or FALSE, so you can use these similarly to relational statements to generate logical output based on the content of some data.
+Other useful functions will also output `TRUE` or `FALSE`, so you can use these similarly to relational statements to generate logical output based on the content of some data.
 
 ```{r}
 # Remember NA from before? Many times, you will want to know which elements of a dataframe column are missing.
@@ -433,6 +510,7 @@ is.na(data2$conf)
 
 
 ## Conditional operators
+
 Sometimes, you want to run commands or set values based on whether certain things are true or false. For example, imagine that you have some continuous outcome variable, and you want to recode that continuous outcome variable categorically.
 
 We can use what we've learned about logical statements so far, in conjunction with some new commands!
@@ -463,36 +541,9 @@ Now, our pseudocode has just introduced a word we haven't previously seen: *IF.*
 data2$adhdCoded <- ifelse(data2$adhd >= 4, "adhd", "no adhd")
 ```
 
-## Packages
+## Functions
 
-Packages are bundles of functions in R, usually made by experienced programmers, that you can use to make life easier! Oftentimes, if there's something you want to do in R, there already exists a function to do it, that you can find in a package.
-
-Since these packages don't come with base R, you have to install them.
-```{r}
-# You will need these packages in later parts of the workshop!
-install.packages(pkgs = c("car",
-                          "moments",
-                          "ggplot",
-                          "tidyr",
-                          "dplyr",
-                          "effects"))
-
-# You can also do this through the GUI, using the "Packages" tab in the lower-right window of RStudio.
-```
-
-Then, once they're installed, you again have to tell R to LOAD the packages into your active R session. While you only have to install packages once, you have to load them every time you open R. (Why they don't load automatically? I don't know! But if you'd like to configure R to load packages automatically every time you open R, ask us after this)
-
-```{r}
-# Use library() to load a package ONCE IT'S INSTALLED.
-# You can put the package name as a string
-library("car")
-# OR unquoted, as a variable name. Some functions don't care whether you use quotes or not, but some do.
-library(moments)
-library(tidyr)
-library(dplyr)
-library(effects)
-```
-
+We've already used a variety of functions, so this is a brief definition:
 
 ## Getting assistance
 
@@ -504,7 +555,3 @@ library(effects)
 + Asking someone else
     + Who to ask
     + How to ask
-
-
-## PAB Other Thoughts
-As I read through this, I think it will take students a long time to get through. Especially vectors and onward, I remember that stuff being difficult to pick up. Maybe when we're thinking about how we budget time for each modules (or after we practice), we can adjust for this? Or split some of this material into other modules when it becomes relevant?
