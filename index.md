@@ -26,3 +26,6 @@ We've assembled a non-exhaustive [list of external R resources](Resources/useful
 ## Contact
 
 The materials within are currently maintained by [Paul Bloom](https://github.com/pab2163), [Ellen Tedeschi](https://github.com/etedeschi), [Monica Thieu](https://github.com/monicathieu), and [Michelle VanTieghem](https://github.com/mvantieghem), PhD students in the Columbia psychology department. 
+
+
+![plotting is fun!](resources/funplot.png)
