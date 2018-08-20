@@ -1,0 +1,268 @@
+---
+title: "Programming Lesson Plan"
+author: "Monica Thieu"
+date: "November 26, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Welcome (back) to the CU psychology R tutorial! As a reminder, the documents for the introduction to programming cover the following:
+
+0. Finding your way around RStudio
+1. Variables, data types, vectors
+2. Coding strategy, relational & logical operators **this document!**
+
+Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things!
+
+# Pseudocode
+
+This is **so important to do before you write a single line of code.**
+
+Before you try to write any code, you should talk through what you want to do in plain English before you actually try to code it. This is how you will actually figure out what you need your code to do, and then what functions you need to do the things you want.
+
+```{r, echo = FALSE}
+data <- read.csv(file = "../3_descriptives/uncapher_2016_one_condition_dataset.csv", header = TRUE, stringsAsFactors = FALSE)
+# Don't worry about the command below; I'm just shortening the dataframe. You'll understand what this means later! Just run it now.
+data <- data[data$groupStatus != "", -c(1:4, 22:26)]
+# PAB -- emphasize that vectors in a dataframe are of equal length -- and why this makes sense
+```
+
+For example, consider the dataset we loaded in lesson part 1 (I've invisibly re-loaded it here). Let's say I want to calculate the mean hit rate for all subjects in the group "HMM".
+
+I need to _operationalize_ this statement into a series of pieces that can be directly translated into R commands:
+
+1. Grab the hit rate column...
+2. but only the ones for "HMM" subjects
+3. Calculate the mean of that vector
+
+Each of these instructions that I've laid out corresponds to a distinct R command--in this case, we need to:
+
+1. index the hit rate column in the master dataframe
+2. logical-index it so we only have the values corresponding to the "HMM" values in the group status column
+3. Call `mean()` on the vector we logical-indexed
+
+And now we can go ahead and write the code to do this bit of calculation. This pseudocoding exercise was pretty brief. Pseudocoding can be quick, but it can often become complex for larger data processing or analysis tasks! Still, the time you take to brainstorm some pseudocode will save you time you might have otherwise spent puzzling over which functions to use and how.
+
+# Relational operators
+
+Most of the time, when you want to do things in R, you want to do them in _some conditions but not others._
+
+**Relational operators** are the first key to making this happen. These are essentially inequality operators like the ones you would encounter in algebra.
+
+The following is a **relational statement.** This is a command involving a relational operator that returns `TRUE` or `FALSE` based on whether the statement is true or false.
+
+```{r}
+2 > 1
+```
+
+Here are a few more relational statements. Do you expect each one to return `TRUE` or `FALSE`, based on what's written?
+
+```{r}
+2 < 1
+```
+
+```{r}
+99 == 99
+```
+
+```{r}
+99 != 100
+```
+
+Here are the relational operators:
+* `>` (greater than)
+* `<` (less than)
+* `>=` (greater than or equal to)
+* `<=` (less than or equal to)
+* `==` (is equal to--NOTE that it is _two_ equals signs, _one_ equals sign does something different)
+* `!=` (is not equal to)
+* `%in%` (is contained by; this is useful when you need to see whether the element on the left matches any of a vector of elements on the right)
+
+Here's a few examples of `%in%` in action, in case this is a little less intuitive than the others:
+
+```{r}
+1 %in% 1:5
+```
+
+```{r}
+"apple" %in% char.vector
+```
+
+```{r}
+"orange" %in% char.vector
+```
+
+Note that `%in%` takes a _vector_ on the right side, and looks for _full matches_ from the element on the left to the elements on the right. To match a piece of character data into a single, LONGER piece of character data on the right (e.g. matching one word into a sentence), you have to use other strategies we won't get into here.
+
+In most cases, you can use `==` and `!=` to compare character data too--if you want to see if one piece of character data is the same as another piece.
+
+```{r}
+"word" == "word"
+```
+
+```{r}
+text.var == "statistics"
+```
+
+Hey, if we think about the pseudocode from earlier, we can use `==` to determine which values of `data$groupStatus` are equal to `"HMM"`.
+
+```{r}
+data2$groupStatus == "HMM"
+```
+
+Relational operators are vectorized--see that feeding in a vector on the left of the relational statement returns a logical vector, not just one logical!
+
+Remember logical indexing? This is a frequent use case of relational statements. Now that we've used a relational statement above to generate a logical vector indicating which subjects are members of the HMM group, we can logical-index the hit rate column to select only those values belonging to the HMM group.
+
+To refresh, logical indexing involves calling a logical vector (here created as the output of a vectorized relational statement) of the same length as the vector to be indexed inside of the hard brackets. Only the values in the vector to be indexed where the logical vector's values are `TRUE` will be indexed.
+
+```{r}
+data$hitRate[data$groupStatus == "HMM"]
+```
+
+And now, because we've have just identified all the values I'd like to calculate the mean on, we can go ahead and call `mean()` on this and get the mean hit rate for HMM subjects.
+
+```{r}
+mean(data$hitRate[data$groupStatus == "HMM"])
+```
+
+# Logical operators
+
+Relational statements will get you a long way. Sometimes, though, you need to know whether groups of conditions are true or false. You can combine the `TRUE`s and `FALSE`s of relational statements using Boolean logical operators.
+
+These are the core Boolean operators you'll need in most cases:
+
+* `!` (NOT operator; this returns the opposite of whatever follows it)
+* `&` (AND operator; this returns `TRUE` if both statements on either side are both true
+* `|` (Pipe, or shift-backslash--OR operator; this returns `TRUE` if _at least one_ of the statements on either side is true)
+
+Here are examples of the Boolean operators at work.
+
+The `!` NOT operator:
+
+```{r}
+!TRUE # What do you expect this to return?
+```
+
+```{r}
+!(data2$groupStatus == "HMM") # This should return TRUE for all the times where groupStatus is "LMM"
+```
+
+The `&` AND operator:
+
+```{r}
+1 == 1 & 2 == 2 # See what this returns
+```
+
+```{r}
+1 == 1 & 2 != 2 # Versus this
+```
+
+The `|` OR operator:
+
+```{r}
+1 == 1 | 2 == 2
+```
+
+```{r}
+1 == 1 | 2 != 2
+```
+
+Relational operators also obey order of operations re: parentheses (). See below:
+
+```{r}
+(1 == 1 & 2 != 2)
+```
+
+```{r}
+!(1 == 1 & 2 != 2)
+```
+
+```{r}
+(1 == 1) & (2 != 2)
+```
+
+```{r}
+(1 == 1) & !(2 != 2)
+```
+
+Other useful functions will also output `TRUE` or `FALSE`, so you can use these similarly to relational statements to generate logical output based on the content of some data.
+
+Remember the `NA` data type? Many times, you will want to know which elements of a dataframe column are missing.
+
+```{r}
+is.na(data$rtFA)
+```
+
+There are many more of these `is.whatever()` functions! You can look them up in the help--chances are
+there'll be one to check whichever data type you're looking for.
+
+# Conditional operators
+
+Sometimes, you want to run commands or set values based on whether certain things are true or false. For example, imagine that you have some continuous outcome variable, and you want to recode that continuous outcome variable categorically.
+
+We can use what we've learned about logical statements so far, in conjunction with some new commands!
+
+Let's consider the column `adhd` in our dataframe `data`. This is the participant's score on the ADHD Adult Self-Report Scale (short form). The inventory scoring instructions say that any participant with a score of 4 or above is considered "potentially diagnostic of ADHD". If we wanted to add a variable that indicated whether someone did or did not have a suprathreshold ADHD score, what would we do?
+
+Let's first brainstorm some pseudocode:
+
+1. Call the column for ADHD
+2. Create a new column and fill in the following values based on the corresponding values in ADHD
+    1. If the ADHD score is 4 or above, then label the new column as ADHD diagnostic
+    2. Otherwise (if the ADHD score is less than 4), label the new column as ADHD non-diagnostic
+
+Now, our pseudocode has just introduced a word we haven't previously seen: _if._ What we need here is a command that will direct R to judge whether some condition is true, and then perform some action ONLY if that condition is true.
+
+If-based code is great for promoting reproducibility. You can just tell R to check that a certain condition is true, and you'll always get the result you want, no matter what order the rows of your data are in, or any other particulars.
+
+Now introducing a new function, that'll let us label a vector based on whether a condition is true: `ifelse()`.
+
+First, `ifelse()` takes a _test:_ this is any statement that evaluates to **logical** data. It's a question in R that must yield a YES or NO answer.
+
+Then, `ifelse()` creates a new vector the same length as the test. Each element of this new vector is going to be filled in with some value based on whether the test came out as `TRUE` or `FALSE` for that element. If the condition is `TRUE` for an element, `ifelse()` fills in that spot with value specified in the second argument. Otherwise, if the condition is `FALSE` for an element, `ifelse()` fills in that spot with the value specified in the third argument.
+
+In plain English, `ifelse(condition, A, B)` essentially does the following:
+
+1. Check whether a condition is true or false
+2. If the condition is true, create a variable with value A
+3. Otherwise, if the condition is false, create a variable with value B
+
+`ifelse()` is a vectorized function! Remember that this means that if you input a vector in the first argument, you'll get a vector of the same length as your output, because the operation is done on each vector element separately.
+
+```{r}
+data2$adhdCoded <- ifelse(data2$adhd >= 4, "adhd", "no adhd")
+```
+
+# Functions
+
+We've already used a variety of functions (`mean()`, `is.na()`, `ifelse()`, and more), so the behavior of functions should be somewhat familiar to you. **Functions take inputs, do stuff to them, and give you an output that's had the stuff done to it.**
+
+Right now, we'll take a moment to go over the pieces of a function a little more formally so you know how to use them to their fullest extent.
+
+Below is an example (fake) function call. This function takes the inputs `input1` and `input2`, does the function `function()` to those inputs, and returns an output which can be stored in a variable. Here are the relevant pieces:
+
+`output <- function(argument1 = input1, argument2 = input2)`
+
+- `function()`: This is the function that will DO SOMETHING to your inputs.
+  Whenever you are referencing a function by name, you should always write it with the two parentheses () after the function name so people know you're referring to a function and not a variable.
+  The name of a function will tell you something about what a function does. You can/should look it up if you're not sure though!
+- `argument1`, `argument2`, etc: These are **arguments** to a function--this is the information that a function *expects* and *is prepared to operate on*.
+  The name of an argument will tell you something what an argument represents and how it should be formatted. (More on this later)
+- `input1`, `input2`, etc: These are variables that you created that will actually get fed into your function. This is the information that will actually get operated on. These can be data that live in your environment, or these can be settings (like switches and knobs, if your function was an actual machine) that are turned to a specific value.
+- `output`: This is the variable that will hold your output information.
+  As you can see, we are ASSIGNING the value that's output from `function()` to the variable `output` using the `<-` left-facing arrow operator. Just like before with printing variable values to console, if you run a function without assigning its output to a variable, the output will print to console (so you can read it) but it will not be stored anywhere (so you can't perform any further operations on that output).
+
+# Getting assistance
+
++ On your own
+    + The help docs!
+    + The internet
+    + Stack Overflow & other Q&A spaces
+    + R user blogs
++ Asking someone else
+    + Who to ask
+    + How to ask

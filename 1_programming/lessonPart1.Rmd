@@ -1,0 +1,441 @@
+---
+title: "CU Psych R Tutorial, part 1.1"
+author: "Monica Thieu"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Welcome (back) to the CU psychology R tutorial! As a reminder, the documents for the introduction to programming cover the following:
+
+0. Finding your way around RStudio
+1. Variables, data types, vectors **this document!**
+2. Coding strategy, relational & logical operators
+
+# Variables
+
++ a **variable** is how we store information in a way that the computer can operate on
++ it has a **value:** the info itself
++ and a **name:** the cue by which we call upon the info to the computer
+
+If you think about how variables like x and y are used in algebra, calculus, etc, that can be a useful way to conceptualize them.
+
+Variables can contain numbers. We *assign* a value to a name.
+
+```{r make some vars}
+# We are storing the number 20 under the variable name first.var by using the left-arrow operator. It's like 20 is going "into" the label first.var
+first.var <- 20
+# And again with second.var
+second.var <- 0.5
+
+second.var
+```
+
+They can also contain other stuff (literally almost anything) but we'll talk about this later!
+
+Variables live in the **environment**. The environment is your workbench in R: this is where all data are held, so that you can access and manipulate that data using R commands. It's sort of like R's working memory, where information is held for immediate use. You can see all the objects currently saved in your environment in the Environment pane.
+
+Information doesn't just exist in the environment--it can also be printed to **console.** Remember that the console is the place where you talk to R (type in commands), and R talks back to you (shows you the result of those commands).
+
+The console is a great place to check the contents of variables, and perform quick calculations. However, information printed to console is _not automatically saved to a variable,_ so if you know you will want some data for later you must assign it to a variable in your environment!
+
+Since variables are labels for pieces of information, a variable name can be used to refer to any piece of data where you would otherwise call that data directly. For example:
+
+```{r}
+# This outputs the result to console
+20 + 10
+# Since first.var contains the value 20, this outputs the SAME result to console
+first.var + 10
+```
+
+Variables don't just have to contain pure numbers; you can assign the output of commands to variables.
+
+```{r}
+third.var <- first.var + 10
+```
+
+You can overwrite the values of variables, simply by assigning some other value to the same name.
+
+```{r}
+# With the values of other variables
+third.var <- second.var + 10
+# OR of the current value of the variable. Note that R will ALWAYS use the PREVIOUS value of a variable in all the calculations BEFORE re-assigning the final result to the variable name.
+third.var <- third.var + 10
+# You can also delete variables from your environment
+rm(third.var)
+```
+
+With regards to variables, you can make the name of a variable almost whatever you want, within reason. A variable name can legally contain:
+
+* letters (upper or lowercase, R is case sensitive!)
+* numbers
+* period (.) and underscore (_)
+
+R (and basically all programming languages) require variable names to START with a LETTER. (Try initializing a variable name starting with a number and see what happens.) Other allowed characters can be anywhere in the variable name except for first.
+
+Beyond this, here are some recommendations we strongly urge you to follow as well when naming variables:
+
+* Name variables informatively, not arbitrarily! The name of a variable should tell you something about what information it contains. `raw.data` is better than `d`.
+* Separate words in multi-word variable names using one of the following conventions (but be consistent!):
+    + underscore_separated_names
+    + period.separated.names
+    + camelCaseNames
+* Name variables succinctly, but informatively. Abbreviations are okay if they are standard throughout your code. `max.val` is okay instead of `maximum.value`.
+* When in doubt, use lowercase letters.
+
+# Data types
+
+So what kind of data can be stored and manipulated in R? There are different "types" of data that programming languages know how to handle. Each is encoded in a slightly different way, and can have different things done to it.
+
+## Numeric data
+
+Numeric data encompasses any (real) number. Positive, negative, integer, decimal, all fine.
+
+```{r}
+first.var <- 280
+second.var <- 41.5
+```
+
+### Arithmetic operators
+
+You can do your usual math on numeric data, like so:
+
+```{r}
+first.var + second.var
+first.var - second.var
+```
+
+The basic arithmetic operators are specified as:
+
+* `+` addition
+* `-` subtraction
+* `*` multiplication
+* `/` division
+* `^` exponent
+* `()` parentheses
+
+R obeys PEMDAS!
+
+```{r modulo could take this out}
+# Bonus arithmetic operator; you may need someday
+10 %% 2 # The modulo %% operator returns the remainder of dividing two numbers. Observe the results for the following modulo operations
+10 %% 3
+10 %% 4
+10 %% 5
+```
+
+## Logical data
+
+Logical data are a special case of numbers, representing `TRUE` and `FALSE`.
+
+Note that this is case-sensitive: R requires `TRUE` and `FALSE` to be written in all caps!
+
+Logical data can be math-ed on as if it were numeric; `TRUE` is 1 and `FALSE` is 0. This is especially useful when multiplying--
+
+```{r}
+TRUE * 10 # Like multiplying by 1. the other number stays the same!
+FALSE * 10 # Like multiplying by 0. the other number becomes 0!
+```
+
+Logical data are used most often as informational flags. To be revisited...
+
+## Character data
+
+This is letter/word-based data. A piece of character data is called a **string.**
+
+R understands that this data is made up of text, and treats it in a special way. You might encounter this if you are storing free-response text data in R, or perhaps if you have a list of word-based stimuli stored in R as part of your task data.
+
+```{r}
+text.var <- "statistics"
+text.var.2 <- "my favorite number is 7" # Disclaimer: Not actually my favorite number
+```
+
+Here are just a couple of the functions that specifically operate on character data.
+
+You can coerce things to upper or lowercase with the right function:
+
+```{r}
+toupper(text.var)
+```
+
+You can also count the number of characters. Note that spaces count as characters!
+
+```{r}
+nchar(text.var.2)
+```
+
+Of note is that you canNOT do arithmetic on strings.
+
+```{r}
+not.a.number <- "7"
+```
+
+The following will return an error if you try to run it:
+
+```{r, eval = FALSE}
+not.a.number + 1
+```
+
+Now, we'll talk about data structures--it's all the data types we talked about earlier, just with multiple pieces of data!
+
+# Data structures
+
+## Vectors
+
+A vector is a sequence of pieces of information that are **all the same data type** (for the computer) and meaningfully related (for you). A vector is like one column of data with a particular length (depending on the number of elements in the vector).
+
+```{r}
+num.vector <- c(1, 2, 3, 4, 5)
+length(num.vector)
+```
+
+Fun stuff: notice that a single piece of data is in fact a vector with length 1.
+
+```{r}
+length(first.var)
+```
+
+The individual pieces of data inside one vector are called **elements.**
+
+Vectors can be any of the data types we just learned about.
+
+```{r}
+char.vector <- c("apple", "banana", "cantaloupe", "dragonfruit")
+length(char.vector)
+
+logical.vector <- c(TRUE, TRUE, FALSE, TRUE)
+```
+
+As you can see above, the function `c()` is the primary way to construct vectors, by listing out all the pieces of data you want to put into the vector inside of `c()`, separated with commas.
+
+Buuuut R lets you do some special stuff to create certain useful numeric vectors. You can use the colon `:` between any two integers to create a vector of all the integers between the values on either side of the colon (inclusive).
+
+```{r}
+num.vector.2 <- 1:5
+
+num.vector.2
+```
+
+### Indexing into vectors
+
+When you need to access individual pieces of information inside of a vector, you'll do that by calling the vector and adding an additional "address" to specify which piece of data inside the vector you want. This address is called an **index.**
+
+To tell R that you are indexing into a vector, you put the index inside hard brackets [] after the name of your vector variable.
+
+#### Numeric indexing
+
+You can index one piece of data, by putting one index number inside the hard brackets, to index the nth value of that vector. R starts indexing at 1; the first element in your vector is at index 1.
+
+You can only index into your vector using VALID indices; that is, indices that actually correspond to elements in the vector. Essentially, you can't index using a number that is larger than the length of your vector.
+
+```{r}
+char.vector[1]
+```
+
+You can also index multiple pieces of data out of a vector. This returns another, shorter, vector! You do this by putting a valid numeric vector inside the brackets.
+Remember the colon `:` operator from above? It's handy to create vectors for indexing a sequence of values:
+
+```{r}
+char.vector[1:3]
+```
+
+But you can also index using any valid numeric vector constructed using `c()`.
+
+```{r}
+char.vector[c(1, 4)]
+```
+
+You can also index to _exclude_ elements from a vector, using negative numbers. This will return a vector _missing_ the values you negative-indexed.
+
+```{r}
+char.vector[-2]
+```
+
+#### Logical indexing
+
+To logical-index a vector, instead of calling a numeric vector of indices inside of the hard brackets, call a logical vector of_ equal length_ to your vector of interest inside the hard brackets. All values in the original vector where the corresponding values in the logical vector are `TRUE` will be indexed, and all values where the logical vector is `FALSE` will not be indexed.
+
+Remember our logical vector from before? It should be of use here...
+
+```{r}
+logical.vector
+```
+
+```{r}
+length(logical.vector)
+length(char.vector)
+```
+
+All right, our logical and character vectors are the same length, so we can index our character vector using our logical vector.
+
+```{r}
+# Which elements do you expect to be indexed here?
+char.vector[logical.vector]
+# We'll come back to this later
+```
+
+Now we'll learn about the two broad families of functions/operations you can call on vectors.
+
+### Vectorized/one-to-one operations (n element input, n element output)
+
+This takes a thing and does it individually to each element in your vector, returning an analogous vector where the nth element of the output vector is the result of performing the operation on the nth element of the input vector.
+
+If you want to do the same thing to a bunch of data, this is the way to do it fast! Basically all the arithmetic operations are vectorized, for example:
+
+```{r}
+num.vector + 1
+```
+
+```{r}
+num.vector * 12
+```
+
+Many other functions are vectorized as well. It's always worth inputting a vector into a function of interest and checking if you get a vector of the same length as output.
+
+### Summarizing operations (n element input, 1 element output)
+
+These operations require multiple pieces of data (a vector) and return one piece of data. Descriptive statistical operations are typically of this type, like:
+
+```{r}
+mean(num.vector)
+```
+
+```{r}
+min(num.vector)
+```
+
+```{r}
+max(num.vector)
+```
+
+## Data frames
+
+This is the data structure where it happens! Imagine your usual rectangular Excel spreadsheet that you might have for your study data, where each column of the spreadsheet contains a meaningful category of information (e.g. subject ID, task condition, trial response), and each row contains one observation of information (one subject, or one trial within subject, etc). A dataframe is basically that.
+
+A **dataframe** is a special rectangular data structure in R that is *column-optimized.* A dataframe is essentially a series of vectors *of equal length* stuck together in a meaningful way. 
+
+Each column is a vector, containing all the observations of a particular meaningful grouping. Each row is the nth element across vectors, containing one complete observation from all the vectors. Each observation can be a subject, a trial, a group, whatever--any one meaningful something.
+
+In the below code chunk, we'll load a dataframe in from a study I worked in undergrad. It's saved externally as a CSV file (one that you could open in Excel if you wanted to), so you can see the commonalities between your garden-variety study data Excel spreadsheet and an R dataframe.
+
+(Quick review question: Am I calling the below file path using an _absolute_ or _relative_ path? How can you tell?)
+
+```{r}
+data <- read.csv(file = "../3_descriptives/uncapher_2016_one_condition_dataset.csv", header = TRUE, stringsAsFactors = FALSE)
+# Don't worry about the command below; I'm just shortening the dataframe. You'll understand what this means later! Just run it now.
+data <- data[data$groupStatus != "", -c(1:4, 22:26)]
+# PAB -- emphasize that vectors in a dataframe are of equal length -- and why this makes sense
+```
+
+A dataframe is composed of a series of vectors; you can manipulate individual columns of a dataframe as vectors. But you can NOT manipulate individual rows of a dataframe as vectors. We will try this very soon and you'll see that an individual row of a dataframe behaves as a dataframe with only one row in it. Why might this be the case?
+
+To access these individual columns and rows, we'll index into our dataframe. Indexing is back... with a vengeance!
+
+### Indexing into dataframes
+
+It's like indexing into vectors, but with more to love! You can index whole rows, whole columns, and portions of both.
+
+#### Indexing columns
+
+You can index by _name_ (each column in a dataframe has a name, like the header row in a spreadsheet), or by _number_ (first column, second column, etc). Today, we'll learn about indexing by _name,_ because this is a more reproducible way to index.
+
+Consider it this way: other people don't know what order your columns are in, but they can gather what's in a column by the name, so if someone else were reading your code, they'd be able to tell much more easily what column(s) you were referring to if you indexed columns by name.
+
+##### With brackets
+
+This is similar to indexing a single vector using brackets, but this time, a dataframe has **two dimensions: length AND width.** This means that bracket-indexing into a dataframe expects TWO coordinates: which rows you want, *and* which columns you want. The indexing is ALWAYS `[row, column]` where the row index is the one BEFORE the comma, and the column index is AFTER. You can remember this as it's similar to (x, y) coordinates, where x goes horizontally and y goes vertically.
+
+When you want all _rows,_ you leave the row index _blank,_ but you still need the comma! Notice that I am calling the column name as a _string._
+
+```{r}
+data[, "subjNum"]
+```
+
+##### With the dollar sign
+
+Remember how dataframes are column-optimized? There's a special way to index columns of a dataframe that's optimized for using column names to index. Let's take a look:
+
+```{r}
+data$subjNum
+```
+
+This returns the exact same column as we got before!
+
+You first write the name of your dataframe, then the `$`, to tell R to go "inside" of that dataframe and look for the column you're about to specify. Then you write the column name, _without quotation marks. It's not a string!_
+
+This is why $ indexing is special: **A word without quotes is a variable name, but a word in quotes is a string.** These behave two very different ways in R.
+
+##### Indexing rows
+
+Indexing rows works similarly to indexing columns in some ways. But, while columns of a dataframe have names, *rows of a dataframe do not have names, ONLY numerical indices.* So we CANNOT use dollar-sign indexing to index rows, ONLY bracket indexing. And we cannot use words to call rows, ONLY numbers.
+
+Quick review: Do we expect to call rows using the space BEFORE the comma, or AFTER the comma?
+
+```{r}
+data[1, ]
+```
+
+Observe that indexing a single row of a dataframe returns _a dataframe with one row in it._ Because R knows that each row of a dataframe is a complete observation of data, R keeps that observation in dataframe form even when there's only one observation, so that you can continue doing special dataframe stuff on it.
+
+Remember that you can use a vector in the numerical index to index multiple indices, here calling multiple rows.
+
+```{r}
+data[1:4, ]
+```
+
+There are two specific data types that feature heavily when working with dataframes: factor data and missing data. We'll take a look at these now that we've learned a little about dataframes.
+
+# Data types pt 2
+
+These data types make more sense when presented as vectors/dataframe columns--you'll rarely need to deal with objects of these types that are length 1. Now that you know about vectors & dataframes, we'll take a look at the following data types:
+
+## Factor data
+
+Character data, as described above, is R's all-purpose data type for text-based data. But R knows that sometimes you might have a column composed of text to label your within-subject task conditions, between-subject groups, etc. **Factor data** is a data type built on top of character data that gives you special properties that are useful when a column/vector contains _grouping_ information.
+
+For example, we can consider the `groupStatus` column from the dataframe we loaded previously. This column contains subject-level information indicating which group each subject belongs to, so this is a natural fit for the factor data type.
+
+```{r}
+# This column wasn't originally factor, so I'm coercing it to factor here.
+# There are a suite of R functions designed for pushing data from one type to another
+as.factor(data$groupStatus)
+```
+
+Observe how this vector now has _levels;_ these are the different categories of the variable. Factor levels are ordered alphabetically by default; you can reorder the levels into a more meaningful order if you want.
+
+We won't worry too much more about factor data for now, but here are a couple of factor data's pros and cons relative to regular character data:
+
+* PROS: You get special properties that help when graphing, and when creating models for data
+* CONS: While factor data is composed of text, it doesn't behave like character data in every single case, and so you have to be very careful with factor data because sometimes you don't get the outputs you expect if you were to run the same operation on character data.
+
+## Non-data data
+
+You know what's the worst? Missing data! But it happens to the best of us. When you have a missing data point in an Excel spreadsheet, you might leave that cell blank. But in R, you need to put a placeholder in that spot. There's a special data type, `NA`, used as the missing data placeholder.
+
+```{r}
+na.vector <- c(1, 2, 3, NA, 5)
+```
+
+When you call vectorized (one-to-one) functions on a vector containing `NA`, the element in the output vector corresponding to the `NA` in the input vector will be `NA`.
+
+```{r}
+na.vector + 1
+```
+
+When you call summarizing (many-to-one) functions on a vector containing `NA`, the summary value will be `NA`...
+
+```{r}
+mean(na.vector)
+```
+
+unless you specify in the function that you want the value to be calculated as if the `NA`s aren't there.
+
+```{r}
+mean(na.vector, na.rm = TRUE)
+```
+
