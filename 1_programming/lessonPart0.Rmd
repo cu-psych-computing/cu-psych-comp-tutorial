@@ -1,5 +1,6 @@
 ---
-title: "Programming Lesson Plan"
+title: "CU Psych R Tutorial"
+subtitle: "Programming, pt 0"
 author: "Monica Thieu"
 output:
   html_document:
@@ -20,8 +21,8 @@ There's a lot to get into if you have no prior experience with programming (don'
 These documents will cover:
 
 0. Finding your way around RStudio **this document!**
-1. Variables, data types, vectors
-2. Coding strategy, relational & logical operators
+1. [Variables, data types, vectors](1_programming/lessonPart1.html)
+2. [Coding strategy, relational & logical operators](1_programming/lessonPart2.html)
 
 # Working with RStudio
 
@@ -73,7 +74,7 @@ Packages are bundles of functions in R, usually made by experienced programmers,
 
 Since these packages don't come with base R, you have to install them.
 
-```{r}
+```{r, eval = FALSE}
 # You will need these packages in later parts of the workshop!
 install.packages(pkgs = c("car",
                           "moments",
@@ -88,7 +89,7 @@ install.packages(pkgs = c("car",
 
 Then, once they're installed on your computer, you again have to tell R to _load_ the packages into your active R session. This allows you to quickly and easily call the functions in those packages. While you only have to install packages once, you have to load them in every R session that you want to use them. (Why they don't load automatically? I don't know! But if you'd like to configure R to load packages automatically every time you open R, see [these instructions](https://www.r-bloggers.com/load-packages-automatically-in-rstudio/).)
 
-```{r}
+```{r, eval = FALSE}
 # Use library() to load a package ONCE IT'S INSTALLED.
 # You can put the package name as a string
 library("car")
@@ -110,6 +111,8 @@ Every R session has a _working directory,_ or a "home base" folder. Essentially,
 ```{r explain working directories}
 getwd()
 ```
+
+If you run this command on your own computer, you'll get a different folder. And that's okay! Our folder structures on our computers are all different.
 
 When you launch R by opening an R project file (our preferred way of opening R), R automatically sets your working directory to be the folder that this R project file is saved in. Thus, if your R project file is in the same folder as your raw data, scripts, etc, this is a neat short-cut to start R in the folder all of your stuff is saved in.
 

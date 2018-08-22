@@ -1,8 +1,11 @@
 ---
-title: "Programming Lesson Plan"
+title: "CU Psych R Tutorial"
+subtitle: "Programming, pt 2"
 author: "Monica Thieu"
-date: "November 26, 2017"
-output: html_document
+output:
+  html_document:
+    toc: true
+    toc_float: true
 ---
 
 ```{r setup, include=FALSE}
@@ -11,8 +14,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Welcome (back) to the CU psychology R tutorial! As a reminder, the documents for the introduction to programming cover the following:
 
-0. Finding your way around RStudio
-1. Variables, data types, vectors
+0. [Finding your way around RStudio](1_programming/lessonPart0.html)
+1. [Variables, data types, vectors](1_programming/lessonPart1.html)
 2. Coding strategy, relational & logical operators **this document!**
 
 Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things!
@@ -88,6 +91,8 @@ Here's a few examples of `%in%` in action, in case this is a little less intuiti
 ```
 
 ```{r}
+char.vector <- c("apple", "banana", "cantaloupe", "dragonfruit")
+
 "apple" %in% char.vector
 ```
 
@@ -104,13 +109,15 @@ In most cases, you can use `==` and `!=` to compare character data too--if you w
 ```
 
 ```{r}
+text.var <- "statistics"
+
 text.var == "statistics"
 ```
 
 Hey, if we think about the pseudocode from earlier, we can use `==` to determine which values of `data$groupStatus` are equal to `"HMM"`.
 
 ```{r}
-data2$groupStatus == "HMM"
+data$groupStatus == "HMM"
 ```
 
 Relational operators are vectorized--see that feeding in a vector on the left of the relational statement returns a logical vector, not just one logical!
@@ -148,7 +155,7 @@ The `!` NOT operator:
 ```
 
 ```{r}
-!(data2$groupStatus == "HMM") # This should return TRUE for all the times where groupStatus is "LMM"
+!(data$groupStatus == "HMM") # This should return TRUE for all the times where groupStatus is "LMM"
 ```
 
 The `&` AND operator:
@@ -234,7 +241,7 @@ In plain English, `ifelse(condition, A, B)` essentially does the following:
 `ifelse()` is a vectorized function! Remember that this means that if you input a vector in the first argument, you'll get a vector of the same length as your output, because the operation is done on each vector element separately.
 
 ```{r}
-data2$adhdCoded <- ifelse(data2$adhd >= 4, "adhd", "no adhd")
+data$adhdCoded <- ifelse(data$adhd >= 4, "adhd", "no adhd")
 ```
 
 # Functions
