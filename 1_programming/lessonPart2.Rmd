@@ -258,11 +258,78 @@ Below is an example (fake) function call. This function takes the inputs `input1
 
 # Getting assistance
 
-+ On your own
-    + The help docs!
-    + The internet
-    + Stack Overflow & other Q&A spaces
-    + R user blogs
-+ Asking someone else
-    + Who to ask
-    + How to ask
+## On your own
+
+### The help docs
+
+In RStudio, you can use the "Help" tab in the lower right corner of your window to search for the help page for a function you're having trouble with. You can type the name of your problem function into the search bar and pull up the help page!
+
+You can also use the function `?` in console, in front of the function you're looking up, to pull up the same info in the "Help" tab. For example, to open the help page for the `mean()` function, I would run `?mean` in console.
+
+The help document for the function you're looking for should have a description of:
+
+* the function's arguments
+    + what type of data they expect
+    + what part of the function's behavior they control
+* what they intend the function to be used for
+* explanations of any equations used inside the function
+* examples of function calls that work, that you can copy and paste into console and run to inspect output
+
+### The internet
+
+Sometimes you'll run into issues that the help docs don't completely resolve, and that's okay. The internet is here to help, if you know how to ask it!
+
+#### How to Google for help
+
+Sometimes it can be unclear what keywords to enter to find a solution to your code issue. The following strategies can give you a handle:
+
+* Start your query with "r"--it's not perfect, since it's a single letter and not a full word like "python" or "matlab", but this helps to return results that are R-related
+* If you're looking for help with a function from a specific package, include the package name in your query
+* If a command you're trying to run fails, and returns an error message, enter the name of the function and _copy and paste the error message into the query_
+    + your query should look like "r [package name] [function name] [text of error message]"
+* If you aren't getting an explicit error message, but a command you're trying to run is not behaving as you expect, try "r [package name] [function name] won't [the task you're trying to do]"
+* If you have your pseudocode planned out, but don't know what functions to use to execute your pseudocode, try "r how to [your pseudocode here]"
+    + be sure to remove any variable names that are specific to your own data before you Google
+
+#### Stack Overflow and other Q&A sites
+
+Often, a successful Google search for help will yield links to posts on Stack Overflow, a Q&A site where people can post questions about code to solicit answers from other users, or from other Q&A sites (email records from old R help mailing lists, for example).
+
+When parsing a Stack Overflow post, look for the following:
+
+* Read the question to determine how similar this asker's situation is to yours (and thus how likely the posted answers are to solve your problem)
+    + Good question posts will have example code that should run if you copy and paste it into console. If this code is there, you can run it to see if it looks like your own data situation
+* Check out the provided answers
+    + If there is a green check mark on the left of the "top" answer, the question asker has "accepted" the answer, or marked it as the most helpful answer. It has solved the asker's problem, and hopefully will solve yours too!
+    + Answers may have upvotes from other users (not the question asker). You can browse answers, including the "accepted" answer, to try multiple possible solutions and find the one that's best for your situation.
+    
+Other Q&A sites may or may not have as smooth of a setup as Stack Overflow, but if you are careful to inspect the question to see if it's relevant to your own problem, you should be able to assess whether the answer provided will help you.
+
+#### R user blogs
+
+Plenty of R users post little tutorials (like this one!) online to help other R users. I've encountered many of these blog posts while Googling for help, and found many of them useful! Sometimes these may be from larger sites like [r-bloggers.com](https://www.r-bloggers.com/) that post submissions from many users, or they may be from personal blogs maintained by one person.
+
+A good blog post will, like a good Stack Overflow post, have example code that you can copy/paste into your own console and run to follow along with the blog post. This way, you can see if the blog post indeed applies to your particular issue.
+
+## Asking someone else
+
+Sometimes, though, after careful Googling and combing through search results to test all suggested solutions, you still don't have a solution for your R issue. At this time, you can ask someone else for assistance.
+
+You can ask any number of folks, including people in your lab, people in your department, and/or people on the internet (e.g. posting to a help list). At Columbia, we're currently maintaining a [Slack group](https://join.slack.com/t/cu-psych-r-users/shared_invite/enQtMjk5MTExNjkxOTkwLTY2MjJkMGY1ZmU1MzM0ZTA0NTM2ZDJjZjFjMzU4YmRjZDJiMWQyMjJkMzVkMjc0YTE0OTg4ZmU2NjdlYzZiNjk) for R help, where you can join and post questions.
+
+### How to ask
+
+When asking someone for help with your R issue, they'll be best equipped to help you if you provide them with the right info about your problem to give them an idea of what to suggest. Be sure to provide the following pieces of information to anyone you're asking for help from:
+
+* The nature of the dataset you're working with (what kinds of data you're trying to analyze, what data types they are, etc)
+* Your pseudocode, so they know what exactly you're trying to accomplish
+* The code that isn't working
+    + If contacting someone through email/help list/etc, you can copy and paste the code that's not working
+    + Clarify any variable names in the code that are specific to your data
+    + If using functions from a specific package, say what those packages are
+    + If code fails with an error message, include the text of the error message
+* What you've tried already to solve this
+    + If you tried solutions in any Stack Overflow posts, R user blogs, etc, include links to those pages
+    + Copy and paste any solution code you tried if it still isn't working, explaining variable names and including error messages if applicable
+
+Including this info will make it much easier for someone else to identify the cause of the issue you're experiencing and suggest solutions for you. Help them help you!
