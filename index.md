@@ -3,7 +3,10 @@
 ## Bootcamp materials (self-contained multi-page tutorial)
 
 * [Syllabus](syllabus.html)
-* [Programming basics](programming/programming-basics.html)
+* Programming basics
+    0. [Acquainting yourself with RStudio](1_programming/lessonPart0.html)
+    1. [Variables, data types, vectors & dataframes](1_programming/lessonPart1.html)
+    2. [Pseudocode, relational & logical operators](1_programming/lessonPart2.html)
 * Data cleaning
 * Descriptive statistics
 * Plotting
