@@ -4,7 +4,7 @@ Current revision: Winter 2018 (pilot workshop)
 
 ## Course Goals
 
-1.	Emphasize the benefits of using R for data analysis. 
+1.	Emphasize the benefits of using R for data analysis.
 2.	Teach students the basics of programming and graphing in R
 3.	Help students to feel empowered and inspired to learn more R on their own/within a community of scientists/R users
 
@@ -38,7 +38,40 @@ The course will begin with a broad explanation of why students should consider l
 
 ### Basic Programming
 
-This is an optional module aimed at students who have no previous experience with programming. It will cover getting R and R studio installed, basic programming commands in R, and an overview of the data types and structures that R uses. A major hurdle to getting people using R is often anxiety regarding programming, so this module is aimed to get students comfortable. Those who already have a background in programming or have used R in the past can either attend or skip this one. The data challenge for this module will be executing simple programming commands.
+This is an optional module aimed at students who have no previous experience with programming. A major hurdle to getting people using R is often anxiety regarding programming, so this module is aimed to get students comfortable.
+
+#### Topics to cover:
+
+* Working with RStudio
+    + Installing R & RStudio
+    + Getting oriented to the RStudio window
+    + Installing and loading packages
+* Directories on your computer
+    + The working directory
+    + Absolute and relative file paths
+* Variables
+* Data types
+    + Numeric data
+        + Arithmetic operators
+    + Logical data
+    + Character data
+    + Factor data
+    + Non-data data
+* Data structures
+    + Vectors
+        + Indexing into vectors
+            + Numeric indexing
+            + Logical indexing
+        + Vectorized operations
+        + Summarizing operations
+    + Dataframes
+        + Indexing into dataframes
+* Pseudo-coding
+* Operators
+    + Relational operators (==, >, <, etc)
+    + Logical operators (!, &, |, etc)
+* Functions
+* Looking for help
 
 ### Data Cleaning
 
