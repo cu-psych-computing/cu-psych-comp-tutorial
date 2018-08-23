@@ -12,14 +12,14 @@ output:
 Students will learn:
 1. How to open various data types in R
 2. How to check for missing or problematic data and address issues.
-3. How to rearrange and shape data in preparation for analysis. 
+3. How to filter, rearrange and shape data in preparation for analysis. 
 
 ## Install Packages
+Tidyverse is one package with many tools.  We will introduce you to this package in this lesson, and continue using tidyverse in the next module.
 
 ```{r}
 
-library(dplyr)
-library(tidyr)
+library(tidyverse)
 
 ```
 
@@ -162,6 +162,7 @@ table(mydata$Sex)
 When we look at the table for the Sex variable, we see another data entry problem. We have a third category that should really be another case of "Female". We can fix all of these at once, but sometimes messing with factors is more complicated than numeric variables.
 
 ```{r}
+# MVT: is there a way to do this with tidyverse ?
 
 # Replace bad category label
 mydata$Sex[mydata$Sex=="Femle"] <- "Female"
@@ -176,12 +177,26 @@ Now let's look at the continuous variables. You can also look at these with the 
 # Create histograms to see data distribution
 hist(mydata$Age)
 hist(mydata$Neuroticism)
-
-
-
 ```
 
 Looks like we have a potential outlier on the neuroticism score. This could be an entry error, but it could also be a real value that just happens to be really low. This is why data inspection is so important for later analysis - now you know that value is there, it's up to you to decide how to deal with it.
+
+### Filtering data 
+Let's say we have decided aprori to exclude outliers 3SD above or below the mean. We will use the filter() function in tidyverse to clean the dataset.
+```{r}
+# mark upper and lower boundaries of data
+# anything above upper or below lower will be excluded as outlier.
+upper <- mean(mydata$Neuroticism) + 3*sd(mydata$Neuroticism)
+lower <- mean(mydata$Neuroticism)- 3*sd(mydata$Neuroticism)
+
+mydata_cleaned <- mydata %>% 
+  # only keep values within this range! 
+  filter( Neuroticism > lower & Neuroticism < upper)
+
+# check that we excluded 1 outlier. 
+nrow(mydata_cleaned)
+nrow(mydata)
+```
 
 ## Getting ready for analysis
 
@@ -193,11 +208,12 @@ Sometimes we want to treat categorical variables as factors, but sometimes we wa
 
 ```{r}
 
+# Transform into factor with labels using mutate () and recode_factor() 
+mydata <- mydata %>%
+  mutate(Condition =recode_factor(Condition, '0'='Control', '1'='Treatment'))
 
-# Transform into factor with labels 
-mydata$ConditionF <- recode(mydata$Condition, '0'='Control', '1'='Treatment')
-
-
+# check that your variable is now recoded as you'd like! 
+summary(mydata$Condition)
 ```
 
 ### Calculating new variables
@@ -206,9 +222,10 @@ You may also want to recalculate or rescale some variables. For example, we can 
 
 ```{r}
 
-# calculate Z scores
-mydata$NeuroticismZ <- scale(mydata$Neuroticism, center = TRUE, scale = TRUE)
-hist(mydata$NeuroticismZ)
+# calculate Z scores using mutate ()  and scale() 
+mydata <- mydata %>%
+  mutate(NeuroticismZ = scale(Neuroticism, center = TRUE, scale = TRUE))
+
 
 # one way to average multiple columns
 mydata$Average <- rowMeans(mydata[c("T1", "T2", "T3", "T4")])
