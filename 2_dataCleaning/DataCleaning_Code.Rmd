@@ -23,6 +23,7 @@ library(tidyverse)
 
 ```
 
+
 ## Getting your Data into R
 
 ### Entering data directly
@@ -118,28 +119,53 @@ head(mydata, 10)
 
 ```
 
-### Pipe Function
+### Brief intro to tidyverse
 
-Pipe function goes here!
+Tidyverse is not one package, but instead it's multiple packages grouped together. They're all made by the same developers, so the functions play nicely together. If you've done any R before, there are some you're probably familiar with, like ggplot and dplyr, and others that are more obscure. These are all very useful packages, but they do have some tidyverse-specific syntax that we'll be using. (Note: the following paragraphs are an almost verbatim verision of what's in our standalone Tidyverse tutorial, written by Monica, which can be found on the github page)
+
+Enter the pipe `%>%`! The pipe does one simple, but key, thing: **takes the object on the left-hand side and feeds it into the first argument of the function on the right-hand side.** This means that:
+
+* `a %>% foo()` is equivalent to `foo(a)`. Fine and good
+* `a %>% foo() %>% bar(arg = TRUE)` is equivalent to `bar(foo(a), arg = TRUE)`. Now, nested function calls read left-to-right!
+* Most common use case: `df_new <- df_old %>% foo() %>% bar(arg = TRUE) %>% baz()` is equivalent to `df_new <- baz(bar(foo(df_old), arg = TRUE))`. Now, you can chain a series of preprocessing commands to operate on a dataframe all at once, and easily read those commands as typed in your script. No more accidentally not running some key preprocessing command that causes later code to break!
+
+* take as their first argument the object to be operated upon
+* return the same object (or an analog of said), but now operated upon
+
+Essentially all functions from the tidyverse are pipe-safe, but bear this in mind when trying to incorporate functions from base R or other packages into your tidy new world.
 
 ### Rename a variable
 
-Now you're ready to start cleaning up. What is that fifth variable? What does that even mean? Luckily, this is your study and you know that it's a personality questionnaire measuring neuroticism. Let's fix that.
+We'll demonstrate the `%>%` command for our first cleaning step. Look back at your data frame.  What is that fifth variable? What does that even mean? Luckily, this is your study and you know that it's a personality questionnaire measuring neuroticism. Let's fix that using `recode()` from the `dplyr` package.
 
 ```{r}
 
-# Change a varialbe name
-## Note order is NewVariableName = OldVariableName
-## To rename multiple variables, separate with commas
+# Simple command with no pipe, commented out so we don't run both.
+
+#mydata <- rename(mydata, Neuroticism=Personality) ## NewVariableName = OldVariableName
+
+# Simple command with pipe
 
 mydata <- mydata %>% 
-  rename(Neuroticism=Personality)
+  rename(Neuroticism=Personality) 
+
+```
+
+It might seem like the first version is simpler, but it won't be once you start stacking functions together. For example, let's rearrange our variables (using `select()`) while also renameing the variables called T1, T2, T3, and T4. Note that we keep adding ` %>% ` between each function.
+
+```{r}
+
+mydata <- mydata %>% 
+  rename(Day1 = T1, Day2 = T2, Day3 = T3, Day4 = T4) %>% 
+  select(ID, Condition, Age, everything())
+  
+# using everything() within select() means you don't have to type all the variables out.
 
 ```
 
 ### Check for missing data
 
-On problem you may have is missing data. Sometimes this is something you already know about, but you should check your data frame anyway to make sure nothing got missed in a data entry error. For small datasets, you can do this visually, but for larger ones you can ask R.
+One problem you may have is missing data. Sometimes this is something you already know about, but you should check your data frame anyway to make sure nothing got missed in a data entry error. For small datasets, you can do this visually, but for larger ones you can ask R.
 
 ```{r}
 
