@@ -37,7 +37,7 @@ score <- c(20, 16, 35, 19)
 
 name <- c("Monica", "Michelle", "Paul", "Ellen")
 
-year <- c(1, 1, 4, 3)
+year <- c(2, 5, 2, 1)
 
 dataframe <- data.frame(name, score, year)
 
@@ -49,6 +49,9 @@ dataframe <- data.frame(name, score, year)
 It's also easy to introduce errors this way, and with a lot of data it would get tedious. Most of the time, you'll be reading data from an external file (.txt of .csv), or opening up an existing dataset in R. Once you find the location of your files, what you do next will depend on the file format.
 
 #### What's your working directory and where is the file you want?
+
+Your working directory is the directory (and subdirectories) where the files you're working with are stored. If you opened this file from a .Rproj link, the folder where that link was located will automatically be your working directory. If not, you may need to change your working directory so that R can find files when you ask for them.
+
 ```{r}
 
 getwd()
@@ -115,15 +118,22 @@ head(mydata, 10)
 
 ```
 
+### Pipe Function
+
+Pipe function goes here!
+
 ### Rename a variable
 
-Ok, looks good. But what is that fifth variable? What does that even mean? Luckily, this is your study and you know that it's a personality questionnaire measuring neuroticism. Let's fix that.
+Now you're ready to start cleaning up. What is that fifth variable? What does that even mean? Luckily, this is your study and you know that it's a personality questionnaire measuring neuroticism. Let's fix that.
 
 ```{r}
 
 # Change a varialbe name
-names(mydata)[names(mydata) == 'Personality'] <- 'Neuroticism'
-names(mydata)
+## Note order is NewVariableName = OldVariableName
+## To rename multiple variables, separate with commas
+
+mydata <- mydata %>% 
+  rename(Neuroticism=Personality)
 
 ```
 
@@ -159,13 +169,13 @@ table(mydata$Sex)
 
 ```
 
-When we look at the table for the Sex variable, we see another data entry problem. We have a third category that should really be another case of "Female". We can fix all of these at once, but sometimes messing with factors is more complicated than numeric variables.
+When we look at the table for the Sex variable, we see another data entry problem. We have a third category that should really be another case of "Female". Here we are going to use the function `recode` from the `dplyr` package. 
 
 ```{r}
-# MVT: is there a way to do this with tidyverse ?
+
 
 # Replace bad category label
-mydata$Sex[mydata$Sex=="Femle"] <- "Female"
+mydata$Sex <- recode(mydata$Sex, Femle = "Female")
 
 table(mydata$Sex)
 
@@ -189,13 +199,13 @@ Let's say we have decided aprori to exclude outliers 3SD above or below the mean
 upper <- mean(mydata$Neuroticism) + 3*sd(mydata$Neuroticism)
 lower <- mean(mydata$Neuroticism)- 3*sd(mydata$Neuroticism)
 
-mydata_cleaned <- mydata %>% 
+mydata <- mydata %>% 
   # only keep values within this range! 
   filter( Neuroticism > lower & Neuroticism < upper)
 
 # check that we excluded 1 outlier. 
-nrow(mydata_cleaned)
 nrow(mydata)
+hist(mydata$Neuroticism)
 ```
 
 ## Getting ready for analysis
@@ -204,13 +214,13 @@ Now that we've gone through and cleaned up the problems, you can think ahead to 
 
 ### Recoding variables
 
-Sometimes we want to treat categorical variables as factors, but sometimes we want to pretend they're numeric (as in a regression, when binary variables can be coded as 0 and 1). Right now, Condition is coded as a binary numeric variable, but that's not very informative, so you'd rather have the values be descriptive. Here, the function `recode()` from the `dplyr` package is really useful. We'll create a second variable instead of overwriting Condition
+Sometimes we want to treat categorical variables as factors, but sometimes we want to pretend they're numeric (as in a regression, when binary variables can be coded as 0 and 1). Right now, Condition is coded as a binary numeric variable, but that's not very informative, so you'd rather have the values be descriptive. Here, the function `recode()` from the `dplyr` package is really useful again, but we're going to use a different version that will also turn the variable from numeric or factor data. We'll also create a second variable instead of overwriting Condition.
 
 ```{r}
 
 # Transform into factor with labels using mutate () and recode_factor() 
 mydata <- mydata %>%
-  mutate(Condition =recode_factor(Condition, '0'='Control', '1'='Treatment'))
+  mutate(ConditionF =recode_factor(Condition, '0'='Control', '1'='Treatment'))
 
 # check that your variable is now recoded as you'd like! 
 summary(mydata$Condition)
@@ -226,9 +236,16 @@ You may also want to recalculate or rescale some variables. For example, we can 
 mydata <- mydata %>%
   mutate(NeuroticismZ = scale(Neuroticism, center = TRUE, scale = TRUE))
 
+hist(NeuroticismZ)
 
 # one way to average multiple columns
-mydata$Average <- rowMeans(mydata[c("T1", "T2", "T3", "T4")])
+# note that the additional `rowwise()` arguement is necessary, otherwise you will end up with a column of only the total average value of the four columns. `ungroup` undoes the `rowwise` command so that future arguments aren't automatically calculated rowwise.
+
+mydata <- mydata %>% 
+  rowwise() %>%
+  mutate(Average = mean(c(T1, T2, T3, T4))) %>%
+  ungroup()
+                            
 
 ```
 
@@ -278,5 +295,5 @@ Go to the file "CleaningChallenge_NoCode.Rmd" for your data challenge. This chal
 
 ## Future Directions
 
-Congratulations! You've now cleaned some data in R and you're ready to start the real analysis. This tutorial only went over some basic cleaning steps, as you work with your own data, you may find yourself needing other tools. We used functions that come with the basic level of R, but there are many specialized packages that can be used for cleaning and manipulating data structures.
+Congratulations! You've now cleaned some data in R and you're ready to start working with your data. This tutorial only went over some basic cleaning steps, as you work with your own data, you may find yourself needing other tools. 
 
