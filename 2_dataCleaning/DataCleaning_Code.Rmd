@@ -254,7 +254,7 @@ summary(mydata$Condition)
 
 ### Calculating new variables
 
-You may also want to recalculate or rescale some variables. For example, we can turn Neuroticism into a Z score, or calculate an average response across the four time points. For Z scores, you can use the `scale()` function. You can also use this to just mean-center the data.
+You may also want to recalculate or rescale some variables. For example, we can turn Neuroticism into a Z score, or calculate an average response across the four time points. Here we are using `mutate()`, a dplyr function used for adding new variables to a data frame. Mutate is nice because it makes use of other functions, such as `scale()` to make Z scores or `rowMeans()` to calculate means.
 
 ```{r}
 
@@ -264,13 +264,10 @@ mydata <- mydata %>%
 
 hist(NeuroticismZ)
 
-# one way to average multiple columns
-# note that the additional `rowwise()` arguement is necessary, otherwise you will end up with a column of only the total average value of the four columns. `ungroup` undoes the `rowwise` command so that future arguments aren't automatically calculated rowwise.
+# calculate means across multiple columns using rowMeans
+# note that cbind is necessary here because rowMeans expects a Matrix
 
-mydata <- mydata %>% 
-  rowwise() %>%
-  mutate(Average = mean(c(T1, T2, T3, T4))) %>%
-  ungroup()
+mydata <- mydata %>% mutate(Mean = rowMeans(cbind(Day1, Day2, Day3, Day4)))
                             
 
 ```
