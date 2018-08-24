@@ -48,7 +48,7 @@ df <- df %>%
 
 ## Summarizing data
 Let's learn how to make simple tables of summary statistics.
-First, we will calculate summary info across all data.
+First, we will calculate summary info across all data using `summarize()`, a useful function for creating summaries. Like `mutate()`, it can take mutiple functions as arguments. Not that we're not creating a new object for this summary (ie not using th `<-` symbol), so this will print but not save.
 
 ```{r}
 
