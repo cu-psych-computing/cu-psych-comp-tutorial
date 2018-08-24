@@ -272,6 +272,22 @@ mydata <- mydata %>% mutate(Mean = rowMeans(cbind(Day1, Day2, Day3, Day4)))
 
 ```
 
+### Combining data from multiple sources
+
+Sometimes, data might be spread across multiple spreadsheets, and you'll want to combine those for your analysis. For example, maybe this study had a follow-up survey on Day 30. Scores from that survey were entered into another spreadsheet, which only has the subject ID and that score. We want to include that score into our data. Here I'm using the function `merge()`, which is one of the base functions in R, not part of the tidyverse.
+
+```{r}
+
+#First load the new data
+mydata2 <- read.table("Study1_Followup.csv", header=TRUE, sep=",", stringsAsFactors=FALSE)
+
+# Merge the two dataframes. To make sure the rows match up, we use the 'by' argument to speficy that IDs should match. That way even if the data is in a different order you will get scores matched togther correctly.
+
+mydata <- merge(mydata, mydata2, by="ID")
+
+```
+
+
 ### Shaping data
 
 Finally, you may want to change the layout of your data. Right now, our data frame is in "wide" format, which means that each row is a subject, and each observation gets its own column. For some analyses, you'll need to use "long" format, where each row is an observation, and columns specify things like time and ID to differentiate the observations. There are lots of packages that can handle data reshaping, but I'll show the `gather()` and `spread()` functions from `tidyr`.
@@ -280,7 +296,7 @@ Finally, you may want to change the layout of your data. Right now, our data fra
 
 # Key is the name for the new column that will identify which observation it is, and value is the name for the new column that will have the actual values in it. In theory, you can name these whatever you want, but to keep everyone on the same page, name the key "Time" and the value "Score".
 
-mydata_Long <- gather(mydata, key="Time", value="Score", T1:T4)
+mydata_Long <- gather(mydata, key="Time", value="Score", Day1:Day30)
 
 
 # Spread lets you go back the other direction. This should be identical to the original mydata 
