@@ -258,12 +258,12 @@ You may also want to recalculate or rescale some variables. For example, we can 
 
 ```{r}
 
-# calculate Z scores using mutate ()  and scale() 
+# calculate Z scores using mutate()  and scale() 
 mydata <- mydata %>%
-  mutate(NeuroticismZ = scale(Neuroticism, center = TRUE, scale = TRUE))
-
-# Scale creates a matrix with width 1, sometimes this messes things up so we'll convert it to numeric          
-mydata$NeuroticismZ <- as.numeric(mydata$NeuroticismZ)
+  mutate(NeuroticismZ = scale(Neuroticism, center = TRUE, scale = TRUE),
+         # Scale creates a matrix with width 1,
+         # sometimes this messes things up so we'll convert it to numeric        
+         NeuroticismZ = as.numeric(NeuroticismZ))
 
 hist(mydata$NeuroticismZ)
 
