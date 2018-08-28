@@ -8,29 +8,6 @@ output: ioslides_presentation
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-# Why do I use R?
-
-## The old way {.build}
-Raw data file (Excel)  
-
-"Clean" data file (Excel)  
-
-SPSS data file that matched Clean file (SPSS)  
-
-Report of results (Word/Excel)  
-
-Incomplete written log of data collection and analysis (Excel)  
-
-
-## The new way {.build}
-Raw data file (.csv)  
-
-Cleaning script (R)  
-
-Clean data file (.rda)  
-
-Report containing analysis, graphs and written report (RMarkdown) 
-
 
 ## Streamline your research process {.build}
 
@@ -79,33 +56,6 @@ Free stuff is good.
 
 # Why this class?
 
-## Course Plan {.build}
-Tutorial has 5 parts, each with a lesson and a data challenge.
-
-Today  
-- 10:30-12:30 Programming Basics  
-- 12:30-1:30 Lunch  
-- 1:30-2:45 Data Cleaning  
-- 2:45-3 Discussion and Questions  
-
-Tomorrow  
-- 10-11 Descriptive Statistics  
-- 11-12:30 Graphing Data  
-- 12:30-1:30 Lunch  
-- 1:30-2:30 Statistical Tests  
-- 2:30-3:30 Discussion, Questions and Future Directions  
-
-## Resources {.build}
-
-All of the course materials are on our Github:  
-cu-psych-r-tutorial  
-
-Lessons and challenges with and without code  
-
-Additional resources   
-
-Slack channel  
-
 ## Goals {.build}
 
 Introduce the basics of programming in R, and demonstrate some simple tools and skills.  
@@ -114,9 +64,22 @@ Demonstrate strategies for solving R problems you may encounter in the future.
 
 Encourage you to start (or continue) using R for your research.  
 
-Grow R community within the psychology department.
+Grow R community within the psychology department (or other departments!).
 
 Introduce good research practices that you can implement even if you choose not to use R.
+
+## Resources {.build}
+
+All of the course materials are on our Github:  
+cu-psych-r-tutorial  
+
+Lessons and challenges with and without code  
+
+Additional resources and tutorials  
+
+Slack channel  
+
+Join R Club!
 
 ## Disclaimers {.build}
 

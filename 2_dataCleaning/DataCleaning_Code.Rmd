@@ -23,6 +23,7 @@ library(tidyverse)
 
 ```
 
+
 ## Getting your Data into R
 
 ### Entering data directly
@@ -37,7 +38,7 @@ score <- c(20, 16, 35, 19)
 
 name <- c("Monica", "Michelle", "Paul", "Ellen")
 
-year <- c(1, 1, 4, 3)
+year <- c(2, 5, 2, 1)
 
 dataframe <- data.frame(name, score, year)
 
@@ -49,6 +50,9 @@ dataframe <- data.frame(name, score, year)
 It's also easy to introduce errors this way, and with a lot of data it would get tedious. Most of the time, you'll be reading data from an external file (.txt of .csv), or opening up an existing dataset in R. Once you find the location of your files, what you do next will depend on the file format.
 
 #### What's your working directory and where is the file you want?
+
+Your working directory is the directory (and subdirectories) where the files you're working with are stored. If you opened this file from a .Rproj link, the folder where that link was located will automatically be your working directory. If not, you may need to change your working directory so that R can find files when you ask for them.
+
 ```{r}
 
 getwd()
@@ -115,21 +119,53 @@ head(mydata, 10)
 
 ```
 
+### Brief intro to tidyverse
+
+Tidyverse is not one package, but instead it's multiple packages grouped together. They're all made by the same developers, so the functions play nicely together. If you've done any R before, there are some you're probably familiar with, like ggplot and dplyr, and others that are more obscure. These are all very useful packages, but they do have some tidyverse-specific syntax that we'll be using. (Note: the following paragraphs are an almost verbatim verision of what's in our standalone Tidyverse tutorial, written by Monica, which can be found on the github page)
+
+Enter the pipe `%>%`! The pipe does one simple, but key, thing: **takes the object on the left-hand side and feeds it into the first argument of the function on the right-hand side.** This means that:
+
+* `a %>% foo()` is equivalent to `foo(a)`. Fine and good
+* `a %>% foo() %>% bar(arg = TRUE)` is equivalent to `bar(foo(a), arg = TRUE)`. Now, nested function calls read left-to-right!
+* Most common use case: `df_new <- df_old %>% foo() %>% bar(arg = TRUE) %>% baz()` is equivalent to `df_new <- baz(bar(foo(df_old), arg = TRUE))`. Now, you can chain a series of preprocessing commands to operate on a dataframe all at once, and easily read those commands as typed in your script. No more accidentally not running some key preprocessing command that causes later code to break!
+
+* take as their first argument the object to be operated upon
+* return the same object (or an analog of said), but now operated upon
+
+Essentially all functions from the tidyverse are pipe-safe, but bear this in mind when trying to incorporate functions from base R or other packages into your tidy new world.
+
 ### Rename a variable
 
-Ok, looks good. But what is that fifth variable? What does that even mean? Luckily, this is your study and you know that it's a personality questionnaire measuring neuroticism. Let's fix that.
+We'll demonstrate the `%>%` command for our first cleaning step. Look back at your data frame.  What is that fifth variable? What does that even mean? Luckily, this is your study and you know that it's a personality questionnaire measuring neuroticism. Let's fix that using `recode()` from the `dplyr` package.
 
 ```{r}
 
-# Change a varialbe name
-names(mydata)[names(mydata) == 'Personality'] <- 'Neuroticism'
-names(mydata)
+# Simple command with no pipe, commented out so we don't run both.
+
+#mydata <- rename(mydata, Neuroticism=Personality) ## NewVariableName = OldVariableName
+
+# Simple command with pipe
+
+mydata <- mydata %>% 
+  rename(Neuroticism=Personality) 
+
+```
+
+It might seem like the first version is simpler, but it won't be once you start stacking functions together. For example, let's rearrange our variables (using `select()`) while also renameing the variables called T1, T2, T3, and T4. Note that we keep adding ` %>% ` between each function.
+
+```{r}
+
+mydata <- mydata %>% 
+  rename(Day1 = T1, Day2 = T2, Day3 = T3, Day4 = T4) %>% 
+  select(ID, Condition, Age, everything())
+  
+# using everything() within select() means you don't have to type all the variables out.
 
 ```
 
 ### Check for missing data
 
-On problem you may have is missing data. Sometimes this is something you already know about, but you should check your data frame anyway to make sure nothing got missed in a data entry error. For small datasets, you can do this visually, but for larger ones you can ask R.
+One problem you may have is missing data. Sometimes this is something you already know about, but you should check your data frame anyway to make sure nothing got missed in a data entry error. For small datasets, you can do this visually, but for larger ones you can ask R.
 
 ```{r}
 
@@ -159,13 +195,13 @@ table(mydata$Sex)
 
 ```
 
-When we look at the table for the Sex variable, we see another data entry problem. We have a third category that should really be another case of "Female". We can fix all of these at once, but sometimes messing with factors is more complicated than numeric variables.
+When we look at the table for the Sex variable, we see another data entry problem. We have a third category that should really be another case of "Female". Here we are going to use the function `recode` from the `dplyr` package. 
 
 ```{r}
-# MVT: is there a way to do this with tidyverse ?
+
 
 # Replace bad category label
-mydata$Sex[mydata$Sex=="Femle"] <- "Female"
+mydata$Sex <- recode(mydata$Sex, Femle = "Female")
 
 table(mydata$Sex)
 
@@ -189,13 +225,13 @@ Let's say we have decided aprori to exclude outliers 3SD above or below the mean
 upper <- mean(mydata$Neuroticism) + 3*sd(mydata$Neuroticism)
 lower <- mean(mydata$Neuroticism)- 3*sd(mydata$Neuroticism)
 
-mydata_cleaned <- mydata %>% 
+mydata <- mydata %>% 
   # only keep values within this range! 
   filter( Neuroticism > lower & Neuroticism < upper)
 
 # check that we excluded 1 outlier. 
-nrow(mydata_cleaned)
 nrow(mydata)
+hist(mydata$Neuroticism)
 ```
 
 ## Getting ready for analysis
@@ -204,33 +240,61 @@ Now that we've gone through and cleaned up the problems, you can think ahead to 
 
 ### Recoding variables
 
-Sometimes we want to treat categorical variables as factors, but sometimes we want to pretend they're numeric (as in a regression, when binary variables can be coded as 0 and 1). Right now, Condition is coded as a binary numeric variable, but that's not very informative, so you'd rather have the values be descriptive. Here, the function `recode()` from the `dplyr` package is really useful. We'll create a second variable instead of overwriting Condition
+Sometimes we want to treat categorical variables as factors, but sometimes we want to pretend they're numeric (as in a regression, when binary variables can be coded as 0 and 1). Right now, Condition is coded as a binary numeric variable, but that's not very informative, so you'd rather have the values be descriptive. Here, the function `recode()` from the `dplyr` package is really useful again, but we're going to use a different version that will also turn the variable from numeric or factor data. We'll also create a second variable instead of overwriting Condition.
 
 ```{r}
 
 # Transform into factor with labels using mutate () and recode_factor() 
 mydata <- mydata %>%
-  mutate(Condition =recode_factor(Condition, '0'='Control', '1'='Treatment'))
+  mutate(ConditionF =recode_factor(Condition, '0'='Control', '1'='Treatment'))
 
 # check that your variable is now recoded as you'd like! 
-summary(mydata$Condition)
+summary(mydata$ConditionF)
 ```
 
 ### Calculating new variables
 
-You may also want to recalculate or rescale some variables. For example, we can turn Neuroticism into a Z score, or calculate an average response across the four time points. For Z scores, you can use the `scale()` function. You can also use this to just mean-center the data.
+You may also want to recalculate or rescale some variables. For example, we can turn Neuroticism into a Z score, or calculate an average response across the four time points. Here we are using `mutate()`, a dplyr function used for adding new variables to a data frame. Mutate is nice because it makes use of other functions, such as `scale()` to make Z scores or `rowMeans()` to calculate means.
 
 ```{r}
 
-# calculate Z scores using mutate ()  and scale() 
+# calculate Z scores using mutate()  and scale() 
 mydata <- mydata %>%
-  mutate(NeuroticismZ = scale(Neuroticism, center = TRUE, scale = TRUE))
+  mutate(NeuroticismZ = scale(Neuroticism, center = TRUE, scale = TRUE),
+         # Scale creates a matrix with width 1,
+         # sometimes this messes things up so we'll convert it to numeric        
+         NeuroticismZ = as.numeric(NeuroticismZ))
 
+hist(mydata$NeuroticismZ)
 
-# one way to average multiple columns
-mydata$Average <- rowMeans(mydata[c("T1", "T2", "T3", "T4")])
+# calculate means across multiple columns using rowMeans
+# note that cbind is necessary here because rowMeans expects a Matrix
+
+mydata <- mydata %>% mutate(Mean = rowMeans(cbind(Day1, Day2, Day3, Day4)))
+                            
 
 ```
+
+### Combining data from multiple sources
+
+Sometimes, data might be spread across multiple spreadsheets, and you'll want to combine those for your analysis. For example, maybe this study had a follow-up survey on Day 30. Scores from that survey were entered into another spreadsheet, which only has the subject ID and that score. We want to include that score into our data.
+
+Here I'm using the function `merge()`, which is one of the base functions in R, not part of the tidyverse.
+
+```{r}
+
+#First load the new data
+mydata2 <- read.table("Study1_Followup.csv", header=TRUE, sep=",", stringsAsFactors=FALSE)
+
+# Merge the two dataframes. To make sure the rows match up, we use the 'by' argument to specify that IDs should match. That way even if the data is in a different order you will get scores matched togther correctly.
+
+mydata <- merge(mydata, mydata2, by="ID")
+
+# Note that mydata has one less row than mydata2 because we removed that outlier. By default, merge will use only cases of the 'by' variable that exist in both dataframes, so it drops that one row from mydata2 when merging. You can use additional arguments to change this if you want to keep all observations from one or both frames, even if it means blank cells.
+
+```
+
+There are joining functions in the tidyverse that you can use if you'd like; feel free to ask about these and how they're different from `merge()`.
 
 ### Shaping data
 
@@ -240,7 +304,7 @@ Finally, you may want to change the layout of your data. Right now, our data fra
 
 # Key is the name for the new column that will identify which observation it is, and value is the name for the new column that will have the actual values in it. In theory, you can name these whatever you want, but to keep everyone on the same page, name the key "Time" and the value "Score".
 
-mydata_Long <- gather(mydata, key="Time", value="Score", T1:T4)
+mydata_Long <- gather(mydata, key="Time", value="Score", starts_with('Day'))
 
 
 # Spread lets you go back the other direction. This should be identical to the original mydata 
@@ -278,5 +342,5 @@ Go to the file "CleaningChallenge_NoCode.Rmd" for your data challenge. This chal
 
 ## Future Directions
 
-Congratulations! You've now cleaned some data in R and you're ready to start the real analysis. This tutorial only went over some basic cleaning steps, as you work with your own data, you may find yourself needing other tools. We used functions that come with the basic level of R, but there are many specialized packages that can be used for cleaning and manipulating data structures.
+Congratulations! You've now cleaned some data in R and you're ready to start working with your data. This tutorial only went over some basic cleaning steps, as you work with your own data, you may find yourself needing other tools. 
 

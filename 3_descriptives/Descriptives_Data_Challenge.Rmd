@@ -4,49 +4,47 @@ output: html_document
 ---
 
 # Data challenge for descriptive statistics
+Using the same dataset as the lesson, complete the following exercises. Make sure to reload the .csv file from the folder, don't use the version we were working on during the tutorial if you still have it open.
 
-
-0. We're going to continue working with the Uncapher et al. (2016) dataset for this challenge! First, load the *uncapher_2016_one_condition_dataset.csv* file into a dataframe 
-
+## 0. Get started by loading data and packages 
 ```{r}
 
 ```
 
 
-1. Make a histogram of the variable called "Dprime". This variable represents (normed) hit rate minus (normed) false alarm rate during the working memory task. 
-
 ```{r}
+# this dataset examines the relationship between multitasking and working memory.
+# original paper by Uncapher et al. 2016:  https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4733435/pdf/nihms712443.pdf
 
-```
-
-
-
-2. What is the skew and kurtosis of Dprime? Is it normally distributed? 
-```{r}
-# hint: there is missing data in the dprime variable. how do we get around that?
-
+# open the data from csv 
 
 
 ```
-
-3. Make a boxplot comparing Dprime between high multitaskers (groupStatus: HMM) and low multitaskers (groupStatus: LMM). 
-```{r}
+## 1. Create a new data frame with only variables for subject number, group status, hitRate, faRate and bis. Also, we don't want any rows where the false alarm rate is above .3.
 
 
-```
-
-4. what is the mean dprime score for high multitaskers and low multitaskers?
 ```{r}
 
 
 
 ```
 
-5. Make a plot showing the relationship between multitasking and dprime.
-Is this relationship positive or negative?  
 
+## 2. What is the mean, range, and standard deviation False error rate for high and low multitaskers?
 
 ```{r}
+
+
+
+
+```
+
+## 3. Group participants based on BIS score
+
+The BIS is a personality questionnaire. Find out the median value, and create a new variable divided into high and low BIS scores. Then, calculate average values for hitRate, faRate and dprime for the two groups.
+
+```{r}
+
 
 
 ```
