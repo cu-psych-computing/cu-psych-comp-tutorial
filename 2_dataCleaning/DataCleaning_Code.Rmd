@@ -249,7 +249,7 @@ mydata <- mydata %>%
   mutate(ConditionF =recode_factor(Condition, '0'='Control', '1'='Treatment'))
 
 # check that your variable is now recoded as you'd like! 
-summary(mydata$Condition)
+summary(mydata$ConditionF)
 ```
 
 ### Calculating new variables
@@ -262,7 +262,10 @@ You may also want to recalculate or rescale some variables. For example, we can 
 mydata <- mydata %>%
   mutate(NeuroticismZ = scale(Neuroticism, center = TRUE, scale = TRUE))
 
-hist(NeuroticismZ)
+# Scale creates a matrix with width 1, sometimes this messes things up so we'll convert it to numeric          
+mydata$NeuroticismZ <- as.numeric(mydata$NeuroticismZ)
+
+hist(mydata$NeuroticismZ)
 
 # calculate means across multiple columns using rowMeans
 # note that cbind is necessary here because rowMeans expects a Matrix
@@ -285,6 +288,8 @@ mydata2 <- read.table("Study1_Followup.csv", header=TRUE, sep=",", stringsAsFact
 
 mydata <- merge(mydata, mydata2, by="ID")
 
+# Note that mydata has one less row than mydata2 because we removed that outlier. By default, merge will use only cases of the 'by' variable that exist in both dataframes, so it drops that one row from mydata2 when merging. You can use additional arguments to change this if you want to keep all observations from one or both frames, even if it means blank cells.
+
 ```
 
 
@@ -296,7 +301,7 @@ Finally, you may want to change the layout of your data. Right now, our data fra
 
 # Key is the name for the new column that will identify which observation it is, and value is the name for the new column that will have the actual values in it. In theory, you can name these whatever you want, but to keep everyone on the same page, name the key "Time" and the value "Score".
 
-mydata_Long <- gather(mydata, key="Time", value="Score", Day1:Day30)
+mydata_Long <- gather(mydata, key="Time", value="Score", starts_with('Day'))
 
 
 # Spread lets you go back the other direction. This should be identical to the original mydata 
