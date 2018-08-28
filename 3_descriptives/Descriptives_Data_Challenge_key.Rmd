@@ -4,7 +4,7 @@ output: html_document
 ---
 
 # Data challenge for descriptive statistics
-Using the same dataset as the lesson, complete the following exercises. 
+Using the same dataset as the lesson, complete the following exercises. Make sure to reload the .csv file from the folder, don't use the version we were working on during the tutorial if you still have it open.
 
 ## 0. Get started by loading data and packages 
 ```{r}
@@ -18,11 +18,22 @@ library(tidyverse)
 # original paper by Uncapher et al. 2016:  https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4733435/pdf/nihms712443.pdf
 
 # open the data from csv 
-df <- read.csv("uncapher_2016_one_condition_dataset.csv")
+df <- read.csv("uncapher_2016_repeated_measures_dataset.csv")
+```
+## 1. Create a new data frame with only variables for subject number, group status, hitRate, faRate and bis. Also, we don't want any rows where the false alarm rate is above .3.
+
+
+```{r}
+
+df2 <- df %>% 
+  select(subjNum, groupStatus, hitRate, faRate, dprime, bis) %>% 
+  filter(faRate < .3)
+
 ```
 
-## 1. what is the mean, range, and standard deviation False error rate?
- high multitaskers and low multitaskers?
+
+## 2. What is the mean, range, and standard deviation False error rate for high and low multitaskers?
+
 ```{r}
 
 df %>% 
@@ -35,4 +46,23 @@ group_by(groupStatus) %>%
 
 ```
 
-# need to add.
+## 3. Group participants based on BIS score
+
+The BIS is a personality questionnaire. Find out the median value, and create a new variable divided into high and low BIS scores. Then, calculate average values for hitRate, faRate and dprime for the two groups.
+
+```{r}
+
+median <- median(df2$bis)
+
+df2 <- df2 %>% 
+   # if bis score is lower than median, label "low", else label "high""
+   mutate(bisF = ifelse(bis < median, "Low", "High")) 
+
+df2 %>% 
+  group_by(bisF) %>%
+  summarize( meanFA=mean(faRate), 
+             meanHR = mean(hitRate), 
+             meanDP= mean(dprime))
+
+```
+
