@@ -9,12 +9,21 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+## Return home
+
+Click [here](https://cu-psych-r-users.github.io/cu-psych-r-tutorial) to return to the main CU psychology R tutorials page.
+
 ## 1: First Install/load ggplot2
 
-install.packages('ggplot2')
 ```{r}
 #load the package
-require(ggplot2)
+
+if (!require(ggplot2)) {
+  install.packages(ggplot2)
+} else {
+  require(ggplot2)
+}
 ```
 
 
@@ -88,16 +97,14 @@ Question: what if we want to look at distribution of weights by region in the nh
 With ggplot, if x is a factor (discrete, not continuous) we can plot dots as a function of the fact
 
 ```{r}
-b <- ggplot(nhanes, aes(x = UrbanRecode, y = Height)) + geom_point()
-b
-
 nhanes$UrbanRecode <- as.factor(nhanes$Urban)
 
-as.numeric()
+b <- ggplot(nhanes, aes(x = UrbanRecode, y = Height)) + geom_point()
+b
+```
 
+```{r}
 # Woah! So much data, hard to see anything, let's use geom_jitter() with size = .05, width = .1 instead
-
-
 
 b <- ggplot(nhanes, aes(x = UrbanRecode, y = Height)) + geom_jitter(size = .05, width = .1)
 b
