@@ -48,7 +48,7 @@ df <- df %>%
 
 ## Summarizing data
 Let's learn how to make simple tables of summary statistics.
-First, we will calculate summary info across all data using `summarize()`, a useful function for creating summaries. Like `mutate()`, it can take mutiple functions as arguments. Not that we're not creating a new object for this summary (ie not using th `<-` symbol), so this will print but not save.
+First, we will calculate summary info across all data using `summarize()`, a useful function for creating summaries. Like `mutate()`, it can take mutiple functions as arguments. Note that we're not creating a new object for this summary (ie not using th `<-` symbol), so this will print but not save.
 
 ```{r}
 
@@ -121,6 +121,24 @@ df %>%
   summarize (nTrials = n())
 
 ```
+
+## Combine summary statistics with the full data frame
+For some analyses, you might want to add a higher level variable (e.g. subject average hitRate) alongside your long data. We can do this by summarizing the data in a new data frame and then merging it with the full data.
+
+```{r}
+
+avgHR <- df %>% 
+  group_by(subjNum) %>% 
+  summarize(avgHR = mean(hitRate, na.rm=T))
+
+df <- merge(df, avgHR, by="subjNum")
+
+# you should now have an avgHR column in df, which will repeat within each subject, but vary across subjects.
+
+```
+
+
+
 
 # 6. saving your work
 
