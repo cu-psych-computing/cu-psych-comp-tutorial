@@ -1,6 +1,6 @@
 # R Tutorial Syllabus
 
-Current revision: Winter 2018 (pilot workshop)
+Current revision: Fall 2018 (Workshop Version 2)
 
 ## Course Goals
 
@@ -75,11 +75,25 @@ This is an optional module aimed at students who have no previous experience wit
 
 ### Data Cleaning
 
-This module will cover the basics of data cleaning, including loading data into R from various formats, data inspection (e.g. looking for missing values, checking data types), calculation of new variables, and how to change and manipulate data structures (e.g. merging data frames, long and wide formats). 
+This module will cover the basics of data cleaning, which is the process of taking raw data and getting it ready for summarizing, plotting and analysis.
+
+#### Topics to Cover
+
+* Loading data into R
+* Basic Cleaning
+    + Checking for missing or miscoded data
+    + Renaming variables
+    + Recoding variables
+* Calculating new variables
+* Reshaping Data
+    + Filtering and subsetting data
+    + Combining data from multiple sources
+    + Reshaping data
+* Saving cleaned data for later
 
 ### Descriptive Statistics
 
-This module teaches students how to calculate and display basic descriptive statistics, and how to divide and aggregate data in different ways. It will also cover basic visualization tools.
+This module teaches students how to calculate and display basic descriptive statistics, and how to divide and aggregate data in different ways. 
 
 ### Basics of Graphing
 
