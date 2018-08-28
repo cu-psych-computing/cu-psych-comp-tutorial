@@ -12,7 +12,7 @@ output:
 Students will test their understanding of:
 1. How to open data in R
 2. How to check for missing or problematic data and address issues.
-3. How to rearrange and shape data in preparation for analysis. 
+3. How to filter, rearrange and shape data in preparation for analysis.
 
 ## Your turn!
 
@@ -20,7 +20,12 @@ Now it's your turn to try opening and cleaning a new data set. There are issues 
 
 NOTE: This is the key for the data challenge, so it has all the code already. If you haven't done the challenge, go to the blank version and try doing it on your own. If you are using this key to check your work, remembere that there are many ways to do things in R, so what you did might not be what we did here, but it can still be right (it might even be better!).
 
+
+## Open and visually inspect the data
+
 ```{r}
+
+library(tidyverse)
 
 # Read the data into R. The file is called "Study2_Subjects.csv". Check out the separate "README_Study2.txt" file for information on the study and variables.
 
@@ -44,41 +49,69 @@ hist(subjects$Q2)
 hist(subjects$Q3)
 table(subjects$Condition)
 
-#Condition variable has a missing data point for sub 9. README says they should be in condition C
+#check for missing values
+subjects[!complete.cases(subjects),]
+
+```
+
+## Correcting data issues
+
+Remember to check the README for additional information on the data that may help you decide what needs to be fixed.
+
+```{r}
+
+#Condition variable has a missing data point for sub 9. 
+
 subjects$Condition[subjects$ID==9] <- "C"
 
 #The variables Q1, Q2 and Q3 don't have useful names, update them to something useful
-names(subjects)[names(subjects) == 'Q1'] <- 'Anxiety'
-names(subjects)[names(subjects) == 'Q2'] <- 'Depression'
-names(subjects)[names(subjects) == 'Q3'] <- 'Stress'
 
-# The sex variable is coded in a non-intuitive way, change to male/female
-library(dplyr)
-subjects$Sex <- recode(subjects$Sex, '1'='Female', '2'='Male')
+subjects <- subjects %>% 
+  rename(Anxiety = Q1, Depression = Q2, Stress = Q3) %>% 
+  select(ID, Condition, Age, everything())
 
-# This study has three conditions, based on how long the subject kept their hand in cold water. Right now this is categorical, but you may want to look at it continuously. Make a new condition variable that's numeric.
+# The sex variable is coded in a non-intuitive way, change to male/female and make it a factor
+subjects <- subjects %>%
+  mutate(Sex = recode_factor(Sex, '1' = 'Female', '2' = 'Male'))
 
-subjects$ConditionNum <- recode(subjects$Condition, 'A'='1', 'B'='2', 'C'='3')
-subjects$ConditionNum <- as.numeric(subjects$ConditionNum)
+
+```
+
+## Create new variables
+
+```{r}
 
 # Each subject in this study filled out three related questionnaires, but these scores can be combined into a composite score but taking the sum. Create a new variable for this score.
 
-subjects$Composite <- subjects$Anxiety + subjects$Depression + subjects$Stress
+subjects <- subjects %>% 
+  mutate(Composite = rowMeans(cbind(Anxiety, Depression, Stress)))
 
-# You see there's another .csv file for Study 2, this one's called Study2_Trials.csv. Open it and take a look. This frame has the same 10 subjects, but now it has reaction time data from a task with 30 trials. Create a new data frame that combines this with your subject level information. Hint: ?merge, by="ID"
+```
+
+## Combine two data sets together and reshape
+
+```{r}
+
+# You see there's another .csv file for Study 2, this one's called Study2_Trials.csv. Open it and take a look. This frame has the same 10 subjects, but now it has reaction time data from a task with 30 trials. Create a new data frame that combines this with your subject level information. 
 
 trials <- read.table("Study2_Trials.csv", header=TRUE, sep=",", stringsAsFactors=FALSE)
 data <- merge(subjects, trials, by="ID")
 
 # Now that you have a one frame with all the data, put it into long format. Each subject should have one row for each trial.
 
-library(tidyr)
-data_Long <- gather(data, key="Trial", value="RT", RT_1:RT_30)
+data_Long <- data %>% 
+  gather(key="Trial", value="RT", RT_1:RT_30)
 
-# You want to do a separate analysis only on the people who had a high score on the anxiety questionnaire. Create a new data frame (in long format) with just the individuals who got 25 or higher. (Hint, check out ?subset for help)
+# You want to do a separate analysis only on the people who had a high score on the anxiety questionnaire. Create a new data frame (in long format) with just the individuals who got 25 or higher. 
 
-subset <- subset(data_Long, Anxiety >= 25)
+subset <- data_Long %>%
+  filter(Anxiety >= 25)
 
+```
+
+## Save your work
+
+```{r}
 # You should have 5 data frames now (subject level, trial level, combined, long format and the subset). Save them as a new .rda file for future use
 
 save(subjects, trials, data, data_Long, subset, file="Study2_Clean.rda")

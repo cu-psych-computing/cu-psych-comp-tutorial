@@ -4,70 +4,65 @@ output: html_document
 ---
 
 # Data challenge for descriptive statistics
-```{r}
+Using the same dataset as the lesson, complete the following exercises. Make sure to reload the .csv file from the folder, don't use the version we were working on during the tutorial if you still have it open.
 
-library(car)
-library(moments)
-library(tidyr)
-library(dplyr)
+## 0. Get started by loading data and packages 
+```{r}
+library(tidyverse)
 
 ```
 
-Using the same dataset, complete the following exercises. 
+
 ```{r}
 # this dataset examines the relationship between multitasking and working memory.
 # original paper by Uncapher et al. 2016:  https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4733435/pdf/nihms712443.pdf
 
 # open the data from csv 
-df <- read.csv("uncapher_2016_one_condition_dataset.csv")
+df <- read.csv("uncapher_2016_repeated_measures_dataset.csv")
 ```
+## 1. Create a new data frame with only variables for subject number, group status, hitRate, faRate and bis. Also, we don't want any rows where the false alarm rate is above .3.
 
-1. Make a histogram of the variable called "Dprime". Add colors and labels. This variable represents (normed) hit rate /(normed) false alarm rate during the working memory task. 
 
 ```{r}
 
-hist(df$dprime, col = "blue", breaks = 20)
-
-
-```
-
-
-
-2. What is the skew and kurtosis of Dprime? Is it normally distributed? 
-```{r}
-
-skewness(df$dprime, na.rm = TRUE)
-
-kurtosis(df$dprime, na.rm = TRUE)
-
-shapiro.test(df$dprime)
-```
-
-3.Make a boxplot comparing Dprime between high multitaskers (groupStatus: HMM) and low multitaskers (groupStatus: LMM). 
-```{r}
-
-boxplot(df$dprime, df$groupStatus)
+df2 <- df %>% 
+  select(subjNum, groupStatus, hitRate, faRate, dprime, bis) %>% 
+  filter(faRate < .3)
 
 ```
 
-4. what is the mean dprime score for high multitaskers and low multitaskers?
+
+## 2. What is the mean, range, and standard deviation False error rate for high and low multitaskers?
+
 ```{r}
 
-grouped <- group_by(dprime, groupStatus)
-
-# now we will extract summary statistics from the grouped data
-summarise(grouped, mean=mean(dprime), sd = sd(dprime),  min=min(dprime), max=max(dprime)))
+df %>% 
+group_by(groupStatus) %>%
+  summarize( mean=mean(faRate), 
+             sd = sd(faRate), 
+             min=min(faRate), 
+             max=max(faRate))
 
 
 ```
 
-5. Make a plot showing the relationship between multitasking and dprime.
-Is this relationship positive or negative?  
+## 3. Group participants based on BIS score
+
+The BIS is a personality questionnaire. Find out the median value, and create a new variable divided into high and low BIS scores. Then, calculate average values for hitRate, faRate and dprime for the two groups.
 
 ```{r}
 
-plot(df$dprime ~ df$mmi) # negative. 
+median <- median(df2$bis)
 
+df2 <- df2 %>% 
+   # if bis score is lower than median, label "low", else label "high""
+   mutate(bisF = ifelse(bis < median, "Low", "High")) 
+
+df2 %>% 
+  group_by(bisF) %>%
+  summarize( meanFA=mean(faRate), 
+             meanHR = mean(hitRate), 
+             meanDP= mean(dprime))
 
 ```
 

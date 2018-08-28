@@ -11,11 +11,14 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 ## 1: First Install/load ggplot2
 
-install.packages('ggplot2')
-
 ```{r}
 #load the package
-require(ggplot2)
+
+if (!require(ggplot2)) {
+  install.packages(ggplot2)
+} else {
+  require(ggplot2)
+}
 ```
 
 
@@ -115,10 +118,8 @@ The `labs()` command can be added to ggplot with different arguments, lke `x`, `
 
 Note, if we want to change labels for FACTORS, not just axes, it's easier to do that using the tidyverse 
 
-```{r}
+```{r, message = FALSE, warning = FALSE}
 require(tidyverse)
-
-
 ```
 
 ## 7: Facetting

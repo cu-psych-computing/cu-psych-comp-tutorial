@@ -222,11 +222,14 @@ div.tocify {
 
 <div id="first-installload-ggplot2" class="section level2">
 <h2>1: First Install/load ggplot2</h2>
-<p>install.packages(‘ggplot2’)</p>
 <pre class="r"><code>#load the package
-require(ggplot2)</code></pre>
+
+if (!require(ggplot2)) {
+  install.packages(ggplot2)
+} else {
+  require(ggplot2)
+}</code></pre>
 <pre><code>## Loading required package: ggplot2</code></pre>
-<pre><code>## Warning: package 'ggplot2' was built under R version 3.3.2</code></pre>
 </div>
 <div id="load-in-sample-data-nhanes" class="section level2">
 <h2>2: Load in Sample Data (NHANES)</h2>
@@ -271,20 +274,6 @@ View(nhanes)</code></pre>
 <p>The <code>labs()</code> command can be added to ggplot with different arguments, lke <code>x</code>, <code>y</code>, or <code>title</code> to make the plots clearer</p>
 <p>Note, if we want to change labels for FACTORS, not just axes, it’s easier to do that using the tidyverse</p>
 <pre class="r"><code>require(tidyverse)</code></pre>
-<pre><code>## Loading required package: tidyverse</code></pre>
-<pre><code>## Warning: package 'tidyverse' was built under R version 3.3.2</code></pre>
-<pre><code>## Loading tidyverse: tibble
-## Loading tidyverse: tidyr
-## Loading tidyverse: readr
-## Loading tidyverse: purrr
-## Loading tidyverse: dplyr</code></pre>
-<pre><code>## Warning: package 'tibble' was built under R version 3.3.2</code></pre>
-<pre><code>## Warning: package 'tidyr' was built under R version 3.3.2</code></pre>
-<pre><code>## Warning: package 'purrr' was built under R version 3.3.2</code></pre>
-<pre><code>## Warning: package 'dplyr' was built under R version 3.3.2</code></pre>
-<pre><code>## Conflicts with tidy packages ----------------------------------------------</code></pre>
-<pre><code>## filter(): dplyr, stats
-## lag():    dplyr, stats</code></pre>
 </div>
 <div id="facetting" class="section level2">
 <h2>7: Facetting</h2>
