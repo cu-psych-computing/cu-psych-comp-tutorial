@@ -4,12 +4,12 @@
 
 * [Syllabus](syllabus.html)
 * Programming basics
-    0. [Acquainting yourself with RStudio](1_programming/lessonPart0.html)
-    1. [Variables, data types, vectors & dataframes](1_programming/lessonPart1.html)
-    2. [Pseudocode, relational & logical operators](1_programming/lessonPart2.html)
+    + [Acquainting yourself with RStudio](1_programming/lessonPart0.html)
+    + [Variables, data types, vectors & dataframes](1_programming/lessonPart1.html)
+    + [Pseudocode, relational & logical operators](1_programming/lessonPart2.html)
 * [Data cleaning](2_dataCleaning/DataCleaning_Code.html)
 * [Descriptive statistics](3_descriptives/Descriptives_Code.html)
-* [Plotting](4_plotting/1b_ggplot_live_coding_WITHCODE.html)
+* [Plotting](4_plotting/1B_ggplot_live_coding_WITHCODE.html)
 
 ## One-off materials
 
