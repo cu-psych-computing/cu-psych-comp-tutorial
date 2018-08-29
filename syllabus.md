@@ -69,7 +69,7 @@ This is an optional module aimed at students who have no previous experience wit
 * Pseudo-coding
 * Operators
     + Relational operators (==, >, <, etc)
-    + Logical operators (!, &, |, etc)
+    + Logical operators (!, &, \|, etc)
 * Functions
 * Looking for help
 
