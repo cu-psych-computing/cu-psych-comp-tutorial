@@ -160,6 +160,30 @@ weightByRegionConf <- ggplot(nhanes, aes(x = Region, y = Weight)) + stat_summary
 weightByRegionConf
 ```
 
+It might be useful to look at the summary with the raw data too..just to put any potential region differences in context
+
+```{r}
+rawPlusSummary <- ggplot(nhanes, aes(x = Region, y = Weight)) + 
+  geom_jitter(size = .1, alpha = .1, height = 0, width = .1) +
+  stat_summary(fun.data = "mean_cl_boot", fun.args=list(conf.int=.95), color = 'red')  
+  
+
+rawPlusSummary
+```
+
+And with the density plots!
+
+```{r}
+rawPlusSummary <- ggplot(nhanes, aes(x = Region, y = Weight)) + 
+  geom_jitter(size = .1, alpha = .1, height = 0, width = .1) +
+  geom_flat_violin(position = position_nudge(x = .15, y = 0)) +
+  stat_summary(fun.data = "mean_cl_boot", fun.args=list(conf.int=.95), color = 'red', position = position_nudge(x = .2, y = 0))
+
+rawPlusSummary
+```
+
+Now that we can visualize the distributions, we can see that weight is bimodally distributed (probably because of the young children in this dataset)
+
 ## 6: Fitting Lines To The Data
 
 Let's say we think there might be a linear relationship between height and weight
