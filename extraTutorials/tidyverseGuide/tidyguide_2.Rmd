@@ -87,7 +87,11 @@ raw <- tibble(id = 1L:20L,
 
 # Joining dfs
 
-Under construction!
+Before we jump into the heavy lifting (vectorizing operations on nested dfs), we'll briefly go over `dplyr`'s functions for joining dfs.
+
+To refresh: joining two dfs involves binding them together row-wise, _matching_ the rows according to values of certain key variables. For example, if you run a two-part experiment, you might have two different dfs containing the data from the first task and the second task, but the subjects might be in different order in these two dfs, perhaps because they did the two parts at different times. Joining these dfs along the subject ID variable would allow you to row-bind them, while matching along subject ID so that the rows for each subject get joined together, irrespective of the original row order.
+
+`dplyr` provides the `*_join()` family of functions for joining dfs in different situations. You may be familiar with `merge()` for joining in base R--these do essentially the same thing, but instead of setting the type of join inside an argument as you do in `merge()`, in `*_join()` you use a different function depending on the type of join you want. Different strokes for different folks; I like the `*_join()` functions because I find that they're clearer to me 
 
 # Nested dfs
 
