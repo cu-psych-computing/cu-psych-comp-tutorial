@@ -9,7 +9,7 @@
     + [Pseudocode, relational & logical operators](1_programming/lessonPart2.html)
 * [Data cleaning](2_dataCleaning/DataCleaning_Code.html)
 * [Descriptive statistics](3_descriptives/Descriptives_Code.html)
-* [Plotting](4_plotting/1B_ggplot_live_coding_WITHCODE.html)
+* [Plotting](4_plotting/plotting_tutorial.html)
 
 ## One-off materials
 
