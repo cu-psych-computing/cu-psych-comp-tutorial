@@ -24,6 +24,8 @@ Students will learn:
 Tidyverse is one package with many tools.  We will introduce you to this package in this lesson, and continue using tidyverse in the next module.
 
 ```{r, message = FALSE, warning = FALSE}
+
+install.packages("tidyverse")
 library(tidyverse)
 ```
 
@@ -63,7 +65,7 @@ getwd()
 
 list.files()
 
-#setwd("~/Desktop/R Tutorial/data_cleaning") 
+setwd("/Users/ellen/Documents/cu-psych-r-tutorial/2_dataCleaning") 
 
 ```
 
@@ -111,7 +113,7 @@ Start by checking that you have the expected number of rows and columns in your 
 ```{r}
 
 # Number of rows and number of columns
-nrow(mydata)
+numberSubjects <- nrow(mydata)
 ncol(mydata)
 
 # Names of columns
@@ -119,6 +121,7 @@ names(mydata)
 
 # look at the first few rows
 head(mydata, 10)
+
 
 
 ```
@@ -152,6 +155,8 @@ We'll demonstrate the `%>%` command for our first cleaning step. Look back at yo
 
 mydata <- mydata %>% 
   rename(Neuroticism=Personality) 
+
+head(mydata)
 
 ```
 
@@ -205,9 +210,11 @@ When we look at the table for the Sex variable, we see another data entry proble
 
 
 # Replace bad category label
-mydata$Sex <- recode(mydata$Sex, Femle = "Female")
+mydata$Sex <- dplyr::recode(mydata$Sex, Femle = "Female")
 
 table(mydata$Sex)
+
+table(mydata$Age)
 
 ```
 
@@ -274,7 +281,8 @@ hist(mydata$NeuroticismZ)
 # calculate means across multiple columns using rowMeans
 # note that cbind is necessary here because rowMeans expects a Matrix
 
-mydata <- mydata %>% mutate(Mean = rowMeans(cbind(Day1, Day2, Day3, Day4)))
+mydata <- mydata %>% 
+  mutate(DayMean = rowMeans(cbind(Day1, Day2, Day3, Day4)))
                             
 
 ```

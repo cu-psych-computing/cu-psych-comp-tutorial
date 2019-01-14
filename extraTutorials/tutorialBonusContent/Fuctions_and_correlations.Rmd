@@ -1,0 +1,107 @@
+---
+title: 'Fall Tutorial: Bonus Content'
+author: "Ellen Tedeschi"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 5
+---
+
+## Bonus!
+
+During the tutorial on Wednesday, we had a couple requests for extra things people would like to cover. The main ones were writing your own function and correlations + correlation tables. These are also great topics for future R club meetings, but here's a brief overview of these two things.
+
+```{r}
+
+#First some set up:
+
+#install.packages("car")
+library(car)
+
+#install.packages("corrplot")
+library(corrplot)
+
+library(tidyverse)
+
+
+
+```
+### Make your own function
+
+Any function you make will have basically the same format, and will be created using the `function()` function:
+
+functionName <- function(argument1, argument2, ...) {
+  Function code
+  Function code
+  More Function code
+  return(Return Value)
+}
+
+The body of the function will come between the curly brackets, and the last line of the body should be whatever the function is going to spit out at the end (if anything).
+
+Let's say you're collaborating with a british colleague who is sending you data they are collecting so that you can analyze it. One of the variables is the temperature of the room where the experiment took place, in celcius. Your colleague is constantly sending you new data as they collect it, but you'd really rather work with values in farenheit. We can create a function to do the conversion for you so you don't have to look up the formula every time.
+
+```{r}
+
+# Here's the function, with a formula I found on the internet. The input argument is the temperature in Celcius. A variable called TempF is created within the function, which is the result of taking TempC and transforming it. We then return the value of TempF
+
+C2F <- function(TempC) {
+  TempF <- TempC * 1.8 + 32
+  return(TempF)
+}
+
+# What's 20 degrees celcius in farenheit?
+
+C2F(20)
+
+# What are all these values in farenheit?
+
+oldTemps <- c(19, 27, 0, 66, 37)
+
+C2F(oldTemps)
+
+
+```
+
+
+### Correlations
+
+```{r}
+
+# Here I'm just using the packages "car", which has a handy build in dataset called mtcars full of nice continuous variables we can correlate. 
+data("mtcars")
+head(mtcars)
+
+# Select only the variables you're interested in correlating
+mtcars <- mtcars %>% 
+  select(mpg, cyl, gear, vs)
+
+# cor() is the basic R function for computing correlations. As arguments, it needs two vectors of the same length, or a dataframe with more than two vectors. 
+
+# Inputing two vectors produces one correlation coefficient.
+cor(mtcars$mpg, mtcars$cyl)
+
+# Inputting a dataframe of multiple columns creates a correlation matrix
+cor(mtcars)
+
+# However, these are rather ugly matrices. For nicer ones, I recommend the corrplot package.
+# The main function is corrplot(), which takes as inputs a correlation matrix and a 'method'.
+
+# First, save your correlation matrix
+CarCor <- cor(mtcars)
+
+corrplot(CarCor, method="circle")
+
+# Instead of numbers, the matrix is now filled with colored circles. The color of the circle represents the value of the correlation, with 1 as the darkest blue and -1 the darkest red. The size and saturation of the circles also gives you information about the value of the correlation. Corrplot has many optional arguments for changing the appearance of this plot. Play around with these, and with the different methods. Type ?corrplot to see all the options.
+
+colors <- colorRampPalette(c("black","white"))
+
+corrplot(CarCor, method="ellipse", type="upper", 
+         col=colors(50), bg="lightblue")
+
+# to get really fancy, try corrplot.mixed instead. This lets you vizualize in multiple ways.
+
+corrplot.mixed(CarCor)
+
+```
