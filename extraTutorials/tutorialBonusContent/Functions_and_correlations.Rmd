@@ -30,45 +30,7 @@ if (!require(tidyverse)) {
 
 ### Make your own function
 
-Any function you make will have basically the same format, and will be created using the `function()` function:
-
-```{r, eval = FALSE}
-functionName <- function(argument1, argument2, ...) {
-  function_code
-  function_code
-  more_function_code
-  return(output_value)
-}
-```
-
-The body of the function will come between the curly brackets, and the last line of the body should be whatever the function is going to spit out at the end.
-
-Let's say you're collaborating with a British colleague who is sending you data they are collecting so that you can analyze it. One of the variables is the temperature of the room where the experiment took place, in Celsius. Your colleague is constantly sending you new data as they collect it, but you'd really rather work with values in Fahrenheit. We can create a function to do the conversion for you so you don't have to look up the formula every time.
-
-```{r}
-
-# Here's the function, with a formula I found on the internet. The input argument is the temperature in Celsius. A variable called TempF is created within the function, which is the result of taking TempC and transforming it. We then return the value of TempF
-
-C2F <- function(TempC) {
-  TempF <- TempC * 1.8 + 32
-  return(TempF)
-}
-```
-
-```{r}
-# What's 20 degrees Celsius in Fahrenheit?
-
-C2F(20)
-```
-
-```{r}
-# What are all these values in Fahrenheit?
-
-oldTemps <- c(19, 27, 0, 66, 37)
-
-C2F(oldTemps)
-```
-
+This content has now been **moved** to part 2 of the programming lesson.
 
 ### Correlations
 
