@@ -46,11 +46,14 @@ BMI     -  BMI, measured in kg/(m^2)
 
 ```{r}
 nhanes <- read.csv("NHANES1990.csv", stringsAsFactors = F)
-nhanes$Age <- nhanes$Age/12 # convert age to years for convinience 
 
-# Recoding factors
-nhanes$Urban <- dplyr::recode(nhanes$Urban, '1' = 'Metro Area', '2' = 'Non-Metro Area')
-nhanes$Region <- dplyr::recode(nhanes$Region, '1' = 'Northeast', '2' = 'Midwest', '3' = 'South', '4' = 'West')
+
+nhanes <- mutate(nhanes,
+                 Age = Age/12, # convert age to years
+                 Urban = dplyr::recode(Urban, '1' = 'Metro Area', '2' = 'Non-Metro Area'),
+                 Region = dplyr::recode(Region, '1' = 'Northeast', '2' = 'Midwest', '3' = 'South', '4' = 'West'))
+
+
 head(nhanes)
 ```
 
@@ -98,8 +101,9 @@ Remember, it's a good habbit to save your plots to objects, not just draw them!
 
 ```{r}
 ageWeightPlot <- ggplot(nhanes, aes(x = Age, y = Weight)) + 
-  geom_point(size = 1, alpha = .2, aes(color = factor(Region), pch = factor(Region)))
+  geom_point(size = 1, alpha = .2, aes(color = Region, pch = Region))
 
+ageWeightPlot
 ```
 
 ### 3a: Histograms with ggplot
@@ -124,8 +128,7 @@ heightByUrban
 Woah! So much data, hard to see anything, let's use geom_jitter() with size = .05, width = .1 instead
 
 ```{r}
-
-heightByUrban <- ggplot(nhanes, aes(x = Urban, y = Height)) + geom_jitter(size = .05, width = .1)
+heightByUrban <- ggplot(nhanes, aes(x = Urban, y = Height)) + geom_jitter(size = .05, width = .1, height =0, alpha = .1)
 heightByUrban
 ```
 
@@ -137,7 +140,7 @@ Still a TON of data! Here's a great tool I really like for plotting the density 
 # We can use 'source' to pull bits of code from github, as well as local files
 source("https://gist.githubusercontent.com/benmarwick/2a1bb0133ff568cbe28d/raw/fb53bd97121f7f9ce947837ef1a4c65a73bffb3f/geom_flat_violin.R") 
 
-heightByUrban + geom_flat_violin(,
+heightByUrban + geom_flat_violin(
                    position = position_nudge(x = .15, y = 0), alpha = .7)
 ```
 
@@ -150,12 +153,16 @@ Now, we can really begin to se the skewedness of these weight distributions.
 Plotting data points is all well and good, but what if we want to use our plots to summarize distributions? We'll do that here: 
 
 ```{r}
-weightByRegion <- ggplot(nhanes, aes(x = Region, y = Weight)) + stat_summary(fun.y= "mean", geom = "point")
-weightByRegion
+weightByRegion <- ggplot(nhanes, aes(x = Region, y = Weight)) + 
+  stat_summary(fun.y= "mean", geom = "point")
+
+
+weightByRegion + ylim(0,400)
 
 
 # People might want to know how to add a confidence interval
-weightByRegionConf <- ggplot(nhanes, aes(x = Region, y = Weight)) + stat_summary(fun.data = "mean_cl_boot", fun.args=list(conf.int=.95))
+weightByRegionConf <- ggplot(nhanes, aes(x = Region, y = Weight)) + 
+  stat_summary(fun.data = "mean_cl_boot", fun.args=list(conf.int=.95))
 
 weightByRegionConf
 ```
@@ -164,8 +171,9 @@ It might be useful to look at the summary with the raw data too..just to put any
 
 ```{r}
 rawPlusSummary <- ggplot(nhanes, aes(x = Region, y = Weight)) + 
-  geom_jitter(size = .1, alpha = .1, height = 0, width = .1) +
-  stat_summary(fun.data = "mean_cl_boot", fun.args=list(conf.int=.95), color = 'red')  
+  stat_summary(fun.data = "mean_cl_boot", fun.args=list(conf.int=.95), color = 'red')  +
+  geom_jitter(size = .1, alpha = .1, height = 0, width = .1) 
+  
   
 
 rawPlusSummary
@@ -192,7 +200,10 @@ We can use `geom_smooth` for this and `method = 'lm` specifically for a linear m
 Also `level = .95` can specify confidence interval about the estimate at each x value
 
 ```{r}
-heightByWeight <- ggplot(nhanes, aes(x = Height, y = Weight)) + geom_point() + stat_smooth(method = 'lm')
+heightByWeight <- ggplot(nhanes, aes(x = Height, y = Weight)) + 
+  geom_point(size = .1, alpha = .1) + 
+  stat_smooth(method = 'lm')
+
 heightByWeight
 ```
 
@@ -212,7 +223,7 @@ heightByWeight
 The `labs()` command can be added to ggplot with different arguments, lke `x`, `y`, or `title` to make the plots clearer
 
 ```{r}
-heightByUrban + labs(x = 'Neighborhood', y = 'Height in Inches', title = 'Height by Urban States')
+heightByUrban + labs(x = 'Neighborhood', y = 'Height in Inches', title = 'Height by Urban Status')
 ```
 
 Note, if we want to change labels for FACTORS, not just axes, it's easier to do that using the tidyverse 
@@ -334,7 +345,7 @@ We can plot the time series using `geom_point()` and connect the times using `ge
 ```{r}
 ggplot(timeFrame, aes(x = years, y = price, color = item)) +
   geom_point() +
-  geom_line() +
+  geom_line(aes(lty = item)) +
   theme_bw()
 ```
 

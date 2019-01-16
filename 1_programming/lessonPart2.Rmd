@@ -248,6 +248,8 @@ data$adhdCoded <- ifelse(data$adhd >= 4, "adhd", "no adhd")
 
 We've already used a variety of functions (`mean()`, `is.na()`, `ifelse()`, and more), so the behavior of functions should be somewhat familiar to you. **Functions take inputs, do stuff to them, and give you an output that's had the stuff done to it.**
 
+## Anatomy of a function
+
 Right now, we'll take a moment to go over the pieces of a function a little more formally so you know how to use them to their fullest extent.
 
 Below is an example (fake) function call. This function takes the inputs `input1` and `input2`, does the function `function()` to those inputs, and returns an output which can be stored in a variable. Here are the relevant pieces:
@@ -262,6 +264,61 @@ Below is an example (fake) function call. This function takes the inputs `input1
 - `input1`, `input2`, etc: These are variables that you created that will actually get fed into your function. This is the information that will actually get operated on. These can be data that live in your environment, or these can be settings (like switches and knobs, if your function was an actual machine) that are turned to a specific value.
 - `output`: This is the variable that will hold your output information.
   As you can see, we are ASSIGNING the value that's output from `function()` to the variable `output` using the `<-` left-facing arrow operator. Just like before with printing variable values to console, if you run a function without assigning its output to a variable, the output will print to console (so you can read it) but it will not be stored anywhere (so you can't perform any further operations on that output).
+  
+## Writing your own function
+
+Many times in R, you'll find yourself wanting to do the same thing multiple times. You can do this by _writing your own function_ that you'll then call to do whatever it is you need to do, whenever you need to do it. This will save you time. You don't have to copy and paste certain blocks of code that you use a bunch--instead, make it into a function and you can call it quickly whenever you need it!
+
+Any function you make will have basically the same format, and will be created using the `function()` function:
+
+```{r, eval = FALSE}
+functionName <- function(argument1, argument2, ...) {
+  function_code
+  function_code
+  more_function_code
+  return(output_value)
+}
+```
+
+The body of the function will come between the curly brackets, and the last line of the body should be whatever the function is going to spit out at the end.
+
+Let's say you're collaborating with a British colleague who is sending you data they are collecting so that you can analyze it. One of the variables is the temperature of the room where the experiment took place, in Celsius. Your colleague is constantly sending you new data as they collect it, but you'd really rather work with values in Fahrenheit. We can create a function to do the conversion for you so you don't have to look up the formula every time.
+
+```{r}
+
+# Here's the function, with a formula from the internet
+# The input argument is the temperature in Celsius
+# A variable called TempF is created within the function
+# which is the result of taking TempC and transforming it
+# We then return the value of TempF
+
+C2F <- function(tempC) {
+  tempF <- tempC * 1.8 + 32
+  return(tempF)
+}
+```
+
+Now, you can call your own homemade function just like any function that already comes with R.
+
+```{r}
+# What's 20 degrees Celsius in Fahrenheit?
+
+C2F(20)
+```
+
+And again, just like pre-existing R functions, you can assign the outputs of homemade functions to new variables.
+
+```{r}
+# What are all these values in Fahrenheit?
+
+oldTemps <- c(19, 27, 0, 66, 37)
+
+newTemps <- C2F(oldTemps)
+
+newTemps
+```
+
+**Keep in mind:** R is not so strict about the names you give to your functions. Sometimes, you can get into a pickle when homemade functions have the same name as pre-existing functions, and R doesn't know which function you're referring to. For this reason, _avoid giving homemade functions the same names as pre-existing functions._ For example, avoid creating homemade functions named `mean`, `median`, and other names that you know for sure also belong to pre-existing functions. (If you're ever not sure if a function name already belongs to a function, you can use the [help pages](#The-help-docs) to see if a help page exists for a particular function. If a help page does exist, then a function already has that name.)
 
 # Getting assistance
 

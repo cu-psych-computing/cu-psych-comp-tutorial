@@ -15,17 +15,17 @@ Click [here](https://cu-psych-r-users.github.io/cu-psych-r-tutorial) to return t
 ## Goals of this lesson
 
 Students will learn:
+
 1. How to open various data types in R
 2. How to check for missing or problematic data and address issues.
 3. How to filter, rearrange and shape data in preparation for analysis. 
 
 ## Install Packages
 
-Tidyverse is one package with many tools.  We will introduce you to this package in this lesson, and continue using tidyverse in the next module.
+`tidyverse` is one package with many tools.  We will introduce you to this package in this lesson, and continue using `tidyverse` in the next module.
 
 ```{r, message = FALSE, warning = FALSE}
-
-install.packages("tidyverse")
+#install.packages("tidyverse")
 library(tidyverse)
 ```
 
@@ -53,21 +53,29 @@ dataframe <- data.frame(name, score, year)
 
 ### Reading data into R
 
-It's also easy to introduce errors this way, and with a lot of data it would get tedious. Most of the time, you'll be reading data from an external file (.txt of .csv), or opening up an existing dataset in R. Once you find the location of your files, what you do next will depend on the file format.
+It's also easy to introduce errors this way, and with a lot of data it would get tedious. Most of the time, you'll be reading data from an external file (.txt or .csv), or opening up an existing dataset in R. Once you find the location of your files, what you do next will depend on the file format.
 
 #### What's your working directory and where is the file you want?
 
-Your working directory is the directory (and subdirectories) where the files you're working with are stored. If you opened this file from a .Rproj link, the folder where that link was located will automatically be your working directory. If not, you may need to change your working directory so that R can find files when you ask for them.
+Your working directory is the directory (and subdirectories) where the files you're working with are stored. Whenever possible, you should open the files you run in R from a .Rproj link; by doing so, the folder in which that file was located will automatically be your working directory.
+
+You can check your working directory using the `getwd()` function.
 
 ```{r}
 
 getwd()
 
+```
+
+You can access a list of the files within your working directory using the `list.files()` function...
+
+```{r}
+
 list.files()
 
-setwd("/Users/ellen/Documents/cu-psych-r-tutorial/2_dataCleaning") 
-
 ```
+
+...as well as in the "Files" tab in the module at the bottom right corner of your RStudio window.
 
 #### What kind of file do you have?
 ```{r}
@@ -91,7 +99,6 @@ mydata <- read.table("Study1.csv", header=TRUE, sep=",", stringsAsFactors=FALSE)
 
 load("Study1.rda")
 
-
 ## For getting data from another program:
 #install.packages("foreign")
 #library(foreign)
@@ -101,7 +108,7 @@ load("Study1.rda")
 
 ```
 
-Remember, all of these commands can have arguments that will help R make sense of your data. To find out what arguments are possible, put a question mark in front of the name of the function (e.g. ?read.table). For options not listed here, Google "<your data type> into R" and you should find instructions.
+Remember, all of these commands can have arguments that will help R make sense of your data. To find out what arguments are possible, put a question mark in front of the name of the function (e.g. `?read.table`). For options not listed here, Google "<your data type> into R" and you should find instructions.
 
 ## Inspecting your data
 
@@ -122,17 +129,15 @@ names(mydata)
 # look at the first few rows
 head(mydata, 10)
 
-
-
 ```
 
-### Brief intro to tidyverse
+### Brief intro to `tidyverse`
 
-Tidyverse is not one package, but instead it's multiple packages grouped together. They're all made by the same developers, so the functions play nicely together. If you've done any R before, there are some you're probably familiar with, like ggplot and dplyr, and others that are more obscure. These are all very useful packages, but they do have some tidyverse-specific syntax that we'll be using. (Note: the following paragraphs are an almost verbatim verision of what's in our standalone Tidyverse tutorial, written by Monica, which can be found on the github page)
+`tidyverse` is not one package, but instead it's multiple packages grouped together. They're all made by the same developers, so the functions play nicely together. If you've done any R before, there are some you're probably familiar with, like `ggplot` and `dplyr`, and others that are more obscure. These are all very useful packages, but they do have some `tidyverse`-specific syntax that we'll be using. (Note: the following paragraphs are an almost verbatim verision of what's in our standalone `tidyverse` tutorial, written by Monica, which can be found on the Github page).
 
 Enter the pipe `%>%`! The pipe does one simple, but key, thing: **takes the object on the left-hand side and feeds it into the first argument of the function on the right-hand side.** This means that:
 
-* `a %>% foo()` is equivalent to `foo(a)`. Fine and good
+* `a %>% foo()` is equivalent to `foo(a)`. Fine and good.
 * `a %>% foo() %>% bar(arg = TRUE)` is equivalent to `bar(foo(a), arg = TRUE)`. Now, nested function calls read left-to-right!
 * Most common use case: `df_new <- df_old %>% foo() %>% bar(arg = TRUE) %>% baz()` is equivalent to `df_new <- baz(bar(foo(df_old), arg = TRUE))`. Now, you can chain a series of preprocessing commands to operate on a dataframe all at once, and easily read those commands as typed in your script. No more accidentally not running some key preprocessing command that causes later code to break!
 
@@ -160,7 +165,7 @@ head(mydata)
 
 ```
 
-It might seem like the first version is simpler, but it won't be once you start stacking functions together. For example, let's rearrange our variables (using `select()`) while also renameing the variables called T1, T2, T3, and T4. Note that we keep adding ` %>% ` between each function.
+It might seem like the first version is simpler, but it won't be once you start stacking functions together. For example, let's rearrange our variables (using `select()`) while also renameing the variables called T1, T2, T3, and T4. Note that we keep adding `%>%` between each function.
 
 ```{r}
 
@@ -226,10 +231,10 @@ hist(mydata$Age)
 hist(mydata$Neuroticism)
 ```
 
-Looks like we have a potential outlier on the neuroticism score. This could be an entry error, but it could also be a real value that just happens to be really low. This is why data inspection is so important for later analysis - now you know that value is there, it's up to you to decide how to deal with it.
+Looks like we have a potential outlier on the neuroticism score. This could be an entry error, but it could also be a real value that just happens to be really low. This is why data inspection is so important for later analysis -- now you know that value is there, it's up to you to decide how to deal with it.
 
 ### Filtering data 
-Let's say we have decided aprori to exclude outliers 3SD above or below the mean. We will use the filter() function in tidyverse to clean the dataset.
+Let's say we have decided a prori to exclude outliers 3SD above or below the mean. We will use the filter() function in `tidyverse` to clean the dataset.
 ```{r}
 # mark upper and lower boundaries of data
 # anything above upper or below lower will be excluded as outlier.
