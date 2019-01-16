@@ -29,7 +29,7 @@ library(ggplot2) # Required for plots included in this file
 To work with R Markdown, if necessary:
 
 * Install [R](http://www.r-project.org/)
-* Install the lastest version of [RStudio](http://rstudio.org/download/) (at time of posting, this is 0.96)
+* Install the latest version of [RStudio](http://rstudio.org/download/)
 * Install the latest version of the `knitr` package: `install.packages("knitr")`
 
 If you're looking for a quick reference to R Markdown formatting, I strongly suggest you check out **[this helpful cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)**!
