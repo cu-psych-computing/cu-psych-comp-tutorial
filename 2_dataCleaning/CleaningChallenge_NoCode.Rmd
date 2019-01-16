@@ -10,6 +10,7 @@ output:
 ## Goals of this challenge
 
 Students will test their understanding of:
+
 1. How to open data in R
 2. How to check for missing or problematic data and address issues.
 3. How to filter, rearrange and shape data in preparation for analysis.
@@ -17,9 +18,6 @@ Students will test their understanding of:
 ## Your turn!
 
 Now it's your turn to try opening and cleaning a new data set. There are issues with the raw data, so make sure to inspect the variables and make changes when needed. Below is a rough outline to follow, try to get as far as you can.
-
-NOTE: This is the key for the data challenge, so it has all the code already. If you haven't done the challenge, go to the blank version and try doing it on your own. If you are using this key to check your work, remembere that there are many ways to do things in R, so what you did might not be what we did here, but it can still be right (it might even be better!).
-
 
 ## Open and visually inspect the data
 
