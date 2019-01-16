@@ -82,7 +82,7 @@ Since these packages don't come with base R, you have to install them.
 # You will need these packages in later parts of the workshop!
 install.packages(pkgs = c("car",
                           "moments",
-                          "ggplot",
+                          "ggplot2",
                           "tidyr",
                           "dplyr",
                           "effects",
