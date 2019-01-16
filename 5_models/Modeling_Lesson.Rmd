@@ -15,8 +15,8 @@ Goals:
 
  Let's get some data. 
 We will use the same data we are already familiar with from the Descriptives lesson. We will compute a group for high and low ADHD, so we can use that in our models. 
-```{r}
 
+```{r}
 df <- read.csv("uncapher_2016_repeated_measures_dataset.csv")
 head(df)
 ```
@@ -41,13 +41,13 @@ names(df)
 ### Basic models 
 For each model type, there is a different function. Many of these are available in base R.
 
-TTEST: t.test()
-CORRELATION: cor.test()
-LINEAR REGRESSION: lm()
-ANOVA: aov()
+TTEST: `t.test()`
+CORRELATION: `cor.test()`
+LINEAR REGRESSION: `lm()`
+ANOVA: `aov()`
 
 Each function has their own set of arguments, based on the options available. 
-Always use the ? to see more details for the model you're using.
+Always use the `?` to see more details for the model you're using.
 
 The first argument is always the model formula, which follows a standard syntax.
 
@@ -59,21 +59,19 @@ Y ~ X
 
 Example of t-test
 ```{r}
-# ttest looking at the effect of ADHD group (IV) on dprime (DV)
 t.test(dprime ~ adhdF, data = df)
-
 ```
+
+*When working with a dataframe, you can either index your data with `$` or provide a second argument in the function, delineating which data your variables come from -- the output will be identical. However, we recommend the 2nd option, as it ensures that you will be always working with columns from the same data frame, and is less susceptible to mistakes*
 
 Example of a linear regression
 ```{r}
 lm(dprime ~ adhd, data = df)
-
 ```
 
 Example of an anova
 ```{r}
 aov(dprime ~ adhdF, data = df)
-
 ```
 
 ### To add multiple factors 
@@ -84,13 +82,11 @@ aov(dprime ~ adhdF, data = df)
 Here is a linear model example with 2 predictors (continuous)
 ```{r}
 lm(dprime ~ adhd + bis, data = df)
-
 ```
 
 Here is an ANOVA example with 2 predictors (continuous)
 ```{r}
 aov(dprime ~ adhdF + bis, data = df)
-
 ```
 
 ### Interactions 
@@ -107,13 +103,11 @@ Alternatively, a shortcut is to use an asterix "*" that provides a shortcut. It 
 Example of an interaction between 2 continous variables in linear regression:
 ```{r}
 lm(dprime ~ adhd*bis, data = df)
-
 ```
 
 Example of an interaction between 2 categorical variables in anova
 ```{r}
 aov(dprime ~ adhdF*groupStatus, data = df)
-
 ```
 
 In the case where there is no IV/DV (i.e. correlation between 2 continuous variables), there is no "~".
@@ -122,7 +116,6 @@ Instead there is a ","" to delineate 2 different variables.
 Example of a correlation
 ```{r}
 cor.test(df$dprime, df$adhd)
-
 ```
 
 
@@ -178,15 +171,12 @@ summary(a2)
 ## Visualizing models 
 
 There are many ways (and packages) to plot the output of your models. 
-We will start with a handy package that plots the effects of many model types.
 
-Effect Displays for Linear, Generalized Linear, and Other Models
-https://cran.r-project.org/web/packages/effects/effects.pdf
+We will start with a handy package, [`effects`](https://cran.r-project.org/web/packages/effects/effects.pdf), that plots the effects of many model types.
 
 ```{r}
 #install.packages("effects")
 library(effects)
-
 ```
 
 Let's plot the effect of ADHD on dprime from our linear model.
@@ -216,8 +206,9 @@ if you want to really make beautiful graphs and customizations of your models,
 we encourage you to experiment with ggplot!
 
 ## Advanced models 
+
 For more advanced modeling, you may need to download packages for those model types. Two common examples you may see in graduate level statistics include:
-lmer() for mixed effects modeling using the "lme4" package 
-mediation () for mediations using the "mediate" package
+`lmer()` for mixed effects modeling using the `lme4` package 
+`mediation()` for mediations using the `mediate` package
 However, the opportunities for modeling in R are endless! There is a package for any kind of model you can think of.
 
