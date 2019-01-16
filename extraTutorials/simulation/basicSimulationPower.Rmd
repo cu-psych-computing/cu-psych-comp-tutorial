@@ -1,0 +1,81 @@
+---
+title: "Basic Data Simulation & Power Analysis"
+author: "Paul Bloom"
+date: "October 17, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lme4)
+library(broom)
+```
+
+# True generating parameters
+
+```{r}
+# subjects per group
+n = 40000
+
+
+# mean group effect
+effectGroup2 = .2
+betweenSd = 1
+
+
+frame = data.frame(id = 1:(n*2), 
+                   group = c(rep(0, n), rep(1, n))) %>%
+  mutate(outcome = rnorm((n*2), group*effectGroup2, 1))
+
+
+
+ggplot(frame, aes(x = group, y = outcome)) +
+  stat_summary(fun.data = 'mean_cl_boot')
+
+
+```
+
+Simulate a bunch of studies!!
+
+This loop might take a while depending on the number of studies
+```{r}
+nSims = 100
+simOutputs = data.frame(model = rep(NA, nSims))
+
+for (ii in 1:nSims){
+  frame = data.frame(id = 1:(n*2), 
+                   group = c(rep(0, n), rep(1, n))) %>%
+  mutate(outcome = rnorm((n*2), group*effectGroup2, 1))
+  mod = lm(data = frame, outcome ~ group)
+  simOutputs$model[ii] = list(mod)
+}
+```
+
+# Pull out useful coefs from each model
+
+```{r}
+# extreme tidy magic to map coefs to a new column
+simOutputs = simOutputs %>%
+  mutate(., coefs = map(model, ~tidy(.)),
+         index = 1:nSims)
+
+# Unnest coefs to long form
+simOutLong = simOutputs %>%
+  unnest(coefs) %>%
+  filter(., !is.na(std.error))
+```
+
+# Plot estimate +/- 2 SE for each param 
+
+```{r}
+ggplot(simOutLong) +
+  geom_hline(yintercept = 0, lty = 2) +
+  geom_errorbar(aes(x = index, ymin = estimate - 2*std.error, ymax = estimate + 2*std.error), 
+                width = 0, alpha = .5) +
+  geom_point(aes(x = index, y = estimate), color = 'purple', size = 1) +
+  facet_wrap('term', scales = 'free_y') +
+  theme_bw()
+  
+```
+
