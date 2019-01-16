@@ -18,27 +18,28 @@ library(broom)
 # subjects per group
 n = 40000
 
-
 # mean group effect
 effectGroup2 = .2
 betweenSd = 1
 
+frame = tibble(id = 1:(n*2),
+               group = rep(0:1, n)) %>%
+  # The mean outcome will be 0 for group 0
+  # and effectGroup2 for group 1
+  mutate(outcome = rnorm(n(), group * effectGroup2, betweenSd))
+```
 
-frame = data.frame(id = 1:(n*2), 
-                   group = c(rep(0, n), rep(1, n))) %>%
-  mutate(outcome = rnorm((n*2), group*effectGroup2, 1))
-
-
-
+```{r}
+# Hmisc caused a lot of trouble last year I remember bc of various compatibility issues
+# If this is a show and tell this is ok but I wouldn't call "mean_cl_boot" in a work-along doc
 ggplot(frame, aes(x = group, y = outcome)) +
   stat_summary(fun.data = 'mean_cl_boot')
-
-
 ```
 
 Simulate a bunch of studies!!
 
-This loop might take a while depending on the number of studies
+This loop might take a while depending on the number of studies.
+
 ```{r}
 nSims = 100
 simOutputs = data.frame(model = rep(NA, nSims))
@@ -50,6 +51,21 @@ for (ii in 1:nSims){
   mod = lm(data = frame, outcome ~ group)
   simOutputs$model[ii] = list(mod)
 }
+```
+
+```{r monicas purrr version}
+# Maybe don't use this one because it contains purrr. idk.
+nSims = 100
+
+# generate 2n id values, nSims times total
+simOutputs <- crossing(nSim = 1:nSims,
+                 id = 1:(n*2)) %>%
+  # assign each sim's ids to group 0 or 1
+  group_by(nSim) %>%
+  mutate(group = rep(0:1, n()/2),
+         outcome = rnorm(n(), group * effectGroup2, betweenSd)) %>%
+  nest(.key = "data") %>%
+  mutate(mod = map(data, ~lm(outcome ~ group, data = .)))
 ```
 
 # Pull out useful coefs from each model
