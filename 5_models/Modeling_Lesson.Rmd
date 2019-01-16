@@ -60,11 +60,6 @@ Y ~ X
 Example of t-test
 ```{r}
 # ttest looking at the effect of ADHD group (IV) on dprime (DV)
-t.test(df$dprime ~ df$adhdF)
-
-# when working with a dataframe, you can either index your data with $ 
-# or provide a second argument in the function, delineating which data your variables come from. 
-# the output will be identical.
 t.test(dprime ~ adhdF, data = df)
 
 ```
@@ -146,6 +141,10 @@ d) overall model results (RSE, R-squared, F-statistics, p-value)
 lm1 <-  lm(dprime ~ adhd, data = df)
 # then we will ask for the summary of the model results
 summary(lm1)
+
+
+# save the model 
+save (lm1, file = "my_model.Rda")
 ```
 
 We can index specific components of the output. What if I want to save the coefficients to a table?
@@ -182,7 +181,7 @@ There are many ways (and packages) to plot the output of your models.
 We will start with a handy package that plots the effects of many model types.
 
 Effect Displays for Linear, Generalized Linear, and Other Models
-#https://cran.r-project.org/web/packages/effects/effects.pdf
+https://cran.r-project.org/web/packages/effects/effects.pdf
 
 ```{r}
 #install.packages("effects")
