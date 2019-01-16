@@ -246,10 +246,12 @@ div.tocify {
 <h3>R project files</h3>
 <p>Whenever you are working in RStudio, you’ll likely be working with a particular set of code scripts, raw data, and other files that are all saved in a particular folder. An <a href="https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects"><strong>R project file</strong></a> tells RStudio “this folder is a place where I am doing R stuff related to one complete project” and helps you keep your different data analysis projects organized.</p>
 <p>You can create an R project file inside of a folder where you plan to do R work, or you can open an existing R project file in a folder you’ve already set up.</p>
+<p><em>Note: Although R projects may not be something you’ll always learn in intro stats classes, etc., we advise using them most of the time for helping organize files/your life! More on this later.</em></p>
 </div>
 <div id="console-window" class="section level3">
 <h3>Console window</h3>
 <p>In the automatic configuration of RStudio’s panes/mini-windows, the console is likely in the bottom left. In general, you can type R commands in the console, and press Enter to execute those commands. This is where you can execute R code!</p>
+<p><em>Note: the console is a great place to try out new stuff, but it doesn’t save your code as one piece the way a script does – for the most part it is good practice to be writing scripts</em></p>
 </div>
 <div id="editor-window" class="section level3">
 <h3>Editor window</h3>
@@ -307,7 +309,7 @@ library(effects)</code></pre>
 <h2>The working directory</h2>
 <p>Every R session has a <em>working directory,</em> or a “home base” folder. Essentially, this is the folder that R is “in”. R is not actually installed in this folder, mind you! The working directory is the first folder where R looks for raw data files to load in. You can find out what folder is your working directory using the <code>getwd()</code> command as below.</p>
 <pre class="r"><code>getwd()</code></pre>
-<pre><code>## [1] &quot;/Users/mthieu/Repos/cu-psych-r-tutorial/1_programming&quot;</code></pre>
+<pre><code>## [1] &quot;/Users/Paul/Documents/Columbia/rTutorial/cu-psych-r-tutorial/1_programming&quot;</code></pre>
 <p>If you run this command on your own computer, you’ll get a different folder. And that’s okay! Our folder structures on our computers are all different.</p>
 <p>When you launch R by opening an R project file (our preferred way of opening R), R automatically sets your working directory to be the folder that this R project file is saved in. Thus, if your R project file is in the same folder as your raw data, scripts, etc, this is a neat short-cut to start R in the folder all of your stuff is saved in.</p>
 <p><strong>We do not recommend changing your working directory during an active R session.</strong> R project files automatically set your working directory for you, so you don’t need to physically set your working directory when you open up R if you open up an R project file. Additionally, when you use R project files, you can open multiple R instances in different working directories if you need to work on multiple projects at once, so you shouldn’t need to change your working directory inside one R session.</p>
