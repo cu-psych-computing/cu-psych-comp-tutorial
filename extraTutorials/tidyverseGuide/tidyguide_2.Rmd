@@ -85,14 +85,6 @@ raw <- tibble(id = 1L:20L,
   ungroup()
 ```
 
-# Joining dfs
-
-Before we jump into the heavy lifting (vectorizing operations on nested dfs), we'll briefly go over `dplyr`'s functions for joining dfs.
-
-To refresh: joining two dfs involves binding them together row-wise, _matching_ the rows according to values of certain key variables. For example, if you run a two-part experiment, you might have two different dfs containing the data from the first task and the second task, but the subjects might be in different order in these two dfs, perhaps because they did the two parts at different times. Joining these dfs along the subject ID variable would allow you to row-bind them, while matching along subject ID so that the rows for each subject get joined together, irrespective of the original row order.
-
-`dplyr` provides the `*_join()` family of functions for joining dfs in different situations. You may be familiar with `merge()` for joining in base R--these do essentially the same thing, but instead of setting the type of join inside an argument as you do in `merge()`, in `*_join()` you use a different function depending on the type of join you want. Different strokes for different folks; I like the `*_join()` functions because I find that they're clearer to me 
-
 # Nested dfs
 
 Nearly all of the tidyverse features we'll be working through in this vignette rely on two key features of R to make their magic happen: **list-columns** and **flexible vectorizing functions.** These are features that you may very well encounter explicitly in casual R usage, so we'll take a bit of time to familiarize ourselves with these concepts before we jump all the way in.
@@ -596,6 +588,22 @@ nested_with_models %>%
 Notice that when you use the `.preserve` argument to specify which other list-columns you want to keep in your output df (and thus repeat with the other subject-level variables), any columns of list type that _aren't_ explicitly specified will be _dropped_ from your output. Here, you can see that the `models` column, which was a list-column so that each element could contain a model object, is absent from the output of `unnest()` because we only specified that `trials` should be preserved.
 
 In any case, I hope you can see that if you need to fit the same model repeatedly to different datasets, perhaps to data from individual subjects, using `map()` to vectorize your model-fitting on list-columns in a nested df can do just the trick.
+
+# Joining dfs
+
+Here, we'll briefly go over `dplyr`'s functions for joining dfs.
+
+To refresh: joining two dfs involves binding them together row-wise, _matching_ the rows according to values of certain key variables. For example, if you run a two-part experiment, you might have two different dfs containing the data from the first task and the second task, but the subjects might be in different order in these two dfs, perhaps because they did the two parts at different times. Joining these dfs along the subject ID variable would allow you to row-bind them, while matching along subject ID so that the rows for each subject get joined together, irrespective of the original row order in the two starting dfs.
+
+`dplyr` provides the `*_join()` family of functions for joining dfs in different situations. You may be familiar with `merge()` for joining in base R--these do essentially the same thing, but instead of setting the type of join inside an argument as you do in `merge()`, in `*_join()` you use a different function depending on the type of join you want. Different strokes for different folks; I like the `*_join()` functions because I find that they make it clearer to me which join I'm using at any given time.
+
+`left_join()` is my most frequently used joining function.
+
+## Joining more than two dfs at once
+
+What if you have more than two dfs that you need to join into a mega-df? With vectorizing helper functions, all things are possible!
+
+This particular 
 
 # Plotting data
 
