@@ -42,9 +42,13 @@ Whenever you are working in RStudio, you'll likely be working with a particular 
 
 You can create an R project file inside of a folder where you plan to do R work, or you can open an existing R project file in a folder you've already set up.
 
+*Note: Although R projects may not be something you'll always learn in intro stats classes, etc., we advise using them most of the time for helping organize files/your life! More on this later.*
+
 ### Console window
 
 In the automatic configuration of RStudio's panes/mini-windows, the console is likely in the bottom left. In general, you can type R commands in the console, and press Enter to execute those commands. This is where you can execute R code!
+
+*Note: the console is a great place to try out new stuff, but it doesn't save your code as one piece the way a script does -- for the most part it is good practice to be writing scripts*
 
 ### Editor window
 
@@ -78,7 +82,7 @@ Since these packages don't come with base R, you have to install them.
 # You will need these packages in later parts of the workshop!
 install.packages(pkgs = c("car",
                           "moments",
-                          "ggplot",
+                          "ggplot2",
                           "tidyr",
                           "dplyr",
                           "effects",

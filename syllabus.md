@@ -75,7 +75,7 @@ This is an optional module aimed at students who have no previous experience wit
 
 ### Data Cleaning
 
-This module will cover the basics of data cleaning, which is the process of taking raw data and getting it ready for summarizing, plotting and analysis.
+This module will cover the basics of data cleaning, which is the process of taking raw data and getting it ready for summarizing, plotting and analysis. We will use tidyverse, a set of packages that follows a common framework for "tidy" data.
 
 #### Topics to Cover
 
@@ -93,19 +93,28 @@ This module will cover the basics of data cleaning, which is the process of taki
 
 ### Descriptive Statistics
 
-This module teaches students how to calculate and display basic descriptive statistics, and how to divide and aggregate data in different ways. 
+This module teaches students how to calculate and display basic descriptive statistics, and how to divide and aggregate data in different ways. We will build on tools from the "tidyverse".
 
 ### Basics of Graphing
 
 This module builds on the previous two by introduing students to the ggplot package. Students will learn how to use ggplot to make basic graphs and plots.
 
-### Statistical Models in R
+### Modeling in R
 
-This module will cover the syntax for various useful statistical tests. It will also cover how to graph the outputs of these tests.
+This module will cover the common syntax for statistical tests in R, how to work with model objects, and visualize the results. This is *not* a statistics course, but a lesson on *how* to run statistical tests in the R environment.
 
-### Future Directions
+### R markdown 
 
-The final module will give an overview of more advanced R functions and related content that students may want to pursue. This will include R markdown, more advanced tests, Shiny and others. We will not attempt to fully teach all the topics, but to give students an idea of what's possible. The content of this module will be partly determined by what students are interested in learning about.
+This mini-module will show some examples of output (word, html, pdf) from R markdown that can be useful for lab reports, analysis logs, or writing manuscripts.
+
+### Data Simulation & Power Analysis 
+
+We will show you how conduct simple and straightforward power analyses using simulation in R.
+
+### Git and Github
+
+This module will quick introduction to version control. We will learn how to make a github repository and link it to an R project, so that you can add github to your R workflow. https://happygitwithr.com/
+
 
 ## How can you help?
 
