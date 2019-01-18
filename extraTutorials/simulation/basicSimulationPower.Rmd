@@ -12,7 +12,6 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
-library(lme4)
 library(broom)
 library(arm)
 ```
@@ -20,6 +19,7 @@ library(arm)
 ## Why Simulate?
 
 Simulation is an extremely useful tool, because we can create **ground truth** by which to test our models. If we know the true process by which the data are generated, we can check whether our models are doing well at recovering this truth. This helps in many situations, including:
+
   * Power analysis & sample size calculations
   * Model tuning & checking
   * Computational/modeling research
@@ -83,21 +83,22 @@ hist(df$height)
 ```
 
 Now, let's create a *ground truth* for the simulated relationship between height and extroversion. 
+
   * Let's set the 'intercept' (alpha) for a person of average height as an extroversion score of 100.
   * Let's set the 'slope' (beta) such that for two increase in 1 inch of height corresponds with a 2-point increase in extroversion, on average
-  * Let's set the 'noise' to 20 -- extroversion is influenced by many factors other than height so we'll add normaly distributed error with a standard deviation of 20 to this simulation
+  * Let's set the 'noise' to 25 -- extroversion is influenced by many factors other than height so we'll add normaly distributed error with a standard deviation of 25 to this simulation
 
 ```{r}
 alpha = 100
 beta = 2
-noise = 20
+noise = 25
 ```
 
 Now, let's simulate these data!
 
 We use the linear model $Y = a + bX + error$
 
-Or $extraverson = alpha + beta*height + noise$
+Or $extroversion = alpha + beta*height + noise$
 
 To do this, we can use `extroversion = (n, rnorm(n, alpha + beta*heightMeanCentered, noise))`
 
@@ -120,10 +121,10 @@ ggplot(data = df, aes(x = height, y = extroversion)) +
 Now let's model this with a linear regression
 ```{r}
 mod = lm(data = df, extroversion ~ heightMeanCentered)
-display(mod)
+arm::display(mod)
 ```
 
-Okay, great! It looks like our linear model recovered the parameters pretty well for both the intercept and the slope for height!
+So, did our model recover the parameters? Let's say for the time being that if the *ground truth* value is contained within the 95% confidence interval (or approximately estimate +/- 2se) of the model, we've recovered the parameter. Looks like that is the case here!
 
 However, this is just one random sampling of a dataset from our *ground truth*. To really see how well our model would fit, we will want to simulate many datasets and fit the model to them. 
 
@@ -162,32 +163,48 @@ simOutputs = simOutputs %>%
 # Unnest coefs to long form
 simOutLong = simOutputs %>%
   unnest(coefs) %>%
-  filter(., !is.na(std.error))
+  dplyr::filter(., !is.na(std.error)) %>%
+  mutate(.,
+         trueVal = case_when(
+    term == '(Intercept)' ~ alpha,
+    term == 'heightMeanCentered' ~ beta
+  ))
 ```
 
 Now, we can plot the parameters and approximate 95% intervals (the parameter +/-2 std errors) for each of the simulated studies to visually inspect how well they are recovering *ground truth*
 
-```{r}
-ggplot(simOutLong) +
+```{r, results='hide'}
+myplot = ggplot(simOutLong) +
   geom_hline(yintercept = 0, lty = 2) +
   geom_errorbar(aes(x = index, ymin = estimate - 2*std.error, ymax = estimate + 2*std.error),
                 width = 0, alpha = .5) +
   geom_point(aes(x = index, y = estimate), color = 'purple', size = 1) +
   facet_wrap('term', scales = 'free_y') +
+  geom_hline(aes(yintercept = trueVal), lty = 2, color = 'red')
   theme_bw()
+```
 
+```{r}
+myplot
 ```
 
 Looks like we're doing well! The intercepts are all pretty close to 100 and the height parameters are grouped around 2. So on average, definitely recovering truth. But what about power?
 
 ## Power Analysis
 
-Let's say we want to know the proportion of 'studies' under this scenario in which we'd recover the true parameter for height within a 95% interval, and also have that interval exclude 0. (By definition, this would mean that we would be estimating the right sign for the parameter)
+Let's say we want to know the proportion of 'studies' under this scenario that recover our true effect. For our purposes here, we have two conditions that must be met:
+
+  * Our confidence interval from the model must contain the true parameter within a 95% confidence interval.
+  * Our 95% confidence interval from the model must exclude 0 -- a significance test to determine whether the parameter meets threshold for us to believe it is a consistent effect
+  
+
+By combining both metrics as criteria, we are to an extent considering both 'estimation precision' and 'significance' in our definition of power.
+  
 
 Let's calculate this here:
 
 ```{r}
-heightParameters = filter(simOutLong, term == 'heightMeanCentered') %>%
+heightParameters = dplyr::filter(simOutLong, term == 'heightMeanCentered') %>%
   mutate(.,
          lwr = estimate - 2*std.error,
          upr = estimate + 2*std.error)
@@ -197,7 +214,7 @@ recoveryRate = nrow(filter(heightParameters,
 
 ```
 
-So, in this case, our 'power', or rate of sucessful parameter recovery, is `r recoveryRate`. That's very good!
+So, in this case, our 'power', or rate of sucessful parameter recovery, is `r recoveryRate`. 
 
 It is also important to check for the rate of 'type S' errors, or errors where we have estimated the parameter to have the opposite sign from the true generating param. Anything more than a very low type S rate could be a serious issue. 
 
@@ -207,7 +224,8 @@ typeSRate = nrow(filter(heightParameters,
                            estimate < 0))/nrow(heightParameters)
 ```
 
-Our type S rate is `r typeSRate` here so that's very good!
+Our type S rate is `r typeSRate` here
+
 
 ## Sample Size Calculation
 
@@ -220,6 +238,7 @@ So, what we'll do here is run 1000 simulated studies with different sample sizes
 sampSizes = seq(from = 10, to = 150, by = 10)
 nSims = 1000
 
+# Make an empty data frame for power at each sample size
 powDF = tibble(recoveryRate = rep(NA, length(sampSizes)), typeSRate =rep(NA, length(sampSizes)), sampSizes)
 
 for (i in 1:length(sampSizes)){
@@ -241,7 +260,7 @@ for (i in 1:length(sampSizes)){
   # Unnest coefs to long form
   simOutLong = simOutputs %>%
     unnest(coefs) %>%
-    filter(., !is.na(std.error))
+    dplyr::filter(., !is.na(std.error))
   
   heightParameters = filter(simOutLong, term == 'heightMeanCentered') %>%
   mutate(.,
@@ -254,12 +273,16 @@ for (i in 1:length(sampSizes)){
   powDF$typeSRate[i] = nrow(filter(heightParameters, 
                            estimate < 0))/nrow(heightParameters)
 }
+```
 
+Now, plot power and typeS curves as a function of sample size
+```{r}
 ggplot(data = powDF, aes(x = sampSizes, y = recoveryRate)) +
+  geom_hline(yintercept = .8, lty = 2, alpha = .5, color = 'red') + 
   geom_line() +
   geom_point() +
   theme_bw() +
-  labs(title = 'Height Parameter Recovery Rate as a function of Sample Size')
+  labs(title = 'Height Parameter Recovery Rate as a function of Sample Size') 
 
 ggplot(data = powDF, aes(x = sampSizes, y = typeSRate)) +
   geom_line() +
@@ -267,3 +290,7 @@ ggplot(data = powDF, aes(x = sampSizes, y = typeSRate)) +
   theme_bw() +
   labs(title = 'Height Parameter Type S Error as a function of Sample Size')
 ```
+
+Depending on the power needs of our study (goals of 80% or 90% power are common), we can use this approach to approximate what our required sample size would be! 
+
+Of course, many of the models we want to use for our studies are more complex than the linear regression with 1 predictor we simulated here. The process of simulating data to match our hypothesized effects is often then iterative, sometimes requiring careful tuning and several different simulated *ground truths* to make sure that our models will work well under different possible patterns in the observed data.  
