@@ -22,9 +22,7 @@ Many of these materials were originally prepared as presentations for Columbia P
   + [part 1: data manipulation basics](extraTutorials/tidyverseGuide/tidyguide_1.html)
   + [part 2: nested dfs, mapping, etc](extraTutorials/tidyverseGuide/tidyguide_2.html)
 * Data Simulation & Power Analysis
-  +	[Basic Data Simulation & Power](extraTutorials/simulation/basicSimulationPower.html)
-* R Markdown
-  + [R Markdown PDF](extraTutorials/Rmakdown/example-r-markdown.pdf)
+  + [Basic Data Simulation & Power](extraTutorials/simulation/basicSimulationPower.html)
 ## External materials (not by us!)
 
 We've assembled a non-exhaustive [list of external R resources](extResources/useful_websites.html) that we've found useful, and hope you will too.
