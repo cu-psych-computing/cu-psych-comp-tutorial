@@ -213,7 +213,9 @@ Hmm, this actually looks like it's giving us some pretty bad predictions. We're 
 
 
 ```{r}
-heightByWeight <- ggplot(nhanes, aes(x = Height, y = Weight)) + geom_point() + stat_smooth(method = 'auto', level = .99)
+heightByWeight <- ggplot(nhanes, aes(x = Height, y = Weight)) + 
+  geom_point() + 
+  stat_smooth(method = 'auto', level = .99, alpha = 1, color = 'green', fill = 'red')
 heightByWeight
 ```
 
@@ -251,7 +253,7 @@ We can even do multiple factors
 multiFacet <- ggplot(nhanes, aes(x = Height, y = Weight)) + 
   geom_point(alpha = .2, size = .5, aes(color = Urban)) + 
   stat_smooth() + 
-  facet_wrap(c('Region', 'Urban'), scales = 'free_y')
+  facet_grid(Region ~ Urban, scales = 'free_y')
 
 
 multiFacet

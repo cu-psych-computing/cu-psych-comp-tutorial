@@ -76,6 +76,7 @@ Here are a few more relational statements. Do you expect each one to return `TRU
 ```
 
 Here are the relational operators:
+
 * `>` (greater than)
 * `<` (less than)
 * `>=` (greater than or equal to)
