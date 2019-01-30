@@ -2,7 +2,8 @@
 title: "R Markdown Example"
 date: "January 16, 2019"
 output:
-  pdf_document:
+  html_document:
+    theme: "journal"
     toc: true
     toc_depth: 3
 ---
