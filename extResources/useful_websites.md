@@ -32,6 +32,7 @@ You can work along with these, course materials should be linked in the syllabi.
 ## Working with version control
 
 * [A tutorial for integrating RStudio and Github](http://happygitwithr.com/)
+* [Fork-and-pull-request Github collaboration tutorial](http://mozillascience.github.io/working-open-workshop/github_for_collaboration/)
 
 ## Programming
 
