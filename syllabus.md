@@ -1,6 +1,6 @@
 # R Tutorial Syllabus
 
-Current revision: Fall 2018 (Workshop Version 2)
+Current revision: Spring 2019 (Workshop Version 3)
 
 ## Course Goals
 
