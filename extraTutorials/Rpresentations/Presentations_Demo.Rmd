@@ -16,14 +16,19 @@ knitr::opts_chunk$set(warning = FALSE, message=FALSE)
 
 # Get your libraries
 
-library(ggplot2)
+library(tidyverse)
+library(gridExtra)
+library(knitr)
+library(RGraphics)
+
 # Set ggplot theme
 
 mytheme = theme_bw() + theme(panel.grid.major = element_blank(), 
                              panel.grid.minor = element_blank(),
                              axis.text=element_text(size=14),
-                             axis.title.x=element_text(size=14,face="bold", margin = margin(t = 10, r = 0, b = 0, l = 0)),
-                             axis.title.y=element_text(size=14, face="bold", margin = margin(t = 0, r = 10, b = 0, l = 0)),
+                             axis.title.x=element_text(size=14,face="bold"),
+                             axis.title.y=element_text(size=14, face="bold"),
+                             plot.title=element_text(size=20, hjust = 0.5),
                              plot.margin= margin(t = 20, r = 20, b = 20, l = 20, unit = "pt"),
                              legend.position="none")
 theme_set(mytheme)
@@ -49,6 +54,18 @@ load("BabyData.rda")
 
 ***
 
+# Controlling your presentation
+
+* There are three areas within the markdown that are important for the look and feel of your presentation.
+
++ In the regular text, you control headings, text styles and outlines using special characters (#,*,+ etc.)
+
+* Within the code chunks
+
+* Within the headers of each code chunk, where you specify what should appear in the final document.
+
+***
+
 # Arranging your text
 
 1.  Hashtags can be used to add headers of various sizes
@@ -56,8 +73,6 @@ load("BabyData.rda")
 2.  Start lines with numerals for a numbered list, or use (*) for unnumbered lines
 
 3.  End a line with two spaces to start a new paragraph.  
-
-> Block quotes start with (>)
 
 * See code for how to do:
 +  *italics* 
@@ -80,18 +95,118 @@ knitr::include_graphics("Evie.jpg")
 
 # Adding Graphs
 
+```{r, fig.align='center'}
 
+ggplot(BabyData, aes(x=Month, y=Weight)) + geom_point(color="seagreen3", size=5) + geom_line(color="seagreen3") +
+  scale_y_continuous(limits=c(0, 14), breaks=seq(0,14,2)) + labs(y="Weight (pounds)", title="How large is Evie?")
 
-***
-
-# Adding Tables
-
-
-***
-
-Displaying Code
-
+```
 
 ***
 
-Displaying Results + Code
+# Two Graphs, Side by Side
+
+```{r, fig.align='center', fig.width=12, fig.height=4}
+
+Graph1 <- ggplot(BabyData, aes(x=Month, y=Weight)) + geom_point(color="seagreen3", size=5) + 
+  geom_line(color="seagreen3") + scale_y_continuous(limits=c(0, 14), breaks=seq(0,14,2)) + 
+  labs(y="Weight (pounds)", title="How large is Evie?")
+
+Graph2 <- ggplot(BabyData, aes(x=Month, y=SleepLength)) + geom_point(color="purple", size=5) + 
+  geom_line(color="purple") + scale_y_continuous(limits=c(0, 14), breaks=seq(0,14,2)) + 
+  labs(y="Longest Sleep Duration", title="How much does Evie sleep?")
+
+grid.arrange(Graph1, Graph2, ncol=2)
+
+```
+
+***
+
+# Two Graphs, Side by Side, No code
+
+```{r, fig.align='center', fig.width=12, fig.height=7, echo=FALSE}
+
+Graph1 <- ggplot(BabyData, aes(x=Month, y=Weight)) + geom_point(color="seagreen3", size=5) + 
+  geom_line(color="seagreen3") + scale_y_continuous(limits=c(0, 14), breaks=seq(0,14,2)) + 
+  labs(y="Weight (pounds)", title="How large is Evie?")
+
+Graph2 <- ggplot(BabyData, aes(x=Month, y=SleepLength)) + geom_point(color="purple", size=5) + 
+  geom_line(color="purple") + scale_y_continuous(limits=c(0, 14), breaks=seq(0,14,2)) + 
+  labs(y="Longest Sleep Duration", title="How much does Evie sleep?")
+
+grid.arrange(Graph1, Graph2, ncol=2)
+
+```
+
+***
+
+# I want to build in my graphs!
+
+```{r, fig.align='center', fig.height=5}
+
+# Build an empty plot
+BuildGraph <- ggplot(BabyData, aes(x=Month, y=Weight)) + scale_y_continuous(limits=c(0, 14), breaks=seq(0,14,2)) + 
+  labs(y="Weight (pounds)", title="How large is Evie?")
+
+grid.arrange(BuildGraph)
+
+```
+
+***
+
+# I want to build in my graphs!
+
+```{r, fig.align='center', fig.height=5}
+
+# Add onto your empty plot in a second slide
+BuildGraph <- BuildGraph + 
+  geom_point(color="seagreen3", size=5) + geom_line(color="seagreen3") 
+
+grid.arrange(BuildGraph)
+
+```
+
+***
+
+```{r, fig.align='center', fig.height=5}
+
+# Text
+text <- "\n\n\nI added this text using the RGraphics package, combined with grid.arrange. It's still a little buggy, but you can experiment"
+p2 <- splitTextGrob(text)
+# Arrange the plots on the same page
+grid.arrange(BuildGraph, p2, ncol=2)
+
+
+```
+
+***
+
+# Include Code and Output: {r, No extra arguments}
+
+```{r}
+
+test <- lm(Weight~Month, data=BabyData)
+summary(test)
+
+```
+***
+
+# No Code, Only Output: {r, echo=FALSE}
+
+```{r, echo=FALSE}
+
+test <- lm(Weight~Month, data=BabyData)
+summary(test)
+
+```
+
+***
+
+# No Output, Only Code: {r, eval=FALSE}
+
+```{r, eval=FALSE}
+
+test <- lm(Weight~Month, data=BabyData)
+summary(test)
+
+```
