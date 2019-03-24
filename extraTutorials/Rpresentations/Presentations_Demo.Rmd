@@ -2,34 +2,96 @@
 title: "Presentations in R"
 author: "Ellen Tedeschi"
 date: "3/23/2019"
-output: slidy_presentation
+output:
+  slidy_presentation: 
+    incremental: true
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+
+## This is your set up code chunk!
+
+# Set chunk options
+knitr::opts_chunk$set(warning = FALSE, message=FALSE)
+
+# Get your libraries
+
+library(ggplot2)
+# Set ggplot theme
+
+mytheme = theme_bw() + theme(panel.grid.major = element_blank(), 
+                             panel.grid.minor = element_blank(),
+                             axis.text=element_text(size=14),
+                             axis.title.x=element_text(size=14,face="bold", margin = margin(t = 10, r = 0, b = 0, l = 0)),
+                             axis.title.y=element_text(size=14, face="bold", margin = margin(t = 0, r = 10, b = 0, l = 0)),
+                             plot.margin= margin(t = 20, r = 20, b = 20, l = 20, unit = "pt"),
+                             legend.position="none")
+theme_set(mytheme)
+
+# Load your data
+
+load("BabyData.rda")
+
+# Other set up (functions, variable manipulation, etc.)
+
+
 ```
 
-## R Markdown
+# Why should I make my presentation in R?
 
-This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+* No more copying and pasting graphs into powerpoint or keynote.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+* Great for data presentations and lab meetings where you need to show lots of graphs.
 
-## Slide with Bullets
+* Great for tutorials or labs where you want to show code and output.
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
+* Maybe don't use this when you really really care about how your slides are laid out.
 
-## Slide with R Output
+***
 
-```{r cars, echo = TRUE}
-summary(cars)
+# Arranging your text
+
+1.  Hashtags can be used to add headers of various sizes
+
+2.  Start lines with numerals for a numbered list, or use (*) for unnumbered lines
+
+3.  End a line with two spaces to start a new paragraph.  
+
+> Block quotes start with (>)
+
+* See code for how to do:
++  *italics* 
++ **bold**
++ superscripts^2^
++ ~~strikethrough~~
++ [link](www.rstudio.com)
+
+***
+
+# Adding images
+
+```{r, out.height = "400px", fig.align='center'}
+knitr::include_graphics("Evie.jpg")
 ```
 
-## Slide with Plot
+> - In the code header: {r, out.width="400px", fig.align="center"}
 
-```{r pressure}
-plot(pressure)
-```
+***
 
+# Adding Graphs
+
+
+
+***
+
+# Adding Tables
+
+
+***
+
+Displaying Code
+
+
+***
+
+Displaying Results + Code
