@@ -7,3 +7,5 @@
 Rplots.pdf
 
 *.DS_Store
+
+_site/*
