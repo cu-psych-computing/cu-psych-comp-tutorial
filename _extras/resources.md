@@ -1,8 +1,14 @@
+---
+layout: page
+title: Links we like
+permalink: /resources/
+---
+
 # Useful websites for learRning and refeRence
 
 ## Columbia-specific
 
-* Columbia R users Slack group [(click to join)](https://join.slack.com/t/cu-psych-r-users/shared_invite/enQtMjk5MTExNjkxOTkwLTY2MjJkMGY1ZmU1MzM0ZTA0NTM2ZDJjZjFjMzU4YmRjZDJiMWQyMjJkMzVkMjc0YTE0OTg4ZmU2NjdlYzZiNjk)
+* Columbia Psychology scientific computing users Slack group [(click to join)](https://join.slack.com/t/cu-psych-r-users/shared_invite/enQtMjk5MTExNjkxOTkwLTY2MjJkMGY1ZmU1MzM0ZTA0NTM2ZDJjZjFjMzU4YmRjZDJiMWQyMjJkMzVkMjc0YTE0OTg4ZmU2NjdlYzZiNjk)
      
 ## Full freestanding general-use R tutorials
 
@@ -23,6 +29,31 @@ You can work along with these, course materials should be linked in the syllabi.
 ## Various R cheat sheets
 
 * [A very large list of cheatsheets, tutorials and books on R](https://paulvanderlaken.com/2017/08/10/r-resources-cheatsheets-tutorials-books/)
+
+<div class="row">
+    <div class="col-md-6">
+        <iframe
+            src="https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf"
+            frameborder="0"
+            width="90%"
+            height="400px"
+            scrolling="auto">
+        </iframe>
+    </div>
+    <div class="col-md-6">
+        <iframe
+            src="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf"
+            frameborder="0"
+            width="90%"
+            height="400px"
+            scrolling="auto">
+        </iframe>
+    </div>
+</div>
+
+[Base R reference card for many different uses](https://cran.r-project.org/doc/contrib/Short-refcard.pdf)
+
+[Hadley Wickham's intro to the tidy data framework](https://vita.had.co.nz/papers/tidy-data.pdf)
 
 ## Graphing
 
