@@ -3,22 +3,19 @@
 # Values for this workshop.
 #------------------------------------------------------------
 
-# Which carpentry is this ("swc", "dc", "lc", or "cp")?
-# swc: Software Carpentry
-# dc: Data Carpentry
-# lc: Library Carpentry
-# cp: Carpentries (to use for instructor traning for instance)
-carpentry: "dc"
-org: "cu-psych-computing"
-
-# Overall title for pages.
-title: "Intro to Coding for Social Scientists"
+workshop_title: "Intro to Coding for Social Scientists"
+workshop_edition: "Fall '19"
 
 #------------------------------------------------------------
 # Generic settings (should not need to change).
 #------------------------------------------------------------
 
+# Overall info for pages.
+title: "Columbia Psychology Scientific Computing Tutorials"
+org: "cu-psych-computing"
+
 # What kind of thing is this ("workshop" or "lesson")?
+# TODO: Remove dependency on site.kind since we are going rogue
 kind: "workshop"
 
 # Magic to make URLs resolve both locally and on GitHub.
@@ -29,7 +26,7 @@ repository: <USERNAME>/<PROJECT>
 # Email address, no mailto:
 # (Don't change this -- the contact address for your workshop will be set 
 # in the index.md file)
-email: "team@carpentries.org"
+email: "psych-methods-support@columbia.edu"
 
 # Sites.
 amy_site: "https://amy.software-carpentry.org/workshops"
