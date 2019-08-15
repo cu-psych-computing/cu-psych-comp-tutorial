@@ -6,6 +6,8 @@ permalink: /resources/
 
 # Useful websites for learRning and refeRence
 
+This newfangled version of the external resources page is **under development.** Please pardon our dust!
+
 ## Columbia-specific
 
 * Columbia Psychology scientific computing users Slack group [(click to join)](https://join.slack.com/t/cu-psych-r-users/shared_invite/enQtMjk5MTExNjkxOTkwLTY2MjJkMGY1ZmU1MzM0ZTA0NTM2ZDJjZjFjMzU4YmRjZDJiMWQyMjJkMzVkMjc0YTE0OTg4ZmU2NjdlYzZiNjk)
