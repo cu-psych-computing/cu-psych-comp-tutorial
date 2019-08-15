@@ -5,6 +5,9 @@ title: Welcome
 
 {% comment %} See instructions in the comments below for how to edit specific sections of this workshop template. {% endcomment %}
 
+Welcome to our tutorial repository! We love using scientific computing to help us understand psychology.
+We don't love writing website blurbs, though. We'll flesh this out soon.
+
 {% comment %}
   SYLLABUS
 
@@ -36,3 +39,7 @@ but are also designed to be stand-alone tutorials that you can read through and 
 {% include extra_tutorials.html %}
 
 <hr/> 
+
+<img src="../websiteFiles/funplot.png" title="scientific computing rules" alt="scientific computing rules" style="display: block; margin: auto;" width = "50%"/>
+
+<hr/>
