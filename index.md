@@ -1,40 +1,50 @@
-# CU R tutorial
+---
+layout: page      # DON'T CHANGE THIS.
+title: Welcome
+---
 
-## Bootcamp materials (self-contained multi-page tutorial)
+{% comment %} See instructions in the comments below for how to edit specific sections of this workshop template. {% endcomment %}
 
-* [Syllabus](syllabus.html)
-* Programming basics
-    + [Acquainting yourself with RStudio](1_programming/lessonPart0.html)
-    + [Variables, data types, vectors & dataframes](1_programming/lessonPart1.html)
-    + [Pseudocode, relational & logical operators](1_programming/lessonPart2.html)
-* [Data cleaning](2_dataCleaning/DataCleaning_Code.html)
-* [Descriptive statistics](3_descriptives/Descriptives_Code.html)
-* [Plotting](4_plotting/plotting_tutorial.html)
+Welcome to our tutorial repository! <b>This site is under construction</b>--please pardon our web dust.
 
-## One-off materials
+{% comment %}
+  SYLLABUS
 
-Many of these materials were originally prepared as presentations for Columbia Psychology R users, but are also designed to be stand-alone tutorials that you can read through and learn from remotely.
+  Show what topics will be covered.
 
-* ggplot2 2018 summer session
-  + [Basic plotting in ggplot](extraTutorials/ggplotExtra/ggplot_summer2018_part1.html)
-  + [More advanced ggplotting (plotting using model fits + raw data)](extraTutorials/ggplotExtra/ggplot_summer2018_part2.html)
-* Tidyverse guided tour
-  + [part 1: data manipulation basics](extraTutorials/tidyverseGuide/tidyguide_1.html)
-  + [part 2: nested dfs, mapping, etc](extraTutorials/tidyverseGuide/tidyguide_2.html)
-* Data Simulation & Power Analysis
-  + [Basic data simulation & power](extraTutorials/simulation/basicSimulationPower.html)
-* Multilevel Modeling with brms (focus on partial pooling)
-  + [Multilevel modeling with brms](extraTutorials/brms/multilevelModelsWithBrms.html)
-* R Markdown
-  + [R markdown tutorial](extraTutorials/Rmarkdown/example-r-markdown.html)
-  
-## External materials (not by us!)
+  1. If your workshop is R rather than Python, remove the comment
+  around that section and put a comment around the Python section.
+  2. Some workshops will delete SQL.
+  3. Please make sure the list of topics is synchronized with what you
+  intend to teach.
+  4. You may need to move the div's with class="col-md-6" around inside
+  the div's with class="row" to balance the multi-column layout.
 
-We've assembled a non-exhaustive [list of external R resources](extResources/useful_websites.html) that we've found useful, and hope you will too.
+  This is one of the places where people frequently make mistakes, so
+  please preview your site before committing, and make sure to run
+  'tools/check' as well.
+{% endcomment %}
 
-## Contact
+<h2 id="syllabus">Syllabus: {{ site.workshop_title }}</h2>
 
-The materials within are currently maintained by [Paul Bloom](https://github.com/pab2163), [Ellen Tedeschi](https://github.com/etedeschi), [Monica Thieu](https://github.com/monicathieu), [Emily Nakkawita](https://github.com/emilynakka), and [Michelle VanTieghem](https://github.com/mvantieghem), PhD students in the Columbia psychology department. 
+This is our core introductory scientfic computing syllabus. The materials here are designed to be
+suitable for learners with little to no prior programming experience.
 
+{% include workshop_syllabus.html %}
 
-![plotting is fun!](websiteFiles/funplot.png)
+<hr/>
+
+<h2 id="oneoffs">Additional instructional materials</h2>
+
+Many of these materials were originally prepared as presentations for Columbia Psychology R users,
+but are also designed to be stand-alone tutorials that you can read through and learn from remotely.
+These materials span a wider range of learner skill levels, and assume basic experience with
+scientific computing.
+
+{% include extra_tutorials.html %}
+
+<hr/> 
+
+<img src="../websiteFiles/funplot.png" title="scientific computing rules" alt="scientific computing rules" style="display: block; margin: auto;" width = "50%"/>
+
+<hr/>
