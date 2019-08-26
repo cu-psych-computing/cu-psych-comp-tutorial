@@ -14,14 +14,15 @@ This is adapted from: https://ricostacruz.com/til/relative-paths-in-jekyll
 {% assign last_char = page.url | slice: -1 %}
 
 {% if last_char == "/"}
-{% assign offset = 0 %}
+    {% assign offset = 0 %}
 {% else %}
-{% assign offset = 1 %}
+    {% assign offset = 1 %}
 {% endif %}
 
 {% assign depth = page.url | split: '/' | size | minus: offset %}
-{% if    depth <= 1 %}{% assign relative_root_path = '.' %}
-{% elsif depth == 2 %}{% assign relative_root_path = '..' %}
-{% elsif depth == 3 %}{% assign relative_root_path = '../..' %}
-{% elsif depth == 4 %}{% assign relative_root_path = '../../..' %}
+{% if    depth <= 2 %}{% assign relative_root_path = '.' %}
+{% elsif depth == 3 %}{% assign relative_root_path = '..' %}
+{% elsif depth == 4 %}{% assign relative_root_path = '../..' %}
+{% elsif depth == 5 %}{% assign relative_root_path = '../../..' %}
 {% endif %}
+
