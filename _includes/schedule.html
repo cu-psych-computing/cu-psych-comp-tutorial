@@ -1,15 +1,19 @@
 <!--
 F19 workshop
 -->
+{% assign r_path = relative_root_path | append: '/R/' %}
+{% assign py_path = relative_root_path | append: '/python/' %}
+
 <div class="row">
   <div class="col-md-6">
     <h3>Session 1 (9/6/19)</h3>
     <table class="table table-striped">
-      <tr><td>Before starting</td><td><a href="{{ site.dc_pre_survey }}{{ site.github.project_title }}" target="_blank">Pre-workshop survey</a></td></tr>
-      <tr><td><b>9:00a</b> - 10:00a</td><td><a href="https://cu-psych-computing.github.io/cu-psych-comp-tutorial/">(Fix my link!) Setting up for scientific computing</a></td></tr>
-      <tr><td>10:00a - 12:30p</td><td>Intro to programming in R, continued</td></tr>
+      {% comment %} TODO: Get our own pre- and post-workshop surveys running {% endcomment %}
+      <tr><td>Before starting</td><td><a href="" target="_blank">Pre-workshop survey</a></td></tr>
+      <tr><td><b>9:00a</b> - 10:00a</td><td><a href="{{ r_path }}1_programming/lessonPart0.html">Acquainting yourself with RStudio</a></td></tr>
+      <tr><td>10:00a - 12:30p</td><td><a href="{{ r_path }}1_programming/lessonPart1.html">Intro to programming in R, part 1</a></td></tr>
       <tr><td>12:30p - 1:00p</td><td>Lunch</td></tr>
-      <tr><td>1:00p - <b>2:00p</b></td><td>Intro to programming in R, continued</td></tr>
+      <tr><td>1:00p - <b>2:00p</b></td><td><a href="{{ r_path }}1_programming/lessonPart2.html">Intro to programming in R, part 2</a></td></tr>
     </table>
   </div>
   <div class="col-md-6">
@@ -31,7 +35,8 @@ F19 workshop
       <tr><td>1:00p - 2:00p</td><td>Data cleaning in Python, continued</td></tr>
       <tr><td>2:00p - 3:00p</td><td>Basic plotting in Python with <code>seaborn</code></td></tr>
       <tr><td>3:00p - <b>4:00p</b></td><td>Basic plotting in Python with <code>seaborn</code>, continued</td></tr>
-      <tr><td>After finishing</td><td><a href="{{ site.dc_post_survey }}{{ site.github.project_title }}" target="_blank">Post-workshop survey</a></td></tr>
+      <tr><td>After finishing</td><td><a href="" target="_blank">Post-workshop survey</a></td></tr>
+      {% comment %} {{ site.dc_post_survey }}{{ site.github.project_title }} Need this syntax someday {% endcomment%}
     </table>
   </div>
 </div>
