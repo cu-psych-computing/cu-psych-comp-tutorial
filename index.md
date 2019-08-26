@@ -5,8 +5,7 @@ title: Welcome
 
 {% comment %} See instructions in the comments below for how to edit specific sections of this workshop template. {% endcomment %}
 
-Welcome to our tutorial repository! We love using scientific computing to help us understand psychology.
-We don't love writing website blurbs, though. We'll flesh this out soon.
+Welcome to our tutorial repository! <b>This site is under construction</b>--please pardon our web dust.
 
 {% comment %}
   SYLLABUS
@@ -25,7 +24,11 @@ We don't love writing website blurbs, though. We'll flesh this out soon.
   please preview your site before committing, and make sure to run
   'tools/check' as well.
 {% endcomment %}
+
 <h2 id="syllabus">Syllabus: {{ site.workshop_title }}</h2>
+
+This is our core introductory scientfic computing syllabus. The materials here are designed to be
+suitable for learners with little to no prior programming experience.
 
 {% include workshop_syllabus.html %}
 
@@ -35,6 +38,8 @@ We don't love writing website blurbs, though. We'll flesh this out soon.
 
 Many of these materials were originally prepared as presentations for Columbia Psychology R users,
 but are also designed to be stand-alone tutorials that you can read through and learn from remotely.
+These materials span a wider range of learner skill levels, and assume basic experience with
+scientific computing.
 
 {% include extra_tutorials.html %}
 
