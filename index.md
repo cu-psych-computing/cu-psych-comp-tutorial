@@ -45,6 +45,6 @@ scientific computing.
 
 <hr/> 
 
-<img src="{{relative_root_path}}websiteFiles/funplot.png" title="scientific computing rules" alt="scientific computing rules" style="display: block; margin: auto;" width = "50%"/>
+<img src="{{relative_root_path}}/websiteFiles/funplot.png" title="scientific computing rules" alt="scientific computing rules" style="display: block; margin: auto;" width = "50%"/>
 
 <hr/>
