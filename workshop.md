@@ -171,7 +171,7 @@ displayed if the 'eventbrite' field in the header is not set.
 <h2 id="surveys">Surveys</h2>
 <p>Please be sure to complete these surveys before and after the workshop.</p>
 {% comment %} TODO: Make new pre-survey and post-survey {{ site.dc_pre_survey }}{{ site.github.project_title }} {% endcomment %}
-<p><a href="">Pre-workshop Survey</a></p>
+<p><a href="{{ site.pre_survey }}">Pre-workshop Survey</a></p>
 <p><a href="">Post-workshop Survey</a></p>
 
 {% comment %}
