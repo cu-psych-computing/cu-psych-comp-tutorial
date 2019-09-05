@@ -37,8 +37,8 @@ There's a lot to get into if you have no prior experience with programming (don'
 These documents will cover:
 
 0. Finding your way around RStudio **this document!**
-1. [Variables, data types, vectors](R/1_programming/lessonPart1.html)
-2. [Coding strategy, relational & logical operators](R/1_programming/lessonPart2.html)
+1. [Variables, data types, vectors](lessonPart1.html)
+2. [Coding strategy, relational & logical operators](lessonPart2.html)
 
 # Working with RStudio
 
