@@ -94,6 +94,9 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
 }
@@ -229,8 +232,8 @@ div.tocify {
 <p>These documents will cover:</p>
 <ol start="0" style="list-style-type: decimal">
 <li>Finding your way around RStudio <strong>this document!</strong></li>
-<li><a href="1_programming/lessonPart1.html">Variables, data types, vectors</a></li>
-<li><a href="1_programming/lessonPart2.html">Coding strategy, relational &amp; logical operators</a></li>
+<li><a href="R/1_programming/lessonPart1.html">Variables, data types, vectors</a></li>
+<li><a href="R/1_programming/lessonPart2.html">Coding strategy, relational &amp; logical operators</a></li>
 </ol>
 <div id="working-with-rstudio" class="section level1">
 <h1>Working with RStudio</h1>
@@ -284,7 +287,7 @@ div.tocify {
 <pre class="r"><code># You will need these packages in later parts of the workshop!
 install.packages(pkgs = c(&quot;car&quot;,
                           &quot;moments&quot;,
-                          &quot;ggplot&quot;,
+                          &quot;ggplot2&quot;,
                           &quot;tidyr&quot;,
                           &quot;dplyr&quot;,
                           &quot;effects&quot;,
@@ -309,7 +312,7 @@ library(effects)</code></pre>
 <h2>The working directory</h2>
 <p>Every R session has a <em>working directory,</em> or a “home base” folder. Essentially, this is the folder that R is “in”. R is not actually installed in this folder, mind you! The working directory is the first folder where R looks for raw data files to load in. You can find out what folder is your working directory using the <code>getwd()</code> command as below.</p>
 <pre class="r"><code>getwd()</code></pre>
-<pre><code>## [1] &quot;/Users/Paul/Documents/Columbia/rTutorial/cu-psych-r-tutorial/1_programming&quot;</code></pre>
+<pre><code>## [1] &quot;/Users/mthieu/Repos/cu-psych-r-tutorial/R/1_programming&quot;</code></pre>
 <p>If you run this command on your own computer, you’ll get a different folder. And that’s okay! Our folder structures on our computers are all different.</p>
 <p>When you launch R by opening an R project file (our preferred way of opening R), R automatically sets your working directory to be the folder that this R project file is saved in. Thus, if your R project file is in the same folder as your raw data, scripts, etc, this is a neat short-cut to start R in the folder all of your stuff is saved in.</p>
 <p><strong>We do not recommend changing your working directory during an active R session.</strong> R project files automatically set your working directory for you, so you don’t need to physically set your working directory when you open up R if you open up an R project file. Additionally, when you use R project files, you can open multiple R instances in different working directories if you need to work on multiple projects at once, so you shouldn’t need to change your working directory inside one R session.</p>

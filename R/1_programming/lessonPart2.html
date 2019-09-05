@@ -94,6 +94,9 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
 }
@@ -225,8 +228,8 @@ div.tocify {
 
 <p>Welcome (back) to the CU psychology R tutorial! As a reminder, the documents for the introduction to programming cover the following:</p>
 <ol start="0" style="list-style-type: decimal">
-<li><a href="1_programming/lessonPart0.html">Finding your way around RStudio</a></li>
-<li><a href="1_programming/lessonPart1.html">Variables, data types, vectors</a></li>
+<li><a href="R/1_programming/lessonPart0.html">Finding your way around RStudio</a></li>
+<li><a href="R/1_programming/lessonPart1.html">Variables, data types, vectors</a></li>
 <li>Coding strategy, relational &amp; logical operators <strong>this document!</strong></li>
 </ol>
 <p>Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things!</p>
@@ -263,7 +266,16 @@ div.tocify {
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>99 != 100</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>Here are the relational operators: * <code>&gt;</code> (greater than) * <code>&lt;</code> (less than) * <code>&gt;=</code> (greater than or equal to) * <code>&lt;=</code> (less than or equal to) * <code>==</code> (is equal to–NOTE that it is <em>two</em> equals signs, <em>one</em> equals sign does something different) * <code>!=</code> (is not equal to) * <code>%in%</code> (is contained by; this is useful when you need to see whether the element on the left matches any of a vector of elements on the right)</p>
+<p>Here are the relational operators:</p>
+<ul>
+<li><code>&gt;</code> (greater than)</li>
+<li><code>&lt;</code> (less than)</li>
+<li><code>&gt;=</code> (greater than or equal to)</li>
+<li><code>&lt;=</code> (less than or equal to)</li>
+<li><code>==</code> (is equal to–NOTE that it is <em>two</em> equals signs, <em>one</em> equals sign does something different)</li>
+<li><code>!=</code> (is not equal to)</li>
+<li><code>%in%</code> (is contained by; this is useful when you need to see whether the element on the left matches any of a vector of elements on the right)</li>
+</ul>
 <p>Here’s a few examples of <code>%in%</code> in action, in case this is a little less intuitive than the others:</p>
 <pre class="r"><code>1 %in% 1:5</code></pre>
 <pre><code>## [1] TRUE</code></pre>
@@ -387,6 +399,8 @@ text.var == &quot;statistics&quot;</code></pre>
 <div id="functions" class="section level1">
 <h1>Functions</h1>
 <p>We’ve already used a variety of functions (<code>mean()</code>, <code>is.na()</code>, <code>ifelse()</code>, and more), so the behavior of functions should be somewhat familiar to you. <strong>Functions take inputs, do stuff to them, and give you an output that’s had the stuff done to it.</strong></p>
+<div id="anatomy-of-a-function" class="section level2">
+<h2>Anatomy of a function</h2>
 <p>Right now, we’ll take a moment to go over the pieces of a function a little more formally so you know how to use them to their fullest extent.</p>
 <p>Below is an example (fake) function call. This function takes the inputs <code>input1</code> and <code>input2</code>, does the function <code>function()</code> to those inputs, and returns an output which can be stored in a variable. Here are the relevant pieces:</p>
 <p><code>output &lt;- function(argument1 = input1, argument2 = input2)</code></p>
@@ -396,6 +410,45 @@ text.var == &quot;statistics&quot;</code></pre>
 <li><code>input1</code>, <code>input2</code>, etc: These are variables that you created that will actually get fed into your function. This is the information that will actually get operated on. These can be data that live in your environment, or these can be settings (like switches and knobs, if your function was an actual machine) that are turned to a specific value.</li>
 <li><code>output</code>: This is the variable that will hold your output information. As you can see, we are ASSIGNING the value that’s output from <code>function()</code> to the variable <code>output</code> using the <code>&lt;-</code> left-facing arrow operator. Just like before with printing variable values to console, if you run a function without assigning its output to a variable, the output will print to console (so you can read it) but it will not be stored anywhere (so you can’t perform any further operations on that output).</li>
 </ul>
+</div>
+<div id="writing-your-own-function" class="section level2">
+<h2>Writing your own function</h2>
+<p>Many times in R, you’ll find yourself wanting to do the same thing multiple times. You can do this by <em>writing your own function</em> that you’ll then call to do whatever it is you need to do, whenever you need to do it. This will save you time. You don’t have to copy and paste certain blocks of code that you use a bunch–instead, make it into a function and you can call it quickly whenever you need it!</p>
+<p>Any function you make will have basically the same format, and will be created using the <code>function()</code> function:</p>
+<pre class="r"><code>functionName &lt;- function(argument1, argument2, ...) {
+  function_code
+  function_code
+  more_function_code
+  return(output_value)
+}</code></pre>
+<p>The body of the function will come between the curly brackets, and the last line of the body should be whatever the function is going to spit out at the end.</p>
+<p>Let’s say you’re collaborating with a British colleague who is sending you data they are collecting so that you can analyze it. One of the variables is the temperature of the room where the experiment took place, in Celsius. Your colleague is constantly sending you new data as they collect it, but you’d really rather work with values in Fahrenheit. We can create a function to do the conversion for you so you don’t have to look up the formula every time.</p>
+<pre class="r"><code># Here's the function, with a formula from the internet
+# The input argument is the temperature in Celsius
+# A variable called TempF is created within the function
+# which is the result of taking TempC and transforming it
+# We then return the value of TempF
+
+C2F &lt;- function(tempC) {
+  tempF &lt;- tempC * 1.8 + 32
+  return(tempF)
+}</code></pre>
+<p>Now, you can call your own homemade function just like any function that already comes with R.</p>
+<pre class="r"><code># What's 20 degrees Celsius in Fahrenheit?
+
+C2F(20)</code></pre>
+<pre><code>## [1] 68</code></pre>
+<p>And again, just like pre-existing R functions, you can assign the outputs of homemade functions to new variables.</p>
+<pre class="r"><code># What are all these values in Fahrenheit?
+
+oldTemps &lt;- c(19, 27, 0, 66, 37)
+
+newTemps &lt;- C2F(oldTemps)
+
+newTemps</code></pre>
+<pre><code>## [1]  66.2  80.6  32.0 150.8  98.6</code></pre>
+<p><strong>Keep in mind:</strong> R is not so strict about the names you give to your functions. Sometimes, you can get into a pickle when homemade functions have the same name as pre-existing functions, and R doesn’t know which function you’re referring to. For this reason, <em>avoid giving homemade functions the same names as pre-existing functions.</em> For example, avoid creating homemade functions named <code>mean</code>, <code>median</code>, and other names that you know for sure also belong to pre-existing functions. (If you’re ever not sure if a function name already belongs to a function, you can use the <a href="#The-help-docs">help pages</a> to see if a help page exists for a particular function. If a help page does exist, then a function already has that name.)</p>
+</div>
 </div>
 <div id="getting-assistance" class="section level1">
 <h1>Getting assistance</h1>

@@ -14,9 +14,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Welcome (back) to the CU psychology R tutorial! As a reminder, the documents for the introduction to programming cover the following:
 
-0. [Finding your way around RStudio](1_programming/lessonPart0.html)
+0. [Finding your way around RStudio](R/1_programming/lessonPart0.html)
 1. Variables, data types, vectors **this document!**
-2. [Coding strategy, relational & logical operators](1_programming/lessonPart2.html)
+2. [Coding strategy, relational & logical operators](R/1_programming/lessonPart2.html)
 
 # Variables
 
