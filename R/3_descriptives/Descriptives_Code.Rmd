@@ -21,7 +21,7 @@ This dataset examines the relationship between multitasking and working memory. 
 
 ```{r, message = FALSE, warning = FALSE}
 # use read.csv function to open data into R 
-df <- read.csv("uncapher_2016_repeated_measures_dataset.csv")
+df <- read.csv("uncapher_2016_repeated_measures_dataset.csv", header=TRUE, stringsAsFactors = FALSE)
 
 # we will continue using tidyverse tools
 library(tidyverse)
@@ -136,14 +136,13 @@ df %>%
 
 ## Combine summary statistics with the full data frame
 
-For some analyses, you might want to add a higher level variable (e.g. subject average hitRate) alongside your long data. We can do this by summarizing the data in a new data frame and then merging it with the full data.
+For some analyses, you might want to add a higher level variable (e.g. subject average hitRate) alongside your long data. We can do this by using mutate instead of summarize. Note: you'll have repeating values for the average column.
 
 ```{r}
 avgHR <- df %>% 
   group_by(subjNum) %>% 
-  summarize(avgHR = mean(hitRate, na.rm=T))
+  mutate(avgHR = mean(hitRate, na.rm=T))
 
-df <- merge(df, avgHR, by="subjNum")
 
 # you should now have an avgHR column in df, which will repeat within each subject, but vary across subjects.
 ```
@@ -165,9 +164,10 @@ df <- merge(df, avgHR, by="subjNum")
 ```
 
 ```{r, eval = FALSE}
-# use write.csv() to save this out!
-write.csv(basic_descriptives, file = "myDescriptives.csv")
-
+# use write.csv() or save() to save this out!
+# if you use save, you can combine the full data and descriptives into a tidy package.
+write.csv(basic_descriptives, file = "R/3_descriptives/myDescriptives.csv")
+save(basic_descriptives, df, file="R/3_descriptives/StudyData.rda")
 
 # note : it will automatically save to your working directory unless you specify otherise 
 # remember to check your working directory, use getwd() 
