@@ -127,7 +127,6 @@ For some analyses, you might want to add a higher level variable (e.g. subject a
 
 
 
-
 # you should now have an avgHR column in df, which will repeat within each subject, but vary across subjects.
 ```
 
