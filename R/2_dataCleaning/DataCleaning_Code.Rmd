@@ -344,7 +344,7 @@ However, you can also save in an R format that lets you save multiple variables/
 
 ```{r, eval = FALSE}
 # Save a .rda. Add as many objects as you want, separated by commas
-save(mydata_Long, mydata_Wide, file="Study1_clean.rda")
+save(mydata_Long, mydata_Wide, file="2_dataCleaning/Study1_clean.rda")
 ```
 
 ## Data Challenge!
