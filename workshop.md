@@ -54,7 +54,12 @@ displayed if the 'eventbrite' field in the header is not set.
   the pitch.
 {% endcomment %}
 
-{% include intro.html %}
+<p>
+  {{site.title}} develops and teaches workshops on scientific computing skills needed to conduct
+  psychological research. Its target audience is researchers who have little to no prior computational experience, 
+  and its lessons are psychology-specific, building on learners' existing knowledge to enable them to quickly 
+  apply skills learned to their own research.
+</p>
 
 {% comment %}
   AUDIENCE
@@ -63,7 +68,14 @@ displayed if the 'eventbrite' field in the header is not set.
   workshop is only open to people from a particular institution.
 {% endcomment %}
 
-{% include who.html %}
+<p id="who">
+  <strong>Who:</strong>
+  The course is aimed at graduate students and other researchers.
+  <strong>
+    You don't need to have any previous knowledge of the tools
+    that will be presented at the workshop.
+  </strong>
+</p>
 
 {% comment %}
   LOCATION
