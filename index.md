@@ -29,6 +29,11 @@ Welcome to our tutorial repository! <b>This site is under construction</b>--plea
 
 During the fall 2019 semester, the [graduate methods support advisors](who) are holding
 open office hours on **Mondays** (except the 4th Monday of each month) **from 10:30a to 12:00p.**
+
+* First Mondays: Jonathan Nicholas, Schermerhorn Extension 368
+* Second Mondays: Monica Thieu, Schermerhorn 324B (common area)
+* Third Mondays: Paul Bloom, Schermerhorn 409A (ring the doorbell)
+
 CU psychology graduate students can stop by for to chat about using computing tools at any stage of the research process. Use cases include, but are not limited to:
 
 * conducting pre-study power analysis
