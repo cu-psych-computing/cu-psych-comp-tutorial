@@ -25,6 +25,24 @@ Welcome to our tutorial repository! <b>This site is under construction</b>--plea
   'tools/check' as well.
 {% endcomment %}
 
+<h2>In-person scientific computing support</h2>
+
+During the fall 2019 semester, the [graduate methods support advisors](who) are holding
+open office hours on **Mondays** (except the 4th Monday of each month) **from 10:30a to 12:00p.**
+
+* First Mondays: Jonathan Nicholas, Schermerhorn Extension 368
+* Second Mondays: Monica Thieu, Schermerhorn 324B (common area)
+* Third Mondays: Paul Bloom, Schermerhorn 409A (ring the doorbell)
+
+CU psychology graduate students can stop by for to chat about using computing tools at any stage of the research process. Use cases include, but are not limited to:
+
+* conducting pre-study power analysis
+* setting up tools for administering tasks in-person and online
+* cleaning and analyzing data
+* preparing presentations and manuscripts
+
+Outside of office hours, the support advisors can also assist over [email](mailto:{{site.email}}).
+
 <h2 id="syllabus">Syllabus: {{ site.workshop_title }}</h2>
 
 This is our core introductory scientfic computing syllabus. The materials here are designed to be

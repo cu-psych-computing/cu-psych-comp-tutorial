@@ -25,11 +25,20 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
 
-	      {% comment %} Always show link to workshop landing page. {% endcomment %}
+	      {% comment %} DON'T show link to workshop landing page when workshop is not active. 
         <li><a href="{{ relative_root_path }}{% link workshop.md %}">{{site.workshop_edition}} Workshop</a></li>
+        {% endcomment %}
 
-	      {% comment %} Always show code of conduct. {% endcomment %}
+	      {% comment %} Hide code of conduct from navbar. Probably only link to this in the workshop md
         <li><a href="{{ relative_root_path }}{% link CODE_OF_CONDUCT.md %}">Code of Conduct</a></li>
+        {% endcomment %}
+
+        {% comment %} Show "who we are" page. {% endcomment %}
+        <li><a href="{{ relative_root_path }}{% link who.md %}">Who we are</a></li>
+
+        {% comment %} Show "who we are" page. {% endcomment %}
+        <li><a href="{{ relative_root_path }}{% link meeting.md %}">Meetings</a></li>
+        
 
         {% comment %} Show lesson episodes for lessons. 
         <li class="dropdown">
