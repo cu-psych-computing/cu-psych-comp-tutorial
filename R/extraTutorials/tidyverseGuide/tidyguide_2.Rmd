@@ -29,7 +29,7 @@ Hello (again)! This is a continuation of our tour through base tidyverse. Our go
 
 This time, we'll be moving ahead to some more complex use cases utilizing some more advanced programming tactics. I hope to show you how the tidyverse makes these things a little smoother!
 
-Again, please remember that for more exhaustive documentation you can visit the online reference pages for your packae of interest, and for more in-depth self-teaching, please refer to [R for Data Science online textbook](http://r4ds.had.co.nz/) by Garrett Grolemund and Hadley Wickham.
+Again, please remember that for more exhaustive documentation you can visit the online reference pages for your package of interest, and for more in-depth self-teaching, please refer to the [R for Data Science online textbook](http://r4ds.had.co.nz/) by Garrett Grolemund and Hadley Wickham.
 
 # Quick cheat-list of key functions from various pkgs
 
@@ -166,6 +166,7 @@ The best thing about named list elements is that you can use those names to acce
 ```{r}
 mylist["first"]
 ```
+
 ```{r}
 mylist[c("second", "third")]
 ```
@@ -251,7 +252,7 @@ This works because single-bracket indexing always returns another list, and you 
 If your df contains a list-column, you can do most things with that df that you might do with a fully atomic list-free df. You can:
 
 * subset by column using `select()`
-* reshape your df using `gather()` and `spread()`
+* reshape your df using `pivot_longer()` and `pivot_wider()`
 
 There are a couple respects in which list-columns are limited, though. Most of these involve the fact that R makes fewer assumptions about the content of lists (since elements are not bound to be the same type/length 1), and so for your own safety the tidyverse prevents you from doing some things that might yield unexpected results:
 
