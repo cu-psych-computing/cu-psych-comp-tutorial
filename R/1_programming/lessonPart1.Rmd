@@ -10,6 +10,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
 ```
 
 Welcome (back) to the CU psychology R tutorial! As a reminder, the documents for the introduction to programming cover the following:
@@ -58,6 +59,15 @@ Variables don't just have to contain pure numbers; you can assign the output of 
 
 ```{r}
 third.var <- first.var + 10
+```
+
+And as we saw earlier, you can assign whole dataframes into variables. We'll be able to access all the content of a dataframe in a variable so we can do data manipulation, plotting, and stats on it later.
+
+(Quick review question: Am I calling the below file path using an _absolute_ or _relative_ path? How can you tell?)
+
+```{r}
+data_path <- here::here("R", "1_programming", "shakes.csv")
+shakes <- read_csv(data_path)
 ```
 
 You can overwrite the values of variables, simply by assigning some other value to the same name.
@@ -182,9 +192,111 @@ The following will return an error if you try to run it:
 not.a.number + 1
 ```
 
-Now, we'll talk about data structures--it's all the data types we talked about earlier, just with multiple pieces of data!
+## Dataframe columns have data types too
+
+It's not only single pieces of information that have a defined data type. Whole dataframe columns of values have data types as well. (This is a requirement of dataframe columns: that they are composed of a set of values that are all the same data type.)
+
+R will tell us a bit about the data types in our dataframe columns when we print the dataframe to console. Let's take a look:
+
+```{r}
+shakes
+```
+
+Just below the name of each column, we see some abbreviations: `<chr>` and `<dbl>`. These are the data types of these columns. `<chr>` means that all values in that column are character, or text, data. `<dbl>` stands for "double", which is R-speak for numeric data with decimal-point precision.
+
+Just as you can do arithmetic on single numeric values, and text-manipulation operations on single character strings, you can do these operations on whole dataframe columns as well. We'll see this soon!
+
+Now, we'll talk a little bit more about these data structures, like dataframes, that hold multiple pieces of data.
 
 # Data structures
+
+## Data frames
+
+This is the data structure where it happens! Imagine your usual rectangular Excel spreadsheet that you might have for your study data, where each column of the spreadsheet contains a meaningful category of information (e.g. subject ID, task condition, trial response), and each row contains one observation of information (one subject, or one trial within subject, etc). A dataframe is basically that.
+
+A **dataframe** is a special rectangular data structure in R that is *column-optimized.* A dataframe is essentially a series of vectors *of equal length* stuck together in a meaningful way. 
+
+Each column is a vector, containing all the observations of a particular meaningful grouping. Each row is the nth element across vectors, containing one complete observation from all the vectors. Each observation can be a subject, a trial, a group, whatever--any one meaningful something.
+
+Notice that dataframes can be read in from CSV files. These files can be opened in other programs like Microsoft Excel, where you can see that they look like any garden-variety spreadsheet.
+
+A dataframe is composed of a series of vectors; you can manipulate individual columns of a dataframe on their own. But you can NOT manipulate individual rows of a dataframe in the same way. We will try this very soon and you'll see that an individual row of a dataframe behaves as a dataframe with only one row in it. Why might this be the case?
+
+### Working with dataframe columns
+
+Very frequently, when working with dataframes, we will need to create new columns, or modify existing columns. The function we'll use to do this is `mutate()`.
+
+The first argument that `mutate()` takes, or information it needs to be able to work, is what dataframe we want to operate on. All of the rest of the function works because `mutate()` knows which dataframe we are working inside.
+
+After you specify the dataframe in question, we then specify pieces of information in pairs:
+
+1. The name of the new dataframe column you wish to create
+1. How you want to create that new column
+
+The syntax for creating these new columns is `new_column_name = function(old_column_name)`. For example, if we want to create a new column containing all the values of `n.words` but divided by 1,000:
+
+```{r}
+mutate(shakes,
+       n.words.1k = n.words / 1000)
+```
+
+Notice that the dataframe appears to have a new column, with the name and the contents we specified. Each row of `n.words.1k` contains the value from the `n.words` column, but divided by a thousand. Exactly as intended!
+
+However, remember that **this content is not saved back into the `shakes` variable unless we re-assign it to the `shakes` variable name.**
+
+We would need to use the `<-` operator and re-assign this info into `shakes` to overwrite the OLD dataframe with the NEW one, containing the extra column.
+
+```{r}
+shakes <- mutate(shakes,
+       n.words.1k = n.words / 1000)
+```
+
+We can use the same strategy of overwriting the old content of a variable to modify the content of a dataframe column without creating a new one.
+
+In this case, we re-use the name of an existing column on the left side of the equals sign inside of `mutate()`. Similar to overwriting an existing variable, this will overwrite the existing column with some function applied to the old value of the column.
+
+```{r}
+mutate(shakes,
+       genre = tolower(genre))
+```
+
+In the output above, see that the `genre` column is still where it was, but now all of the genre labels are lowercase instead of having the first letter capitalized.
+
+In the commands above, we have been accessing the columns of our `shakes` dataframe by typing the column names "naked", as if they were variables in the environment. However, when we look in the Environment tab in the top-right, we do not see these column names as their own variables! They live _inside the dataframe._ `mutate()`, and other tidyverse functions that we will use, have the **special ability to allow dataframe column names to be typed on their own, like free-standing variables, inside of these functions.** Other functions will not allow this, so be careful in later explorations of R.
+
+What kind of functions can we use to create/modify columns with `mutate()`? We can use any **vectorized function.** These are functions that take a process and apply it individually to each element in your column, returning an analogous column where the nth element of the output column is the result of performing the operation on the nth element of the input column.
+
+If you want to do the same thing to a bunch of data, this is the way to do it fast! Basically all the arithmetic operations are vectorized, for example:
+
+```{r}
+mutate(shakes,
+       n.words.half = n.words / 2)
+```
+
+Many other functions are vectorized as well. It's always worth trying a function of interest on a dataframe column and checking if you get a column of the same length, with corresponding values from both columns in the same row, as output.
+
+### Summarizing dataframe columns
+
+Other times, when working with dataframes, we will need to summarize over the values of existing columns. The function we'll use to do this is `summarize()`.
+
+Just like `mutate()`, and pretty much every other tidyverse function, the first argument that `summarize()` takes is what dataframe we want to operate on.
+
+After you specify the dataframe in question, we then specify pieces of information in pairs, much the same way as we did with `mutate()`: `new_column_name = function(old_column_name)`. 
+
+The difference here is that instead of creating a whole column as our output, with the same number of rows as the original data, we need to summarize over all rows in the column, producing _one row of output._ For example, calculating the mean or the standard deviation of a column of data will take the entire column as input, returning a single value as output. In general, descriptive statistical operations are typically of this type.
+
+
+```{r}
+summarize(shakes,
+          mean.n.words = mean(n.words))
+```
+
+```{r}
+summarize(shakes,
+          sd.n.words = sd(n.words))
+```
+
+### Logical filtering dataframe rows
 
 ## Vectors
 
@@ -284,112 +396,9 @@ Now we'll learn about the two broad families of functions/operations you can cal
 
 ### Vectorized/one-to-one operations (n element input, n element output)
 
-This takes a thing and does it individually to each element in your vector, returning an analogous vector where the nth element of the output vector is the result of performing the operation on the nth element of the input vector.
 
-If you want to do the same thing to a bunch of data, this is the way to do it fast! Basically all the arithmetic operations are vectorized, for example:
-
-```{r}
-num.vector + 1
-```
-
-```{r}
-num.vector * 12
-```
-
-Many other functions are vectorized as well. It's always worth inputting a vector into a function of interest and checking if you get a vector of the same length as output.
 
 ### Summarizing operations (n element input, 1 element output)
-
-These operations require multiple pieces of data (a vector) and return one piece of data. Descriptive statistical operations are typically of this type, like:
-
-```{r}
-mean(num.vector)
-```
-
-```{r}
-min(num.vector)
-```
-
-```{r}
-max(num.vector)
-```
-
-## Data frames
-
-This is the data structure where it happens! Imagine your usual rectangular Excel spreadsheet that you might have for your study data, where each column of the spreadsheet contains a meaningful category of information (e.g. subject ID, task condition, trial response), and each row contains one observation of information (one subject, or one trial within subject, etc). A dataframe is basically that.
-
-A **dataframe** is a special rectangular data structure in R that is *column-optimized.* A dataframe is essentially a series of vectors *of equal length* stuck together in a meaningful way. 
-
-Each column is a vector, containing all the observations of a particular meaningful grouping. Each row is the nth element across vectors, containing one complete observation from all the vectors. Each observation can be a subject, a trial, a group, whatever--any one meaningful something.
-
-In the below code chunk, we'll load a dataframe in from a study I worked in undergrad. It's saved externally as a CSV file (one that you could open in Excel if you wanted to), so you can see the commonalities between your garden-variety study data Excel spreadsheet and an R dataframe.
-
-(Quick review question: Am I calling the below file path using an _absolute_ or _relative_ path? How can you tell?)
-
-```{r}
-data <- read.csv(file = "../3_descriptives/uncapher_2016_one_condition_dataset.csv", header = TRUE, stringsAsFactors = FALSE)
-# Don't worry about the command below; I'm just shortening the dataframe. You'll understand what this means later! Just run it now.
-data <- data[data$groupStatus != "", -c(1:4, 22:26)]
-# PAB -- emphasize that vectors in a dataframe are of equal length -- and why this makes sense
-```
-
-A dataframe is composed of a series of vectors; you can manipulate individual columns of a dataframe as vectors. But you can NOT manipulate individual rows of a dataframe as vectors. We will try this very soon and you'll see that an individual row of a dataframe behaves as a dataframe with only one row in it. Why might this be the case?
-
-To access these individual columns and rows, we'll index into our dataframe. Indexing is back... with a vengeance!
-
-### Indexing into dataframes
-
-It's like indexing into vectors, but with more to love! You can index whole rows, whole columns, and portions of both.
-
-#### Indexing columns
-
-You can index by _name_ (each column in a dataframe has a name, like the header row in a spreadsheet), or by _number_ (first column, second column, etc). Today, we'll learn about indexing by _name,_ because this is a more reproducible way to index.
-
-Consider it this way: other people don't know what order your columns are in, but they can gather what's in a column by the name, so if someone else were reading your code, they'd be able to tell much more easily what column(s) you were referring to if you indexed columns by name.
-
-##### With brackets
-
-This is similar to indexing a single vector using brackets, but this time, a dataframe has **two dimensions: length AND width.** This means that bracket-indexing into a dataframe expects TWO coordinates: which rows you want, *and* which columns you want. The indexing is ALWAYS `[row, column]` where the row index is the one BEFORE the comma, and the column index is AFTER. You can remember this as it's similar to (x, y) coordinates, where x goes horizontally and y goes vertically.
-
-When you want all _rows,_ you leave the row index _blank,_ but you still need the comma! Notice that I am calling the column name as a _string._
-
-```{r}
-data[, "subjNum"]
-```
-
-##### With the dollar sign
-
-Remember how dataframes are column-optimized? There's a special way to index columns of a dataframe that's optimized for using column names to index. Let's take a look:
-
-```{r}
-data$subjNum
-```
-
-This returns the exact same column as we got before!
-
-You first write the name of your dataframe, then the `$`, to tell R to go "inside" of that dataframe and look for the column you're about to specify. Then you write the column name, _without quotation marks. It's not a string!_
-
-This is why $ indexing is special: **A word without quotes is a variable name, but a word in quotes is a string.** These behave two very different ways in R.
-
-##### Indexing rows
-
-Indexing rows works similarly to indexing columns in some ways. But, while columns of a dataframe have names, *rows of a dataframe do not have names, ONLY numerical indices.* So we CANNOT use dollar-sign indexing to index rows, ONLY bracket indexing. And we cannot use words to call rows, ONLY numbers.
-
-Quick review: Do we expect to call rows using the space BEFORE the comma, or AFTER the comma?
-
-```{r}
-data[1, ]
-```
-
-Observe that indexing a single row of a dataframe returns _a dataframe with one row in it._ Because R knows that each row of a dataframe is a complete observation of data, R keeps that observation in dataframe form even when there's only one observation, so that you can continue doing special dataframe stuff on it.
-
-Remember that you can use a vector in the numerical index to index multiple indices, here calling multiple rows.
-
-```{r}
-data[1:4, ]
-```
-
-There are two specific data types that feature heavily when working with dataframes: factor data and missing data. We'll take a look at these now that we've learned a little about dataframes.
 
 # Data types pt 2
 
