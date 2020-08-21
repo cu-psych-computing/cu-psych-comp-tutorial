@@ -54,7 +54,7 @@ Each of these instructions that I've laid out corresponds to a distinct R comman
 
 1. Use a relational operator to determine which rows (i.e., subjects) in the group status column are equal to (`==`) "HMM".
 1. `filter()` the dataframe so it only includes these "HMM" rows.
-2. Call `mean()` on the hit rate column in the filtered dataframe.
+2. Use `summarize()` to call `mean()` on the hit rate column in the filtered dataframe.
 
 And now we can go ahead and write the code to do this bit of calculation. This pseudocoding exercise was pretty brief. Pseudocoding can be quick, but it can often become complex for larger data processing or analysis tasks! Still, the time you take to brainstorm some pseudocode will save you time you might have otherwise spent puzzling over which functions to use and how.
 
