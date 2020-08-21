@@ -1663,9 +1663,8 @@ library(effects)</code></pre>
 </div>
 <div id="reading-the-data-into-r" class="section level3">
 <h3>Reading the data into R</h3>
-<p>Then, to examine this file in R, place the file path inside the parentheses in the <code>read_csv()</code> function.</p>
-<pre class="r"><code># You can do using the file path outputted by the here() function...
-read_csv(&quot;/Users/emily/Desktop/cu-psych-comp-tutorial-r-prog-dev-emily/R/1_programming/shakes.csv&quot;)</code></pre>
+<p>Then, to examine this file in R, place the file path inside the parentheses in the <code>read_csv()</code> function. You could do this by copying and pasting the full file path outputted by the <code>here()</code> function, but it is simpler to “nest” the <code>here()</code> function inside <code>read_csv()</code>.</p>
+<pre class="r"><code>read_csv(here(&quot;R&quot;, &quot;1_programming&quot;, &quot;shakes.csv&quot;))</code></pre>
 <pre><code>## # A tibble: 37 x 3
 ##    title                     genre   n.words
 ##    &lt;chr&gt;                     &lt;chr&gt;     &lt;dbl&gt;
@@ -1680,26 +1679,11 @@ read_csv(&quot;/Users/emily/Desktop/cu-psych-comp-tutorial-r-prog-dev-emily/R/1_
 ##  9 Henry IV, Part II         History   25689
 ## 10 Henry V                   History   26119
 ## # … with 27 more rows</code></pre>
-<pre class="r"><code># ...or by placing the here() function itself inside the read_csv() function
-read_csv(here(&quot;R&quot;, &quot;1_programming&quot;, &quot;shakes.csv&quot;))</code></pre>
-<pre><code>## # A tibble: 37 x 3
-##    title                     genre   n.words
-##    &lt;chr&gt;                     &lt;chr&gt;     &lt;dbl&gt;
-##  1 All&#39;s Well That Ends Well Comedy    23009
-##  2 Antony and Cleopatra      Tragedy   24905
-##  3 As You Like It            Comedy    21690
-##  4 Comedy of Errors          Comedy    14701
-##  5 Coriolanus                Tragedy   27589
-##  6 Cymbeline                 Tragedy   27565
-##  7 Hamlet                    Tragedy   30557
-##  8 Henry IV, Part I          History   24579
-##  9 Henry IV, Part II         History   25689
-## 10 Henry V                   History   26119
-## # … with 27 more rows</code></pre>
+<p>After running the line above, you will see a preview of the file in R. Sometimes this kind of quick preview is helpful! However, in order to do more with the data, you will want to save a copy of the file as an object in your R environment. (You can tell that the file has <em>not</em> yet been loaded into your environment by taking a look at the Environment tab in the upper right section of your RStudio window. Unless you were working in R before this workshop began, you will see a message noting that it is empty!)</p>
 </div>
 <div id="loading-the-file-as-an-r-object" class="section level3">
 <h3>Loading the file as an R object</h3>
-<p>Finally, to load the file into your R environment so you can do more with it later, give it a name (e.g., <code>shakes</code>) and use the <code>&lt;-</code> (the <em>assignment operator</em>) to load the data contained in the CSV into an object with that name.</p>
+<p>To load the file into your R environment, give it a name (e.g., <code>shakes</code>) and use the <code>&lt;-</code> (the <em>assignment operator</em>) to save the data contained in the CSV into an R object with that name.</p>
 <pre class="r"><code>shakes &lt;- read_csv(here(&quot;R&quot;, &quot;1_programming&quot;, &quot;shakes.csv&quot;))</code></pre>
 <p>Once you have done so, you will see this object listed in the Environment tab in the upper right section of your RStudio window.</p>
 </div>
