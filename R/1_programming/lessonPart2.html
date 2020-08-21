@@ -1533,7 +1533,7 @@ div.tocify {
 # Don&#39;t worry about the following command; I&#39;m just shortening the dataframe. You&#39;ll understand what this means later! Just run it now.
 data &lt;- data %&gt;%
   filter(groupStatus != &quot;&quot;) %&gt;%
-  select(&quot;subjNum&quot;:&quot;bis&quot;)
+  select(subjNum:bis)
 
 # Let&#39;s take a quick look at the dataframe by running a line with its name:
 data</code></pre>
@@ -1564,7 +1564,7 @@ data</code></pre>
 <ol style="list-style-type: decimal">
 <li>Use a relational operator to determine which rows (i.e., subjects) in the group status column are equal to (<code>==</code>) “HMM”.</li>
 <li><code>filter()</code> the dataframe so it only includes these “HMM” rows.</li>
-<li>Call <code>mean()</code> on the hit rate column in the filtered dataframe.</li>
+<li>Use <code>summarize()</code> to call <code>mean()</code> on the hit rate column in the filtered dataframe.</li>
 </ol>
 <p>And now we can go ahead and write the code to do this bit of calculation. This pseudocoding exercise was pretty brief. Pseudocoding can be quick, but it can often become complex for larger data processing or analysis tasks! Still, the time you take to brainstorm some pseudocode will save you time you might have otherwise spent puzzling over which functions to use and how.</p>
 </div>
@@ -1618,15 +1618,10 @@ text.var == &quot;statistics&quot;</code></pre>
 <h2>Filtering data</h2>
 <p>Relational statements are often helpful when you are interested in filtering your data. Now that we’ve used a relational statement above to generate a logical column indicating which subjects are members of the HMM group, we can use the <code>filter()</code> function in <code>tidyverse</code> to filter only the rows belonging to the HMM group.</p>
 <p>Filtering involves specifying a dataframe and a logical vector (e.g., the <code>isHMM</code> column we created above). When you filter a dataframe, only the rows in the dataframe with a <code>TRUE</code> in the logical column’s values will remain.</p>
-<p>We can do this by indicating that we only want rows with “TRUE” in the new “isHMM” column we created (option 1):</p>
-<pre class="r"><code># Here, we are creating a new R object (data_HMM) that contains the smaller, filtered dataframe
-data_HMM &lt;- filter(data,
-              isHMM == TRUE)</code></pre>
-<p>…or we can skip the middle step of creating the “isHMM” column, and simply filter the dataframe using the relational statement (<code>groupStatus == &quot;HMM&quot;</code>) we used to create that column a few lines back (option 2):</p>
+<p>We can do this by using the same relational statement (<code>groupStatus == &quot;HMM&quot;</code>) we used to create the <code>isHMM</code> column a few lines back:</p>
 <pre class="r"><code># Here, we are creating a new R object (data_HMM) that contains the smaller, filtered dataframe
 data_HMM &lt;- filter(data,
               groupStatus == &quot;HMM&quot;)</code></pre>
-<p>We will end up with the same filtered dataframe either way. (Because it is more efficient, people tend to go with option 2.)</p>
 </div>
 <div id="operating-on-filtered-data" class="section level2">
 <h2>Operating on filtered data</h2>
