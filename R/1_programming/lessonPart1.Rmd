@@ -214,13 +214,9 @@ Now, we'll talk a little bit more about these data structures, like dataframes, 
 
 This is the data structure where it happens! Imagine your usual rectangular Excel spreadsheet that you might have for your study data, where each column of the spreadsheet contains a meaningful category of information (e.g. subject ID, task condition, trial response), and each row contains one observation of information (one subject, or one trial within subject, etc). A dataframe is basically that.
 
-A **dataframe** is a special rectangular data structure in R that is *column-optimized.* A dataframe is essentially a series of vectors *of equal length* stuck together in a meaningful way. 
-
-Each column is a vector, containing all the observations of a particular meaningful grouping. Each row is the nth element across vectors, containing one complete observation from all the vectors. Each observation can be a subject, a trial, a group, whatever--any one meaningful something.
+A **dataframe** is a special rectangular data structure in R that is *column-optimized.* A dataframe is essentially a series of vectors *of equal length* stuck together in a meaningful way. Each column contains all the observations of a particular meaningful grouping. Each row is the nth value across columns, containing one complete observation from all the columns. Each observation can be a subject, a trial, a group, whatever--any one meaningful something.
 
 Notice that dataframes can be read in from CSV files. These files can be opened in other programs like Microsoft Excel, where you can see that they look like any garden-variety spreadsheet.
-
-A dataframe is composed of a series of vectors; you can manipulate individual columns of a dataframe on their own. But you can NOT manipulate individual rows of a dataframe in the same way. We will try this very soon and you'll see that an individual row of a dataframe behaves as a dataframe with only one row in it. Why might this be the case?
 
 ### Working with dataframe columns
 
@@ -296,7 +292,42 @@ summarize(shakes,
           sd.n.words = sd(n.words))
 ```
 
-### Logical filtering dataframe rows
+### Indexing into dataframes
+
+Sometimes, however, you may need to access the content of a dataframe column outside of `mutate()`, `summarize()`, or another tidyverse function. Remember that tidyverse functions have the special ability to let you call column names with "naked" variable names, and this ability works because you have to feed in the name of your dataframe as the first argument to the function. That's how the function knows where to look for the column. Other parts of R don't work this way, so sometimes we need to use a different technique.
+
+For example, we know there is a column called `title` inside of the `shakes` dataframe. Inside of `mutate()`, for example, you can call this column just by calling `title`:
+
+```{r}
+mutate(shakes,
+       title.length = nchar(title))
+```
+
+However, if we try to calculate the character lengths of each of Shakespeare's play titles _outside_ of `mutate()`, it doesn't seem to work:
+
+```{r, error = TRUE}
+nchar(title)
+```
+
+Because we are outside of `mutate()`, we do not have the ability to call dataframe columns on their own. We have to use another method to tell R which dataframe a column lives in.
+
+We use a special operator to do this: the dollar sign `$`. `$` tells R when a variable name, in this case a column name, is a sub-variable of a larger variable, in this case a dataframe. In this way, we can tell R that `title` is not floating around on its own, but is a column in the dataframe `shakes`.
+
+```{r}
+shakes$title
+```
+
+You may also notice when typing in RStudio, that if you type `shakes$`, you'll suddenly see a little tab-complete selector pop up, listing out the names of all the columns in `shakes`. You can either type more to narrow down to the column you want, and then hit Tab to auto-complete the column name, or use the arrow keys to scroll up and down through the column names to select the one you want (and hit Tab to auto-complete in this case as well).
+
+Note that when you call the column in this way, the printed output doesn't look like it did when we printed the entire dataframe. When you call a dataframe column on its own using `$`, R temporarily treats it as separate from the dataframe that it came from.
+
+```{r}
+nchar(shakes$title)
+```
+
+A dataframe column on its own like this, separated from the rest of the dataframe, is a _vector._ Vectors can exist totally separate from dataframes, or they can be bound together as dataframe columns. A vector can have any number of values in it, but is always width 1 (which makes sense when you think of them as columns of data). 
+
+PS: Every column of a dataframe is a vector on its own, so you can extract and manipulate individual columns of a dataframe. But you can NOT manipulate individual rows of a dataframe in the same way. We will try this very soon and you'll see that an individual row of a dataframe behaves as a dataframe with only one row in it. Why might this be the case?
 
 ## Vectors
 
@@ -315,7 +346,7 @@ length(first.var)
 
 The individual pieces of data inside one vector are called **elements.**
 
-Vectors can be any of the data types we just learned about.
+Vectors, whether or not they're dataframe columns, can be any of the data types we just learned about.
 
 ```{r}
 char.vector <- c("apple", "banana", "cantaloupe", "dragonfruit")
@@ -324,7 +355,7 @@ length(char.vector)
 logical.vector <- c(TRUE, TRUE, FALSE, TRUE)
 ```
 
-As you can see above, the function `c()` is the primary way to construct vectors, by listing out all the pieces of data you want to put into the vector inside of `c()`, separated with commas.
+As you can see above, the function `c()` is the primary way to construct freestanding vectors. You list out all the pieces of data you want to put into the vector inside of `c()`, separated with commas.
 
 Buuuut R lets you do some special stuff to create certain useful numeric vectors. You can use the colon `:` between any two integers to create a vector of all the integers between the values on either side of the colon (inclusive).
 
@@ -334,13 +365,13 @@ num.vector.2 <- 1:5
 num.vector.2
 ```
 
+Most of the time, you will not need to work with vectors outside of dataframes. If you do need to work with a vector on its own, you may need to grab individual elements within that vector.
+
 ### Indexing into vectors
 
 When you need to access individual pieces of information inside of a vector, you'll do that by calling the vector and adding an additional "address" to specify which piece of data inside the vector you want. This address is called an **index.**
 
 To tell R that you are indexing into a vector, you put the index inside hard brackets [] after the name of your vector variable.
-
-#### Numeric indexing
 
 You can index one piece of data, by putting one index number inside the hard brackets, to index the nth value of that vector. R starts indexing at 1; the first element in your vector is at index 1.
 
@@ -369,37 +400,6 @@ You can also index to _exclude_ elements from a vector, using negative numbers. 
 char.vector[-2]
 ```
 
-#### Logical indexing
-
-To logical-index a vector, instead of calling a numeric vector of indices inside of the hard brackets, call a logical vector of_ equal length_ to your vector of interest inside the hard brackets. All values in the original vector where the corresponding values in the logical vector are `TRUE` will be indexed, and all values where the logical vector is `FALSE` will not be indexed.
-
-Remember our logical vector from before? It should be of use here...
-
-```{r}
-logical.vector
-```
-
-```{r}
-length(logical.vector)
-length(char.vector)
-```
-
-All right, our logical and character vectors are the same length, so we can index our character vector using our logical vector.
-
-```{r}
-# Which elements do you expect to be indexed here?
-char.vector[logical.vector]
-# We'll come back to this later
-```
-
-Now we'll learn about the two broad families of functions/operations you can call on vectors.
-
-### Vectorized/one-to-one operations (n element input, n element output)
-
-
-
-### Summarizing operations (n element input, 1 element output)
-
 # Data types pt 2
 
 These data types make more sense when presented as vectors/dataframe columns--you'll rarely need to deal with objects of these types that are length 1. Now that you know about vectors & dataframes, we'll take a look at the following data types:
@@ -408,12 +408,12 @@ These data types make more sense when presented as vectors/dataframe columns--yo
 
 Character data, as described above, is R's all-purpose data type for text-based data. But R knows that sometimes you might have a column composed of text to label your within-subject task conditions, between-subject groups, etc. **Factor data** is a data type built on top of character data that gives you special properties that are useful when a column/vector contains _grouping_ information.
 
-For example, we can consider the `groupStatus` column from the dataframe we loaded previously. This column contains subject-level information indicating which group each subject belongs to, so this is a natural fit for the factor data type.
+For example, we can consider the `genre` column from the `shakes` dataframe we loaded previously. This column contains categorical information about which of three genres each Shakespeare play belongs to, so this is a natural fit for the factor data type.
 
 ```{r}
 # This column wasn't originally factor, so I'm coercing it to factor here.
 # There are a suite of R functions designed for pushing data from one type to another
-as.factor(data$groupStatus)
+as.factor(shakes$genre)
 ```
 
 Observe how this vector now has _levels;_ these are the different categories of the variable. Factor levels are ordered alphabetically by default; you can reorder the levels into a more meaningful order if you want.
@@ -448,4 +448,3 @@ unless you specify in the function that you want the value to be calculated as i
 ```{r}
 mean(na.vector, na.rm = TRUE)
 ```
-
