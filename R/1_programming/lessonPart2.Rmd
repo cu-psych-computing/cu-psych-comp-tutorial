@@ -36,7 +36,7 @@ data <- read_csv(here("R", "3_descriptives", "uncapher_2016_one_condition_datase
 # Don't worry about the following command; I'm just shortening the dataframe. You'll understand what this means later! Just run it now.
 data <- data %>%
   filter(groupStatus != "") %>%
-  select("subjNum":"bis")
+  select(subjNum:bis)
 
 # Let's take a quick look at the dataframe by running a line with its name:
 data
