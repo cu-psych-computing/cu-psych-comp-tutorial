@@ -221,6 +221,14 @@ Notice that dataframes can be read in from CSV files. These files can be opened 
 
 Very frequently, when working with dataframes, we will need to create new columns, or modify existing columns. The function we'll use to do this is `mutate()`.
 
+A note before we jump in: `mutate()`, and many of the other R functions we'll be using in the workshop, are not included in default, or base, R. They are part of the **tidyverse,** a group of R packages designed to make data manipulation and exploration smoother. In order to be able to access these functions in a later R session (after you close it and reopen it again), you need to put the following command in the first chunk of your R Markdown document and run the command _first, before any other code is run_:
+
+```{r, eval = FALSE}
+library(tidyverse)
+```
+
+Once you've loaded the tidyverse group of functions, you can now use them in R as usual. Now we're ready to explore these functions!
+
 The first argument that `mutate()` takes, or information it needs to be able to work, is what dataframe we want to operate on. All of the rest of the function works because `mutate()` knows which dataframe we are working inside.
 
 After you specify the dataframe in question, we then specify pieces of information in pairs:
