@@ -202,19 +202,17 @@ here("R", "1_programming", "shakes.csv")
 
 ### Reading the data into R
 
-Then, to examine this file in R, place the file path inside the parentheses in the `read_csv()` function.
+Then, to examine this file in R, place the file path inside the parentheses in the `read_csv()` function. You could do this by copying and pasting the full file path outputted by the `here()` function, but it is simpler to "nest" the `here()` function inside `read_csv()`.
 
 ```{r readfile, message=FALSE}
-# You can do using the file path outputted by the here() function...
-read_csv("/Users/emily/Desktop/cu-psych-comp-tutorial-r-prog-dev-emily/R/1_programming/shakes.csv")
-
-# ...or by placing the here() function itself inside the read_csv() function
 read_csv(here("R", "1_programming", "shakes.csv"))
 ```
 
+After running the line above, you will see a preview of the file in R. Sometimes this kind of quick preview is helpful! However, in order to do more with the data, you will want to save a copy of the file as an object in your R environment. (You can tell that the file has *not* yet been loaded into your environment by taking a look at the Environment tab in the upper right section of your RStudio window. Unless you were working in R before this workshop began, you will see a message noting that it is empty!)
+
 ### Loading the file as an R object
 
-Finally, to load the file into your R environment so you can do more with it later, give it a name (e.g., `shakes`) and use the `<-` (the _assignment operator_) to load the data contained in the CSV into an object with that name.
+To load the file into your R environment, give it a name (e.g., `shakes`) and use the `<-` (the _assignment operator_) to save the data contained in the CSV into an R object with that name.
 
 ```{r loadfile, message=FALSE}
 shakes <- read_csv(here("R", "1_programming", "shakes.csv"))
