@@ -214,10 +214,10 @@ read_csv(here("R", "1_programming", "shakes.csv"))
 
 ### Loading the file as an R object
 
-Finally, to load the file into your R environment so you can do more with it later, give it a name (e.g., `shakespeare`) and use the `<-` (the _assignment operator_) to load the data contained in the CSV into an object with that name.
+Finally, to load the file into your R environment so you can do more with it later, give it a name (e.g., `shakes`) and use the `<-` (the _assignment operator_) to load the data contained in the CSV into an object with that name.
 
 ```{r loadfile, message=FALSE}
-shakespeare <- read_csv(here("R", "1_programming", "shakes.csv"))
+shakes <- read_csv(here("R", "1_programming", "shakes.csv"))
 ```
 
 Once you have done so, you will see this object listed in the Environment tab in the upper right section of your RStudio window.
