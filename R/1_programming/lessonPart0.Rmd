@@ -1,5 +1,5 @@
 ---
-title: "CU Psych R Tutorial"
+title: "CU Psych Scientific Computing Workshop"
 teaching: 9000
 exercises: 42
 questions:
@@ -12,6 +12,7 @@ objectives:
   - "Install new packages using GUI/console."
   - "Use paths to specify file addresses."
   - "Understand difference between absolute and relative paths."
+  - "Read in data using read_csv() with a valid path to data."
 keypoints:
   - "RStudio is very powerful."
   - "Setup can encourage better coding practices."
@@ -27,6 +28,8 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+Welcome to the CU Psychology Scientific Computing workshop!
 
 Programming is telling a computer to do some action to some input info to get output info that you want. When it comes to working with data in R, programming is how we tell R to load data, process it, plot it, fit models to it, and so on (everything!). 
 
@@ -44,7 +47,7 @@ These documents will cover:
 
 ## Installing R & RStudio
 
-To install R, visit the [CRAN website](https://mirrors.sorengard.com/cran/) to download the appropriate version of R for your operating system (Linux, Mac, or Windows). Run the installer contained within your downloaded file.
+To install R, visit the [CRAN website](https://cran.r-project.org/mirrors.html) to download the appropriate version of R for your operating system (Linux, Mac, or Windows). Run the installer contained within your downloaded file.
 
 To install RStudio, visit the [RStudio website](https://www.rstudio.com/products/rstudio/download/#download) to download the appropriate version of RStudio for your operating system. Again, run the installer that downloads to your computer.
 
@@ -98,9 +101,8 @@ Since these packages don't come with base R, you have to install them.
 # You will need these packages in later parts of the workshop!
 install.packages(pkgs = c("car",
                           "moments",
-                          "ggplot2",
-                          "tidyr",
-                          "dplyr",
+                          "tidyverse",
+                          "here",
                           "effects",
                           "knitr"))
 
@@ -109,14 +111,14 @@ install.packages(pkgs = c("car",
 
 Then, once they're installed on your computer, you again have to tell R to _load_ the packages into your active R session. This allows you to quickly and easily call the functions in those packages. While you only have to install packages once, you have to load them in every R session that you want to use them. (Why they don't load automatically? I don't know! But if you'd like to configure R to load packages automatically every time you open R, see [these instructions](https://www.r-bloggers.com/load-packages-automatically-in-rstudio/).)
 
-```{r, eval = FALSE}
+```{r, message=FALSE, warning=FALSE}
 # Use library() to load a package ONCE IT'S INSTALLED.
 # You can put the package name as a string
 library("car")
 # OR unquoted, as a variable name. Some functions don't care whether you use quotes or not, but some do.
 library(moments)
-library(tidyr)
-library(dplyr)
+library(tidyverse)
+library(here)
 library(effects)
 ```
 
@@ -179,3 +181,41 @@ The following are special keywords you can use in file paths:
     + double period `..`: The folder one level _up/backward._ If the current working directory is `"plant foods/vegetables"`, I can go to the folder for fruits using the path `"../fruits"`. You can chain the double period to go backwards multiple folders. For example, `"../../.."` is a path going three folders backwards from the current working directory.
 * Mac/Linux only:
     + tilde `~`: This refers to your _home folder._ This is a special folder designated on your computer as a... home base (duh). This is probably the folder associated with your user account on your computer, so it should be located at `"/Users/your_username"`. Your Documents folder, among other folders, is in your home folder, so the path `"~/Documents"` is equivalent to `"/Users/your_username/Documents"`.
+    
+## Reading data into R
+
+One reason file paths are useful is that they allow you to read data (e.g., from an existing spreadsheet or text file) into R. In order to load such a file, you will need to specify the file path so R knows where the data is located.
+
+Although you can figure out the file path on your own, even frequent R users can find it confusing to do so. Thankfully, a function called `here()` (in the `here` package) can easily generate an absolute file path for you, as long as you know which folders your file is located in.
+
+### Generating a file path using here()
+
+Let's say you want to load a CSV file containing data on Shakespeare's plays in R. This file is called `shakes.csv`, and it is located in the folder for this R project. In particular, it is saved inside the "1_programming" subfolder, which is located within the "R" subfolder in the main project folder:
+
+![](../../assets/images/filepath.png)
+
+To generate a file path using `here()`, list the names of each subfolder in quotes, followed by the file name in quotes. Please note that these subfolder names should be listed from highest in the folder structure to lowest (ending with the subfolder where the data file is located).
+
+```{r generatefilepath}
+here("R", "1_programming", "shakes.csv")
+```
+
+### Reading the data into R
+
+Then, to examine this file in R, place the file path inside the parentheses in the `read_csv()` function. You could do this by copying and pasting the full file path outputted by the `here()` function, but it is simpler to "nest" the `here()` function inside `read_csv()`.
+
+```{r readfile, message=FALSE}
+read_csv(here("R", "1_programming", "shakes.csv"))
+```
+
+After running the line above, you will see a preview of the file in R. Sometimes this kind of quick preview is helpful! However, in order to do more with the data, you will want to save a copy of the file as an object in your R environment. (You can tell that the file has *not* yet been loaded into your environment by taking a look at the Environment tab in the upper right section of your RStudio window. Unless you were working in R before this workshop began, you will see a message noting that it is empty!)
+
+### Loading the file as an R object
+
+To load the file into your R environment, give it a name (e.g., `shakes`) and use the `<-` (the _assignment operator_) to save the data contained in the CSV into an R object with that name.
+
+```{r loadfile, message=FALSE}
+shakes <- read_csv(here("R", "1_programming", "shakes.csv"))
+```
+
+Once you have done so, you will see this object listed in the Environment tab in the upper right section of your RStudio window.

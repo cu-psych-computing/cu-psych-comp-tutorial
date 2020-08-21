@@ -141,23 +141,13 @@ Relational statements are often helpful when you are interested in filtering you
 
 Filtering involves specifying a dataframe and a logical vector (e.g., the `isHMM` column we created above). When you filter a dataframe, only the rows in the dataframe with a `TRUE` in the logical column's values will remain.
 
-We can do this by indicating that we only want rows with "TRUE" in the new "isHMM" column we created (option 1):
-
-```{r}
-# Here, we are creating a new R object (data_HMM) that contains the smaller, filtered dataframe
-data_HMM <- filter(data,
-              isHMM == TRUE)
-```
-
-...or we can skip the middle step of creating the "isHMM" column, and simply filter the dataframe using the relational statement (`groupStatus == "HMM"`) we used to create that column a few lines back (option 2):
+We can do this by using the same relational statement (`groupStatus == "HMM"`) we used to create the `isHMM` column a few lines back:
 
 ```{r}
 # Here, we are creating a new R object (data_HMM) that contains the smaller, filtered dataframe
 data_HMM <- filter(data,
               groupStatus == "HMM")
 ```
-
-We will end up with the same filtered dataframe either way. (Because it is more efficient, people tend to go with option 2.)
 
 ## Operating on filtered data
 
