@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
-Welcome (back) to the CU psychology R tutorial! As a reminder, the documents for the introduction to programming cover the following:
+Welcome (back) to the CU Psychology Scientific Computing Workshop! As a reminder, the documents for the introduction to programming cover the following:
 
 0. [Finding your way around RStudio](lessonPart0.html)
 1. Variables, data types, vectors **this document!**
