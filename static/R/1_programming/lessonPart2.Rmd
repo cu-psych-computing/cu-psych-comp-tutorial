@@ -1,0 +1,441 @@
+---
+title: "CU Psych Scientific Computing Workshop"
+subtitle: "Programming, pt 2"
+author: "Monica Thieu"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+```
+
+Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder, the documents for the introduction to programming cover the following:
+
+0. [Finding your way around RStudio](lessonPart0.html)
+1. [Variables, data types, vectors](lessonPart1.html)
+2. Coding strategy, relational & logical operators **this document!**
+
+Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things!
+
+# Pseudocode
+
+This is **so important to do before you write a single line of code.**
+
+Before you try to write any code, you should talk through what you want to do in plain English before you actually try to code it. This is how you will actually figure out what you need your code to do, and then what functions you need to do the things you want.
+
+As an example, let's load a dataframe from a study one of the instructors worked as an undergrad. It's saved within the folders for this project as a CSV file.
+
+```{r, message = FALSE, warning = FALSE}
+data <- read_csv(here("R", "3_descriptives", "uncapher_2016_one_condition_dataset.csv"))
+
+# Don't worry about the following command; I'm just shortening the dataframe. You'll understand what this means later! Just run it now.
+data <- data %>%
+  filter(groupStatus != "") %>%
+  select(subjNum:bis)
+
+# Let's take a quick look at the dataframe by running a line with its name:
+data
+```
+
+In this dataframe, each row contains the data for a single subject in the study.
+
+Let's say I want to calculate the mean hit rate for all subjects in the group "HMM". I need to _operationalize_ this statement into a series of pieces that can be directly translated into R commands:
+
+1. Figure out which subjects were in the "HMM" condition.
+2. Grab the data for only these "HMM" subjects.
+3. Calculate the mean of the values in the hit rate column for only these "HMM" subjects.
+
+Each of these instructions that I've laid out corresponds to a distinct R command--in this case, we need to:
+
+1. Use a relational operator to determine which rows (i.e., subjects) in the group status column are equal to (`==`) "HMM".
+1. `filter()` the dataframe so it only includes these "HMM" rows.
+2. Use `summarize()` to call `mean()` on the hit rate column in the filtered dataframe.
+
+And now we can go ahead and write the code to do this bit of calculation. This pseudocoding exercise was pretty brief. Pseudocoding can be quick, but it can often become complex for larger data processing or analysis tasks! Still, the time you take to brainstorm some pseudocode will save you time you might have otherwise spent puzzling over which functions to use and how.
+
+# Relational operators
+
+Most of the time, when you want to do things in R, you want to do them in _some conditions but not others._
+
+**Relational operators** are the first key to making this happen. These are essentially inequality operators like the ones you would encounter in algebra.
+
+The following is a **relational statement.** This is a command involving a relational operator that returns `TRUE` or `FALSE` based on whether the statement is true or false.
+
+```{r}
+2 > 1
+```
+
+Here are a few more relational statements. Do you expect each one to return `TRUE` or `FALSE`, based on what's written?
+
+```{r}
+2 < 1
+```
+
+```{r}
+99 == 99
+```
+
+```{r}
+99 != 100
+```
+
+Here are the relational operators:
+
+* `>` (greater than)
+* `<` (less than)
+* `>=` (greater than or equal to)
+* `<=` (less than or equal to)
+* `==` (is equal to--NOTE that it is _two_ equals signs, _one_ equals sign does something different)
+* `!=` (is not equal to)
+* `%in%` (is contained by; this is useful when you need to see whether the element on the left matches any of a vector of elements on the right)
+
+Here's a few examples of `%in%` in action, in case this is a little less intuitive than the others:
+
+```{r}
+1 %in% 1:5
+```
+
+```{r}
+char.vector <- c("apple", "banana", "cantaloupe", "dragonfruit")
+
+"apple" %in% char.vector
+```
+
+```{r}
+"orange" %in% char.vector
+```
+
+Note that `%in%` takes a _vector_ on the right side, and looks for _full matches_ from the element on the left to the elements on the right. As we touched on in Part 1, it may be helpful to think of a vector as a single column of data.
+
+To match a piece of character data into a single, LONGER piece of character data on the right (e.g. matching one word into a sentence), you have to use other strategies we won't get into here.
+
+In most cases, you can use `==` and `!=` to compare character data too--if you want to see if one piece of character data is the same as another piece.
+
+```{r}
+"word" == "word"
+```
+
+```{r}
+text.var <- "statistics"
+
+text.var == "statistics"
+```
+
+Hey, if we think about the pseudocode from earlier, we can use `==` to determine which values in the `groupStatus` column are equal to `"HMM"`.
+
+```{r}
+data <- mutate(data,
+          isHMM = (groupStatus == "HMM"))
+```
+
+Relational operators are vectorized--see that feeding in a vector (i.e., a column of data) on the left of the relational statement returns a logical vector (i.e., a separate column of TRUE / FALSE values), not just one logical!
+
+## Filtering data 
+
+Relational statements are often helpful when you are interested in filtering your data. Now that we've used a relational statement above to generate a logical column indicating which subjects are members of the HMM group, we can use the `filter()` function in `tidyverse` to filter only the rows belonging to the HMM group.
+
+Filtering involves specifying a dataframe and a logical vector (e.g., the `isHMM` column we created above). When you filter a dataframe, only the rows in the dataframe with a `TRUE` in the logical column's values will remain.
+
+We can do this by indicating that we only want rows with "TRUE" in the new "isHMM" column we created (option 1):
+
+```{r}
+# Here, we are creating a new R object (data_HMM) that contains the smaller, filtered dataframe
+data_HMM <- filter(data,
+              isHMM == TRUE)
+```
+
+...or we can skip the middle step of creating the "isHMM" column, and simply filter the dataframe using the relational statement (`groupStatus == "HMM"`) we used to create that column a few lines back (option 2):
+
+```{r}
+# Here, we are creating a new R object (data_HMM) that contains the smaller, filtered dataframe
+data_HMM <- filter(data,
+              groupStatus == "HMM")
+```
+
+We will end up with the same filtered dataframe either way. (Because it is more efficient, people tend to go with option 2.)
+
+## Operating on filtered data
+
+By filtering using logical data, we can also perform functions on only a smaller, filtered subset of the dataframe. For instance, whereas it is possible to examine the mean hit rate for all subjects in the original dataframe:
+
+```{r}
+# Notice that we are using the original `data` dataframe here
+summarize(data,
+          meanHitRate = mean(hitRate))
+```
+
+...filtering the data allows you to examine the mean hit rate for _only_ the subjects in the HMM group.
+
+```{r}
+# Here, instead, we are using the filtered `data_HMM` dataframe
+summarize(data_HMM,
+          meanHitRate = mean(hitRate))
+```
+
+# Logical operators
+
+Relational statements will get you a long way. Sometimes, though, you need to know whether groups of conditions are true or false. You can combine the `TRUE`s and `FALSE`s of relational statements using Boolean logical operators.
+
+These are the core Boolean operators you'll need in most cases:
+
+* `!` (NOT operator; this returns the opposite of whatever follows it)
+* `&` (AND operator; this returns `TRUE` if both statements on either side are both true
+* `|` (Pipe, or shift-backslash--OR operator; this returns `TRUE` if _at least one_ of the statements on either side is true)
+
+Here are examples of the Boolean operators at work.
+
+The `!` NOT operator:
+
+```{r}
+!TRUE # What do you expect this to return?
+```
+
+```{r}
+data <- mutate(data,
+          isLMM = !(groupStatus == "HMM"))
+# This should return TRUE for all the times where groupStatus is "LMM"
+```
+
+The `&` AND operator:
+
+```{r}
+1 == 1 & 2 == 2 # See what this returns
+```
+
+```{r}
+1 == 1 & 2 != 2 # Versus this
+```
+
+The `|` OR operator:
+
+```{r}
+1 == 1 | 2 == 2
+```
+
+```{r}
+1 == 1 | 2 != 2
+```
+
+Relational operators also obey order of operations re: parentheses (). See below:
+
+```{r}
+(1 == 1 & 2 != 2)
+```
+
+```{r}
+!(1 == 1 & 2 != 2)
+```
+
+```{r}
+(1 == 1) & (2 != 2)
+```
+
+```{r}
+(1 == 1) & !(2 != 2)
+```
+
+Other useful functions will also output `TRUE` or `FALSE`, so you can use these similarly to relational statements to generate logical output based on the content of some data.
+
+Remember the `NA` data type? Many times, you will want to know which elements of a dataframe column are missing.
+
+```{r}
+data <- mutate(data,
+          rtFA_missing = is.na(rtFA))
+```
+
+There are many more of these `is.whatever()` functions! You can look them up in the help--chances are
+there'll be one to check whichever data type you're looking for.
+
+# Conditional operators
+
+Sometimes, you want to run commands or set values based on whether certain things are true or false. For example, imagine that you have some continuous outcome variable, and you want to recode that continuous outcome variable categorically.
+
+We can use what we've learned about logical statements so far, in conjunction with some new commands!
+
+Let's consider the column `adhd` in our dataframe `data`. This is the participant's score on the ADHD Adult Self-Report Scale (short form). The inventory scoring instructions say that any participant with a score of 4 or above is considered "potentially diagnostic of ADHD". If we wanted to add a variable that indicated whether someone did or did not have a suprathreshold ADHD score, what would we do?
+
+Let's first brainstorm some pseudocode:
+
+1. Call the column for ADHD
+2. Create a new column and fill in the following values based on the corresponding values in ADHD
+    1. If the ADHD score is 4 or above, then label the new column as ADHD diagnostic
+    2. Otherwise (if the ADHD score is less than 4), label the new column as ADHD non-diagnostic
+
+Now, our pseudocode has just introduced a word we haven't previously seen: _if_. What we need here is a command that will direct R to judge whether some condition is true, and then perform some action ONLY if that condition is true.
+
+If-based code is great for promoting reproducibility. You can just tell R to check that a certain condition is true, and you'll always get the result you want, no matter what order the rows of your data are in, or any other particulars.
+
+Now introducing a new function, that'll let us create a new column that specifies whether a condition is true in an existing column: `if_else()`. (Please note the underscore! Although there is also a similar `ifelse()` function in base R, we recommend using the `if_else()` function in the `tidyverse` package.)
+
+First, `if_else()` takes a _condition_: this is any statement that evaluates to **logical** data. It's a question in R that must yield a TRUE or FALSE answer. (In the examples we will review today, we will focus on conditions involving columns of logical data.)
+
+Then, `if_else()` creates a new column the same length as the existing column specified in the condition. Each element of this new column will be filled in with some value based on whether the condition came out as `TRUE` or `FALSE` for that row. If the condition is `TRUE` for a given row, `if_else()` fills in the new column in that same row with value specified in the second argument. Otherwise, if the condition is `FALSE` for that row, `if_else()` fills in the new column with the value specified in the third argument.
+
+In plain English, `if_else(condition, A, B)` essentially does the following:
+
+1. Check whether a condition is true or false for each row in a column.
+2. If the condition is true for that row, fill in the same row in the new column with value A.
+3. Otherwise, if the condition is false for that row, fill in the same row in the new column with value B.
+
+`if_else()` is a vectorized function! Remember that this means that if you input a vector (i.e., a column) in the first argument, you'll get a vector of the same length as your output, because the operation is done on each vector element (i.e., each row) separately.
+
+```{r}
+data <- mutate(data,
+          adhdCoded = if_else(adhd >= 4, "adhd", "no adhd"))
+```
+
+# Functions
+
+We've already used a variety of functions (`mean()`, `is.na()`, `if_else()`, and more), so the behavior of functions should be somewhat familiar to you. **Functions take inputs, do stuff to them, and give you an output that's had the stuff done to it.**
+
+## Anatomy of a function
+
+Right now, we'll take a moment to go over the pieces of a function a little more formally so you know how to use them to their fullest extent.
+
+Below is an example (fake) function call. This function takes the inputs `input1` and `input2`, does the function `function()` to those inputs, and returns an output which can be stored in a variable. Here are the relevant pieces:
+
+`output <- function(argument1 = input1, argument2 = input2)`
+
+- `function()`: This is the function that will DO SOMETHING to your inputs.
+  Whenever you are referencing a function by name, you should always write it with the two parentheses () after the function name so people know you're referring to a function and not a variable.
+  The name of a function will tell you something about what a function does. You can/should look it up if you're not sure though!
+- `argument1`, `argument2`, etc: These are **arguments** to a function--this is the information that a function _expects_ and _is prepared to operate on_.
+  The name of an argument will tell you something what an argument represents and how it should be formatted. (More on this later)
+- `input1`, `input2`, etc: These are variables that you created that will actually get fed into your function. This is the information that will actually get operated on. These can be data that live in your environment, or these can be settings (like switches and knobs, if your function was an actual machine) that are turned to a specific value.
+- `output`: This is the variable that will hold your output information.
+  As you can see, we are _assigning_ the value that's output from `function()` to the variable `output` using the `<-` left-facing arrow operator. Just like before with printing variable values to console, if you run a function without assigning its output to a variable, the output will print to console (so you can read it) but it will not be stored anywhere (so you can't perform any further operations on that output).
+  
+## Writing your own function
+
+Many times in R, you'll find yourself wanting to do the same thing multiple times. You can do this by _writing your own function_ that you'll then call to do whatever it is you need to do, whenever you need to do it. This will save you time. You don't have to copy and paste certain blocks of code that you use a bunch--instead, make it into a function and you can call it quickly whenever you need it!
+
+Any function you make will have basically the same format, and will be created using the `function()` function:
+
+```{r, eval = FALSE}
+functionName <- function(argument1, argument2, ...) {
+  function_code
+  function_code
+  more_function_code
+  return(output_value)
+}
+```
+
+The body of the function will come between the curly brackets, and the last line of the body should be whatever the function is going to spit out at the end.
+
+Let's say you're collaborating with a British colleague who is sending you data they are collecting so that you can analyze it. One of the variables is the temperature of the room where the experiment took place, in Celsius. Your colleague is constantly sending you new data as they collect it, but you'd really rather work with values in Fahrenheit. We can create a function to do the conversion for you so you don't have to look up the formula every time.
+
+```{r}
+# Here's the function, with a formula from the internet
+# The input argument is the temperature in Celsius
+# A variable called TempF is created within the function
+# which is the result of taking TempC and transforming it
+# We then return the value of TempF
+
+C2F <- function(tempC) {
+  tempF <- tempC * 1.8 + 32
+  return(tempF)
+}
+```
+
+Now, you can call your own homemade function. First, let's load some data to test it with.
+
+```{r, message = FALSE}
+# This is a CSV file of the average monthly high temperature (Celsius) in Colombo, Sri Lanka.
+read_csv("colombo.csv")
+
+# Let's load this dataframe as an object in our R environment
+temps <- read_csv("colombo.csv")
+```
+
+Using `mutate()`, we can use the output to create new columns just like any function that already comes with R. Let's try it out by creating a new column of Fahrenheit data.
+
+```{r}
+# Using mutate and our new C2F() function, I can convert the values to Fahrenheit
+mutate(temps,
+       fahrenheit = C2F(celsius))
+```
+
+**Keep in mind:** R is not so strict about the names you give to your functions. Sometimes, you can get into a pickle when homemade functions have the same name as pre-existing functions, and R doesn't know which function you're referring to. For this reason, _avoid giving homemade functions the same names as pre-existing functions._ For example, avoid creating homemade functions named `mean`, `median`, and other names that you know for sure also belong to pre-existing functions. (If you're ever not sure if a function name already belongs to a function, you can use the [help pages](#The-help-docs) to see if a help page exists for a particular function. If a help page does exist, then a function already has that name.)
+
+# Getting assistance
+
+## On your own
+
+### The help docs
+
+In RStudio, you can use the "Help" tab in the lower right corner of your window to search for the help page for a function you're having trouble with. You can type the name of your problem function into the search bar and pull up the help page!
+
+You can also use the function `?` in console, in front of the function you're looking up, to pull up the same info in the "Help" tab. For example, to open the help page for the `mean()` function, I would run `?mean` in console.
+
+The help document for the function you're looking for should have a description of:
+
+* the function's arguments
+    + what type of data they expect
+    + what part of the function's behavior they control
+* what they intend the function to be used for
+* explanations of any equations used inside the function
+* examples of function calls that work, that you can copy and paste into console and run to inspect output
+
+### The internet
+
+Sometimes you'll run into issues that the help docs don't completely resolve, and that's okay. The internet is here to help, if you know how to ask it!
+
+#### How to Google for help
+
+Sometimes it can be unclear what keywords to enter to find a solution to your code issue. The following strategies can give you a handle:
+
+* Start your query with "r"--it's not perfect, since it's a single letter and not a full word like "python" or "matlab", but this helps to return results that are R-related
+* If you're looking for help with a function from a specific package, include the package name in your query
+* If a command you're trying to run fails, and returns an error message, enter the name of the function and _copy and paste the error message into the query_
+    + your query should look like "r [package name] [function name] [text of error message]"
+* If you aren't getting an explicit error message, but a command you're trying to run is not behaving as you expect, try "r [package name] [function name] won't [the task you're trying to do]"
+* If you have your pseudocode planned out, but don't know what functions to use to execute your pseudocode, try "r how to [your pseudocode here]"
+    + be sure to remove any variable names that are specific to your own data before you Google
+
+#### Stack Overflow and other Q&A sites
+
+Often, a successful Google search for help will yield links to posts on Stack Overflow, a Q&A site where people can post questions about code to solicit answers from other users, or from other Q&A sites (email records from old R help mailing lists, for example).
+
+When parsing a Stack Overflow post, look for the following:
+
+* Read the question to determine how similar this asker's situation is to yours (and thus how likely the posted answers are to solve your problem)
+    + Good question posts will have example code that should run if you copy and paste it into console. If this code is there, you can run it to see if it looks like your own data situation
+* Check out the provided answers
+    + If there is a green check mark on the left of the "top" answer, the question asker has "accepted" the answer, or marked it as the most helpful answer. It has solved the asker's problem, and hopefully will solve yours too!
+    + Answers may have upvotes from other users (not the question asker). You can browse answers, including the "accepted" answer, to try multiple possible solutions and find the one that's best for your situation.
+    
+Other Q&A sites may or may not have as smooth of a setup as Stack Overflow, but if you are careful to inspect the question to see if it's relevant to your own problem, you should be able to assess whether the answer provided will help you.
+
+#### R user blogs
+
+Plenty of R users post little tutorials (like this one!) online to help other R users. I've encountered many of these blog posts while Googling for help, and found many of them useful! Sometimes these may be from larger sites like [r-bloggers.com](https://www.r-bloggers.com/) that post submissions from many users, or they may be from personal blogs maintained by one person.
+
+A good blog post will, like a good Stack Overflow post, have example code that you can copy/paste into your own console and run to follow along with the blog post. This way, you can see if the blog post indeed applies to your particular issue.
+
+## Asking someone else
+
+Sometimes, though, after careful Googling and combing through search results to test all suggested solutions, you still don't have a solution for your R issue. At this time, you can ask someone else for assistance.
+
+You can ask any number of folks, including people in your lab, people in your department, and/or people on the internet (e.g. posting to a help list). At Columbia, we're currently maintaining a [Slack group](https://join.slack.com/t/cu-psych-r-users/shared_invite/enQtMjk5MTExNjkxOTkwLTY2MjJkMGY1ZmU1MzM0ZTA0NTM2ZDJjZjFjMzU4YmRjZDJiMWQyMjJkMzVkMjc0YTE0OTg4ZmU2NjdlYzZiNjk) for R help, where you can join and post questions.
+
+### How to ask
+
+When asking someone for help with your R issue, they'll be best equipped to help you if you provide them with the right info about your problem to give them an idea of what to suggest. Be sure to provide the following pieces of information to anyone you're asking for help from:
+
+* The nature of the dataset you're working with (what kinds of data you're trying to analyze, what data types they are, etc.)
+* Your pseudocode, so they know what exactly you're trying to accomplish
+* The code that isn't working
+    + If contacting someone through email/help list/etc, you can copy and paste the code that's not working
+    + Clarify any variable names in the code that are specific to your data
+    + If using functions from a specific package, say what those packages are
+    + If code fails with an error message, include the text of the error message
+* What you've tried already to solve this
+    + If you tried solutions in any Stack Overflow posts, R user blogs, etc, include links to those pages
+    + Copy and paste any solution code you tried if it still isn't working, explaining variable names and including error messages if applicable
+
+Including this info will make it much easier for someone else to identify the cause of the issue you're experiencing and suggest solutions for you. Help them help you!

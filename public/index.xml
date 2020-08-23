@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Workshop on Columbia Psychology Scientific Computing</title>
+    <link>/</link>
+    <description>Recent content in Workshop on Columbia Psychology Scientific Computing</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>License</title>
+      <link>/license/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/license/</guid>
+      <description>License Instructional Material All CU Psych Computing instructional material is made available under the Creative Commons Attribution license. The following is a human-readable summary of (and not a substitute for) the full legal text of the CC BY 4.0 license.
+You are free:
+ to Share—copy and redistribute the material in any medium or format to Adapt—remix, transform, and build upon the material  for any purpose, even commercially.</description>
+    </item>
+    
+    <item>
+      <title>Meetings</title>
+      <link>/meetings/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/meetings/</guid>
+      <description> Meetings Come and learn with us at one of our meetings! Topics span various early-intermediate to advanced strategies for asking psychological research questions using scientific computing tools.
+Upcoming To be announced.
+ Past Under construction! Documentation of past meetings will be added soon.
+  </description>
+    </item>
+    
+    <item>
+      <title>Resources</title>
+      <link>/resources/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/resources/</guid>
+      <description>Resources Columbia-Specific Resources  Columbia Psychology scientific computing users Slack group)   Full, Freestanding General-Use R Tutorials Mainly base R tutorials  Cookbook for R: Basics of data cleaning, analysis and graphing   Tidyverse tutorials  Hadley Wickham’s R for Data Science online textbook Michael C. Frank’s psychology-specific tidyverse tutorial, adapted from R for Data Science   Syllabi for courses taught in R You can work along with these; course materials should be linked in the syllabi.</description>
+    </item>
+    
+    <item>
+      <title>Who We Are</title>
+      <link>/who/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/who/</guid>
+      <description>Who We Are 2020 - 2021 Graduate Methods Support Advisors Emily Nakkawita  Research interests: how goal pursuit processes differ based on individuals’ unique motivational orientations Method specialties: surveys, web-based response latency tasks Tool/language specialties: R, generating manuscripts with Papaja, Javascript/HTML customization in Qualtrics, M-Turk, Prolific Favorite NYC neighborhood: Park Slope Office hours: To be announced   Hannah Tarder-Stoll  Research interests: how memory is flexibly used to predict future events at different timescales Method specialties: cognitive tasks (in-person and web-based), neuroimaging, virtual reality Tool/language specialties: R, Python, Unity, Inquisit Favorite NYC neighborhood: Astoria Office hours: To be announced     Contributors to Scientific Computing Workshop The lesson materials for the introductory workshop are the evolving product of several contributors, past and present, from the Columbia University psychology department.</description>
+    </item>
+    
+    <item>
+      <title>Workshop</title>
+      <link>/workshop/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/workshop/</guid>
+      <description>Fall 2020 Workshop Instructors: Paul A. Bloom, Emily Nakkawita, Jonathan Nicholas, Matt Siegelman, Hannah Tarder-Stoll, Monica Thieu
+ General Information This workshop develops and teaches the scientific computing skills needed to conduct psychological research. Its target audience is researchers who have little to no prior computational experience, and its lessons are psychology-specific, building on learners’ existing knowledge to enable them to quickly apply skills learned to their own research.</description>
+    </item>
+    
+  </channel>
+</rss>

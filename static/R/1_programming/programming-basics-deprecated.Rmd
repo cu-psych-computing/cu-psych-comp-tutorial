@@ -1,0 +1,1082 @@
+---
+title: "CU Psych R Tutorial - Programming Basics"
+author: "Monica Thieu"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 5
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## First off
+
+R is a programming language designed for statistical computing and production of statistical graphics. In other words, **R is for doing stats with code.** With R, you have a lot of power over your stats (statistical power? ha ha ha), once you get a hang on the code part. Before we get to the **stats** part, though, we'll spend a little bit of time on the **code** part.
+
+To be able to make full flexible use of R, we're going to learn some basics of programming. Essentially, you'll learn what your computer hears when you speak to it using R, and strategies for how to tell your computer to do certain things you will often want it to do. We'll also touch on some best practices for code writing: how to write code that's efficient both for your computer (to run) and for humans (to read).
+
+## Defining things
+
+### Variables
+
+At its base, our goal with programming is to tell a computer to take some input information, do something with it, and give us the output. A **variable** is how we'll store that information in a way that the computer can operate on. A variable has two parts: a **name** and a **value**. A variable's name allows us to specify which piece of information we want the computer to operate on, and its value specifies the information to be operated on itself.
+
+Below, I'll initialize a variable named `x`, and assign it the value 1. **Initializing** is the programming term for creating a new variable that didn't previously exist.
+
+```{r}
+# In plain English, this translates to "Initialize the variable 'x' and assign to it the value 1" or, more succinctly, "Let 'x' take the value of 1".
+# The <- (left-facing arrow) operator is what you'll use to assign values to variables. Values can be numbers, like here, or they can be much more complex pieces of information (which we'll get to in a bit).
+# You'll specify your inputs on the RIGHT side (shaft) of the arrow, and your desired output location on the LEFT side (head) of the arrow.
+# If you use the framing "Let [left side] take the value of [right side]" you can remember how to assign values to variables. It's like taking the value on the right, and pushing it along the direction of the arrow into the variable name on the left.
+x <- 1
+```
+
+Now, the computer is holding onto this information, and I can access it and do what I wish with it. This information is being held onto in R's **environment,** or a chunk of computer memory that R uses to store information. When you are working on stored variables in R, this is where they live. It's kind of like R's working memory. Just as in psychology, it's *not* the same as long-term memory--storing variables in the environment is *not* equivalent to saving them to your computer as you would a document or other file. You can ONLY work on your R variables in R.
+
+If I want to know what the value of `x` is, I can ask the computer to output the value of `x` to console. The **console** is where the magic happens: the window where you type commands and run them by pressing Enter. **Commands** are any instruction you give to your computer via your programming language. Typically, one complete command is one line of code.
+
+If your command has an output associated with it, the output will appear below your command in the console. Use outputs to quickly check what the values of variables are.
+
+```{r}
+# Typing the name of a variable, without anything else, and running that command will cause R to output the value of that variable. This is also called "printing" the variable's value to console output.
+# Notice that there's no arrow in this command!
+x
+```
+
+In fact, if you type *any* command with **no arrow** R will print the results of your command to console output.
+
+```{r}
+# This time, we'll do a little bit of calculating. See again that there's no arrow in the command, and that the result of my addition has printed to console.
+2 + 2
+```
+
+Now, we see the output of `2 + 2`, but that information isn't held onto anywhere. If you want to store the results of a command for later, you'll need to set a variable equal to those results. Let's save the results of `2 + 2` into the variable `x`. Since `x` has already been initialized, we're going to be writing OVER the old value of x with new information.
+
+```{r}
+# "Assign to x the result of 2 + 2"
+x <- 2 + 2
+```
+
+Now, just to be sure, let's check the value of x by printing it to console:
+
+```{r}
+x
+```
+
+Great! Now that the results are being stored in the variable `x`, we can do stuff to those results. For example, a little bit more calculating:
+
+```{r}
+x * 2
+```
+
+Now let's do that calculation again, and this time we'll save the results of this new command into a variable.
+
+```{r}
+# Initialize the variable "y"
+y <- x * 2
+```
+
+Again, let's check that the value of `y` is what we'd expect by printing to console.
+
+```{r}
+y
+```
+
+We don't have to create a new variable every time we want to store some information. As you saw, you can write over the existing value of a variable by setting the variable equal to something else. You can even write over the existing value of a variable by doing a calculation on that variable itself:
+
+```{r}
+# Read this as "Assign to NEW y the OLD value of y divided by 2"
+# Whenever you're setting a variable equal to some function of itself, ALL of the commands and calculations will be run using the OLD value of the variable, and it will only be reassigned after the WHOLE command is run.
+y <- y / 2
+```
+
+And now let's check the new value of `y` in console output:
+
+```{r}
+y
+```
+
+
+#### Best practices: naming variables
+
+In each section, we'll touch on best practices. Best practices for programming encompasses the conventions you should follow in writing your code to make it readable to your collaborators, and most importantly, future you! These will be interspersed in their relevant locations, and summarized again for you at the end.
+
+With regards to variables, you can make the name of a variable almost whatever you want, within reason. A variable name can legally contain:
+
+- letters (upper or lowercase, R is case sensitive!)
+- numbers
+- period (.) and underscore (_)
+
+R (and basically all programming languages) require variable names to START with a LETTER. (Try initializing a variable name starting with a number and see what happens.) Other allowed characters can be anywhere in the variable name except for first.
+
+Beyond this, here are some recommendations we strongly urge you to follow as well when naming variables:
+
+- Name variables informatively, not arbitrarily! The name of a variable should tell you something about what information it contains. `raw.data` is better than `d`.
+- Use a period to separate words in multi-word variable names.
+- Name variables succinctly, but informatively. Abbreviations are okay if they are standard throughout your code. `max.val` is okay instead of `maximum.value`.
+- When in doubt, use lowercase letters.
+
+This whole time, we've been using console output to see the values of variables.
+
+Cool! Let's review now:
+
+- A **variable** stores some **value** under a **name** that you can use to refer to that value
+- Variables are stored in the **environment** (like R's working memory)
+- You can do operations on variables (calculator-type and otherwise) by referring to them by name in commands
+- You can print the value of a variable (or the result of any command) by typing it with no `<-`
+- You can set the value of a variable to the result of a command
+  - You can set the value of a variable to the result of a command involving another variable
+  - You can set the *new* value of a variable to the result of a command involving the *old* value of that same variable
+  
+### Functions
+
+Before we get further, let's take a brief moment to go over the anatomy of a **function.** If you consider that previously, we learned that our goal with programming is to tell a computer to take some input information, do something with it, and give us the output, a **function** is the *do something with it* part of this sentence. (We just learned that a variable holds that *input info* and also can hold the *output info.*)
+
+You'll use a great many functions to DO STUFF to your variables in R. Let's go over the pieces of a function so you know how to use one.
+
+Below is an example (fake) function call. This function takes the inputs `input1` and `input2`, does the function `function()` to those inputs, and returns an output which can be stored in a variable. Here are the relevant pieces:
+
+`output <- function(argument1 = input1, argument2 = input2)`
+
+- `function()`: This is the function that will DO SOMETHING to your inputs.
+  Whenever you are referencing a function by name, you should always write it with the two parentheses () after the function name so people know you're referring to a function and not a variable.
+  The name of a function will tell you something about what a function does. You can/should look it up if you're not sure though!
+- `argument1`, `argument2`, etc: These are **arguments** to a function--this is the information that a function *expects* and *is prepared to operate on*.
+  The name of an argument will tell you something what an argument represents and how it should be formatted. (More on this later)
+- `input1`, `input2`, etc: These are variables that you created that will actually get fed into your function. This is the information that will actually get operated on. These can be data that live in your environment, or these can be settings (like switches and knobs, if your function was an actual machine) that are turned to a specific value.
+- `output`: This is the variable that will hold your output information.
+  As you can see, we are ASSIGNING the value that's output from `function()` to the variable `output` using the `<-` left-facing arrow operator. Just like before with printing variable values to console, if you run a function without assigning its output to a variable, the output will print to console (so you can read it) but it will not be stored anywhere (so you can't perform any further operations on that output).
+
+#### Best practices: Using & getting help with functions
+
+Most times, if you're having a problem in R, it's because a function that you want to use is not doing the thing that you want it to do to your data. Here's a few best practices for using functions, so that when (not if... trust me) you have a problem with a function, you can resolve your problem with a minimum of hair-pulling.
+
+- Spell out the names of your arguments in all function commands.
+  R understands that `function(input1, input2)` means the same thing as `function(argument1 = input1, argument2 = input2)`. Functions have expected arguments listed in a particular order, and if you don't explicitly name the argument, it will assume you are specifying your input variables in the default argument order. If you want to look back at a function call you used in the past, though, if you don't remember what arguments a function takes, or what order they're expected, *you will get confused!* Always spell out all argument names so that you (or someone else) can look back later and know what you were trying to do.
+- When you need help...
+  - Search the documentation first
+    In RStudio, you can use the "Help" tab in the lower right corner of your window to search for the help page for a function you're having trouble with. You can type the name of your problem function into the search bar and pull up the help page! You can also use the function `help()` in console to pull up the same info. `help()` takes the name of your function as an argument. For example, if I want the help page for the `mean()` function (take arithmetic mean of data), I would run `help(topic = "mean")` in console.
+  - Google it (for real)
+    Googling the answer can save you LOTS of time if the docs don't help first. I usually type something like "R [function name] won't [do the thing I am trying to do]", substituting my problem function and my desired operation into the search term.
+  - Ask a human
+    When asking a human for help via text (email etc.), always refer to your problem function name as `function()` with the parentheses () after the function name. This helps your colleague know that you are referring to a function, and not a variable.
+
+### Data types
+
+Thus far, we've created a couple variables and set them equal to a number (either explicitly, or as the result of a calculation). That's not the only type of information R can store, though. R can store all sorts of stuff! What kinds of stuff? Let's take a look.
+
+The different formats of information R understands are called **data types.** Broadly, the type of a piece of data specifies what kind of information it holds, and what kinds of operations might be done on that data. There are different things you would want to do with different pieces of data, and data types allow a programming language to know the sorts of things you want to use a piece of information for.
+
+#### Numeric data
+
+We've been working with numbers thus far, and you'll likely continue to work with numbers in your R travels. (I mean, what else are you gonna do stats on?) The **numeric** data type specifies that your variable is a number, and allows R to do mathematical operations on it.
+
+```{r}
+# I'm going to reassign x here to a number of my own choosing. Not necessarily my favorite number, just what popped into my head.
+x <- 16
+
+# Here's the basic arithmetic operations R understands.  
+
+x + 0.5
+# R understands PEMDAS! As should you.
+3 * (x - 7)
+x / 4
+x^2
+```
+
+```{r}
+# Bonus arithmetic!
+
+# What is this!? %% is the "modulo" operator. This operator says "attempt to divide the second value into the first value and output the remainder." So 16 / 8 leaves remainder 0, but 16 / 7 leaves remainder 2 (aka 16 - 14). You might be wondering when on earth this would ever be useful. Just trust us on this one!
+x %% 8
+x %% 7
+# Another goofy operator! %/% is a cousin to modulo: integer divison. This operator says "attempt to divide the second value into the first value and output the integer result without the remainder." So 16 %/% 8 <- 2 remainder 0, and 16 %/% 7 <- 2 remainder 2, so the remainder info is discarded and these two commands both output 2.
+x %/% 8
+x %/% 7
+```
+
+
+#### Logical data
+
+A special case of numeric data is **logical** data, which is essentially binary (0 or 1) numeric data. R will let you represent binary numeric data as TRUE/FALSE, where 0 means FALSE and 1 means TRUE. You can do everything you can do with numeric data on logical data, like:
+
+```{r}
+# this behaves like 1 + 5
+TRUE + 5
+```
+
+Logical data can also do stuff that numeric data can't do. For example, a function can take an argument like  `function(data <- my.variable, do.this <- TRUE)`, where the argument `do.this` specifies a sort of on/off switch to control what operations you want `function()` to do on `my.variable`.
+
+#### Character data
+
+Another type of data you'll likely need to work with is word-based data. The **character** data type specifies that your variable contains word-based information, and allows R to perform language-y operations on a variable. One piece of character data is called a **string.**
+
+```{r}
+this.string <- "words"
+```
+
+In psychology research, you might use string data in the following contexts:
+
+- Coding participant IDs
+- Indicating levels of independent variable conditions (e.g. "Control" vs "Manipulation")
+- Actual textual data (e.g. a participant's written response to a question)
+
+For example, a couple string-specific operations you can do on character data:
+
+```{r}
+# If you check the docs, you'll see that the function toupper() expects an argument called x, where x is any character data. We won't specify the arg name here--e.g. toupper(x = this.string)--because base functions like this, that really only take one argument, are self-explanatory enough that you can look back later and know what you were doing. You should name args for more complex functions though! 
+# toupper() returns the same character data that was input, but in all caps. This, and its companion function tolower(), can be really handy when you need to standardize text data that comes in different cases.
+toupper(this.string)
+```
+
+```{r}
+# nchar() also expects an argument called x (I know, x is not an informative variable name. This only happens with the really basic functions, I promise!). 
+# It returns the character count (INCLUDING SPACES AND SPECIAL CHARACTERS) of a character variable. So here, knowing that the input variable is "words", what do we expect the output character count to be?
+nchar(this.string)
+```
+
+**R is not the place to be doing intense textual analysis!** But R CAN handle your run-of-the-mill text labeling/processing needs.
+
+#### Vectors
+
+So now we know that R understands a few different basic data types--numeric, logical, and character. We've operated on single chunks of information thus far--one number or one string. 99.9% of the time, though, your data will not be comprised of one piece of information. In these cases, you'll be using **vectors,** which are sequences of values stored together in one variable.
+
+For example:
+
+```{r}
+this.vector <- 1
+```
+
+Right now, the variable `this.vector` is storing ONE piece of information. But if I do this:
+
+```{r}
+# The function c() will become a very, very close friend of yours. This is the CONCATENATION function. In the context of R, concatenation means "combining multiple distinct values into one vector". (chaining things together, per the lay definition)
+# You'll see that I didn't name any arguments that passed into c(). I just typed the numbers right in there, separated with commas. c() doesn't actually take named arguments--it can take any type of information that is concatenate-able.
+this.vector <- c(1, 2, 3)
+this.vector
+```
+
+`this.vector` now is storing the THREE values: 1, 2, and 3. Each of these values in the vector is called an **element.** We will spend more time later looking at all the fantastic things you can do with vectors. A couple examples here:
+
+```{r}
+# You can do vectorized math: R understands this as "take ALL the values in this.vector, and add 7 to each of them individually."
+this.vector + 7
+```
+
+```{r}
+# You can do summarizing operations using the values in a vector as a group:
+# Again, see that some basic functions like sum() don't take named arguments. In these cases, it's okay because reading the function is pretty self-explanatory re: what your intention was in writing the function.
+
+sum(this.vector)
+```
+
+```{r}
+# You can do vector-to-vector math:
+# WHENEVER you are doing mathematical operations with vectors, R will ASSUME you want these vectorized (e.g. do the operation using the first element of both vectors, then the second element of both, etc)
+# This is critical to remember in R. For the types of operations you'll likely be doing, this is the "common sense" way of operating on things, but not all programming languages behave this way, so this doesn't necessarily generalize.
+this.other.vector <- c(10, 20, 30)
+this.vector + this.other.vector
+```
+
+One type of vector you might need to deal with is a series of numbers increasing by 1. You can use the `:` colon operator to create a vector of numbers spanning any range, increasing by 1. For example, if you need to number a series of 15 observations 1 through 15, you might want to create a vector containing the numbers 1, 2, 3 ... 15 to label those observations. See below:
+
+```{r}
+# Use the colon between the start and the end numbers!
+yet.another.vector <- c(1:15)
+yet.another.vector
+```
+
+```{r}
+# You can use c() to create a vector containing colon-generated sequences along with other numbers too.
+# We'll reassign yet.another.vector below. Say I want to make a vector holding numbers from 1 to 25, but I want to skip 16 and 18. I can do that this way:
+yet.another.vector <- c(1:15, 17, 19:25)
+yet.another.vector
+```
+
+
+##### Indexing into vectors
+If you want to extract specific elements from a vector, you can do that too, by typing the "address" of the element you want into hard brackets [] after hte name of the vector. The "address" of an element in a vector is called its **index.** A vector has only one dimension (length), so the index of an element is a single number specifying its location in the vector.
+
+If you are coming from other languages, note that **indexing in R starts at 1, not 0.** So to get the first element of a vector, you use the index 1, and so on. It's more common-sensey for the usual user, but this is a deviation from how most programming languages handle indexing.
+
+```{r}
+# Return the first element of this.vector to console
+this.vector[1]
+```
+
+```{r}
+# Return the second element of this.other.vector to console
+this.other.vector[2]
+```
+
+```{r}
+# What if you want to index multiple elements of a vector at once? You sure can. How? With...
+# VECTOR-CEPTION!
+# You can index into a vector using a VECTOR of indices, and return a vector of all indexed values.
+# Below, I am using c() to create a vector containing the values 1 through 5, and feeding that into the indexing brackets, to call the values at all requested indices.
+# See that the output to console is also a vector. This time it's a shorter vector, since I only requested a subset of the values of the original.
+yet.another.vector[c(1:5)]
+```
+
+```{r}
+# Or if you want to request all values of a vector EXCEPT certain values, you can do that too.
+# Use the minus sign in front of an index value to indicate to R that you want NOT that value.
+# Below, I am asking for ALL values of this.vector EXCEPT the 3rd one.
+this.vector[-3]
+```
+
+```{r}
+# You can also use the minus except syntax for multiple indices, per below.
+# Notice that the below syntax, "all values of this.other.vector EXCEPT the first AND second one," is equivalent to saying "only the first value of this.other.vector ."
+# Since there are multiple different ways to index desired values of a vector (specify the ones you want, or minus-specify the ones you don't want), you can choose the way that requires the least amount of typing.
+this.other.vector[-c(1, 2)]
+```
+
+You can also index into vectors using logical data, instead of explicitly specifying index numbers. **Logical indexing** involves indexing using hard brackets [] just as before, but instead of feeding in a vector of numbers corresponding to desired indices, you feed in a vector that is the same length as your vector, where every value is a piece of logical data: TRUE or FALSE. What you're essentially doing with logical indexing is telling R "Yes index this one" or "No don't index this one" for every single value in your vector. The resultant vector you get from logical indexing is all of the values of your original vector to which you said TRUE ("Yes index this one").
+
+```{r}
+# Below, I'm telling R I want the first and the second value but not the third value.
+# Note that this REQUIRES logical data to be represented as TRUE/FALSE. It does NOT work if data is represented as 0/1. If you use 0/1 here, R will assume that the number 1 means that you want to index element #1 (which is not your intention with logical indexing).
+this.other.vector[c(TRUE, TRUE, FALSE)]
+```
+
+Right now, you might be thinking "sure, logical indexing seems cool, but it seems so much more time-consuming to type out a full-length vector of TRUEs and FALSEs." You're absolutely right! Later, we'll learn how to construct logical vectors of all sorts using code, and this will become perhaps your favorite way to index.
+
+##### Numeric vectors
+
+Vectors come in different flavors based on the type of data stored in the elements of the vector. All the vectors we've just been looking at are **numeric vectors**--vectors with numbers in them. You can do math and stats on the numbers in a vector. You can index subsets of those numbers and do stats on those. You can combine vectors into longer vectors and do more stats on those. **The numeric vector is the core of research data in R!**
+
+##### Logical vectors
+
+We learned about these a bit ago when we learned about logical indexing. As a vector, a **logical vector** is to a numeric vector what a single piece of logical data is to a number. It behaves as a numeric vector might, but also does logical things as well. We'll come back to these later :)
+
+##### Character vectors
+
+But, numeric vectors aren't the ONLY super cool fun vector you'll need. **Character vectors**, vectors containing strings as their elements, are handy as well. You create this the same way as you create a numeric vector...
+
+```{r}
+# with our best friend c() !
+# See how the output that prints to console looks similar / different to the output of numeric vectors.
+this.char.vector <- c("jackfruit", "coconut", "lychee", "rambutan")
+this.char.vector
+```
+
+You can index into a character vector just like you would with a numeric vector.
+
+```{r}
+# Is this prounced lee-chee or lye-chee? Real question.
+this.char.vector[3]
+```
+
+You can also apply string functions like the ones we saw before to character vectors.
+
+```{r}
+# Using a string function on a character vector will return another vector, with the function applied to each of the original elements individually.
+# if you think about it, previously we were just doing all these operations on vectors of length 1. So the vector operation is the broad case, and a vector of length 1 is a special case.
+toupper(this.char.vector)
+```
+
+It's important to remember that a character vector containing a series of strings is NOT the same as ONE string containing the same "words." For example,
+
+```{r}
+these.words <- "jackfruit coconut lychee rambutan"
+# nchar() here returns 33, because that's the number of characters in the whole ONE string.
+nchar(these.words)
+```
+
+The above is not the same as our original character vector!
+
+```{r}
+# meanwhile here, nchar() returns a value for the character count of EACH ELEMENT SEPARATELY.
+nchar(this.char.vector)
+```
+
+Vectors can contain as many elements as your heart desires, but **all of the elements of a single vector must be the same data type.** This assumption/requirement is what gives vectors their magical efficient powers. "But what if I need to have a vector with different data types together?" Soon, friends. We'll get there!
+
+#### Factor data
+
+#### Data frames
+
+Ahhhh, my favorite of the data structures. This is where the magic happens!
+A **data frame** is a 2D array-like rectangular structure with rows and columns, where each column is a vector, and each row corresponds to the element at the same index of each column vector. Sounds like... real data! 
+
+Let's look at a sample data frame.
+
+```{r}
+# Do not mind the functions I am calling here to create this fake data. If you'd like to look them up, though, you can check them out in the docs!
+this.df <- data.frame(subjects = sprintf(fmt = "sub%02d", c(1:20)),
+                      age = sample(x = c(18:35), size = 20, replace = TRUE),
+                      condition = c(rep(x = "control", times = 10), rep(x = "manipulation", times = 10)),
+                      score = rnorm(n = 20, mean = 75, sd = 10),
+                      stringsAsFactors = FALSE)
+this.df
+```
+
+Because dataframes must be rectangular, all column vectors of a dataframe must be the same length, as must all rows. If you think about the structure of a dataset, this makes sense. If each row corresponds to the info from one subject, for example, and each column corresponds to some metric you're collecting data on, each subject should have an observation of every metric (each row is the same length). And each column should contain every subject's data (each column is the same length).
+
+You'll see that when dealing with dataframes, using print-to-console to visually inspect your data starts to get unwieldy. Large data frames are quite cumbersome to print to console and examine. If you're in RStudio, however, you can make use of TECHNOLOGY!
+
+```{r, eval = FALSE}
+# Use View() WITH A CAPITAL V! to pop a dataframe up in your viewer window (likely in the top left of RStudio).
+# You can use View() with most data types--vectors, matrices, whatever. But View() is truly best for visually inspecting dataframes.
+# If you like the visual inspection capabilities of Excel (and I do, I will admit), View() should do you just fine. Note that the viewer window is just that--a viewer! NOT an editor. So you can ONLY change values using commands to console. (This is better for data safety. No more accidentally changing data because you clicked in an Excel cell you weren't supposed to!)
+# Please be aware that in data frames with very many columns, View() will not show you all the columns! There are other ways of looking for what you want in that case.
+View(this.df)
+```
+
+Remember that each column of a dataframe is a vector. Hence, you can do all of the vector things to a dataframe column. 
+
+How do we index values of a dataframe? There are a few ways; each will be useful in some situations but not others.
+
+```{r}
+# The first way is by using the hard brackets [] that we used to index into vectors before. Remember that a dataframe is a collection of vectors!
+# Consider that a dataframe has two dimensions: length and width. This means that we have up to TWO locations to specify to index values in a dataframe: which row and which column. (A simple vector can be considered as just ONE column, such that indexing into the vector requires only the row index.)
+
+# To extract one specific value, use the following syntax:
+# data.frame[ROW, COLUMN]
+# Below, we are indexing the value in the 8th row and 1st column of this.df
+# It is easy to get mixed up as to whether the order is [row, column] or [column, row]. Frankly, if I'm not sure, I will just try putting the indices in both orders and seeing which one actually gives me the value I was looking for.
+
+# Note that when indexing ONE value, the data type of my output is the pure data type of that one value (numeric or character).
+this.df[8,1]
+```
+
+```{r}
+# Just as before, when we used vectors of indices to index multiple elements of a vector, we can index multiple elements of a dataframe. Observe:
+
+this.df[c(8:10), c(1:3)]
+```
+
+#### Non-data data
+
+Non-data data? What is this business? Why would we bother with this?
+
+It's important to be able to have a data type to mark non-data as a placeholder in vectors, especially in vectors within dataframes. When (not if) you collect a dataset where some subjects have missing data for some reason, you need to be able to use a non-data indicator to mark elements of a dataframe as empty without having to totally delete that subject's row.
+
+#### Lists
+
+## Pseudocode
+
+**Pseudocoding** is the process of writing out what you want a computer program to do, but in human language. **This is the first step to any and all successful code writing.** Before you can tell a computer to do *anything,* you have to know *what you intend to tell it to do.* Programming languages work--computers will do what you ask them to. When a computer isn't doing what you wanted it to, most of the time it's because *you didn't actually ask it to do what you wanted it to do!* So, in order to be sure that you're giving your computer the proper instructions, *you need to know what the instructions are supposed to be.* So, we pseudocode!
+
+You'll generally be doing this by writing pseudocode as **comments** in your code. A comment is anything that's typed out but is tagged as being non-code, so your computer doesn't try to run it. This is how you leave notes to yourself and other people while programming.
+
+In R, you comment by using the pound sign # as the FIRST character in your command. ANY command that starts with a # will NOT BE EVALUATED. If you look back at previous code examples in this sheet, you'll see that I have commented almost every command, by adding some explanatory text before my command with the # symbol.
+
+The lovely thing about pseudocode is that you can write out what you want your code to do *even before you know how to write that code.* If you get to a point while pseudocoding where you don't know how to actual-code the thing you're planning to do, very specific pseudocode will make it easier for you to get the help you need, from Google or other people.
+
+See some example pseudocode below, for a problem you might encounter: Let's say you have survey data from college student participants, where you've asked them to type their major into a text box. Now that you're ready to analyze your data, you realize you need to code the majors to do some group-wise analyses by major type. You could do this by manually reading through and labeling each major with a coded value, or you could do this with code, maybe like below:
+
+```{r}
+# Pseudocode to clean undergrad major text-entry data from survey
+
+# 1. Load in CSV of survey data
+# 2. Identify which column contains majors
+# 3. Make sure majors are spelled in a standard way, with same capitalization
+  # 3a. Render all responses in lowercase to get rid of capitalization differences
+  # 3b. Remove extraneous words from free responses
+  # 3c. Correct spelling mistakes
+# 4. Specify majors coding scheme, perhaps as below
+# 5. Label each subject's (text-cleaned) major with its coded category
+
+# Example coding scheme
+# SS: Social sciences
+  # Psychology, sociology, anthropology
+# HUM: Humanities
+  # History, English, women's studies
+# AS: Applied sciences/engineering
+  # Electrical engineering, computer science, mechanical engineering
+# NS: Natural sciences
+  # Biology, chemistry, physics
+
+```
+
+The key, that pseudocode forces you to do BEFORE you start actually writing any code at all, is that you must *operationalize your desired task* before you can write the code for it. Just like you can't measure a variable until you've operationalized it, you can't write code for a task until you've operationalized the exact things that need to happen for the task to be completed.
+
+In programming, this is considered thinking algorithmically--developing a strategy for completing a task, and breaking that strategy down into code-able steps. There's a really clear analogy to variable operationalization in psychology research. In order to decide how to do something, you have to decide what exact something you'll try to do.
+
+Now that we've spent a bit of time thinking about the component pieces of data in R and what we can do with them, we're going to move forward to  basic tools and strategies of programming. As we learn these things, we'll begin to think about the logical frameworks you can use to construct code--what kinds of strategies will you be able to employ?
+
+## Logical & relational operators
+
+As you're writing R code to perform various operations on your data, you'll often find that you want to perform particular operations under SOME conditions but NOT others.
+
+For example, if I have a bunch of subjects' ages (ranging from 18-35) in a column vector of a dataframe, and then test scores for those subjects in another column, I might calculate the mean test score for all subjects by calling `mean(dataframe$score)` to mean across all values in that column. But what if I only want to calculate the mean for subjects aged 22 and younger, how can I tell R to only calculate the mean for those values of the vector but not all?
+
+I could look up the specific row indices of those subjects in the age range I want, and call my function as `mean(dataframe$score[c(1, 2, 4, 7)])` or something like that. But manually looking up the numerical indices of your desired data is cumbersome. Ain't nobody got time for that.
+
+This is where logical & relational operators come in. These are ways that you can specify conditions under which particular operations should be done. In the prior example, this is how we would tell R "Calculate the mean of the "score" column of my dataframe, but only include scores for subjects 22 and younger." Let's break this down into its pseudocode components:
+
+```{r}
+# Pseudocode:
+
+# 1. identify rows of your dataframe that belong to subjects aged 22 and below
+# 2. pull data from those corresponding rows out of the column "score" of your dataframe
+# 3. calculate a mean using just those values
+```
+
+We know how to do #2 (vector indexing to retrieve specific values!) and the #3 (use the function that does what we want!), but what about #1? As above, you could physically look and record which rows belong to subjects aged 22 and younger, but again, this is time-consuming and sub-optimal. How about we ask R to do the work for us? All of the values R needs are there.
+
+We can use relational operators to tell R to find exactly the values we want. **Relational operators** are operators used to generate logical data based on whether a value meets a condition. We need to specify a value to check and a condition that can either be met or unmet for that value. The output of the conditional statement would then evaluate to TRUE if the value met the condition, and FALSE if the value did not meet the condition.
+
+Here, our value is age: we want the subject's age to meet a certain condition. Our condition is the that the numeric value has to be 22 or below. We now have pseudocode for this relational statement!
+
+```{r}
+# Pseudocode of my relational statement:
+# Age is 22 or below
+# also written as:
+# Age is less than or equal to 22
+# Code written as:
+this.df$age <= 22
+
+# You can imagine that this value would evaluate as TRUE or FALSE for every value of this.df$age. The age either IS less than or equal to 22, or it ISN'T.
+```
+
+Relational operators should mostly look familiar from inequalities in algebra. Here they are:
+
+- `==` is equal to.
+  Note that it's a DOUBLE equals sign, not a single equals! A single equals is a totally different operator.
+- `!=` is NOT equal to.
+  The exclamation point on its own also serves a more general purpose which you'll see in a bit.
+- `<` is less than
+- `>` is greater than
+- `<=` is less than or equal to.
+  Don't confuse this with the `<-` left-facing arrow assignment operator!
+- `>=`is greater than or equal to
+- `%in%` is contained by
+  This operates just like "is contained by" operates in set theory. The condition for `%in%` is typically a VECTOR of possible matching values. This will return TRUE if the value of x is equal to any one of the values inside the vector on the right side.
+
+
+All of these read from LEFT to RIGHT, where the value is on the left, and the condition is on the right.
+
+Most of these relational operators apply only to numeric data, but some of them apply to character data as well. You can figure that the greater than/less than type operators only work for numbers. `==` and `%in%` can often serve you well with character data, where your relational statement is something like "if this particular string matches this subject ID" or something.
+
+NOW... remember logical indexing before? We can index values of a vector using a logical vector indicating TRUE or FALSE to whether we should index each value.
+
+If you input a vector into a relational command, you will get a vector as output. So if I have one value:
+
+```{r}
+this.age <- 27
+# Do I expect this to evaluate TRUE or FALSE?
+this.age <= 22
+```
+
+But if I input a vector, EACH INDIVIDUAL VALUE will be evaluated in the condition, and you'll get a vector of EACH VALUE'S TRUE/FALSE STATUS.
+
+```{r}
+# I've output the values of this.df$age AND the relational statement, so you can see for yourself that when the nth element of age is less than or equal to 22, the nth element of the relational output vector is TRUE, otherwise it's FALSE.
+this.df$age
+this.df$age <= 22
+```
+
+Now, earlier we said that manually creating a logical vector the same length as your vector of interest would be prohibitively time-consuming. But with relational statements, you can use one command to create that logical vector! So let's say I want to index all the values for which the condition is true, and output them:
+
+```{r}
+# The inside of the hard brackets [] evaluates to a logical vector. That logical vector is then used to index this.df$age
+# Check it out: The output is a vector containing all the ages that met the condition, in the same order as they were in the original vector
+this.df$age[this.df$age <= 22]
+```
+
+This logical vector that we get is in fact quite powerful. Because all column vectors of a dataframe must be the same length by definition, the logical vector that you get from a relational statement involving one column of a dataframe can be used to logical-index ANY column of the dataframe!
+
+So if we cycle back to our pseudocode:
+```{r}
+# Pseudocode:
+
+# 1. identify rows of your dataframe that belong to subjects aged 22 and below
+# 2. pull data from those corresponding rows out of the column "score" of your dataframe
+# 3. calculate a mean using just those values
+```
+
+We now have the ability to generate a logical vector that completes step #1 of our pseudocode. We knew that we would use vector indexing to complete step #2, but now we have the ability to use logical indexing in particular to execute this step.
+
+```{r}
+# Zooming in on pseudocode--
+# 2. pull data from those corresponding rows out of the column "score" of your dataframe
+# This can also be rewritten as:
+# Find all rows of "score" where the corresponding row in "age" is less than or equal to 22
+# We know how to write this in code!!!
+# We know how to write the relational statement for finding age <= 22, and we know how to use that output to logical-index into score.
+
+this.df$score[this.df$age <= 22]
+```
+
+Now, we have the vector output we need to complete step #3! We have a vector containing just the values we want, and we can feed this into the function that will do what we like.
+
+```{r}
+mean(this.df$score[this.df$age <= 22])
+```
+
+**Relational statements + logical indexing = very useful tool.**
+
+We can also create more complex relational statements using logical operators as well. For example, what if we want to do the same task we just did, but instead of calculating the mean score for subjects aged 22 and younger, what if we want the mean score for subjects aged between 22 and 26? There isn't properly a "between" relational operator, but we can construct a statement for this using what we do have.
+
+```{r}
+# Pseudocoding this more complex relational statement:
+# Age between 22 and 26 -- this breaks down to...
+# Age greater than or equal to 22 and also less than or equal to 26
+
+this.df$age >= 22 & this.df$age <= 26
+```
+
+We've just created a relational statement with TWO conditions. These statements are connected by a **logical operator** that indicates HOW these two conditions should be combined. Here are the logical operators you can use:
+
+* `!` is NOT (general).
+    + You can use the `!` operator before ANY relational statement to NEGATE that statement. So for example, `x <= y` means "x is less than or equal to y", and `!(x <= y)` means "NEGATIVE OF x is less than or equal to y," or "x is NOT less than or equal to y" in plainer language.
+* `&` ampersand: AND.
+    + `x & y` returns TRUE if x is TRUE and y is also TRUE at the same time. Equivalent to INTERSECTION from set theory.
+* `|` pipe (Shift-backslash): OR.
+    + `x OR y` returns TRUE if either x is TRUE or y is TRUE (at least one has to be true. Both can be true too). Equivalent to UNION from set theory.
+* `xor()`: exclusive OR.
+    + `xor(x, y)` returns TRUE if x is TRUE and y is FALSE, or if x is FALSE and y is TRUE. Said another way, `xor(x, y)` returns true if either x or y is TRUE but NOT if both are true at the same time. Thus, `xor(x, y) == (x & !y) | (!x & y)`. 
+
+Let's look at a couple toy examples of how we might deploy relational statements with logical operators to do all manner of data sorting.
+
+```{r}
+
+```
+
+Now, the relational operators we just learned about are NOT the only ways to generate useful logical data. Here are some other useful functions that will tell you if a condition is TRUE or FALSE:
+
+- `is.na()` returns TRUE if the value inside is `NA`. If you need to get the indices of non-data data, this is extremely useful! You cannot do `x == NA` to achieve the same result--this code will not run. `NA` is special and cannot be used in relational statements like that.
+- `exists()` takes a string that specifies a variable name, and returns TRUE if that variable exists in the environment. This is useful to check whether you have created a certain variable yet.
+
+### Summary
+
+You can use logical statements to specify **the conditions under which you want to perform a certain command.** One frequent use of logical statements is **logical indexing,** where you select certain values from a vector that satisfy a condition.
+
+#### Relational operators
+
+These are all inherently **comparative** and return TRUE or FALSE based on the relationship between TWO pieces of data.
+
+- `==` is equal to
+- `!=` is NOT equal to
+- `<` is less than
+- `>` is greater than
+- `<=` is less than or equal to
+- `>=` is greater than or equal to
+- `%in%` is contained by
+
+#### Other useful functions that return TRUE or FALSE
+
+- `is.na()` returns TRUE if the value inside is `NA`
+- `exists()` takes a string that specifies a variable name, and returns TRUE if that variable exists in the environment. This is useful to check whether you have created a certain variable yet.
+
+#### Logical operators
+
+
+* `!` NOT
+* `&` AND
+* `|` (Shift-backslash) OR
+* `xor()` exclusive OR
+
+### Best practices
+
+## Conditional statements
+
+We've just spent some time learning about relational/logical statements, and how logical indexing is the smart way to filter your data. That's a key use for relational/logical statements, but not the only use for these statements.
+
+Zooming out a bit: A logical statement (something that evaluates to TRUE or FALSE) is used to tell a computer to do something in SOME situations (when the statement is TRUE) but not other situations (when the statement is FALSE).
+
+Logical indexing is a special case of this: we want to index a value if the statement is TRUE, and we don't want to index that value if the statement is FALSE. There will be times when you don't just want to index vectors using conditions: There will also be times when you want *whole blocks of code* to only run in some situations but not others.
+
+For this broader case, we need some programming lingo that we can use to wrap around our code. Let's start with another typical problem, pseudocode a strategy to solve that problem, and then actual-code it.
+
+This time, let's tackle a (frustratingly) common issue in dealing with psychological data: QUALITY CHECKING. I'm sure you can think of a time when you, as a young research assistant, or perhaps a not-so-young graduate student, had to manually scroll through some obscenely huge dataset (perhaps free-response paragraphs from hundreds of MTurk participants, or hundreds of fMRI volumes from a 2-hour scan session) and visually inspect for problems. We know as psychologists that humans are uniquely good at this kind of task, but we also know as researchers that this kind of task is uniquely good at being painfully boring. Let's consider a hypothetical quality checking task where we might be able to get the computer to help us out.
+
+Let's say we have a bunch of data from MTurk subjects, and we've asked them to report their handedness: right- or left-handed. (Ambidextrous was not an option.) Hardyck & Petrinovich (1977) report that about 10% of the population identifies as left-handed. Perhaps we want to verify that the incidence of left-handedness in our data replicates this.
+
+```{r}
+# Pseudocode:
+# 1. Get column of handedness values
+# 2. Calculate proportion of lefties
+  # 2a. Get number of lefties
+  # 2b. Get total number of subjects
+  # Calculate proportion: # lefties / # total
+# 3. Output a message to console describing whether the proportion is within "expected bounds"
+  # 3a. (arbitrarily for the purposes of this exercise) Define "expected bounds" as 10% +- 2.5%
+  # 3b. Relational statement to test: Proportion of lefties is within 10% +- 2.5%
+  # 3c. If relational statement is TRUE, output a relevant message
+  # 3d. If relational statement is FALSE, output a different, but still relevant, message
+
+# Here, we're also going to learn how to output custom messages to console. Oftentimes, if you're feeling lazy, you can manually check whether one value satisfies a condition or not. However, in many cases, you will need to do this in a more automated manner, so outputting a message to console contingent on a result can save you some time (and also be more fun).
+```
+
+```{r, include = FALSE}
+# Generating some sample datasets... with different population probabilities of left-handedness
+hands1 <- sample(x = c("Right", "Left"), size = 500, replace = TRUE, prob = c(0.9, 0.1))
+hands2 <- sample(x = c("Right", "Left"), size = 500, replace = TRUE, prob = c(0.95, 0.05))
+hands3 <- sample(x = c("Right", "Left"), size = 500, replace = TRUE, prob = c(0.87, 0.13))
+```
+
+
+```{r}
+# Pseudocode:
+# 1. Get column of handedness values
+head(hands1)
+```
+```{r}
+# 2. Calculate proportion of lefties
+  # 2a. Get number of lefties
+    # 2a1. Create a logical vector where value is TRUE if subject is left-handed and FALSE if subject is right-handed
+logical.lefties <- hands1 == "Left"
+    # 2a2. Leverage the fact that logical vectors can behave as numeric vectors where TRUE is 1 and FALSE is 0
+    # 2a3. If left-handed is 1 and right-handed is 0 in the logical vector, then taking the sum of the logical vector (which would add 1 for every lefty) should yield a count of lefties in the dataset
+n.lefties1 <- sum(logical.lefties)
+    # 2a4. There is another way to do this, using length() instead of sum()
+    # 2a5. Remember that logical indexing into a vector will yield a vector containing only the indexed values--thus, a vector whose length is equal to the number of indexed values
+n.lefties2 <- length(hands1[logical.lefties])
+  # 2b. Get total number of subjects
+    # 2b1. The length of the whole dataset will be equal to the total n, because there is one row per subject
+n.total <- length(hands1)
+  # Calculate proportion: # lefties / # total
+prop.lefties1 <- n.lefties1 / n.total
+prop.lefties2 <- n.lefties2 / n.total
+```
+```{r}
+# For sanity's sake, let's make sure that both proportions that we calculated using the different methods of getting n.lefties are equal. Then we can use either one if they're equal
+prop.lefties1 == prop.lefties2
+```
+
+Below, we are going to use an if-else statement to actual-code step #3 of our pseudocode. At its simplest, an **if statement** tells your computer:
+
+- IF a condition is TRUE, do something
+- OTHERWISE (if the condition is FALSE), don't do anything
+
+Essentially, what we're doing is setting up a decision tree in our code, where we are instructing R to follow a certain decision path based on whether certain conditions are TRUE or FALSE.
+
+The basic syntax of an if-statement is the following:
+
+```{r}
+# Start with a single piece of logical data (length 1, NOT a logical vector)
+pointless.condition <- TRUE
+# That logical value passes into the IF statement, syntax below.
+
+# if (condition) {run this code}
+
+# The curly braces {} allow you to group multiple lines of code to be executed with the if statement. If you try to run multiple lines of code after an if statement without enclosing all relevant code in curly braces, it will NOT work.
+# What we've done here is set off the curly braces with line breaks, for readability.
+if (pointless.condition) {
+  # cat() is a function that will print any message to console. cat() can output the value of variables in the message.
+  cat("Duh.")
+}
+```
+
+```{r}
+# You can write out un-evaluated conditions inside the if () parentheses too. R will evaluate the condition inside the parentheses and then pass that TRUE/FALSE to the if ().
+if (2 + 2 == 4) {
+  cat("We can do math!")
+}
+```
+
+```{r}
+# You'll see that if the  condition inside evaluates to FALSE, the enclosed code does NOT run.
+if (2 + 2 == 5) {
+  cat("We can do math!")
+}
+```
+
+Sometimes, you want an if statement that does a little more, like the following:
+
+- IF a condition is TRUE, do something
+- OTHERWISE (if the condition is FALSE), do something ELSE
+
+We can use **if-else statements** to execute some code if a condition is TRUE, and some different code if that condition is FALSE.
+
+```{r}
+# Basic syntax of an if-else statement:
+# if (condition) {run this code} else {run this other code}
+# Again, we set off the curly braces onto a new line for readability. The "else" has to be on the SAME line as the closing curly brace of the if () {}, though, otherwise R will not know that the "else" is connected to that "if."
+if (2 + 2 == 4) {
+  cat("We can do math!")
+} else {
+  cat("What is math, anyway?")
+}
+```
+
+```{r}
+# See that here, the condition evaluates to FALSE, so the "else" code runs, NOT the "if" code.
+if (2 + 2 == 5) {
+  cat("We can do math!")
+} else {
+  cat("What is math, anyway?")
+}
+```
+
+Now, to complete step #3 of our pseudocode, we'll use the if-else statement that we just learned about.
+
+```{r}
+# 3. Output a message to console describing whether the proportion is within "expected bounds"
+  # 3a. (arbitrarily for the purposes of this exercise) Define "expected bounds" as 10% +- 2.5%
+    # 3a1. Create a vector of length 2, where each of the values is lower and upper bound respectively
+bounds <- c(.1 - .025, .1 + .025)
+  # 3b. Relational statement to test: Proportion of lefties is within bounds
+    # 3b1. We can break this down:
+      # prop.lefties is greater than or equal to lower bound AND prop.lefties is less than or equal to upper bound
+  # 3c. If relational statement is TRUE, output a relevant message
+    # 3c1. We'll use cat() to print our custom message to console
+if (prop.lefties1 >= bounds[1] & prop.lefties1 <= bounds[2]) {
+  cat("The proportion of lefties is ", prop.lefties1, " and is within the bounds of ", bounds[1], " and ", bounds[2], ". All is well.",
+      sep = "")
+  # 3d. If relational statement is FALSE, output a different, but still relevant, message
+} else {
+    cat("The proportion of lefties is ", prop.lefties1, " and is OUTSIDE the bounds of ", bounds[1], " and ", bounds[2], ". Something is fishy!",
+        sep = "")
+}
+```
+
+Okay, looks good here! But let's make sure the code does what it's supposed to when the proportion of lefties is actually outside the bounds. It's critical to test that your code behaves as expected when your condition evaluates TRUE as well when it evaluates FALSE.
+
+We can test it with another simulated dataset (where the generating parameters are different...).
+
+```{r}
+# Abbreviated; copied code from before. without pseudocode annotations
+logical.lefties <- hands2 == "Left"
+n.lefties1 <- sum(logical.lefties)
+n.total <- length(hands2)
+prop.lefties1 <- n.lefties1 / n.total
+
+if (prop.lefties1 >= bounds[1] & prop.lefties1 <= bounds[2]) {
+  cat("The proportion of lefties is ", prop.lefties1, " and is within the bounds of ", bounds[1], " and ", bounds[2], ". All is well.",
+      sep = "")
+  # 3d. If relational statement is FALSE, output a different, but still relevant, message
+} else {
+    cat("The proportion of lefties is ", prop.lefties1, " and is OUTSIDE the bounds of ", bounds[1], " and ", bounds[2], ". Something is fishy!",
+        sep = "")
+}
+```
+
+The if-else statement will serve you for most of your if-statement needs. Sometimes you might need to execute different commands based on more than one condition, perhaps. Like "if x is true, do this, but if x is false and y is true, do this instead, and otherwise do a third thing".
+
+Essentially, your condition might take a series of cases, and you might have different commands to run if the first case is true, the second case is true, etc. for any number of cases. Like in the following situation:
+
+```{r}
+# Data has been collected on students from different class years (freshman, sophomore, etc)
+# For each metric, z-score students' scores, but only relative to people from their class year
+# e.g. see below
+# If freshman, z-score based on all freshmen's scores
+# Otherwise if sophomore, z-score based on all sophomores' scores
+# Otherwise if junior, z-score based on all juniors' scores
+# Otherwise if senior, z-score based on all seniors' scores
+```
+
+
+To do this, you would use an if-else-if statement. An **if-else-if statement** will execute some code if a condition is TRUE, and some different code if that condition is FALSE AND another condition is TRUE, etc. for any number of conditions you need.
+
+The conditions of if-else-if statements are tested in order, so it's important to be deliberate about the order of your conditions. In order for the nth condition of an if-else-if statement to be activated, all n-1 prior conditions HAVE TO BE FALSE.
+
+```{r}
+x <- TRUE
+y <- FALSE
+z <- TRUE
+
+# To demonstrate the assumptions of if-else-if statements:
+if (x) {
+  cat("x is true")
+} else if (y) {
+  cat("x is false and y is true")
+} else if (z) {
+  cat("x is false and y is false and z is true")
+}
+```
+
+```{r}
+# the above is functionally equivalent to:
+if (x) {
+  cat("x is true")
+}
+if (!x & y) {
+  cat("x is false and y is true")
+}
+if(!x & !y & z) {
+  cat("x is false and y is false and z is true")
+}
+```
+
+```{r}
+# So because x was TRUE before, the FIRST case of the if-else-if statement was the one that evaluated, because once x was TRUE the statement DOES NOT CHECK ANY FURTHER CONDITIONS.
+# Further conditions of an if-else-if statement will only be evaluated IF THE PRECEDING CONDITION(S) ARE ALL FALSE.
+# So if we reassign some of these logical values:
+x <- FALSE
+# now x and y are both FALSE, and z is TRUE. which code will output?
+if (x) {
+  cat("x is true")
+} else if (y) {
+  cat("x is false and y is true")
+} else if (z) {
+  cat("x is false and y is false and z is true")
+}
+```
+```{r}
+y <- TRUE
+# now x is FALSE, and y and z are both TRUE. which bit of code will actually output?
+if (x) {
+  cat("x is true")
+} else if (y) {
+  cat("x is false and y is true")
+} else if (z) {
+  cat("x is false and y is false and z is true")
+}
+```
+
+If your conditions are mutually exclusive, then it doesn't matter which condition is tested first (because by definition only one condition can be true at a time), but if they aren't, you should take care to order your conditions in a sensible way. Here's a case where you might need to watch out for this (this has actually happened to me):
+
+```{r}
+# Say you have text data, where participants were assigned to write a sentence about one of three fruits: apples, grapes, and grapefruit.
+# If each piece of data is one string containing a sentence-long response, how might we try to code each data based on whether it was about apples, grapes, or grapefruit?
+
+# We might try the following:
+# if ("apple" is in the string) {code it as apple}
+# else if ("grape" is in the string) {code it as grape}
+# else if ("grapefruit" is in the string) {code it as grapefruit}
+
+# This seems sensible. BUT! Consider that every instance of the string "grapefruit" does in fact contain the string "grape". This means that according to the current pseudocode, all grapefruit sentences will be mistakenly coded as grape, because the "grape" condition will be true AND the "grapefruit" condition will be true, and the "grape" condition code will get evaluated because it was listed FIRST.
+
+# To avoid this, you can reorder your else if conditions:
+# if ("apple" is in the string) {code it as apple}
+# else if ("grapefruit" is in the string) {code it as grapefruit}
+# else if ("grape" is in the string) {code it as grape}
+
+# This will work, because for grapefruit sentences, both "grapefruit" and "grape" conditions are true, and the desired condition for grapefruit sentences will evaluate FIRST. For grape sentences, only the "grape" condition is true, so the appropriate condition for grape sentences will evaluate no matter where it's placed in the if-else-if statement.
+```
+
+
+## Loops
+
+The last basic piece of coding logic we'll talk about is looping. A common task you'll want to do with code is to run the same command on a series of different pieces of data. (This is what programming can be great for--automating! So you don't have to do the same thing manually a bunch of times.) You can either do this by copying and pasting a command a bunch of times and then running them all, OR you can use loops!
+
+A **loop** is a method of specifying conditions under which to repeat a series of commands. You might want to write a loop to do something like the following:
+
+```{r}
+# If I have a file folder containing some number of CSV data files, all of which I want to import into R, I could use the function read.csv() to read each of these files in.
+
+# This could be by having individual commands, like:
+# read.csv(the first file)
+# read.csv(the second file)
+# read.csv(etc... till the last file)
+
+# If it's just two or three files, all right. But what if there are tens? Hundreds? We can't be typing each of these out. We CAN, however, loop this:
+# Specify a character vector where every element is a string containing the file name
+# Call read.csv() on every element in this vector in order
+# Soon we'll find out how to write this!
+```
+
+There are two main types of loops we'll learn about here, each with its own best use case.
+
+A **for loop** repeats a command *for* a finite, predefined set of instances. For example, you might use this if you have a set number of subjects, and you want to run a set of commands on each subject's data.
+
+A finite, predefined set of instances... don't we have a data type that stores sequences of instances? YES! Vectors! For loops will allow you to run the same command on every value in a vector.
+
+We'll learn below about the mechanics of for loops and how you can use them. Afterward, we'll talk about the pros and cons of for loops, and situations where you *should* and *should not* use for loops.
+
+The basic syntax of a for loop is similar to that of an if statement.
+
+for (variable in vector) {run some code}
+
+The specification for a for loop contains two things:
+- the loop variable that will represent the CURRENT value inside the loop
+- the vector that contains all the values that will be looped over
+
+The loop variable can take any name (that makes sense to you). The loop variable is what you'll use as a placeholder in your loop code So, if I want to run code on the values 13, 14, 15 ... 23, I would specify the vector to be `c(13:23)`.
+
+```{r}
+
+
+
+# Here's a toy example of a for loop using our good old friend cat() to print a new message to console for each element of a vector.
+values <- 13:23
+for (this.value in values) {
+  cat("The current value is", this.value, "\n")
+}
+```
+
+```{r}
+# The variable letters is one of a pre-defined set of constants that comes standard with R that you can just call like any old variable even if you can't see it in your environment.
+
+for (this.letter in letters) {
+  cat("The current letter is", this.letter, "\n")
+}
+```
+
+
+```{r}
+for (i in 1:length(letters)) {
+  cat("The ", i, "th letter is ", letters[i], "\n", sep = "")
+}
+```
+
+```{r}
+# We can now capture info about each value's index in the vector and use that info.
+# As an additional exercise, let's see if we can make this toy function a little nicer.
+# I notice that using the heuristic "append th to every number to make it ordinal" doesn't work in every case. In particular, 1, 2, 3, 21, 22, and 23 all have an alternate ordinal suffix.
+# Can we clean up our code and get it to output the correct ordinal endings for some values in the vector?
+# Sure we can!
+
+# Pseudocode:
+
+# For the i'th element in the vector letters:
+  # Print the general form "The i'th letter is [insert appropriate letter]"
+    # Get appropriate letter by indexing into the i'th element of letters
+  # Specifically, print certain messages based on what the suffix is supposed to be
+    # For numbers ending in 1 (EXCEPT 11), print "st"
+    # For numbers ending in 2 (EXCEPT 12), print "nd"
+    # For numbers ending in 3 (EXCEPT 13), print "rd"
+    # For all other numbers, print "th"
+
+# One way you could do this is by using a series of if-else-if statements INSIDE your for loop. For each item in the loop, do a particular command based on whether that item satisfies a particular condition.
+
+for (i in 1:length(letters)) {
+  if (i != 11 & i %% 10 == 1) {
+    cat("The ", i, "st letter is ", letters[i], "\n", sep = "")
+  } else if (i != 12 & i %% 10 == 2) {
+    cat("The ", i, "nd letter is ", letters[i], "\n", sep = "")
+  } else if (i != 13 & i %% 10 == 3) {
+    cat("The ", i, "rd letter is ", letters[i], "\n", sep = "")
+  } else {
+    cat("The ", i, "th letter is ", letters[i], "\n", sep = "")
+  }
+}
+```
+
+### When to use a for loop
+
+
+
+### When NOT to use a for loop
+For loops can be really great for repeating a function multiple times. However, for loops have some drawbacks:
+
+- They can be slow. For datasets of <1000 observations, this isn't so big of a deal. But if you are dealing with large datasets (lots of subjects, longitudinal observations, imaging data, etc), this will start to annoy you greatly when your code takes several minutes to run something small.
+- As soon as you start using a for loop to do more than a couple commands, you run the risk of introducing typos that you didn't expect.
+
+
+
+## Summary of best practices
+
+## Now you try
+
+In the below code chunk, initialize a variable and set its value to any integer of your choice. Initialize another variable, whose value will be TRUE if your integer is an ODD number, and FALSE if your integer is an EVEN number. Test your code using both positive and negative as well as both odd and even numbers.
+
+```{r}
+# Demonstrate that it works for a POSITIVE ODD number
+
+# Demonstrate that it works for a POSITIVE EVEN number
+
+# Demonstrate that it works for a NEGATIVE ODD number
+
+# Demonstrate that it works for a NEGATIVE EVEN number
+
+# Demonstrate that it works for ZERO
+```
+
+Hint (will show if you open the source code):
+```{r, echo = FALSE}
+# Consider the definition of an odd vs even number. What mathematical operation could you do that would always return one value if your number was odd (the same value for any odd number), and a different value if your number was even (the same value for any even number)?
+```
+
+## Attributions
+
+Language and layout inspired by [Trevor Page's Programming 101](https://howtoprogramwithjava.com/programming-101-the-5-basic-concepts-of-any-programming-language/).
+Basic info about the language referenced from [the official R Language Definition docs](https://cran.r-project.org/doc/manuals/r-release/R-lang.html).

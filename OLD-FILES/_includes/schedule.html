@@ -1,0 +1,43 @@
+<!--
+F20 workshop
+-->
+<!--{% include base_path.html %}
+
+{% assign r_path = relative_root_path | append: '/R/' %}
+{% assign py_path = relative_root_path | append: '/python/' %}-->
+
+<div class="row">
+  <div class="col-md-6">
+    <h3>Session 1: R (9/11/20), Zoom</h3>
+    <table class="table table-striped">
+      {% comment %} TODO: Get our own pre- and post-workshop surveys running {% endcomment %}
+      <tr><td>Before starting</td><td><a href="{{ site.pre_survey }}" target="_blank">Pre-workshop survey</a></td></tr>
+      <tr><td><b>9:00a</b> - 10:00a</td><td><a href="{{ r_path }}1_programming/lessonPart0.html">Acquainting Yourself with RStudio</a></td></tr>
+      <tr><td>10:00a - 12:30p</td><td><a href="{{ r_path }}1_programming/lessonPart1.html">Intro to Programming and Data Cleaning in R, Part 1</a></td></tr>
+      <tr><td>12:30p - 1:00p</td><td>Lunch</td></tr>
+      <tr><td>1:00p - <b>3:00p</b></td><td><a href="{{ r_path }}1_programming/lessonPart2.html">Intro to Programming and Data Cleaning in R, Part 2</a></td></tr>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <h3>Session 2: R (9/18/20), Zoom</h3>
+    <table class="table table-striped">
+      <tr><td><b>10:00a</b> - 11:30a</td><td><a href="{{ r_path }}3_descriptives/lesson.html">Data Manipulation in R, Part 1</a></td></tr>
+      <tr><td>11:30a - 12:30p</td><td>Lunch</td></tr>
+      <tr><td>12:30p - 1:30p</td><td>Data Manipulation in R, Part 2</td></tr>
+      <tr><td>1:30p - 3:30p</td><td><a href="{{ r_path }}4_plotting/lesson.html">Plotting in R with <code>ggplot2</code></a></td></tr>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <h3>Session 3: Python (9/25/20), Zoom</h3>
+    <table class="table table-striped">
+      <tr><td><b>9:00a</b> - 10:30a</td><td><a href="{{ py_path }}1_r2PythonTranslation/2_introProgramming.html">Intro to Python for R Users</a></td></tr>
+      <tr><td>10:30a - 12:00p</td><td><a href="{{ py_path }}2_dataCleaning/lesson.html">Data Cleaning in Python</a></td></tr>
+      <tr><td>12:00p - 12:30p</td><td><a href="{{ py_path }}3_descriptives/lesson.html">Data Manipulation in Python, Part 1</a></td></tr>
+      <tr><td>12:30p - 1:00p</td><td>Lunch</td></tr>
+      <tr><td>1:00p - 2:00p</td><td>Data Manipulation in Python, Part 2</td></tr>
+      <tr><td>2:00p - 4:00p</td><td><a href="{{ py_path }}4_plotting/lesson.html">Plotting in Python with <code>seaborn</code></a></td></tr>
+      <tr><td>After finishing</td><td><a href="{{ site.post_survey }}" target="_blank">Post-workshop survey</a></td></tr>
+      {% comment %} {{ site.dc_post_survey }}{{ site.github.project_title }} Need this syntax someday {% endcomment%}
+    </table>
+  </div>
+</div>
