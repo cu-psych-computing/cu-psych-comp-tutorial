@@ -1,11 +1,7 @@
 ---
 title: "Tidy walkthrough, part 2"
 author: "Monica Thieu"
-output:
-  html_document:
-    theme: "journal"
-    toc: true
-    toc_float: true
+tags: ["extra", "r"]
 ---
 
 ```{r setup, include=FALSE}
@@ -13,11 +9,6 @@ knitr::opts_chunk$set(echo = TRUE)
 require(tidyverse)
 require(broom)
 ```
-
-
-# Go home
-
-**First of all,** you can click [here](https://cu-psych-r-users.github.io/cu-psych-r-tutorial/) to return to the CU psychology tutorials page.
 
 # Goals for this vignette
 
@@ -271,16 +262,15 @@ You usually won't be creating dfs with df-containing list-columns from scratch. 
 
 ```{r}
 starwars_by_species_home <- starwars %>%
-  group_by(species, homeworld) %>%
-  nest(.key = "characters")
+  nest(characters = -c(species, homeworld))
 
 starwars_by_species_home
 ```
 
 We've done two things here:
 
-1. We grouped our df using `group_by()` to tell `nest()` what the grouping-level variables are
-2. We folded all the observations into a separate column using `nest()`, using the `.key` argument to specify the name of that new column
+1. We folded all the observations into a separate column called `characters` using `nest()`,
+1. We used a negative vector to hold grouping-level variables out of that folded column
 
 `nest()` is what you'll use to create nested dfs, or dfs with columns containing other dfs. `nest()` takes every column that isn't a grouping variable, and folds all of the observations in each group into their own df in the new list-column. All the data we had before is inside this new list-column. Let's look inside one of these sub-dfs to be sure:
 
@@ -425,10 +415,8 @@ First, let's nest our simulated df, `raw`, by all of the subject-level variables
 
 ```{r}
 nested <- raw %>%
-  # gotta group by all the subject-level variables explicitly
-  group_by(id, age, gender, q_1, q_2, q_3) %>%
-  # then I'll rename the column that will contain the trialwise data
-  nest(.key = "trials")
+  # again, tell nest() to hold out the grouping-level variables when nesting
+  nest(trials = -c(id, age, gender, q_1, q_2, q_3))
 ```
 
 Now, to see what the new, nested df looks like:
@@ -488,7 +476,7 @@ nested_summarized <- nested %>%
                                                   `0` = "rate_fa",
                                                   `1` = "rate_hit")) %>%
                            # now we will spread
-                           spread(is_old, rate_choose_old)))
+                           pivot_wider(names_from = is_old, values_from = rate_choose_old)))
 ```
 
 What we've done here is a little more complex. Essentially, we're calling `summarize()` on the trialwise data to generate summary statistics, and then doing some processing on that summary data--this all should be familiar. What's different here is that we're doing it all _inside_ of `map()` so that these commands are applied to each sub-df of trialwise data inside `trials`.
@@ -503,7 +491,7 @@ Hey, each of these sub-dfs is only one row long. We could `unnest()` the `summar
 
 ```{r}
 nested_summarized %>%
-  unnest(summaries, .preserve = "trials")
+  unnest(summaries)
 ```
 
 There we go! Now, the hit and false alarm rates are in the main df and readily accessible without having to use `map()`, and we still have our trialwise data in the same df should we want to calculate anything else.
@@ -587,10 +575,11 @@ If you wanted to pull more values out of `coefs`, you could `unnest()` the colum
 
 ```{r}
 nested_with_models %>%
-  unnest(coefs, .preserve = "trials")
+  select(-models) %>% 
+  unnest(coefs)
 ```
 
-Notice that when you use the `.preserve` argument to specify which other list-columns you want to keep in your output df (and thus repeat with the other subject-level variables), any columns of list type that _aren't_ explicitly specified will be _dropped_ from your output. Here, you can see that the `models` column, which was a list-column so that each element could contain a model object, is absent from the output of `unnest()` because we only specified that `trials` should be preserved.
+Note that when you unnest, any columns of list type that _aren't_ explicitly unnested will be _repeated_ in your output. We only want to keep the `trials` column, so we use `select()` to drop the `models` list-column from the data before unnesting.
 
 In any case, I hope you can see that if you need to fit the same model repeatedly to different datasets, perhaps to data from individual subjects, using `map()` to vectorize your model-fitting on list-columns in a nested df can do just the trick.
 
@@ -618,7 +607,8 @@ What if we want to plot our fake subjects' d' values, but with standard error ba
 ```{r}
 nested_with_models %>%
   # unnest the coefs column to get it into the main df
-  # DON'T need to .preserve anything, since this data is only going into the plot
+  # drop other list-columns first just to make the input data smaller
+  select(-models, -trials) %>% 
   unnest(coefs) %>%
   # I only want to plot the estimate values for the term is_old, which is the d' term
   filter(term == "is_old") %>%

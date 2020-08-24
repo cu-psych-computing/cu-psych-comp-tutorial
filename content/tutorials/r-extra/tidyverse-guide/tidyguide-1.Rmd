@@ -1,22 +1,13 @@
 ---
 title: "Tidy walkthrough, part 1"
 author: "Monica Thieu"
-output:
-  html_document:
-    theme: "journal"
-    toc: true
-    toc_float: true
+tags: ["extra", "r"]
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 require(tidyverse)
-devtools::load_all("~/Repos/cuPsychRTools")
 ```
-
-# Go home
-
-**First of all,** you can click [here](https://cu-psych-r-users.github.io/cu-psych-r-tutorial/) to return to the CU psychology tutorials page.
 
 # Goals for this vignette
 
@@ -769,7 +760,7 @@ crossing(x = letters[1:2], y = letters[3:4], z = 1:2)
 
 ## From wide to long
 
-`tidyr::gather()` is how we'll be taking data from wide form to long form. We'll take wide data that has different conditions of an observed/calculated variable in different columns, and make it long, so that all those values of the same variable are in one column, with another column indicating what condition that value comes form.
+`tidyr::pivot_longer()` is how we'll be taking data from wide form to long form. We'll take wide data that has different conditions of an observed/calculated variable in different columns, and make it long, so that all those values of the same variable are in one column, with another column indicating what condition that value comes form.
 
 (If you want a deeper review on tidy data structure, and what wide form and long form mean, read [this vignette](https://tidyr.tidyverse.org/articles/tidy-data.html).)
 
@@ -800,26 +791,23 @@ When we `gather()` this wide df and thus make it long, we expect to have one col
 ```{r}
 summaries_long <- summaries %>%
   # if I wanted to use tidyselect helpers, I could use starts_with("rt") here
-  gather(key = "statistic", value = "rt", rt_min, rt_median, rt_max)
+  pivot_longer(cols = c(rt_min, rt_median, rt_max), names_to = "statistic", values_to = "rt")
 
 summaries_long
 ```
 
-To change the values of the key/indicator variable, you can then `mutate()` the long df after `gather()`-ing to change the values of the indicator levels using `recode()`, or perhaps a string-manipulating function from `stringr`.
+To trim off prefixes of key/indicator variable, you can use the `names_prefix` argument to tell R to drop a particular string from the beginning of each column name before pivoting.
 
 ```{r}
 summaries_long <- summaries %>%
-  gather(key = "statistic", value = "rt", starts_with("rt")) %>%
-  mutate(statistic = str_replace(statistic, "rt_", ""))
+  pivot_longer(cols = starts_with("rt"), names_to = "statistic", values_to = "rt", names_prefix = "rt_")
 
 summaries_long
 ```
 
-### Gathering multiple distinct variables at once
+### Pivot-longering multiple distinct variables at once
 
-Note that `gather()`, by design, will only create _one value variable at a time._ If you have multiple unique variables in a wide df that are all bound by the same indicator conditions, that's a little less straightforward using `tidyr`, I'll admit.
-
-However, I found myself running into this use case enough that I wrote a helper function in [`cuPsychRTools`](https://github.com/cu-psych-r-users/cuPsychRTools) to handle this. If your column names are formatted the right way, `super_gather()` may be able to help you out!
+You can also use `pivot_longer()` to pivot _multiple value variables at once._ If you have multiple unique variables in a wide df that are all bound by the same indicator conditions, you can modify the arguments of `pivot_longer()` and get the job done.
 
 Below, I'm first going to create a summary df where we have observations of multiple variables (in this case, the three "questionnaire" scores), and each has multiple observation conditions (the minimum and maximum score on that questionnaire within each gender). 
 
@@ -836,81 +824,69 @@ summaries_qs
 
 Say I want to get this into a long df where each questionnaire has its own column, and there's one indicator column for whether the score is a minimum or maximum score, and that indicator corresponds across all three questionnaire columns.
 
-`gather()` alone won't get me all the way there:
+`pivot_longer()` in its usual won't get me all the way there:
 
 ```{r}
 summaries_qs %>%
-  gather(key = "extreme", value = "q_score", starts_with("q"))
+  pivot_longer(cols = starts_with("q"), names_to = "extreme", values_to = "q_score")
 ```
 
-You can see that the key/indicator column, `extreme`, actually contains information for two distinct variables: which questionnaire the score is from, AND which extreme the score is for. If you wanted to get from this intermediate output to the final desired shape, you'd have to first `separate()` your key column to get those two variables apart, and then `spread()` the questionnaire variables back into their own columns.
+You can see that the key/indicator column, `extreme`, actually contains information for two distinct variables: which questionnaire the score is from, AND which extreme the score is for. `pivot_longer()` can handle this, but we need to tell it where to get the names for all the new columns from, since there's more than one value column now.
 
-With some restrictions, `super_gather()` will do this work for you. You have to specify the names of either your key values or your value variables _as they are spelled in your existing column names,_ and the function will attempt to use those to auto-detect the rest of what it needs. I usually supply whichever of `key_names` or `value_names` has fewer elements.
-
-Here's how it looks if you specify the key names:
+Here, we feed a vector into the `names_to` argument, telling it which part of the old column names should go into the names column (here `extreme`) and which should be split out into value columns (with the special phrase `".value"`). Then we use `names_pattern` to specify capture groups to tell R how to break up the column names.
 
 ```{r}
 summaries_qs %>%
-  cuPsychRTools::super_gather(key = "extreme",
-                              key_names = c("min", "max"),
-                              name_order = "value_first")
-```
-
-And here's how it looks if you specify the value names:
-
-```{r}
-summaries_qs %>%
-  cuPsychRTools::super_gather(key = "extreme",
-                              value_names = c("q_1", "q_2", "q_3"),
-                              name_order = "value_first")
+  pivot_longer(cols = starts_with("q"),
+               names_to = c(".value", "extreme"),
+               names_pattern = "(._.*)_(.*)")
 ```
 
 ## From long to wide
 
-To go from long form to wide form, you'll use `tidyr::spread()`.
+To go from long form to wide form, you'll use `tidyr::pivot_wider()`.
 
-`spread()`'s main arguments are analogous to `gather()`'s, but not exactly the same because you're doing something different:
+`pivot_wider()`'s main arguments are analogous to `pivot_longer()`'s, but not exactly the same because you're doing something different:
 
-* `key`: the name of the _existing_ column that is the key/indicator column. You must specify this as a bare variable name, because you're referring to an existing column.
-* `value`: the name of the _existing_ value column. Again, specify as a bare variable name.
+* `names_from`: the name of the _existing_ column that is the key/indicator column. You must specify this as a bare variable name, because you're referring to an existing column.
+* `values_from`: the name of the _existing_ value column. Again, specify as a bare variable name.
 
 ```{r}
 summaries_long <- summaries %>%
-  gather(key = "statistic", value = "rt", starts_with("rt"))
+  pivot_longer(cols = starts_with("rt"), names_to = "statistic", values_to = "rt")
 
 summaries_long %>%
-  spread(key = statistic, value = rt)
+  pivot_wider(names_from = statistic, values_from = rt)
 ```
 
-`spread()` automatically sets the column names of the new wide-split columns to whatever the indicator values were in the key column. Keep this in mind if you're modifying the indicator values to be cleaner--you may want to modify them again if you plan to spread your data, to put the name of the value back into the indicator conditions.
+`pivot_wider()` automatically sets the column names of the new wide-split columns to whatever the indicator values were in the key column. Keep this in mind if you're modifying the indicator values to be cleaner--you may want to modify them again if you plan to spread your data, to put the name of the value back into the indicator conditions.
 
 For example, the below is nice in long form but a little less clear in wide form, because we now don't necessarily know what the min/median/max are calculated on:
 
 ```{r}
 summaries %>%
-  gather(key = "statistic", value = "rt", starts_with("rt")) %>%
-  # str_replace() is from stringr--check that ish out!
-  mutate(statistic = str_replace(statistic, "rt_", "")) %>%
-  spread(key = statistic, value = rt)
+  pivot_longer(cols = starts_with("rt"), names_to = "statistic", values_to = "rt", names_prefix = "rt_") %>%
+  pivot_wider(names_from = statistic, values_from = rt)
 ```
 
-### Spreading multiple distinct variables at once
+### Pivot-widering multiple distinct variables at once
 
-Similarly to `gather()`, `spread()` will only let you spread one value column at a time. Again, I don't mind this default behavior because it is nice and predictable, but sometimes you just need to spread multiple variables at once! The counterpart to `super_gather()` in our helper package is `super_spread()`, which was written to look as much like `spread()` as possible. The only difference is that you can specify multiple variables for the values (using `tidyselect` helpers if you wish!) as opposed to just being able to specify one value with `spread()`.
+Similarly to `pivot_longer()`, `pivot_wider()`'s default behavior is to only let you pivot one value column at a time. Again, if you want to widen multiple unique variables that have repeated measures over the same conditions, you can modify the arguments of `pivot_wider()` to achieve this.
+
+With `pivot_wider()`, the main thing you change is to pass either a vector of column names or a `tidyselect` call to `values_from`, instead of just one column. With multiple columns going in as the argument, usually `pivot_wider()` knows how to pivot those columns and make their new names.
 
 ```{r}
 summaries_qs_long <- summaries_qs %>%
-  cuPsychRTools::super_gather(key = "extreme",
-                              key_names = c("min", "max"),
-                              name_order = "value_first")
+  pivot_longer(cols = starts_with("q"),
+               names_to = c(".value", "extreme"),
+               names_pattern = "(._.*)_(.*)")
 
 summaries_qs_long %>%
-  cuPsychRTools::super_spread(key = extreme,
-                              starts_with("q"),
-                              name_order = "value_first")
+  pivot_wider(names_from = extreme,
+              values_from = starts_with("q"))
 ```
 
-The `name_order` argument specifies the naming convention for the new columns that are created.
+If you want to change the separator character that splits up the new appended names, you can use the `names_sep` argument. As you can see here, the default separator is an underscore.
 
 # Coming up in part 2
 
