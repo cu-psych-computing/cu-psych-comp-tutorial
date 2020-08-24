@@ -1,10 +1,15 @@
 ---
-title: "R Tutorial: Modeling"
-output: 
-  html_document: 
-    toc: true
-    toc_float: true
+title: "Modeling"
+subtitle: "CU Psych Scientific Computing Workshop"
+tags: ["core", "r"]
 --- 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+library(effects)
+```
 
  Welcome to the lesson on modeling in R! 
 Goals: 
@@ -17,13 +22,12 @@ Goals:
 We will use the same data we are already familiar with from the Descriptives lesson. We will compute a group for high and low ADHD, so we can use that in our models. 
 
 ```{r}
-df <- read.csv("uncapher_2016_repeated_measures_dataset.csv")
+df <- read_csv(here("content", "tutorials", "5_models", "uncapher_2016_repeated_measures_dataset.csv"))
 head(df)
 ```
 
 clean up the data for these models
 ```{r}
-library(tidyverse)
  df <- df %>%   
     # only keep data from the task when distractor was present
    dplyr::filter(numDist == 6) %>%
@@ -172,12 +176,7 @@ summary(a2)
 
 There are many ways (and packages) to plot the output of your models. 
 
-We will start with a handy package, [`effects`](https://cran.r-project.org/web/packages/effects/effects.pdf), that plots the effects of many model types.
-
-```{r}
-#install.packages("effects")
-library(effects)
-```
+We will start with a handy package, [`effects`](https://cran.r-project.org/web/packages/effects/effects.pdf), that plots the effects of many model types. Note that these plots are made with base R, not ggplot2, so you can't use ggplot2 tools to tweak their appearance.
 
 Let's plot the effect of ADHD on dprime from our linear model.
 ```{r}

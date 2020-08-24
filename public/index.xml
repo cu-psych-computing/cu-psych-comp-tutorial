@@ -52,6 +52,15 @@ Upcoming To be announced.
     </item>
     
     <item>
+      <title>Modeling</title>
+      <link>/tutorials/5_models/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/5_models/</guid>
+      <description>Basics for modeling in R  Functions:  Basic models  Syntax:  Basic model formula To add multiple factors Interactions  Output of models  Linear models Anova  Visualizing models Advanced models    Welcome to the lesson on modeling in R! Goals: 1. Learn about functions and syntax for models in R 2. Practice examples of different model types 3. Understand how to obtain model results in R</description>
+    </item>
+    
+    <item>
       <title>Plotting Tutorial Using ggplot2!</title>
       <link>/tutorials/4_plotting/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
