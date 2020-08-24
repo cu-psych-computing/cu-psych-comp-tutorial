@@ -12,31 +12,31 @@
   
 
   
-  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../apple-touch-icon.png">
 
   
-  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../favicon-32x32.png">
 
   
-  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../favicon-16x16.png">
 
   
-  <link rel="manifest" href="../site.webmanifest">
+  <link rel="manifest" href="../../../site.webmanifest">
 
   
-  <link rel="mask-icon" href="../safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="mask-icon" href="../../../safari-pinned-tab.svg" color="#5bbad5">
 
   <meta name="msapplication-TileColor" content="#da532c">
 
   <meta name="theme-color" content="#ffffff">
 
   
-  <link rel="stylesheet" href="../css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../../../css/bootstrap.min.css" />
 
   <script src="https://kit.fontawesome.com/7eb067db85.js" crossorigin="anonymous"></script>
 
   
-  <title>Main tutorial | Columbia Psychology Scientific Computing</title>
+  <title>Descriptives_Data_Challenge | Columbia Psychology Scientific Computing</title>
   
 
   <style>
@@ -249,7 +249,7 @@ div .highlightsec {
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-ligh fixed-top">
   <div class="container responsive-menu">
-    <a class="navbar-brand" href="../">Columbia Psychology Scientific Computing</a>
+    <a class="navbar-brand" href="../../../">Columbia Psychology Scientific Computing</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
       aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fa fa-bars"></i>
@@ -260,7 +260,7 @@ div .highlightsec {
           
               
         <li class="nav-item">
-          <a class="nav-link" href="../">
+          <a class="nav-link" href="../../../">
             
               <span>Home</span>
           </a>
@@ -269,7 +269,7 @@ div .highlightsec {
         
               
         <li class="nav-item">
-          <a class="nav-link" href="../who/">
+          <a class="nav-link" href="../../../who/">
             
               <span>Who We Are</span>
           </a>
@@ -278,7 +278,7 @@ div .highlightsec {
         
               
         <li class="nav-item">
-          <a class="nav-link" href="../workshop/">
+          <a class="nav-link" href="../../../workshop/">
             
               <span>Workshop</span>
           </a>
@@ -287,7 +287,7 @@ div .highlightsec {
         
               
         <li class="nav-item">
-          <a class="nav-link" href="../meetings/">
+          <a class="nav-link" href="../../../meetings/">
             
               <span>Meetings</span>
           </a>
@@ -296,7 +296,7 @@ div .highlightsec {
         
               
         <li class="nav-item">
-          <a class="nav-link" href="../tutorials/">
+          <a class="nav-link" href="../../../tutorials/">
             
               <span>Tutorials</span>
           </a>
@@ -305,7 +305,7 @@ div .highlightsec {
         
               
         <li class="nav-item">
-          <a class="nav-link" href="../resources/">
+          <a class="nav-link" href="../../../resources/">
             
               <span>Resources</span>
           </a>
@@ -314,7 +314,7 @@ div .highlightsec {
         
               
         <li class="nav-item">
-          <a class="nav-link" href="../license/">
+          <a class="nav-link" href="../../../license/">
             
               <span>License</span>
           </a>
@@ -328,58 +328,49 @@ div .highlightsec {
   
   <div class="container">
     <article>
-      <h1>Main tutorial</h1>
+      
+<script src="../../../rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#data-challenge-for-descriptive-statistics">Data challenge for descriptive statistics</a>
+<ul>
+<li><a href="#get-started-by-loading-data-and-packages">0. Get started by loading data and packages</a></li>
+<li><a href="#create-a-new-data-frame-with-only-variables-for-subject-number-group-status-hitrate-farate-and-bis.-also-we-dont-want-any-rows-where-the-false-alarm-rate-is-above-.3.">1. Create a new data frame with only variables for subject number, group status, hitRate, faRate and bis. Also, we don’t want any rows where the false alarm rate is above .3.</a></li>
+<li><a href="#what-is-the-mean-range-and-standard-deviation-false-error-rate-for-high-and-low-multitaskers">2. What is the mean, range, and standard deviation False error rate for high and low multitaskers?</a></li>
+<li><a href="#group-participants-based-on-bis-score">3. Group participants based on BIS score</a></li>
+</ul></li>
+</ul>
+</div>
 
+<div id="data-challenge-for-descriptive-statistics" class="section level1">
+<h1>Data challenge for descriptive statistics</h1>
+<p>Using the same dataset as the lesson, complete the following exercises. Make sure to reload the .csv file from the folder, don’t use the version we were working on during the tutorial if you still have it open.</p>
+<div id="get-started-by-loading-data-and-packages" class="section level2">
+<h2>0. Get started by loading data and packages</h2>
+<pre class="language-r"><code class="language-r"># this dataset examines the relationship between multitasking and working memory.
+# original paper by Uncapher et al. 2016:  https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4733435/pdf/nihms712443.pdf
 
-  <p>
-    <a href="../tutorials/1_programming/">Intro to programming in R</a>
-    
-    
-    <br>
-    <small class="text-secondary">Jan 1, 0001</small>
-    
-    
-  </p>
-
-  <p>
-    <a href="../tutorials/2_datacleaning/">Getting your data ready for analysis</a>
-    
-    
-    <br>
-    <small class="text-secondary">Jan 1, 0001</small>
-    
-
-<small><code><a href="../tags/core">core</a></code></small>
-
-
-<small><code><a href="../tags/r">r</a></code></small>
-
-    
-  </p>
-
-  <p>
-    <a href="../tutorials/3_descriptives/">Descriptives</a>
-    
-    
-    <br>
-    <small class="text-secondary">Jan 1, 0001</small>
-    
-
-<small><code><a href="../tags/core">core</a></code></small>
-
-
-<small><code><a href="../tags/r">r</a></code></small>
-
-    
-  </p>
+# open the data from csv </code></pre>
+</div>
+<div id="create-a-new-data-frame-with-only-variables-for-subject-number-group-status-hitrate-farate-and-bis.-also-we-dont-want-any-rows-where-the-false-alarm-rate-is-above-.3." class="section level2">
+<h2>1. Create a new data frame with only variables for subject number, group status, hitRate, faRate and bis. Also, we don’t want any rows where the false alarm rate is above .3.</h2>
+</div>
+<div id="what-is-the-mean-range-and-standard-deviation-false-error-rate-for-high-and-low-multitaskers" class="section level2">
+<h2>2. What is the mean, range, and standard deviation False error rate for high and low multitaskers?</h2>
+</div>
+<div id="group-participants-based-on-bis-score" class="section level2">
+<h2>3. Group participants based on BIS score</h2>
+<p>The BIS is a personality questionnaire. Find out the median value, and create a new variable divided into high and low BIS scores. Then, calculate average values for hitRate, faRate and dprime for the two groups.</p>
+</div>
+</div>
 
     </article>
   </div>
 
   
-<script src="../js/jquery-3.3.1.slim.min.js"></script>
-<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../../../js/jquery-3.3.1.slim.min.js"></script>
+<script src="../../../js/bootstrap.bundle.min.js"></script>
 
   
   
