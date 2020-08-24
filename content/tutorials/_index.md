@@ -1,3 +1,3 @@
 ---
-title: Main tutorial
+title: Tutorials
 ---

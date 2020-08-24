@@ -1,50 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Main tutorial on Columbia Psychology Scientific Computing</title>
+    <title>Tutorials on Columbia Psychology Scientific Computing</title>
     <link>/tutorials/</link>
-    <description>Recent content in Main tutorial on Columbia Psychology Scientific Computing</description>
+    <description>Recent content in Tutorials on Columbia Psychology Scientific Computing</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
 	<atom:link href="/tutorials/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Descriptives</title>
-      <link>/tutorials/3_descriptives/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorials/3_descriptives/</guid>
-      <description>Return home Goals for this tutorial: 0. Open dataset and load package 1. Familiarize yourself with the data 2. Selecting relevant variables 3. Basic Descriptives  Summarizing data  4. Grouping data 5. Extra: Working with a long dataset  How many unique subjects are in the data Make sure you know how many trials there were per subj. Combine summary statistics with the full data frame  6.</description>
-    </item>
-    
-    <item>
-      <title>Getting your data ready for analysis</title>
-      <link>/tutorials/2_datacleaning/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorials/2_datacleaning/</guid>
-      <description>Return home Goals of this lesson Install Packages Getting your Data into R  Entering data directly Reading data into R  Inspecting your data  How is your data frame structured? Brief intro to tidyverse Rename a variable Check for missing data Check for correct values Filtering data  Getting ready for analysis  Recoding variables Calculating new variables Combining data from multiple sources Shaping data  Saving your work Data Challenge!</description>
-    </item>
-    
-    <item>
-      <title>Modeling</title>
-      <link>/tutorials/5_models/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorials/5_models/</guid>
-      <description>Basics for modeling in R  Functions:  Basic models  Syntax:  Basic model formula To add multiple factors Interactions  Output of models  Linear models Anova  Visualizing models Advanced models    Welcome to the lesson on modeling in R! Goals: 1. Learn about functions and syntax for models in R 2. Practice examples of different model types 3. Understand how to obtain model results in R</description>
-    </item>
-    
-    <item>
-      <title>Plotting Tutorial Using ggplot2!</title>
-      <link>/tutorials/4_plotting/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorials/4_plotting/</guid>
-      <description>Return home 0: What is this tutorial? What’s ggplot2? 1: First Load Tidyverse, which includes ggplot2! 2: Load in Sample Data (NHANES) 3: Scatter Plot &amp;amp; Basic ggplot Syntax  3a: Histograms with ggplot  4: Dot Plot Organized by Grouping Factor  4a: Visualizing Distributions with Violin Plots  5: Summary Plots 6: Fitting Lines To The Data 7: Titles, Axis Labels 7: Facetting 8: Color 9: Themes 10: Saving To Files 11: Heatmaps 12: Basic Time Series Plot 13: Final Points   Return home Click here to return to the main CU psychology R tutorials page.</description>
-    </item>
     
   </channel>
 </rss>

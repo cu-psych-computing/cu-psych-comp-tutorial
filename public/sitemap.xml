@@ -7,11 +7,11 @@
   </url>
   
   <url>
-    <loc>/tutorials/3_descriptives/</loc>
+    <loc>/tutorials/core-r/3_descriptives/</loc>
   </url>
   
   <url>
-    <loc>/tutorials/2_datacleaning/</loc>
+    <loc>/tutorials/core-r/2_datacleaning/</loc>
   </url>
   
   <url>
@@ -19,7 +19,11 @@
   </url>
   
   <url>
-    <loc>/tutorials/1_programming/</loc>
+    <loc>/tutorials/core-r/1_programming/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/core-r/</loc>
   </url>
   
   <url>
@@ -27,31 +31,27 @@
   </url>
   
   <url>
-    <loc>/tutorials/</loc>
-  </url>
-  
-  <url>
     <loc>/meetings/</loc>
   </url>
   
   <url>
-    <loc>/tutorials/5_models/</loc>
+    <loc>/tutorials/core-r/5_models/</loc>
   </url>
   
   <url>
-    <loc>/tutorials/4_plotting/</loc>
+    <loc>/tutorials/core-r/4_plotting/</loc>
   </url>
   
   <url>
-    <loc>/tutorials/1_programming/lessonpart0/</loc>
+    <loc>/tutorials/core-r/1_programming/lessonpart0/</loc>
   </url>
   
   <url>
-    <loc>/tutorials/1_programming/lessonpart1/</loc>
+    <loc>/tutorials/core-r/1_programming/lessonpart1/</loc>
   </url>
   
   <url>
-    <loc>/tutorials/1_programming/lessonpart2/</loc>
+    <loc>/tutorials/core-r/1_programming/lessonpart2/</loc>
   </url>
   
   <url>
@@ -64,6 +64,10 @@
   
   <url>
     <loc>/tags/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/</loc>
   </url>
   
   <url>
