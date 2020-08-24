@@ -1,0 +1,817 @@
+---
+title: "Tidy walkthrough, part 2"
+author: "Monica Thieu"
+tags: ["extra", "r"]
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#goals-for-this-vignette">Goals for this vignette</a></li>
+<li><a href="#quick-cheat-list-of-key-functions-from-various-pkgs">Quick cheat-list of key functions from various pkgs</a></li>
+<li><a href="#initializing-fake-data">Initializing fake data</a></li>
+<li><a href="#joining-dfs">Joining dfs</a></li>
+<li><a href="#nested-dfs">Nested dfs</a>
+<ul>
+<li><a href="#a-brief-review-of-lists">A brief (re)view of lists</a></li>
+<li><a href="#lists-as-df-columns">Lists as df columns</a>
+<ul>
+<li><a href="#a-df-with-a-list-column-still-behaves-like-a-df-mostly">A df with a list-column still behaves like a df, mostly</a></li>
+<li><a href="#df-ception-df-list-columns-that-contain-other-dfs">df-ception: df list-columns that contain other dfs</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#vectorizing-to-the-high-heavens">Vectorizing to the high heavens</a>
+<ul>
+<li><a href="#vectorizing-its-like-a-for-loop-but-not">Vectorizing: it’s like a for loop, but not</a></li>
+<li><a href="#tidy-vectorizing">Tidy vectorizing</a>
+<ul>
+<li><a href="#intro-to-map">Intro to map()</a></li>
+<li><a href="#special-versions-of-map">Special versions of map()</a></li>
+<li><a href="#using-map-on-list-columns-inside-a-df">Using map() on list-columns inside a df</a></li>
+</ul></li>
+<li><a href="#when-not-to-vectorize">When not to vectorize</a></li>
+</ul></li>
+<li><a href="#working-with-model-objects-en-masse">Working with model objects en masse</a>
+<ul>
+<li><a href="#fitting-a-whole-lotta-models">Fitting a whole lotta models</a></li>
+<li><a href="#extracting-model-coefficients">Extracting model coefficients</a></li>
+</ul></li>
+<li><a href="#plotting-data">Plotting data</a></li>
+</ul>
+</div>
+
+<div id="goals-for-this-vignette" class="section level1">
+<h1>Goals for this vignette</h1>
+<p>Hello (again)! This is a continuation of our tour through base tidyverse. Our goals are the same as before:</p>
+<ul>
+<li>Demonstrate (what I think are) key first-level features of the tidyverse</li>
+<li>Illustrate psychology use cases for tidyverse functions</li>
+<li>Hopefully convince you to join the cult of tidy</li>
+</ul>
+<p>This time, we’ll be moving ahead to some more complex use cases utilizing some more advanced programming tactics. I hope to show you how the tidyverse makes these things a little smoother!</p>
+<p>Again, please remember that for more exhaustive documentation you can visit the online reference pages for your package of interest, and for more in-depth self-teaching, please refer to the <a href="http://r4ds.had.co.nz/">R for Data Science online textbook</a> by Garrett Grolemund and Hadley Wickham.</p>
+</div>
+<div id="quick-cheat-list-of-key-functions-from-various-pkgs" class="section level1">
+<h1>Quick cheat-list of key functions from various pkgs</h1>
+<p>These are not the only functions in these packages that you may find useful! These are simply the functions from these packages that will be featured in this vignette.</p>
+<ul>
+<li><code>dplyr</code>
+<ul>
+<li>the <code>*_join()</code> family of functions to join dfs row-wise by key columns</li>
+</ul></li>
+<li><code>tidyr</code>
+<ul>
+<li><code>nest()</code> and <code>unnest()</code> to wrap/unwrap a long-form df to/from a nested df with list-columns of observation-level data</li>
+</ul></li>
+<li><code>purrr</code>
+<ul>
+<li>the <code>map()</code> family of vectorizing helper functions</li>
+</ul></li>
+<li><code>broom</code>
+<ul>
+<li><code>tidy()</code> to extract coefficients/SEs from models as a df</li>
+</ul></li>
+</ul>
+</div>
+<div id="initializing-fake-data" class="section level1">
+<h1>Initializing fake data</h1>
+<p>We’ll use a simulated dataset for this vignette, so you don’t need to worry about any dependencies involving datasets you don’t have access to while you’re following along.</p>
+<p>If you have <code>tidyverse</code> loaded, all this code should run if you try to run it in your R console.</p>
+<p>If you’re coming from part 1 of our tidyverse tour, this is the exact same simulated raw data as before. As a reminder, this is a simulated recognition memory task, where for a series of objects that were either seen or not seen in a previous learning phase, fake subjects must respond “old” if they think they saw the object before, and “new” if they think they did not.</p>
+<pre class="language-r"><code class="language-r"># 20 fake subjects, 50 fake trials per subject
+
+# Will simulate the person-level variables FIRST,
+# then expand to simulate the trial-level variables
+raw &lt;- tibble(id = 1L:20L,
+              age = sample(18L:35L, size = 20, replace = TRUE),
+              # assuming binary gender for the purposes of this simulation
+              gender = sample(c(&quot;male&quot;, &quot;female&quot;), size = 20, replace = TRUE)) %&gt;%
+  # simulating some &quot;questionnaire&quot; scores; person-level
+  mutate(q_1 = rnorm(n = n(), mean = 30, sd = 10),
+              q_2 = rnorm(n = n(), mean = 30, sd = 10),
+              q_3 = rnorm(n = n(), mean = 30, sd = 10)) %&gt;%
+  # slice() subsets rows by position; you can use it to repeat rows by repeating position indices
+  slice(rep(1:n(), each = 50)) %&gt;%
+  # We&#39;ll get to this in a bit--this causes every &quot;group&quot;
+  # aka every set of rows with the same value for &quot;id&quot;, to behave as an independent df
+  group_by(id) %&gt;%
+  # I just want to have a column for &quot;trial order&quot;, I like those in my task data
+  mutate(trial_num = 1:n(),
+         # Each subject sees half OLD and half NEW trials in this recognition memory task
+         is_old = rep(0L:1L, times = n()/2),
+         # I&#39;m shuffling the order of &quot;old&quot; and &quot;new&quot; trials in my fake memory task
+         is_old = sample(is_old),
+         # This will generate binary &quot;old&quot;/&quot;new&quot; responses corresponding roughly to a d&#39; of 1
+         # yep, everyone has the same d&#39; today
+         response = if_else(is_old == 1,
+                            rbinom(n = n(), size = 1, prob = 0.7),
+                            rbinom(n = n(), size = 1, prob = 0.3)),
+         rt = rnorm(n = n(), mean = 3, sd = 1.5)) %&gt;%
+  ungroup()</code></pre>
+</div>
+<div id="joining-dfs" class="section level1">
+<h1>Joining dfs</h1>
+<p>Under construction!</p>
+</div>
+<div id="nested-dfs" class="section level1">
+<h1>Nested dfs</h1>
+<p>Nearly all of the tidyverse features we’ll be working through in this vignette rely on two key features of R to make their magic happen: <strong>list-columns</strong> and <strong>flexible vectorizing functions.</strong> These are features that you may very well encounter explicitly in casual R usage, so we’ll take a bit of time to familiarize ourselves with these concepts before we jump all the way in.</p>
+<div id="a-brief-review-of-lists" class="section level2">
+<h2>A brief (re)view of lists</h2>
+<p>Your usual vector, be it character, numeric, or logical, is an <em>atomic vector</em>–this means that every element in the vector is required to be <em>the same data type.</em> A <strong>list</strong> is also a vector, but it’s not bound to be atomic. The different elements of a list <em>do not have to be the same data type.</em> They don’t even all have to be length 1!</p>
+<p>If you’re familiar with data types in Matlab, a list is very similar to a Matlab struct array. Both are objects that contain multiple elements that aren’t bound to be the same type, or length 1.</p>
+<p>While you might initialize an atomic vector using <code>c()</code>, you have to use <code>list()</code> to initialize list vectors.</p>
+<pre class="language-r"><code class="language-r">mylist &lt;- list(1,
+               &quot;one&quot;,
+               c(1, 11, 111))
+
+mylist</code></pre>
+<pre><code>## [[1]]
+## [1] 1
+## 
+## [[2]]
+## [1] &quot;one&quot;
+## 
+## [[3]]
+## [1]   1  11 111</code></pre>
+<p>Notice how R shows you the bracket indexing of the list elements above. There are <em>two</em> ways to bracket index list vectors, with single brackets <code>[]</code> and double brackets <code>[[]]</code>.</p>
+<p><em>Single</em>-bracket indexing a list vector <strong>always returns another list object.</strong></p>
+<pre class="language-r"><code class="language-r">mylist[1]</code></pre>
+<pre><code>## [[1]]
+## [1] 1</code></pre>
+<pre class="language-r"><code class="language-r">mylist[2:3]</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;one&quot;
+## 
+## [[2]]
+## [1]   1  11 111</code></pre>
+<p>See above that when you print single-bracket indexed lists to console, you still get console output that shows you each list element under double-bracketed indices.</p>
+<pre class="language-r"><code class="language-r">typeof(mylist[2:3])</code></pre>
+<pre><code>## [1] &quot;list&quot;</code></pre>
+<p>More explicitly, you can see that single-bracket indexing a list will return an object of list type.</p>
+<p>Meanwhile, <em>double</em>-bracket indexing a list vector <strong>returns the object <em>stored inside</em> that list field.</strong></p>
+<pre class="language-r"><code class="language-r">mylist[[2]]</code></pre>
+<pre><code>## [1] &quot;one&quot;</code></pre>
+<pre class="language-r"><code class="language-r">mylist[[3]]</code></pre>
+<pre><code>## [1]   1  11 111</code></pre>
+<p>Above, you actually get the object stored <em>inside</em> the list at the relevant element. This is probably what you’re expecting when you index a list–to unlist or “unwrap” the element on the inside you wish to access.</p>
+<pre class="language-r"><code class="language-r">typeof(mylist[[3]])</code></pre>
+<pre><code>## [1] &quot;double&quot;</code></pre>
+<p>Just making sure that it is in fact the type of the element stored inside, and no longer list type.</p>
+<p>Notice that you can return an indexed list object <em>of any length</em> when you single-bracket index, but double-bracket indexing to extract individual list elements only lets you access <em>one at a time!</em></p>
+<p>A feature of lists that can be very useful is that list elements can have names. You can create a named list object by naming list elements when you specify them:</p>
+<pre class="language-r"><code class="language-r">mylist &lt;- list(first = 1,
+               second = &quot;one&quot;,
+               third = c(1, 11, 111))
+
+mylist</code></pre>
+<pre><code>## $first
+## [1] 1
+## 
+## $second
+## [1] &quot;one&quot;
+## 
+## $third
+## [1]   1  11 111</code></pre>
+<p>When a list has named elements, printing the list to console will show you the names of the elements. Handy!</p>
+<p>The best thing about named list elements is that you can use those names to access list elements!</p>
+<pre class="language-r"><code class="language-r">mylist[&quot;first&quot;]</code></pre>
+<pre><code>## $first
+## [1] 1</code></pre>
+<pre class="language-r"><code class="language-r">mylist[c(&quot;second&quot;, &quot;third&quot;)]</code></pre>
+<pre><code>## $second
+## [1] &quot;one&quot;
+## 
+## $third
+## [1]   1  11 111</code></pre>
+<pre class="language-r"><code class="language-r">mylist[[&quot;first&quot;]]</code></pre>
+<pre><code>## [1] 1</code></pre>
+<p>Again, single-bracket indexing continues to return a list (this time, a named list containing the elements you indexed), and allows you to index multiple elements at once by feeding in a character vector of names. Double-bracket indexing, meanwhile, unwraps the element you’re indexing.</p>
+<p>You can also index named lists with the dollar sign <code>$</code> operator! Seem familiar?</p>
+<pre class="language-r"><code class="language-r">mylist$third</code></pre>
+<pre><code>## [1]   1  11 111</code></pre>
+<p>This is the same way you index df columns! In fact, somewhere deep down, a dataframe/tibble is a very special list, where each list element is required to be a vector of the same length. Isn’t that cool?</p>
+<p>That’s the basics you need to know about lists, summarized here just in case:</p>
+<ul>
+<li>it’s a vector, basically</li>
+<li>it contains different elements that are not bound to be the same type, and can be vectors themselves</li>
+<li>Single-bracket indexing returns a list, while double-bracket indexing unwraps the element</li>
+<li>elements can have names, which allows indexing by name using brackets or <code>$</code></li>
+</ul>
+</div>
+<div id="lists-as-df-columns" class="section level2">
+<h2>Lists as df columns</h2>
+<p>A df is composed of columns, each of which is a vector of identical length. But nobody ever said the columns of a df all have to be atomic vectors! A df column can be a list vector, where each element of said list-column can contain objects of different data types and lengths.</p>
+<p>This becomes a little easier to wrap your head around if we explicitly look at a df with list-columns in it. Below, we’ll take a look at the <code>starwars</code> df, which is a toy dataset about Star Wars characters that comes standard with <code>dplyr</code>.</p>
+<pre class="language-r"><code class="language-r">starwars</code></pre>
+<pre><code>## # A tibble: 87 x 14
+##    name  height  mass hair_color skin_color eye_color birth_year sex   gender
+##    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+##  1 Luke…    172    77 blond      fair       blue            19   male  mascu…
+##  2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
+##  3 R2-D2     96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
+##  4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
+##  5 Leia…    150    49 brown      light      brown           19   fema… femin…
+##  6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
+##  7 Beru…    165    75 brown      light      blue            47   fema… femin…
+##  8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
+##  9 Bigg…    183    84 black      light      brown           24   male  mascu…
+## 10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
+## # … with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
+## #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+<p>In this df, each row is a “subject” (a character from the movies). Currently, this data is “tidy”: each row is a unique observation (subject in this case), and each column is a distinct variable giving information about that observation.</p>
+<p>Because this object is a tibble (makes sense since it comes with <code>dplyr</code>), we can inspect the nice print output to see the types of the different columns. We can see that the first few columns are atomic vectors, either numeric like <code>height</code> and <code>mass</code> or character like <code>homeworld</code>. But check out the last three columns…</p>
+<pre class="language-r"><code class="language-r">starwars %&gt;%
+  select(name, films, vehicles, starships)</code></pre>
+<pre><code>## # A tibble: 87 x 4
+##    name               films     vehicles  starships
+##    &lt;chr&gt;              &lt;list&gt;    &lt;list&gt;    &lt;list&gt;   
+##  1 Luke Skywalker     &lt;chr [5]&gt; &lt;chr [2]&gt; &lt;chr [2]&gt;
+##  2 C-3PO              &lt;chr [6]&gt; &lt;chr [0]&gt; &lt;chr [0]&gt;
+##  3 R2-D2              &lt;chr [7]&gt; &lt;chr [0]&gt; &lt;chr [0]&gt;
+##  4 Darth Vader        &lt;chr [4]&gt; &lt;chr [0]&gt; &lt;chr [1]&gt;
+##  5 Leia Organa        &lt;chr [5]&gt; &lt;chr [1]&gt; &lt;chr [0]&gt;
+##  6 Owen Lars          &lt;chr [3]&gt; &lt;chr [0]&gt; &lt;chr [0]&gt;
+##  7 Beru Whitesun lars &lt;chr [3]&gt; &lt;chr [0]&gt; &lt;chr [0]&gt;
+##  8 R5-D4              &lt;chr [1]&gt; &lt;chr [0]&gt; &lt;chr [0]&gt;
+##  9 Biggs Darklighter  &lt;chr [1]&gt; &lt;chr [0]&gt; &lt;chr [1]&gt;
+## 10 Obi-Wan Kenobi     &lt;chr [6]&gt; &lt;chr [1]&gt; &lt;chr [5]&gt;
+## # … with 77 more rows</code></pre>
+<p>The last three columns are list type! This makes sense based on the content we might expect to be contained within each column. For example, if each row is one character, but one character appears in multiple movies, you might expect that character’s value in the <code>films</code> column to contain a vector with one element for each movie that character was in. In this way, a list-column allows you to store multiple observations per subject wrapped up in such a way that the main df still has one row per subject, but you retain the observation-level data because you haven’t actually collapsed across any variables.</p>
+<p>(You’re probably familiar with fully long-form data, where each observation has its own row, and then grouping variables like subject are repeated for all observations that belong to the same subject. We will learn about the relationship between dfs containing list-columns and fully long-form dfs later!)</p>
+<p>Now, for list-columns, instead of actually printing the content of the vector, tibble output gives us a blurb about the object contained inside of each list element. To inspect the contents of a list-column, we have to index into the list-column using one of the techniques we reviewed above.</p>
+<p>We can index by position, which corresponds to row numbers, using single-bracket indexing to return another, shorter list:</p>
+<pre class="language-r"><code class="language-r"># These should be Luke&#39;s starships that he piloted at some point in the series
+# since we saw earlier that he&#39;s the first row of the df
+starwars$starships[1]</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;X-wing&quot;           &quot;Imperial shuttle&quot;</code></pre>
+<p>Or double-bracket indexing, which allows us to actually access the object contained within:</p>
+<pre class="language-r"><code class="language-r">starwars$starships[[1]]</code></pre>
+<pre><code>## [1] &quot;X-wing&quot;           &quot;Imperial shuttle&quot;</code></pre>
+<p>We can also use logical indexing to access list-column elements based on values in other columns.</p>
+<pre class="language-r"><code class="language-r"># This is good when you don&#39;t necessarily know the row number of what you&#39;re looking for
+starwars$starships[starwars$name == &quot;Han Solo&quot;]</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;Millennium Falcon&quot; &quot;Imperial shuttle&quot;</code></pre>
+<p>Note that <em>logical indexing only works with single-bracket indexing.</em> If you want to unwrap the object contained within, you have to index twice like below:</p>
+<pre class="language-r"><code class="language-r">starwars$starships[starwars$name == &quot;Han Solo&quot;][[1]]</code></pre>
+<pre><code>## [1] &quot;Millennium Falcon&quot; &quot;Imperial shuttle&quot;</code></pre>
+<p>This works because single-bracket indexing always returns another list, and you can then double-bracket index into THAT list. It’s a lot of brackets, but it does follow a pattern!</p>
+<div id="a-df-with-a-list-column-still-behaves-like-a-df-mostly" class="section level3">
+<h3>A df with a list-column still behaves like a df, mostly</h3>
+<p>If your df contains a list-column, you can do most things with that df that you might do with a fully atomic list-free df. You can:</p>
+<ul>
+<li>subset by column using <code>select()</code></li>
+<li>reshape your df using <code>pivot_longer()</code> and <code>pivot_wider()</code></li>
+</ul>
+<p>There are a couple respects in which list-columns are limited, though. Most of these involve the fact that R makes fewer assumptions about the content of lists (since elements are not bound to be the same type/length 1), and so for your own safety the tidyverse prevents you from doing some things that might yield unexpected results:</p>
+<ul>
+<li>you cannot directly <code>filter()</code> or <code>distinct()</code> a df by a list-column, but you can do these things to a df containing list-columns by an atomic column</li>
+<li>you cannot <code>group_by()</code> a df by a list-column, but you can <code>group_by()</code> atomic columns in a df containing list-columns</li>
+</ul>
+<p>What about using <code>mutate()</code> to create/modify list-columns? You can do this, but it requires special vectorizing functions like <code>purrr::map()</code> that we will cover later. Stay tuned!</p>
+</div>
+<div id="df-ception-df-list-columns-that-contain-other-dfs" class="section level3">
+<h3>df-ception: df list-columns that contain other dfs</h3>
+<p>Okay, so now that you’ve seen list-columns that contain different atomic vectors, it’s time to get list-crazy! A list really can contain <em>basically anything</em> in each of its elements. This means that a list can contain a whole df inside of one (or more) of its list elements.</p>
+<p>When would you want a df that contains other dfs? Well, remember that list-columns are typically useful to contain multiple observations of information that pertain to one subject/group/etc while allowing your df to take a one-row-per-subject/group structure.</p>
+<p>You usually won’t be creating dfs with df-containing list-columns from scratch. More likely, you’ll start with a fully long df, and condense the repeated measures data by folding it into a list-column using <code>tidyr::nest()</code>. Let’s try it with the <code>starwars</code> df, by creating a df that has one row per species x homeworld, and a list-column containing a df for all of the characters of a particular species/homeworld grouping.</p>
+<pre class="language-r"><code class="language-r">starwars_by_species_home &lt;- starwars %&gt;%
+  nest(characters = -c(species, homeworld))
+
+starwars_by_species_home</code></pre>
+<pre><code>## # A tibble: 58 x 3
+##    homeworld species characters       
+##    &lt;chr&gt;     &lt;chr&gt;   &lt;list&gt;           
+##  1 Tatooine  Human   &lt;tibble [8 × 12]&gt;
+##  2 Tatooine  Droid   &lt;tibble [2 × 12]&gt;
+##  3 Naboo     Droid   &lt;tibble [1 × 12]&gt;
+##  4 Alderaan  Human   &lt;tibble [3 × 12]&gt;
+##  5 Stewjon   Human   &lt;tibble [1 × 12]&gt;
+##  6 Eriadu    Human   &lt;tibble [1 × 12]&gt;
+##  7 Kashyyyk  Wookiee &lt;tibble [2 × 12]&gt;
+##  8 Corellia  Human   &lt;tibble [2 × 12]&gt;
+##  9 Rodia     Rodian  &lt;tibble [1 × 12]&gt;
+## 10 Nal Hutta Hutt    &lt;tibble [1 × 12]&gt;
+## # … with 48 more rows</code></pre>
+<p>We’ve done two things here:</p>
+<ol style="list-style-type: decimal">
+<li>We folded all the observations into a separate column called <code>characters</code> using <code>nest()</code>,</li>
+<li>We used a negative vector to hold grouping-level variables out of that folded column</li>
+</ol>
+<p><code>nest()</code> is what you’ll use to create nested dfs, or dfs with columns containing other dfs. <code>nest()</code> takes every column that isn’t a grouping variable, and folds all of the observations in each group into their own df in the new list-column. All the data we had before is inside this new list-column. Let’s look inside one of these sub-dfs to be sure:</p>
+<pre class="language-r"><code class="language-r">starwars_by_species_home$characters[[1]]</code></pre>
+<pre><code>## # A tibble: 8 x 12
+##   name  height  mass hair_color skin_color eye_color birth_year sex   gender
+##   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+## 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
+## 2 Dart…    202   136 none       white      yellow          41.9 male  mascu…
+## 3 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
+## 4 Beru…    165    75 brown      light      blue            47   fema… femin…
+## 5 Bigg…    183    84 black      light      brown           24   male  mascu…
+## 6 Anak…    188    84 blond      fair       blue            41.9 male  mascu…
+## 7 Shmi…    163    NA black      fair       brown           72   fema… femin…
+## 8 Clie…    183    NA brown      fair       blue            82   male  mascu…
+## # … with 3 more variables: films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+<p>In our new nested df, the first row contains all Star Wars characters who are humans from Tatooine. Thus, if we look inside the df stored in the first element of the <code>characters</code> list-column using double-bracket indexing, we see all of the original character-level observations belonging to this group. Notice that inside this sub-df, the columns <code>species</code> and <code>homeworld</code> are absent. This is because these columns are already present in the main df, as the grouping variables.</p>
+<p>You can <code>nest()</code> with as many or as few grouping variables as you’d like–anything that you can <code>group_by()</code> you can <code>nest()</code> along.</p>
+<p>If you have a nested df that you would like to unnest, and return to fully long form, you can do that using <code>tidyr::unnest()</code>. As you might guess, <code>unnest()</code> essentially does the exact opposite of <code>nest()</code>– it takes list-columns and unfolds them back out to be one row per observation instead of one row per group.</p>
+<pre class="language-r"><code class="language-r">starwars_by_species_home %&gt;%
+  unnest(characters)</code></pre>
+<pre><code>## # A tibble: 87 x 14
+##    homeworld species name  height  mass hair_color skin_color eye_color
+##    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;    
+##  1 Tatooine  Human   Luke…    172    77 blond      fair       blue     
+##  2 Tatooine  Human   Dart…    202   136 none       white      yellow   
+##  3 Tatooine  Human   Owen…    178   120 brown, gr… light      blue     
+##  4 Tatooine  Human   Beru…    165    75 brown      light      blue     
+##  5 Tatooine  Human   Bigg…    183    84 black      light      brown    
+##  6 Tatooine  Human   Anak…    188    84 blond      fair       blue     
+##  7 Tatooine  Human   Shmi…    163    NA black      fair       brown    
+##  8 Tatooine  Human   Clie…    183    NA brown      fair       blue     
+##  9 Tatooine  Droid   C-3PO    167    75 &lt;NA&gt;       gold       yellow   
+## 10 Tatooine  Droid   R5-D4     97    32 &lt;NA&gt;       white, red red      
+## # … with 77 more rows, and 6 more variables: birth_year &lt;dbl&gt;, sex &lt;chr&gt;,
+## #   gender &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+<p>There we go, this should be the same df as before! As shown above, <code>unnest()</code> takes the names of columns to be unnested as arguments. I like to always specify the column(s) I’d like to unnest for maximum readability, so it’s obvious to future you/other collaborators exactly what you’re nesting.</p>
+<p>You’ll see that the rows have been re-ordered according to the previous nested grouping, so keep this in mind if you’re expecting rows to be in a particular order (you may need to re-order your df using <code>arrange()</code> after unnesting).</p>
+<div id="what-are-nested-dfs-useful-for" class="section level4">
+<h4>What are nested dfs useful for?</h4>
+<p>For the most part, straightforward data manipulation operations are easier to do on fully long dfs than they are on nested dfs, for reasons we’ll get to soon. You won’t need to use a nested df all the time, and that’s okay! Nested dfs are really great for allowing you to do summarizing and modeling operations <em>alongside your observation-level data, without discarding it.</em> We’ll be learning about this below, so don’t forget about nested dfs because they are coming back!</p>
+</div>
+</div>
+</div>
+</div>
+<div id="vectorizing-to-the-high-heavens" class="section level1">
+<h1>Vectorizing to the high heavens</h1>
+<p>Next, we’ll review vectorizing: this is a feature of R that you probably use all the time and don’t even know it! We’ll learn a little more about what vectorized functions do and how you can vectorize any function you wish.</p>
+<p>To read more in-depth about vectorized functions in R, check out this handy <a href="http://www.noamross.net/blog/2014/4/16/vectorization-in-r--why.html">blog post</a> from Noam Ross. We won’t be getting deep into the nuts and bolts of how vectorization works in R here. We’ll just be discussing it at a high level that should orient you enough to be able to make quick use of vectorizing helper functions.</p>
+<p><code>purrr::map()</code> goes here? compare to <code>apply</code> family of functions in base R</p>
+<div id="vectorizing-its-like-a-for-loop-but-not" class="section level2">
+<h2>Vectorizing: it’s like a for loop, but not</h2>
+<p>As you’ve likely experienced, much data processing requires writing code to perform a particular action, and then wrapping it in other code to repeat that action many times over many objects. In R, this usually means doing the same operation to every element in a vector or every row in a df column.</p>
+<p>In most computing languages, the most sensible way to do one thing a bunch of times is to use a for loop, which (I know you know this but I’ll spell it out just to be extra) repeats the code inside the loop once for every element of a vector that’s specified at the beginning of the loop code.</p>
+<p>To use a for loop to apply some function to every element of a df column, you might write something like:</p>
+<pre class="language-r"><code class="language-r">for (i in 1:nrow(df)) {
+  df$new_col[i] = my_function(df$old_col[i])
+}</code></pre>
+<p>and that would do the trick. In this case, the vector you iterate along contains the row indices of your df, which means that on every iteration of your loop you’re calling <code>my_function()</code> on the next row of data until you get to the end of your df.</p>
+<p>This is a perfectly functional way to write code! Today, I’ll argue that it’s prone to typos that might cause you big headaches. Specifically, these typos may cause your code to <strong>fail silently</strong> (ominous organ riff), or do something unintended without throwing an error. This means you wouldn’t find out that something was wrong unless you visually inspected the output, which you can’t always do after every command (I getcha). Thus, there’s a risk of inducing mistakes in the data that you don’t catch until it’s too late.</p>
+<p>For example, once I wrote a for loop just like the above, to perform some functions on every row of a df column, but I wrote <code>df$old_col[1]</code> instead of <code>df$old_col[i]</code>. I accidentally had the same value in every element of <code>df$new_col</code>, because even though the for loop was iterating as usual, on every iteration of the loop it was calling the same value. I didn’t discover my typo until weeks later. No bueno!</p>
+<p>Enter… vectorizing.</p>
+<p>It turns out that R has built-in optimized functionality for repeating functions along every element of a vector, just waiting for you to harness!</p>
+<p>Generally, any vectorized function <em>takes a vector as input, does the same thing to every element of that vector, and returns a vector of the same length as output.</em> Plenty of functions are already vectorized, and you likely already use them as such, including:</p>
+<ul>
+<li>math operators (R assumes element-wise math as the default, and element-wise == vectorized here)
+<ul>
+<li>arithmetic operators: <code>+</code>, <code>-</code>, and the like</li>
+<li><code>round()</code>, for example</li>
+</ul></li>
+<li>string manipulation functions
+<ul>
+<li><code>paste()</code> always returns a vector equal to the longest input vector</li>
+<li>pattern matching functions like <code>grep()</code>, <code>grepl()</code>, and such</li>
+</ul></li>
+<li>statistical distribution functions
+<ul>
+<li>the <code>d*()</code>, <code>p*()</code>, and <code>q*()</code> statistical distribution functions (e.g. <code>qnorm()</code>) are all vectorized along their main input arguments</li>
+</ul></li>
+<li>other stuff too!
+<ul>
+<li><code>base::ifelse()</code> is vectorized, as it determines true/false for each pair of elements in the two vector arguments element-wise</li>
+</ul></li>
+</ul>
+<p>In general, it’s worth always checking to see if the function you plan to call on a vector is vectorized, and then you can use it on your vector without needing any additional looping.</p>
+<p>PS: I know there are other things people often use for loops for, including simulations &amp; bootstrapping–these can be vectorized as well, if you wish it! We’ll get to these later though.</p>
+</div>
+<div id="tidy-vectorizing" class="section level2">
+<h2>Tidy vectorizing</h2>
+<p>If you use <code>mutate()</code> for your everyday column-wise data manipulation needs, using vectorized functions is smooth. In fact, <code>mutate()</code> is built to encourage you to use vectorized functions for column manipulation.</p>
+<p>If we go back to our original simulated data, we can see this at work. For example, let’s create a new column for RT, but stored in milliseconds, not seconds, by multiplying our original RT column by 1000.</p>
+<pre class="language-r"><code class="language-r">raw %&gt;%
+  mutate(rt_msec = 1000 * rt)</code></pre>
+<pre><code>## # A tibble: 1,000 x 11
+##       id   age gender   q_1   q_2   q_3 trial_num is_old response    rt rt_msec
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1     1    24 male    8.21  24.6  25.2         1      0        1 2.31    2313.
+##  2     1    24 male    8.21  24.6  25.2         2      1        1 0.781    781.
+##  3     1    24 male    8.21  24.6  25.2         3      1        1 2.06    2060.
+##  4     1    24 male    8.21  24.6  25.2         4      0        0 4.40    4397.
+##  5     1    24 male    8.21  24.6  25.2         5      0        0 5.08    5078.
+##  6     1    24 male    8.21  24.6  25.2         6      1        1 2.25    2252.
+##  7     1    24 male    8.21  24.6  25.2         7      1        0 3.37    3372.
+##  8     1    24 male    8.21  24.6  25.2         8      0        1 2.55    2547.
+##  9     1    24 male    8.21  24.6  25.2         9      1        0 2.76    2765.
+## 10     1    24 male    8.21  24.6  25.2        10      0        0 4.08    4082.
+## # … with 990 more rows</code></pre>
+<p>We can write this in one call, without needing to wrap it in a loop, because multiplying by a constant is vectorized, and returns a vector the same length as the input vector. Neat! You can use any vectorized functions “naked” (without any extra looping code) inside of <code>mutate()</code> with no problem.</p>
+<p>But what about functions that aren’t already vectorized? Can we use R magic to make them vectorized, if we so wish? Why yes, we can!</p>
+<div id="intro-to-map" class="section level3">
+<h3>Intro to map()</h3>
+<p>At their root, vectorizing helper functions do <em>very nearly what a for loop does,</em> but with a little more specificity in their syntax that can help protect you from tricky typos. With a vectorizing function, you still specify the two main code components that you’d specify in a for loop:</p>
+<ol style="list-style-type: decimal">
+<li>The vector you want to iterate along</li>
+<li>The code you want to run on every element of that vector</li>
+</ol>
+<p>The nice thing about using a vectorizer function is that it’s <em>designed to return a vector of the same length as the input vector,</em> so it’s perfect for data manipulation on columns in a df. For loops are more flexible in that they can run any code a bunch of times, and don’t necessarily need to return a vector. If your goal is to return an output vector of the same length as your input vector, then vectorizer functions can do the trick!</p>
+<p>The basic tidyverse vectorizer function is <code>purrr::map()</code>. (The <code>purrr</code> package is so named because its helper functions can make your code purr with contentment, haha) It takes the two arguments you’d expect: an input vector, and the code to run on each element of the input vector.</p>
+<p>The main situation where vectorizer functions come in really handy is to vectorize functions to run along every element of a non-atomic list vector. R’s default vectorized functions are all intended for atomic vectors, so to vectorize arguments along a list, we need a little help.</p>
+<p>To illustrate this briefly, we’ll use <code>map()</code> to vectorize an operation that isn’t vectorized by default and run it on every element of a list. Here, I’ll create a list where each element is a numeric vector, and then use <code>map()</code> to compute the mean of every list element.</p>
+<pre class="language-r"><code class="language-r">my_list &lt;- list(rnorm(20),
+                rnorm(20, mean = 1),
+                rnorm(20, mean = 2))
+
+map(my_list, ~mean(.))</code></pre>
+<pre><code>## [[1]]
+## [1] 0.05193821
+## 
+## [[2]]
+## [1] 1.36607
+## 
+## [[3]]
+## [1] 1.835946</code></pre>
+<p>Aha! We see in the output that the means are higher for the later list elements, which makes sense because they were generated from normal distributions with higher means.</p>
+<p>You can see above that the first argument of <code>map()</code> is the vector to be iterated along. The second argument clearly looks like the code that you want run on each element of that vector, but the syntax is a little different than if you were to just call <code>mean(my_list[[1]])</code> or something. This particular syntax is how <code>tidyverse</code> functions allow you to specify functions inside other functions without confusing R about what code to run where. Let’s unpack this a little bit:</p>
+<p>The code you put in the second argument is preceded with a tilde <code>~</code>, which you may recognize from model formula syntax, or other functions like <code>dplyr::case_when()</code>. The tilde essentially tells R not to try to evaluate that code immediately, because it’s wrapped in a vectorizer. Don’t forget this tilde!</p>
+<p>The period <code>.</code> that you see inside of <code>mean(.)</code> is a placeholder that tells <code>map()</code> how to feed your input vector into your looping code. Whenever you see the period inside of <code>tidyverse</code> code, you can refer it as “the element I’m currently working with” in your mental pseudo-code. In this case, you can interpret the <code>map()</code> call as doing the following:</p>
+<ul>
+<li>Take the list <code>my_list</code></li>
+<li>With every element in that list:
+<ul>
+<li>Calculate the mean of that list element</li>
+</ul></li>
+<li>Return another list where the nth element contains the mean of the nth element of <code>my_list</code></li>
+</ul>
+<p>In this way, you can see how similar the pseudo-code of <code>map()</code> is to the pseudo-code of a for loop. Not so intimidating, hopefully!</p>
+</div>
+<div id="special-versions-of-map" class="section level3">
+<h3>Special versions of map()</h3>
+<p>It’s important to remember this: <strong><code>map()</code> always returns a list.</strong> Even if each element of the output list contains an element of the same atomic type, and length 1, <code>map()</code> is not going to try to guess anything and turn your output into an atomic vector. The philosophy of the tidyverse is to avoid guessing data types of output to err on the conservative side.</p>
+<p>If you, the coder, know exactly the data type you expect in your output vector, you can use a specialized version of <code>map()</code> that will return an atomic output vector of your desired data type, or else throw an error (at which point you would go and fix the offending code). These are all called <code>map_*()</code>, where the suffix indicates the expected data type of your output. There’s a version of <code>map_*()</code> for every possible atomic vector data type.</p>
+</div>
+<div id="using-map-on-list-columns-inside-a-df" class="section level3">
+<h3>Using map() on list-columns inside a df</h3>
+<p>Remember from before when we learned about creating nested dfs, that nesting creates a <strong>list-column</strong> where each list element contains another, smaller df pertaining to just the data from that row’s record. What if we wanted to manipulate the data contained inside each sub-df? Since the column of nested data is a list, perhaps <code>map()</code> may be of service!</p>
+<p>Here, we’ll see how we can use <code>map()</code> to calculate subject-level summary statistics while keeping trialwise observation-level data in the same df.</p>
+<p>First, let’s nest our simulated df, <code>raw</code>, by all of the subject-level variables we created (demographics + questionnaire scores).</p>
+<pre class="language-r"><code class="language-r">nested &lt;- raw %&gt;%
+  # again, tell nest() to hold out the grouping-level variables when nesting
+  nest(trials = -c(id, age, gender, q_1, q_2, q_3))</code></pre>
+<p>Now, to see what the new, nested df looks like:</p>
+<pre class="language-r"><code class="language-r">nested</code></pre>
+<pre><code>## # A tibble: 20 x 7
+##       id   age gender    q_1   q_2   q_3 trials           
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;list&gt;           
+##  1     1    24 male    8.21   24.6 25.2  &lt;tibble [50 × 4]&gt;
+##  2     2    18 male   23.2    11.7  8.02 &lt;tibble [50 × 4]&gt;
+##  3     3    18 male   34.0    25.7 37.2  &lt;tibble [50 × 4]&gt;
+##  4     4    30 female -0.629  24.6 29.2  &lt;tibble [50 × 4]&gt;
+##  5     5    33 female 49.0    12.2 39.9  &lt;tibble [50 × 4]&gt;
+##  6     6    28 male   36.0    13.3 39.3  &lt;tibble [50 × 4]&gt;
+##  7     7    27 male   31.2    31.9 35.7  &lt;tibble [50 × 4]&gt;
+##  8     8    19 female -3.55   31.7 32.1  &lt;tibble [50 × 4]&gt;
+##  9     9    20 male   19.7    47.5 47.1  &lt;tibble [50 × 4]&gt;
+## 10    10    34 male   33.2    31.4 24.6  &lt;tibble [50 × 4]&gt;
+## 11    11    29 female 16.8    30.1 35.7  &lt;tibble [50 × 4]&gt;
+## 12    12    27 male   26.5    27.9 16.7  &lt;tibble [50 × 4]&gt;
+## 13    13    34 female 32.7    31.3 12.2  &lt;tibble [50 × 4]&gt;
+## 14    14    20 male   23.8    20.8 29.4  &lt;tibble [50 × 4]&gt;
+## 15    15    33 male   28.0    27.4 29.8  &lt;tibble [50 × 4]&gt;
+## 16    16    29 female 38.5    37.7 28.6  &lt;tibble [50 × 4]&gt;
+## 17    17    28 male   16.1    21.5 28.7  &lt;tibble [50 × 4]&gt;
+## 18    18    31 male   33.6    45.0  9.56 &lt;tibble [50 × 4]&gt;
+## 19    19    30 male   38.0    32.3 33.0  &lt;tibble [50 × 4]&gt;
+## 20    20    24 female 23.9    18.6 31.8  &lt;tibble [50 × 4]&gt;</code></pre>
+<p>And to verify that the trialwise data for the first subject is safe and sound in the first row of the list-column <code>trials</code>:</p>
+<pre class="language-r"><code class="language-r">nested$trials[[1]]</code></pre>
+<pre><code>## # A tibble: 50 x 4
+##    trial_num is_old response    rt
+##        &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
+##  1         1      0        1 2.31 
+##  2         2      1        1 0.781
+##  3         3      1        1 2.06 
+##  4         4      0        0 4.40 
+##  5         5      0        0 5.08 
+##  6         6      1        1 2.25 
+##  7         7      1        0 3.37 
+##  8         8      0        1 2.55 
+##  9         9      1        0 2.76 
+## 10        10      0        0 4.08 
+## # … with 40 more rows</code></pre>
+<p>Now, because our nested df has one row per subject, it’s perfectly set up to contain some additional columns with summary statistics in them. We just need to be able to access the trialwise data inside of the <code>trials</code> column in order to compute these summary stats.</p>
+<p>We can use <code>mutate()</code> to create a new column in our df as per usual. However, this time, we’ll call <code>map()</code> <em>inside of</em> <code>mutate()</code> to create our own vectorized function that can operate on a list-column!</p>
+<p>For our first summary statistic, let’s calculate each subject’s median RT across all of their responses. We’ll do this by using <code>map()</code> to create a function that will call <code>median()</code> on every element in a list, and we’ll wrap all of this inside <code>mutate()</code> so we can work inside of our main df.</p>
+<p>Below is the full function call, so you can see the output first:</p>
+<pre class="language-r"><code class="language-r">nested %&gt;%
+  mutate(rt_median = map_dbl(trials, ~median(.$rt)))</code></pre>
+<pre><code>## # A tibble: 20 x 8
+##       id   age gender    q_1   q_2   q_3 trials            rt_median
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;list&gt;                &lt;dbl&gt;
+##  1     1    24 male    8.21   24.6 25.2  &lt;tibble [50 × 4]&gt;      3.38
+##  2     2    18 male   23.2    11.7  8.02 &lt;tibble [50 × 4]&gt;      2.99
+##  3     3    18 male   34.0    25.7 37.2  &lt;tibble [50 × 4]&gt;      2.62
+##  4     4    30 female -0.629  24.6 29.2  &lt;tibble [50 × 4]&gt;      2.78
+##  5     5    33 female 49.0    12.2 39.9  &lt;tibble [50 × 4]&gt;      3.28
+##  6     6    28 male   36.0    13.3 39.3  &lt;tibble [50 × 4]&gt;      2.82
+##  7     7    27 male   31.2    31.9 35.7  &lt;tibble [50 × 4]&gt;      3.12
+##  8     8    19 female -3.55   31.7 32.1  &lt;tibble [50 × 4]&gt;      3.28
+##  9     9    20 male   19.7    47.5 47.1  &lt;tibble [50 × 4]&gt;      2.69
+## 10    10    34 male   33.2    31.4 24.6  &lt;tibble [50 × 4]&gt;      3.25
+## 11    11    29 female 16.8    30.1 35.7  &lt;tibble [50 × 4]&gt;      2.49
+## 12    12    27 male   26.5    27.9 16.7  &lt;tibble [50 × 4]&gt;      3.39
+## 13    13    34 female 32.7    31.3 12.2  &lt;tibble [50 × 4]&gt;      2.89
+## 14    14    20 male   23.8    20.8 29.4  &lt;tibble [50 × 4]&gt;      3.24
+## 15    15    33 male   28.0    27.4 29.8  &lt;tibble [50 × 4]&gt;      3.09
+## 16    16    29 female 38.5    37.7 28.6  &lt;tibble [50 × 4]&gt;      3.03
+## 17    17    28 male   16.1    21.5 28.7  &lt;tibble [50 × 4]&gt;      3.02
+## 18    18    31 male   33.6    45.0  9.56 &lt;tibble [50 × 4]&gt;      3.33
+## 19    19    30 male   38.0    32.3 33.0  &lt;tibble [50 × 4]&gt;      3.09
+## 20    20    24 female 23.9    18.6 31.8  &lt;tibble [50 × 4]&gt;      2.89</code></pre>
+<p>Now to unpack the pieces of this function call:</p>
+<ul>
+<li>Inside of <code>mutate()</code>, we follow the same usual syntax of <code>new_col = function(old_col)</code>, but this time the function we call is <code>map()</code></li>
+<li>The first argument of <code>map()</code> is the column whose elements we wish to iterate over, in this case <code>trials</code></li>
+<li>The second argument of <code>map()</code> is what we wish to do to each element of <code>trials</code>
+<ul>
+<li>the function call is preceded by a tilde <code>~</code> per <code>map()</code>’s expected syntax</li>
+<li>we call <code>median(.$rt)</code> because <code>.</code> refers to the df contained in each element of <code>trials</code>, and we actually want to take the median of the <code>rt</code> column INSIDE of <code>.</code>. If <code>.</code> refers to a df, you can dollar-sign index the columns of <code>.</code> as you would any other df</li>
+</ul></li>
+<li>We actually call <code>map_dbl()</code> instead of just <code>map()</code> because we expect each vector element to be a double with length 1, and so we use <code>map_dbl()</code> to safely unwrap the output vector into an atomic double vector</li>
+</ul>
+<p>When you just want to calculate one summary statistic, the above strategy of doing a one-off calculation inside an atomic-izing version of <code>map()</code> works well. What if you want to calculate slightly more complex summary statistics? Let’s try another way of leveraging <code>map()</code> to generate summary stats. This way is a little more flexible if you need to calculate a lot of different stats on subsets of your data.</p>
+<p>Here, let’s try to calculate different accuracy rates for each subject–specifically, hit rate and false alarm rate. Since our fake data is from a fake memory task, a subject’s hit rate is their proportion of responding “old” to truly old stimuli, and their false alarm rate is their proportion of responding “old” to truly new stimuli.</p>
+<pre class="language-r"><code class="language-r">nested_summarized &lt;- nested %&gt;%
+  mutate(summaries = map(trials,
+                         ~.x %&gt;%
+                           # First, will group trials by actually old vs actually new
+                           group_by(is_old) %&gt;%
+                           # Here, because both hits and FAs involve responding &quot;old&quot;,
+                           # we can calculate the SAME proportion for the two trial groups
+                           summarize(rate_choose_old = mean(response)) %&gt;%
+                           # now, the summarized data is in semi-long form,
+                           # with one row for the hits group and one row for the FAs group
+                           # we will want these to be in different columns, so we will spread() them
+                           # but first let&#39;s recode the grouping column
+                           # because these values will become the new spread colnames
+                           # and here we&#39;ll &quot;rename&quot; them before spreading
+                           mutate(is_old = recode(is_old,
+                                                  `0` = &quot;rate_fa&quot;,
+                                                  `1` = &quot;rate_hit&quot;)) %&gt;%
+                           # now we will spread
+                           pivot_wider(names_from = is_old, values_from = rate_choose_old)))</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)
+## `summarise()` ungrouping output (override with `.groups` argument)
+## `summarise()` ungrouping output (override with `.groups` argument)
+## `summarise()` ungrouping output (override with `.groups` argument)
+## `summarise()` ungrouping output (override with `.groups` argument)
+## `summarise()` ungrouping output (override with `.groups` argument)
+## `summarise()` ungrouping output (override with `.groups` argument)
+## `summarise()` ungrouping output (override with `.groups` argument)
+## `summarise()` ungrouping output (override with `.groups` argument)
+## `summarise()` ungrouping output (override with `.groups` argument)
+## `summarise()` ungrouping output (override with `.groups` argument)
+## `summarise()` ungrouping output (override with `.groups` argument)
+## `summarise()` ungrouping output (override with `.groups` argument)
+## `summarise()` ungrouping output (override with `.groups` argument)
+## `summarise()` ungrouping output (override with `.groups` argument)
+## `summarise()` ungrouping output (override with `.groups` argument)
+## `summarise()` ungrouping output (override with `.groups` argument)
+## `summarise()` ungrouping output (override with `.groups` argument)
+## `summarise()` ungrouping output (override with `.groups` argument)
+## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<p>What we’ve done here is a little more complex. Essentially, we’re calling <code>summarize()</code> on the trialwise data to generate summary statistics, and then doing some processing on that summary data–this all should be familiar. What’s different here is that we’re doing it all <em>inside</em> of <code>map()</code> so that these commands are applied to each sub-df of trialwise data inside <code>trials</code>.</p>
+<p>Here, each of the element-wise summary outputs is a df, which isn’t an atomic data type, so we have to use <code>map()</code> and keep <code>summaries</code> as a list vector. We can peep inside one of the sub-dfs of the <code>summaries</code> list-column to make sure the calculated values seem sensible:</p>
+<pre class="language-r"><code class="language-r">nested_summarized$summaries[[1]]</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##   rate_fa rate_hit
+##     &lt;dbl&gt;    &lt;dbl&gt;
+## 1    0.32      0.8</code></pre>
+<p>Hey, each of these sub-dfs is only one row long. We could <code>unnest()</code> the <code>summaries</code> column to get these hit and false alarm rate columns to be exposed in our main df, with the other subject-level variables. We’ll still have one row per subject after we unnest, as opposed to repeating rows for repeated observations, because the sub-dfs we’re unnesting only have one row each.</p>
+<pre class="language-r"><code class="language-r">nested_summarized %&gt;%
+  unnest(summaries)</code></pre>
+<pre><code>## # A tibble: 20 x 9
+##       id   age gender    q_1   q_2   q_3 trials            rate_fa rate_hit
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;list&gt;              &lt;dbl&gt;    &lt;dbl&gt;
+##  1     1    24 male    8.21   24.6 25.2  &lt;tibble [50 × 4]&gt;    0.32     0.8 
+##  2     2    18 male   23.2    11.7  8.02 &lt;tibble [50 × 4]&gt;    0.44     0.76
+##  3     3    18 male   34.0    25.7 37.2  &lt;tibble [50 × 4]&gt;    0.28     0.52
+##  4     4    30 female -0.629  24.6 29.2  &lt;tibble [50 × 4]&gt;    0.28     0.56
+##  5     5    33 female 49.0    12.2 39.9  &lt;tibble [50 × 4]&gt;    0.48     0.84
+##  6     6    28 male   36.0    13.3 39.3  &lt;tibble [50 × 4]&gt;    0.24     0.64
+##  7     7    27 male   31.2    31.9 35.7  &lt;tibble [50 × 4]&gt;    0.2      0.64
+##  8     8    19 female -3.55   31.7 32.1  &lt;tibble [50 × 4]&gt;    0.4      0.6 
+##  9     9    20 male   19.7    47.5 47.1  &lt;tibble [50 × 4]&gt;    0.24     0.64
+## 10    10    34 male   33.2    31.4 24.6  &lt;tibble [50 × 4]&gt;    0.28     0.52
+## 11    11    29 female 16.8    30.1 35.7  &lt;tibble [50 × 4]&gt;    0.28     0.8 
+## 12    12    27 male   26.5    27.9 16.7  &lt;tibble [50 × 4]&gt;    0.24     0.64
+## 13    13    34 female 32.7    31.3 12.2  &lt;tibble [50 × 4]&gt;    0.32     0.44
+## 14    14    20 male   23.8    20.8 29.4  &lt;tibble [50 × 4]&gt;    0.2      0.72
+## 15    15    33 male   28.0    27.4 29.8  &lt;tibble [50 × 4]&gt;    0.2      0.64
+## 16    16    29 female 38.5    37.7 28.6  &lt;tibble [50 × 4]&gt;    0.24     0.72
+## 17    17    28 male   16.1    21.5 28.7  &lt;tibble [50 × 4]&gt;    0.24     0.92
+## 18    18    31 male   33.6    45.0  9.56 &lt;tibble [50 × 4]&gt;    0.32     0.76
+## 19    19    30 male   38.0    32.3 33.0  &lt;tibble [50 × 4]&gt;    0.24     0.8 
+## 20    20    24 female 23.9    18.6 31.8  &lt;tibble [50 × 4]&gt;    0.24     0.84</code></pre>
+<p>There we go! Now, the hit and false alarm rates are in the main df and readily accessible without having to use <code>map()</code>, and we still have our trialwise data in the same df should we want to calculate anything else.</p>
+<p>This will get you to roughly the same place as calculating summary statistics on an unnested df and saving those summary stats into a second df. The reason I like this setup is that I can keep all of my data in one df and avoid proliferation of dfs. Ultimately, it’s a matter of personal taste, but if you find that you like managing your trialwise data/subject-level summary data in this way, then you can use these techniques as you like!</p>
+</div>
+</div>
+<div id="when-not-to-vectorize" class="section level2">
+<h2>When not to vectorize</h2>
+<p>Ultimately, I love vectorizing functions like <code>map()</code>–they’ve helped me keep a lot more of my data processing inside of <code>tidyverse</code> functions, and often saved me from copying and pasting code. There are, of course, cases when writing your code to work inside of vectorizing helpers isn’t necessarily optimal. Here are a couple that I’ve run into:</p>
+<ul>
+<li>If you need to recursively reference earlier vector elements while looping
+<ul>
+<li>Vectorizer functions run every iteration of your vectorizing loop <em>independently,</em> which means that the nth iteration cannot access the output of the (n-1)th iteration or any previous ones. If you need to be able to access previous loop content in later iterations, a for loop is the way to go.</li>
+</ul></li>
+<li>If you really need a progress bar to print to console, for iterating over <em>looooong</em> vectors
+<ul>
+<li>True console-based progress bars with must recursively access the console to create a progress bar that stays on one line from 0% to 100%, so they work best inside for loops</li>
+<li>The good folks at RStudio who maintain <code>purrr</code> are still working on building automatic progress bars for <code>map()</code>, but as of right now (August 2018) they’re not implemented</li>
+<li>Check out the <a href="https://github.com/r-lib/progress"><code>progress</code></a> package, which contains helper functions that work inside for loops to make your own progress bars</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="working-with-model-objects-en-masse" class="section level1">
+<h1>Working with model objects en masse</h1>
+<p>This is another handy way to leverage lists and <code>map()</code>. If each element of a list can contain any object, then a list should be able to hold model objects in it as well! And perhaps we can create each model object by using <code>map()</code> to fit a model to every sub-df in a list of dfs. And then we can use <code>map()</code> again to extract model coefficients from each model in the list of models… the possibilities are many. Let’s give it a whirl!</p>
+<div id="fitting-a-whole-lotta-models" class="section level2">
+<h2>Fitting a whole lotta models</h2>
+<p>In this example, we’ll fit a model to each subject’s trialwise data and then extract each subject’s model coefficients. Because our fake data is memory data, we’ll use a logistic regression to estimate each subject’s d’ (d-prime), which is a measure of memory that takes into account correctly remembering seen items (hits) as well as correctly endorsing unseen items as unseen (NOT making false alarms).</p>
+<p>In our nested df, each subject’s trialwise data is already packaged into its own sub-df in the <code>trials</code> list-column. We can use <code>map()</code> inside <code>mutate()</code> to create another list-column based on <code>trials</code>, but this time each element of our output list-column will contain a separate model object that was fit to its respective df in <code>trials</code>.</p>
+<pre class="language-r"><code class="language-r">nested_with_models &lt;- nested %&gt;%
+  mutate(models = map(trials, ~glm(response ~ is_old, family = binomial(link = &quot;probit&quot;), data = .)))
+
+nested_with_models</code></pre>
+<pre><code>## # A tibble: 20 x 8
+##       id   age gender    q_1   q_2   q_3 trials            models
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;list&gt;            &lt;list&gt;
+##  1     1    24 male    8.21   24.6 25.2  &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+##  2     2    18 male   23.2    11.7  8.02 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+##  3     3    18 male   34.0    25.7 37.2  &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+##  4     4    30 female -0.629  24.6 29.2  &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+##  5     5    33 female 49.0    12.2 39.9  &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+##  6     6    28 male   36.0    13.3 39.3  &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+##  7     7    27 male   31.2    31.9 35.7  &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+##  8     8    19 female -3.55   31.7 32.1  &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+##  9     9    20 male   19.7    47.5 47.1  &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 10    10    34 male   33.2    31.4 24.6  &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 11    11    29 female 16.8    30.1 35.7  &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 12    12    27 male   26.5    27.9 16.7  &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 13    13    34 female 32.7    31.3 12.2  &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 14    14    20 male   23.8    20.8 29.4  &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 15    15    33 male   28.0    27.4 29.8  &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 16    16    29 female 38.5    37.7 28.6  &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 17    17    28 male   16.1    21.5 28.7  &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 18    18    31 male   33.6    45.0  9.56 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 19    19    30 male   38.0    32.3 33.0  &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 20    20    24 female 23.9    18.6 31.8  &lt;tibble [50 × 4]&gt; &lt;glm&gt;</code></pre>
+<p>Here, inside of <code>map()</code>, instead of calling df manipulation operations, we call a model fitting function, in this case <code>glm()</code> because we will need to fit a logistic-type regression. In fact, we’re fitting a probit regression (because d’ is based on the normal distribution), so we include the <code>family = binomial(link = "probit")</code> argument inside of our <code>glm()</code> call as usual. The only difference is what we put in for the last argument, <code>data = .</code>. Our old friend the period <code>.</code> is back–this time, to tell the <code>glm()</code> call inside <code>map()</code> to use the current element from the input vector as the source data to fit the model.</p>
+<pre class="language-r"><code class="language-r">summary(nested_with_models$models[[1]])</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = response ~ is_old, family = binomial(link = &quot;probit&quot;), 
+##     data = .)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.7941  -0.8782   0.6681   0.6681   1.5096  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  -0.4677     0.2609  -1.793 0.073014 .  
+## is_old        1.3093     0.3869   3.384 0.000715 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 68.593  on 49  degrees of freedom
+## Residual deviance: 56.364  on 48  degrees of freedom
+## AIC: 60.364
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<p>Each model object can be inspected with <code>summary()</code> in this way if you so choose.</p>
+</div>
+<div id="extracting-model-coefficients" class="section level2">
+<h2>Extracting model coefficients</h2>
+<p>Now that we have a list-column in our df where every element contains the same type of model object, we can write another vectorizing loop with <code>map()</code> to extract the model coefficients from every model in the list vector.</p>
+<p>To extract model coefficients, <code>broom::tidy()</code> is a fantastic little helper function. The <code>broom</code> package is part of the extended tidyverse, and contains a series of functions that quickly extract info from model objects as a df that can then be manipulated a little more easily than extracting coefficients and such directly from the model object.</p>
+<p>We’ll call <code>tidy()</code> inside of a <code>map()</code> call to repeat it over every element of the <code>models</code> column, and create a new list-column where every element contains a sub-df with the model coefficients of its matching model object.</p>
+<pre class="language-r"><code class="language-r">nested_with_models &lt;- nested %&gt;%
+  mutate(models = map(trials, ~glm(response ~ is_old, family = binomial(link = &quot;probit&quot;), data = .)),
+         coefs = map(models, ~tidy(.)))
+
+nested_with_models</code></pre>
+<pre><code>## # A tibble: 20 x 9
+##       id   age gender    q_1   q_2   q_3 trials           models coefs          
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;list&gt;           &lt;list&gt; &lt;list&gt;         
+##  1     1    24 male    8.21   24.6 25.2  &lt;tibble [50 × 4… &lt;glm&gt;  &lt;tibble [2 × 5…
+##  2     2    18 male   23.2    11.7  8.02 &lt;tibble [50 × 4… &lt;glm&gt;  &lt;tibble [2 × 5…
+##  3     3    18 male   34.0    25.7 37.2  &lt;tibble [50 × 4… &lt;glm&gt;  &lt;tibble [2 × 5…
+##  4     4    30 female -0.629  24.6 29.2  &lt;tibble [50 × 4… &lt;glm&gt;  &lt;tibble [2 × 5…
+##  5     5    33 female 49.0    12.2 39.9  &lt;tibble [50 × 4… &lt;glm&gt;  &lt;tibble [2 × 5…
+##  6     6    28 male   36.0    13.3 39.3  &lt;tibble [50 × 4… &lt;glm&gt;  &lt;tibble [2 × 5…
+##  7     7    27 male   31.2    31.9 35.7  &lt;tibble [50 × 4… &lt;glm&gt;  &lt;tibble [2 × 5…
+##  8     8    19 female -3.55   31.7 32.1  &lt;tibble [50 × 4… &lt;glm&gt;  &lt;tibble [2 × 5…
+##  9     9    20 male   19.7    47.5 47.1  &lt;tibble [50 × 4… &lt;glm&gt;  &lt;tibble [2 × 5…
+## 10    10    34 male   33.2    31.4 24.6  &lt;tibble [50 × 4… &lt;glm&gt;  &lt;tibble [2 × 5…
+## 11    11    29 female 16.8    30.1 35.7  &lt;tibble [50 × 4… &lt;glm&gt;  &lt;tibble [2 × 5…
+## 12    12    27 male   26.5    27.9 16.7  &lt;tibble [50 × 4… &lt;glm&gt;  &lt;tibble [2 × 5…
+## 13    13    34 female 32.7    31.3 12.2  &lt;tibble [50 × 4… &lt;glm&gt;  &lt;tibble [2 × 5…
+## 14    14    20 male   23.8    20.8 29.4  &lt;tibble [50 × 4… &lt;glm&gt;  &lt;tibble [2 × 5…
+## 15    15    33 male   28.0    27.4 29.8  &lt;tibble [50 × 4… &lt;glm&gt;  &lt;tibble [2 × 5…
+## 16    16    29 female 38.5    37.7 28.6  &lt;tibble [50 × 4… &lt;glm&gt;  &lt;tibble [2 × 5…
+## 17    17    28 male   16.1    21.5 28.7  &lt;tibble [50 × 4… &lt;glm&gt;  &lt;tibble [2 × 5…
+## 18    18    31 male   33.6    45.0  9.56 &lt;tibble [50 × 4… &lt;glm&gt;  &lt;tibble [2 × 5…
+## 19    19    30 male   38.0    32.3 33.0  &lt;tibble [50 × 4… &lt;glm&gt;  &lt;tibble [2 × 5…
+## 20    20    24 female 23.9    18.6 31.8  &lt;tibble [50 × 4… &lt;glm&gt;  &lt;tibble [2 × 5…</code></pre>
+<p>Below, let’s inspect the content of the first element of the <code>coefs</code> list-column, so you can see how the output of <code>tidy()</code> looks.</p>
+<pre class="language-r"><code class="language-r">nested_with_models$coefs[[1]]</code></pre>
+<pre><code>## # A tibble: 2 x 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)   -0.468     0.261     -1.79 0.0730  
+## 2 is_old         1.31      0.387      3.38 0.000715</code></pre>
+<p>As you can see, it’s essentially the matrix of coefficients/standard errors/etc that you see when you call <code>summary()</code> on a model object, but now it’s already been packaged as a df.</p>
+<p>In this particular example, we specifically want to extract the coefficient estimate for <code>is_old</code>–that value is the d’ we’re looking for. How can we get that specific value into its own column in the main df? Since each subject has only one value for d’, and all of them are the same atomic data type, we should be able to create an atomic vector column in the main df for each subject’s d’.</p>
+<p>We can do this in a variety of ways–any way you might usually use to extract one specific value from a cell of a df works, as long as you can put it inside of <code>map()</code> to repeat it over every sub-df in <code>coefs</code>!</p>
+<p>Here, we’ll combine base R bracket &amp; dollar-sign based logical indexing with our tidyverse tools to index the value in the <code>estimate</code> column of <code>coefs</code> in the row where <code>term == "is_old"</code>. Note that we can dollar-sign index the sub-df in each element of <code>coefs</code> by using the <code>.</code> placeholder.</p>
+<p>We also use <code>map_dbl()</code> here instead of just <code>map()</code> because we expect every output to be a double of length 1, so we wish to return an atomic double vector instead of a list vector.</p>
+<pre class="language-r"><code class="language-r">nested_with_models %&gt;%
+  mutate(dprime = map_dbl(coefs, ~.$estimate[.$term == &quot;is_old&quot;]))</code></pre>
+<pre><code>## # A tibble: 20 x 10
+##       id   age gender    q_1   q_2   q_3 trials        models coefs       dprime
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;list&gt;        &lt;list&gt; &lt;list&gt;       &lt;dbl&gt;
+##  1     1    24 male    8.21   24.6 25.2  &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2…  1.31 
+##  2     2    18 male   23.2    11.7  8.02 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2…  0.857
+##  3     3    18 male   34.0    25.7 37.2  &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2…  0.633
+##  4     4    30 female -0.629  24.6 29.2  &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2…  0.734
+##  5     5    33 female 49.0    12.2 39.9  &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2…  1.04 
+##  6     6    28 male   36.0    13.3 39.3  &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2…  1.06 
+##  7     7    27 male   31.2    31.9 35.7  &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2…  1.20 
+##  8     8    19 female -3.55   31.7 32.1  &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2…  0.507
+##  9     9    20 male   19.7    47.5 47.1  &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2…  1.06 
+## 10    10    34 male   33.2    31.4 24.6  &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2…  0.633
+## 11    11    29 female 16.8    30.1 35.7  &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2…  1.42 
+## 12    12    27 male   26.5    27.9 16.7  &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2…  1.06 
+## 13    13    34 female 32.7    31.3 12.2  &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2…  0.317
+## 14    14    20 male   23.8    20.8 29.4  &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2…  1.42 
+## 15    15    33 male   28.0    27.4 29.8  &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2…  1.20 
+## 16    16    29 female 38.5    37.7 28.6  &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2…  1.29 
+## 17    17    28 male   16.1    21.5 28.7  &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2…  2.11 
+## 18    18    31 male   33.6    45.0  9.56 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2…  1.17 
+## 19    19    30 male   38.0    32.3 33.0  &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2…  1.55 
+## 20    20    24 female 23.9    18.6 31.8  &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2…  1.70</code></pre>
+<p>If you wanted to pull more values out of <code>coefs</code>, you could <code>unnest()</code> the column directly and create a long-form df that you could manipulate as usual, like below:</p>
+<pre class="language-r"><code class="language-r">nested_with_models %&gt;%
+  select(-models) %&gt;% 
+  unnest(coefs)</code></pre>
+<pre><code>## # A tibble: 40 x 12
+##       id   age gender    q_1   q_2   q_3 trials term  estimate std.error
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;list&gt; &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+##  1     1    24 male    8.21   24.6 25.2  &lt;tibb… (Int…  -0.468      0.261
+##  2     1    24 male    8.21   24.6 25.2  &lt;tibb… is_o…   1.31       0.387
+##  3     2    18 male   23.2    11.7  8.02 &lt;tibb… (Int…  -0.151      0.252
+##  4     2    18 male   23.2    11.7  8.02 &lt;tibb… is_o…   0.857      0.373
+##  5     3    18 male   34.0    25.7 37.2  &lt;tibb… (Int…  -0.583      0.267
+##  6     3    18 male   34.0    25.7 37.2  &lt;tibb… is_o…   0.633      0.366
+##  7     4    30 female -0.629  24.6 29.2  &lt;tibb… (Int…  -0.583      0.267
+##  8     4    30 female -0.629  24.6 29.2  &lt;tibb… is_o…   0.734      0.367
+##  9     5    33 female 49.0    12.2 39.9  &lt;tibb… (Int…  -0.0502     0.251
+## 10     5    33 female 49.0    12.2 39.9  &lt;tibb… is_o…   1.04       0.392
+## # … with 30 more rows, and 2 more variables: statistic &lt;dbl&gt;, p.value &lt;dbl&gt;</code></pre>
+<p>Note that when you unnest, any columns of list type that <em>aren’t</em> explicitly unnested will be <em>repeated</em> in your output. We only want to keep the <code>trials</code> column, so we use <code>select()</code> to drop the <code>models</code> list-column from the data before unnesting.</p>
+<p>In any case, I hope you can see that if you need to fit the same model repeatedly to different datasets, perhaps to data from individual subjects, using <code>map()</code> to vectorize your model-fitting on list-columns in a nested df can do just the trick.</p>
+</div>
+</div>
+<div id="plotting-data" class="section level1">
+<h1>Plotting data</h1>
+<p>If there are any <code>tidyverse</code> packages you were acquainted with before you first jumped into the tidy sea, you likely already knew about <code>ggplot2</code>. For this reason, and because Paul Bloom’s fantastic <code>ggplot2</code> vignettes cover plenty of ground (TODO: link), we won’t be getting much into plotting here.</p>
+<p>The one thing, though, that I’d like to show you is how I like to use the pipe <code>%&gt;%</code> to pre-process dfs before plotting. Want to plot just a subset of a df? Or maybe re-label some factor levels for the plot, but not save those factor levels back into the main df? There’s no need to save your slightly modified df into another object just to plot, if you don’t need it for anything else.</p>
+<p>If we remember that the pipe <code>%&gt;%</code> takes the object on the <em>left,</em> and inserts it as the first argument of the function call on the <em>right,</em> then <code>df %&gt;% ggplot(aes(...))</code> should behave the exact same as <code>ggplot(df, aes(...))</code>. Let’s try this while plotting some data from our simulated df.</p>
+<pre class="language-r"><code class="language-r">nested_with_models %&gt;%
+  ggplot(aes(x = q_1, y = q_2)) +
+  geom_point() +
+  labs(x = &quot;Fake questionnaire 1 score&quot;, y = &quot;Fake questionnaire 2 score&quot;)</code></pre>
+<p><img src="/tutorials/r-extra/tidyverse-guide/tidyguide-2_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p>It works! I also think it reads cleanly, because the very first line of the function call tells you which df you’re about to plot. Do be aware, though, that <code>ggplot</code>’s layer-building requires that you chain <code>ggplot</code> calls with <code>+</code>, <em>not</em> <code>%&gt;%</code>. It’ll throw an error if you try, though, so if you mix it up (as I often do) it’s okay.</p>
+<p>Now, we can pipe our df through other data manipulation functions before piping it into a <code>ggplot()</code> call, and these changes to the df will only apply to the data being plotted.</p>
+<p>What if we want to plot our fake subjects’ d’ values, but with standard error bars using the coefficient standard errors from each individual subject’s model? We can <code>unnest()</code> the <code>coefs</code> column our nested df that contains the individual-subject models and clean the data, just for this plot.</p>
+<pre class="language-r"><code class="language-r">nested_with_models %&gt;%
+  # unnest the coefs column to get it into the main df
+  # drop other list-columns first just to make the input data smaller
+  select(-models, -trials) %&gt;% 
+  unnest(coefs) %&gt;%
+  # I only want to plot the estimate values for the term is_old, which is the d&#39; term
+  filter(term == &quot;is_old&quot;) %&gt;%
+  ggplot(aes(x = id, y = estimate)) +
+  geom_errorbar(aes(ymin = estimate - std.error, ymax = estimate + std.error), width = 0) +
+  geom_point() +
+  labs(x = &quot;Subject number (arbitrary order)&quot;, y = &quot;Fake d&#39; (memory sensitivity)&quot;)</code></pre>
+<p><img src="/tutorials/r-extra/tidyverse-guide/tidyguide-2_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p>Using this syntax, you can smoothly and legibly pipe your data through pre-processing calls before it gets plotted. You can use this to <code>recode()</code> factor levels so that you get more informative labels in legends, <code>filter()</code> data to plot only certain conditions, or <code>mutate()</code> to create a new helper variable just to plot.</p>
+</div>

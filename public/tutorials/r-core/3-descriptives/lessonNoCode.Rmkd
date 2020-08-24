@@ -1,0 +1,154 @@
+---
+title: "CU Psychology R Tutorial: Descriptives"
+output: 
+  html_document: 
+    toc: true
+    toc_float: true
+---
+
+# Return home
+
+Click [here](https://cu-psych-r-users.github.io/cu-psych-r-tutorial) to return to the main CU psychology R tutorials page.
+
+# Goals for this tutorial:
+
+1. Learn how to group and categorize data in R 
+2. Learn how to generate descriptive statistics in R
+
+# 0. Open dataset and load package
+
+This dataset examines the relationship between multitasking and working memory. [Link here to original paper by Uncapher et al. 2016.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4733435/pdf/nihms712443.pdf)
+
+```{r, message = FALSE, warning = FALSE}
+# use read.csv function to open data into R 
+
+
+# we will continue using tidyverse tools
+library(tidyverse)
+```
+
+# 1. Familiarize yourself with the data
+
+Quick review from [data cleaning](2_dataCleaning/DataCleaning_Code.html): take a look at the basic data structure, number of rows and columns.
+
+```{r}
+# base R functions
+
+
+
+```
+
+# 2. Selecting relevant variables
+
+Sometimes datasets have many variables that are unnecessary for a given analysis. To simplify your life, and your code, we can select only the given variables we'd like to use for now.
+
+```{r}
+# tidyverse select() function 
+
+
+```
+
+# 3. Basic Descriptives
+
+## Summarizing data
+
+Let's learn how to make simple tables of summary statistics.
+First, we will calculate summary info across all data using `summarize()`, a useful function for creating summaries. Like `mutate()`, it can take mutiple functions as arguments. Note that we're not creating a new object for this summary (i.e. not using the `<-` symbol), so this will print but not save.
+
+```{r}
+
+
+
+```
+
+# 4. Grouping data
+
+Next, we will learn how to group data based on certain variables of interest.
+
+We will use the `group_by()` function in tidyverse, which will automatically group any subsequent actions called on the data. 
+
+```{r}
+
+
+
+```
+
+We can group data by more than one factor. Let's say we're interested in how levels of ADHD interact with `groupStatus` (multitasking: high or low). We will make a factor for ADHD (mean-split), and add it as a grouping variable.
+
+```{r}
+
+
+
+```
+
+Then we'll check how evenly split these groups are.
+
+```{r}
+
+
+```
+
+Then we'll calculate some summary info on these groups.
+
+```{r}
+
+
+
+```
+
+# 5. Extra: Working with a long dataset 
+
+This is a repeated measures ("long") dataset, with multiple rows per subject. This makes things a bit tricker, but we are going to show you some tools for how to work with "long" datasets.
+
+## How many unique subjects are in the data
+
+```{r}
+# Get a list of subjects using unique()
+
+
+# how many subjects are in this dataframe?
+
+
+```
+
+## Make sure you know how many trials there were per subj.
+
+```{r}
+
+
+```
+
+## Combine summary statistics with the full data frame
+
+For some analyses, you might want to add a higher level variable (e.g. subject average hitRate) alongside your long data. We can do this by using mutate instead of summarize. Note: you'll have repeating values for the average column.
+
+```{r}
+
+
+
+
+# you should now have an avgHR column in df, which will repeat within each subject, but vary across subjects.
+```
+
+
+# 6. saving your work
+
+## Saving tables into csv files
+
+```{r}
+
+
+
+```
+
+```{r, eval = FALSE}
+# use write.csv() or save() to save this out!
+# if you use save, you can combine the full data and descriptives into a tidy package.
+
+
+
+# note : it will automatically save to your working directory unless you specify otherise 
+# remember to check your working directory, use getwd() 
+# If you don't want to save into your working directory,
+# add the path manually "/dir/dir/dir/filename.csv"
+```

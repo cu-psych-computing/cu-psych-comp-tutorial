@@ -12,64 +12,64 @@
     
     <item>
       <title>Descriptives</title>
-      <link>/tutorials/core-r/3_descriptives/</link>
+      <link>/tutorials/r-core/3-descriptives/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/tutorials/core-r/3_descriptives/</guid>
+      <guid>/tutorials/r-core/3-descriptives/</guid>
       <description>Return home Goals for this tutorial: 0. Open dataset and load package 1. Familiarize yourself with the data 2. Selecting relevant variables 3. Basic Descriptives  Summarizing data  4. Grouping data 5. Extra: Working with a long dataset  How many unique subjects are in the data Make sure you know how many trials there were per subj. Combine summary statistics with the full data frame  6.</description>
     </item>
     
     <item>
       <title>Getting your data ready for analysis</title>
-      <link>/tutorials/core-r/2_datacleaning/</link>
+      <link>/tutorials/r-core/2-datacleaning/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/tutorials/core-r/2_datacleaning/</guid>
+      <guid>/tutorials/r-core/2-datacleaning/</guid>
       <description>Return home Goals of this lesson Install Packages Getting your Data into R  Entering data directly Reading data into R  Inspecting your data  How is your data frame structured? Brief intro to tidyverse Rename a variable Check for missing data Check for correct values Filtering data  Getting ready for analysis  Recoding variables Calculating new variables Combining data from multiple sources Shaping data  Saving your work Data Challenge!</description>
     </item>
     
     <item>
       <title>Modeling</title>
-      <link>/tutorials/core-r/5_models/</link>
+      <link>/tutorials/r-core/5-models/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/tutorials/core-r/5_models/</guid>
+      <guid>/tutorials/r-core/5-models/</guid>
       <description>Basics for modeling in R  Functions:  Basic models  Syntax:  Basic model formula To add multiple factors Interactions  Output of models  Linear models Anova  Visualizing models Advanced models    Welcome to the lesson on modeling in R! Goals: 1. Learn about functions and syntax for models in R 2. Practice examples of different model types 3. Understand how to obtain model results in R</description>
     </item>
     
     <item>
       <title>Plotting Tutorial Using ggplot2!</title>
-      <link>/tutorials/core-r/4_plotting/</link>
+      <link>/tutorials/r-core/4-plotting/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/tutorials/core-r/4_plotting/</guid>
+      <guid>/tutorials/r-core/4-plotting/</guid>
       <description>Return home 0: What is this tutorial? What’s ggplot2? 1: First Load Tidyverse, which includes ggplot2! 2: Load in Sample Data (NHANES) 3: Scatter Plot &amp;amp; Basic ggplot Syntax  3a: Histograms with ggplot  4: Dot Plot Organized by Grouping Factor  4a: Visualizing Distributions with Violin Plots  5: Summary Plots 6: Fitting Lines To The Data 7: Titles, Axis Labels 7: Facetting 8: Color 9: Themes 10: Saving To Files 11: Heatmaps 12: Basic Time Series Plot 13: Final Points   Return home Click here to return to the main CU psychology R tutorials page.</description>
     </item>
     
     <item>
       <title>Programming, pt 0</title>
-      <link>/tutorials/core-r/1_programming/lessonpart0/</link>
+      <link>/tutorials/r-core/1-programming/lessonpart0/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/tutorials/core-r/1_programming/lessonpart0/</guid>
+      <guid>/tutorials/r-core/1-programming/lessonpart0/</guid>
       <description>Working with RStudio  Installing R &amp;amp; RStudio Getting oriented to the RStudio window  R project files Console window Editor window Environment/history window Files/pkgs/help window  Installing and loading packages  Working directories, file paths, etc  The working directory File paths  Absolute file paths Relative file paths Special file path keywords  Reading data into R  Generating a file path using here() Reading the data into R Loading the file as an R object     Welcome to the CU Psychology Scientific Computing workshop!</description>
     </item>
     
     <item>
       <title>Programming, pt 1</title>
-      <link>/tutorials/core-r/1_programming/lessonpart1/</link>
+      <link>/tutorials/r-core/1-programming/lessonpart1/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/tutorials/core-r/1_programming/lessonpart1/</guid>
+      <guid>/tutorials/r-core/1-programming/lessonpart1/</guid>
       <description>Variables Data types  Numeric data  Arithmetic operators  Logical data Character data Dataframe columns have data types too  Data structures  Data frames  Working with dataframe columns Summarizing dataframe columns Indexing into dataframes  Vectors  Indexing into vectors   Data types pt 2  Factor data Non-data data    Welcome (back) to the CU Psychology Scientific Computing Workshop! As a reminder, the documents for the introduction to programming cover the following:</description>
     </item>
     
     <item>
       <title>Programming, pt 2</title>
-      <link>/tutorials/core-r/1_programming/lessonpart2/</link>
+      <link>/tutorials/r-core/1-programming/lessonpart2/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/tutorials/core-r/1_programming/lessonpart2/</guid>
+      <guid>/tutorials/r-core/1-programming/lessonpart2/</guid>
       <description>Pseudocode Relational operators  Filtering data Operating on filtered data  Logical operators Conditional operators Functions  Anatomy of a function Writing your own function  Getting assistance  On your own  The help docs The internet  Asking someone else  How to ask     Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder, the documents for the introduction to programming cover the following:</description>
     </item>
     

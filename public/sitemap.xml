@@ -3,15 +3,23 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/tutorials/r-extra/</loc>
+  </url>
+  
+  <url>
     <loc>/tags/core/</loc>
   </url>
   
   <url>
-    <loc>/tutorials/core-r/3_descriptives/</loc>
+    <loc>/tutorials/r-core/3-descriptives/</loc>
   </url>
   
   <url>
-    <loc>/tutorials/core-r/2_datacleaning/</loc>
+    <loc>/tags/extra/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/r-core/2-datacleaning/</loc>
   </url>
   
   <url>
@@ -19,11 +27,11 @@
   </url>
   
   <url>
-    <loc>/tutorials/core-r/1_programming/</loc>
+    <loc>/tutorials/r-core/1-programming/</loc>
   </url>
   
   <url>
-    <loc>/tutorials/core-r/</loc>
+    <loc>/tutorials/r-core/</loc>
   </url>
   
   <url>
@@ -35,23 +43,23 @@
   </url>
   
   <url>
-    <loc>/tutorials/core-r/5_models/</loc>
+    <loc>/tutorials/r-core/5-models/</loc>
   </url>
   
   <url>
-    <loc>/tutorials/core-r/4_plotting/</loc>
+    <loc>/tutorials/r-core/4-plotting/</loc>
   </url>
   
   <url>
-    <loc>/tutorials/core-r/1_programming/lessonpart0/</loc>
+    <loc>/tutorials/r-core/1-programming/lessonpart0/</loc>
   </url>
   
   <url>
-    <loc>/tutorials/core-r/1_programming/lessonpart1/</loc>
+    <loc>/tutorials/r-core/1-programming/lessonpart1/</loc>
   </url>
   
   <url>
-    <loc>/tutorials/core-r/1_programming/lessonpart2/</loc>
+    <loc>/tutorials/r-core/1-programming/lessonpart2/</loc>
   </url>
   
   <url>
@@ -64,6 +72,14 @@
   
   <url>
     <loc>/tags/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/r-extra/tidyverse-guide/tidyguide-1/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/r-extra/tidyverse-guide/tidyguide-2/</loc>
   </url>
   
   <url>
