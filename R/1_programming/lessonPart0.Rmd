@@ -128,10 +128,10 @@ Before we actually get started with messing in R, we need to understand how R in
 
 ## The working directory
 
-Every R session has a _working directory,_ or a "home base" folder. Essentially, this is the folder that R is "in". R is not actually installed in this folder, mind you! The working directory is the first folder where R looks for raw data files to load in. You can find out what folder is your working directory using the `getwd()` command as below.
+Every R session has a _working directory,_ or a "home base" folder. Essentially, this is the folder that R is "in". R is not actually installed in this folder, mind you! The working directory is the first folder where R looks for raw data files to load in. You can find out what folder is your working directory using the `here()` command as below.
 
 ```{r explain working directories}
-getwd()
+here()
 ```
 
 If you run this command on your own computer, you'll get a different folder. And that's okay! Our folder structures on our computers are all different.
