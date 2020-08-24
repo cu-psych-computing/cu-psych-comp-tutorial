@@ -193,7 +193,7 @@ Let's say you want to load a CSV file containing data on Shakespeare's plays in 
 To generate a file path using `here()`, list the names of each subfolder in quotes, followed by the file name in quotes. Please note that these subfolder names should be listed from highest in the folder structure to lowest (ending with the subfolder where the data file is located).
 
 ```{r generatefilepath}
-here("content", "tutorials", "1_programming", "shakes.csv")
+here("content", "tutorials", "r-core", "1-programming", "shakes.csv")
 ```
 
 ### Reading the data into R
@@ -201,7 +201,7 @@ here("content", "tutorials", "1_programming", "shakes.csv")
 Then, to examine this file in R, place the file path inside the parentheses in the `read_csv()` function. You could do this by copying and pasting the full file path outputted by the `here()` function, but it is simpler to "nest" the `here()` function inside `read_csv()`.
 
 ```{r readfile, message=FALSE}
-read_csv(here("content", "tutorials", "1_programming", "shakes.csv"))
+read_csv(here("content", "tutorials", "r-core", "1-programming", "shakes.csv"))
 ```
 
 After running the line above, you will see a preview of the file in R. Sometimes this kind of quick preview is helpful! However, in order to do more with the data, you will want to save a copy of the file as an object in your R environment. (You can tell that the file has *not* yet been loaded into your environment by taking a look at the Environment tab in the upper right section of your RStudio window. Unless you were working in R before this workshop began, you will see a message noting that it is empty!)
@@ -211,7 +211,7 @@ After running the line above, you will see a preview of the file in R. Sometimes
 To load the file into your R environment, give it a name (e.g., `shakes`) and use the `<-` (the _assignment operator_) to save the data contained in the CSV into an R object with that name.
 
 ```{r loadfile, message=FALSE}
-shakes <- read_csv(here("content", "tutorials", "1_programming", "shakes.csv"))
+shakes <- read_csv(here("content", "tutorials", "r-core", "1-programming", "shakes.csv"))
 ```
 
 Once you have done so, you will see this object listed in the Environment tab in the upper right section of your RStudio window.

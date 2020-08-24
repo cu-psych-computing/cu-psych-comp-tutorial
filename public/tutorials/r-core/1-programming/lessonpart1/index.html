@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
-  <meta name="generator" content="Hugo 0.67.1" />
+  <meta name="generator" content="Hugo 0.74.3" />
 
   
   <meta name="description" content="CU Psychology Scientific Computing">
@@ -329,36 +329,29 @@ div .highlightsec {
   <div class="container">
     <article>
       
-<script src="../../../../rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 <div id="TOC">
 <ul>
 <li><a href="#variables">Variables</a></li>
-<li><a href="#data-types">Data types</a>
-<ul>
-<li><a href="#numeric-data">Numeric data</a>
-<ul>
+<li><a href="#data-types">Data types</a><ul>
+<li><a href="#numeric-data">Numeric data</a><ul>
 <li><a href="#arithmetic-operators">Arithmetic operators</a></li>
 </ul></li>
 <li><a href="#logical-data">Logical data</a></li>
 <li><a href="#character-data">Character data</a></li>
 <li><a href="#dataframe-columns-have-data-types-too">Dataframe columns have data types too</a></li>
 </ul></li>
-<li><a href="#data-structures">Data structures</a>
-<ul>
-<li><a href="#data-frames">Data frames</a>
-<ul>
+<li><a href="#data-structures">Data structures</a><ul>
+<li><a href="#data-frames">Data frames</a><ul>
 <li><a href="#working-with-dataframe-columns">Working with dataframe columns</a></li>
 <li><a href="#summarizing-dataframe-columns">Summarizing dataframe columns</a></li>
 <li><a href="#indexing-into-dataframes">Indexing into dataframes</a></li>
 </ul></li>
-<li><a href="#vectors">Vectors</a>
-<ul>
+<li><a href="#vectors">Vectors</a><ul>
 <li><a href="#indexing-into-vectors">Indexing into vectors</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#data-types-pt-2">Data types pt 2</a>
-<ul>
+<li><a href="#data-types-pt-2">Data types pt 2</a><ul>
 <li><a href="#factor-data">Factor data</a></li>
 <li><a href="#non-data-data">Non-data data</a></li>
 </ul></li>
@@ -380,7 +373,7 @@ div .highlightsec {
 </ul>
 <p>If you think about how variables like x and y are used in algebra, calculus, etc, that can be a useful way to conceptualize them.</p>
 <p>Variables can contain numbers. We <em>assign</em> a value to a name.</p>
-<pre class="language-r"><code class="language-r"># We are storing the number 20 under the variable name first.var by using the left-arrow operator. It&#39;s like 20 is going &quot;into&quot; the label first.var
+<pre class="r"><code># We are storing the number 20 under the variable name first.var by using the left-arrow operator. It&#39;s like 20 is going &quot;into&quot; the label first.var
 first.var &lt;- 20
 # And again with second.var
 second.var &lt;- 0.5
@@ -392,17 +385,17 @@ second.var</code></pre>
 <p>Information doesn’t just exist in the environment–it can also be printed to <strong>console.</strong> Remember that the console is the place where you talk to R (type in commands), and R talks back to you (shows you the result of those commands).</p>
 <p>The console is a great place to check the contents of variables, and perform quick calculations. However, information printed to console is <em>not automatically saved to a variable,</em> so if you know you will want some data for later you must assign it to a variable in your environment!</p>
 <p>Since variables are labels for pieces of information, a variable name can be used to refer to any piece of data where you would otherwise call that data directly. For example:</p>
-<pre class="language-r"><code class="language-r"># This outputs the result to console
+<pre class="r"><code># This outputs the result to console
 20 + 10</code></pre>
 <pre><code>## [1] 30</code></pre>
-<pre class="language-r"><code class="language-r"># Since first.var contains the value 20, this outputs the SAME result to console
+<pre class="r"><code># Since first.var contains the value 20, this outputs the SAME result to console
 first.var + 10</code></pre>
 <pre><code>## [1] 30</code></pre>
 <p>Variables don’t just have to contain pure numbers; you can assign the output of commands to variables.</p>
-<pre class="language-r"><code class="language-r">third.var &lt;- first.var + 10</code></pre>
+<pre class="r"><code>third.var &lt;- first.var + 10</code></pre>
 <p>And as we saw earlier, you can assign whole dataframes into variables. We’ll be able to access all the content of a dataframe in a variable so we can do data manipulation, plotting, and stats on it later.</p>
 <p>(Quick review question: Am I calling the below file path using an <em>absolute</em> or <em>relative</em> path? How can you tell?)</p>
-<pre class="language-r"><code class="language-r">shakes &lt;- read_csv(here::here(&quot;content&quot;, &quot;tutorials&quot;, &quot;1_programming&quot;, &quot;shakes.csv&quot;))</code></pre>
+<pre class="r"><code>shakes &lt;- read_csv(here::here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;1-programming&quot;, &quot;shakes.csv&quot;))</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   title = col_character(),
@@ -410,7 +403,7 @@ first.var + 10</code></pre>
 ##   n.words = col_double()
 ## )</code></pre>
 <p>You can overwrite the values of variables, simply by assigning some other value to the same name.</p>
-<pre class="language-r"><code class="language-r"># With the values of other variables
+<pre class="r"><code># With the values of other variables
 third.var &lt;- second.var + 10
 # OR of the current value of the variable. Note that R will ALWAYS use the PREVIOUS value of a variable in all the calculations BEFORE re-assigning the final result to the variable name.
 third.var &lt;- third.var + 10
@@ -442,14 +435,14 @@ rm(third.var)</code></pre>
 <div id="numeric-data" class="section level2">
 <h2>Numeric data</h2>
 <p>Numeric data encompasses any (real) number. Positive, negative, integer, decimal, all fine.</p>
-<pre class="language-r"><code class="language-r">first.var &lt;- 280
+<pre class="r"><code>first.var &lt;- 280
 second.var &lt;- 41.5</code></pre>
 <div id="arithmetic-operators" class="section level3">
 <h3>Arithmetic operators</h3>
 <p>You can do your usual math on numeric data, like so:</p>
-<pre class="language-r"><code class="language-r">first.var + second.var</code></pre>
+<pre class="r"><code>first.var + second.var</code></pre>
 <pre><code>## [1] 321.5</code></pre>
-<pre class="language-r"><code class="language-r">first.var - second.var</code></pre>
+<pre class="r"><code>first.var - second.var</code></pre>
 <pre><code>## [1] 238.5</code></pre>
 <p>The basic arithmetic operators are specified as:</p>
 <ul>
@@ -461,14 +454,14 @@ second.var &lt;- 41.5</code></pre>
 <li><code>()</code> parentheses</li>
 </ul>
 <p>R obeys PEMDAS!</p>
-<pre class="language-r"><code class="language-r"># Bonus arithmetic operator; you may need someday
+<pre class="r"><code># Bonus arithmetic operator; you may need someday
 10 %% 2 # The modulo %% operator returns the remainder of dividing two numbers. Observe the results for the following modulo operations</code></pre>
 <pre><code>## [1] 0</code></pre>
-<pre class="language-r"><code class="language-r">10 %% 3</code></pre>
+<pre class="r"><code>10 %% 3</code></pre>
 <pre><code>## [1] 1</code></pre>
-<pre class="language-r"><code class="language-r">10 %% 4</code></pre>
+<pre class="r"><code>10 %% 4</code></pre>
 <pre><code>## [1] 2</code></pre>
-<pre class="language-r"><code class="language-r">10 %% 5</code></pre>
+<pre class="r"><code>10 %% 5</code></pre>
 <pre><code>## [1] 0</code></pre>
 </div>
 </div>
@@ -477,9 +470,9 @@ second.var &lt;- 41.5</code></pre>
 <p>Logical data are a special case of numbers, representing <code>TRUE</code> and <code>FALSE</code>.</p>
 <p>Note that this is case-sensitive: R requires <code>TRUE</code> and <code>FALSE</code> to be written in all caps!</p>
 <p>Logical data can be math-ed on as if it were numeric; <code>TRUE</code> is 1 and <code>FALSE</code> is 0. This is especially useful when multiplying–</p>
-<pre class="language-r"><code class="language-r">TRUE * 10 # Like multiplying by 1. the other number stays the same!</code></pre>
+<pre class="r"><code>TRUE * 10 # Like multiplying by 1. the other number stays the same!</code></pre>
 <pre><code>## [1] 10</code></pre>
-<pre class="language-r"><code class="language-r">FALSE * 10 # Like multiplying by 0. the other number becomes 0!</code></pre>
+<pre class="r"><code>FALSE * 10 # Like multiplying by 0. the other number becomes 0!</code></pre>
 <pre><code>## [1] 0</code></pre>
 <p>Logical data are used most often as informational flags. To be revisited…</p>
 </div>
@@ -487,25 +480,25 @@ second.var &lt;- 41.5</code></pre>
 <h2>Character data</h2>
 <p>This is letter/word-based data. A piece of character data is called a <strong>string.</strong></p>
 <p>R understands that this data is made up of text, and treats it in a special way. You might encounter this if you are storing free-response text data in R, or perhaps if you have a list of word-based stimuli stored in R as part of your task data.</p>
-<pre class="language-r"><code class="language-r">text.var &lt;- &quot;statistics&quot;
+<pre class="r"><code>text.var &lt;- &quot;statistics&quot;
 text.var.2 &lt;- &quot;my favorite number is 7&quot; # Disclaimer: Not actually my favorite number</code></pre>
 <p>Here are just a couple of the functions that specifically operate on character data.</p>
 <p>You can coerce things to upper or lowercase with the right function:</p>
-<pre class="language-r"><code class="language-r">toupper(text.var)</code></pre>
+<pre class="r"><code>toupper(text.var)</code></pre>
 <pre><code>## [1] &quot;STATISTICS&quot;</code></pre>
 <p>You can also count the number of characters. Note that spaces count as characters!</p>
-<pre class="language-r"><code class="language-r">nchar(text.var.2)</code></pre>
+<pre class="r"><code>nchar(text.var.2)</code></pre>
 <pre><code>## [1] 23</code></pre>
 <p>Of note is that you canNOT do arithmetic on strings.</p>
-<pre class="language-r"><code class="language-r">not.a.number &lt;- &quot;7&quot;</code></pre>
+<pre class="r"><code>not.a.number &lt;- &quot;7&quot;</code></pre>
 <p>The following will return an error if you try to run it:</p>
-<pre class="language-r"><code class="language-r">not.a.number + 1</code></pre>
+<pre class="r"><code>not.a.number + 1</code></pre>
 </div>
 <div id="dataframe-columns-have-data-types-too" class="section level2">
 <h2>Dataframe columns have data types too</h2>
 <p>It’s not only single pieces of information that have a defined data type. Whole dataframe columns of values have data types as well. (This is a requirement of dataframe columns: that they are composed of a set of values that are all the same data type.)</p>
 <p>R will tell us a bit about the data types in our dataframe columns when we print the dataframe to console. Let’s take a look:</p>
-<pre class="language-r"><code class="language-r">shakes</code></pre>
+<pre class="r"><code>shakes</code></pre>
 <pre><code>## # A tibble: 37 x 3
 ##    title                     genre   n.words
 ##    &lt;chr&gt;                     &lt;chr&gt;     &lt;dbl&gt;
@@ -536,7 +529,7 @@ text.var.2 &lt;- &quot;my favorite number is 7&quot; # Disclaimer: Not actually 
 <h3>Working with dataframe columns</h3>
 <p>Very frequently, when working with dataframes, we will need to create new columns, or modify existing columns. The function we’ll use to do this is <code>mutate()</code>.</p>
 <p>A note before we jump in: <code>mutate()</code>, and many of the other R functions we’ll be using in the workshop, are not included in default, or base, R. They are part of the <strong>tidyverse,</strong> a group of R packages designed to make data manipulation and exploration smoother. In order to be able to access these functions in a later R session (after you close it and reopen it again), you need to put the following command in the first chunk of your R Markdown document and run the command <em>first, before any other code is run</em>:</p>
-<pre class="language-r"><code class="language-r">library(tidyverse)</code></pre>
+<pre class="r"><code>library(tidyverse)</code></pre>
 <p>Once you’ve loaded the tidyverse group of functions, you can now use them in R as usual. Now we’re ready to explore these functions!</p>
 <p>The first argument that <code>mutate()</code> takes, or information it needs to be able to work, is what dataframe we want to operate on. All of the rest of the function works because <code>mutate()</code> knows which dataframe we are working inside.</p>
 <p>After you specify the dataframe in question, we then specify pieces of information in pairs:</p>
@@ -545,7 +538,7 @@ text.var.2 &lt;- &quot;my favorite number is 7&quot; # Disclaimer: Not actually 
 <li>How you want to create that new column</li>
 </ol>
 <p>The syntax for creating these new columns is <code>new_column_name = function(old_column_name)</code>. For example, if we want to create a new column containing all the values of <code>n.words</code> but divided by 1,000:</p>
-<pre class="language-r"><code class="language-r">mutate(shakes,
+<pre class="r"><code>mutate(shakes,
        n.words.1k = n.words / 1000)</code></pre>
 <pre><code>## # A tibble: 37 x 4
 ##    title                     genre   n.words n.words.1k
@@ -564,11 +557,11 @@ text.var.2 &lt;- &quot;my favorite number is 7&quot; # Disclaimer: Not actually 
 <p>Notice that the dataframe appears to have a new column, with the name and the contents we specified. Each row of <code>n.words.1k</code> contains the value from the <code>n.words</code> column, but divided by a thousand. Exactly as intended!</p>
 <p>However, remember that <strong>this content is not saved back into the <code>shakes</code> variable unless we re-assign it to the <code>shakes</code> variable name.</strong></p>
 <p>We would need to use the <code>&lt;-</code> operator and re-assign this info into <code>shakes</code> to overwrite the OLD dataframe with the NEW one, containing the extra column.</p>
-<pre class="language-r"><code class="language-r">shakes &lt;- mutate(shakes,
+<pre class="r"><code>shakes &lt;- mutate(shakes,
        n.words.1k = n.words / 1000)</code></pre>
 <p>We can use the same strategy of overwriting the old content of a variable to modify the content of a dataframe column without creating a new one.</p>
 <p>In this case, we re-use the name of an existing column on the left side of the equals sign inside of <code>mutate()</code>. Similar to overwriting an existing variable, this will overwrite the existing column with some function applied to the old value of the column.</p>
-<pre class="language-r"><code class="language-r">mutate(shakes,
+<pre class="r"><code>mutate(shakes,
        genre = tolower(genre))</code></pre>
 <pre><code>## # A tibble: 37 x 4
 ##    title                     genre   n.words n.words.1k
@@ -588,7 +581,7 @@ text.var.2 &lt;- &quot;my favorite number is 7&quot; # Disclaimer: Not actually 
 <p>In the commands above, we have been accessing the columns of our <code>shakes</code> dataframe by typing the column names “naked”, as if they were variables in the environment. However, when we look in the Environment tab in the top-right, we do not see these column names as their own variables! They live <em>inside the dataframe.</em> <code>mutate()</code>, and other tidyverse functions that we will use, have the <strong>special ability to allow dataframe column names to be typed on their own, like free-standing variables, inside of these functions.</strong> Other functions will not allow this, so be careful in later explorations of R.</p>
 <p>What kind of functions can we use to create/modify columns with <code>mutate()</code>? We can use any <strong>vectorized function.</strong> These are functions that take a process and apply it individually to each element in your column, returning an analogous column where the nth element of the output column is the result of performing the operation on the nth element of the input column.</p>
 <p>If you want to do the same thing to a bunch of data, this is the way to do it fast! Basically all the arithmetic operations are vectorized, for example:</p>
-<pre class="language-r"><code class="language-r">mutate(shakes,
+<pre class="r"><code>mutate(shakes,
        n.words.half = n.words / 2)</code></pre>
 <pre><code>## # A tibble: 37 x 5
 ##    title                     genre   n.words n.words.1k n.words.half
@@ -612,13 +605,13 @@ text.var.2 &lt;- &quot;my favorite number is 7&quot; # Disclaimer: Not actually 
 <p>Just like <code>mutate()</code>, and pretty much every other tidyverse function, the first argument that <code>summarize()</code> takes is what dataframe we want to operate on.</p>
 <p>After you specify the dataframe in question, we then specify pieces of information in pairs, much the same way as we did with <code>mutate()</code>: <code>new_column_name = function(old_column_name)</code>.</p>
 <p>The difference here is that instead of creating a whole column as our output, with the same number of rows as the original data, we need to summarize over all rows in the column, producing <em>one row of output.</em> For example, calculating the mean or the standard deviation of a column of data will take the entire column as input, returning a single value as output. In general, descriptive statistical operations are typically of this type.</p>
-<pre class="language-r"><code class="language-r">summarize(shakes,
+<pre class="r"><code>summarize(shakes,
           mean.n.words = mean(n.words))</code></pre>
 <pre><code>## # A tibble: 1 x 1
 ##   mean.n.words
 ##          &lt;dbl&gt;
 ## 1       22595.</code></pre>
-<pre class="language-r"><code class="language-r">summarize(shakes,
+<pre class="r"><code>summarize(shakes,
           sd.n.words = sd(n.words))</code></pre>
 <pre><code>## # A tibble: 1 x 1
 ##   sd.n.words
@@ -629,7 +622,7 @@ text.var.2 &lt;- &quot;my favorite number is 7&quot; # Disclaimer: Not actually 
 <h3>Indexing into dataframes</h3>
 <p>Sometimes, however, you may need to access the content of a dataframe column outside of <code>mutate()</code>, <code>summarize()</code>, or another tidyverse function. Remember that tidyverse functions have the special ability to let you call column names with “naked” variable names, and this ability works because you have to feed in the name of your dataframe as the first argument to the function. That’s how the function knows where to look for the column. Other parts of R don’t work this way, so sometimes we need to use a different technique.</p>
 <p>For example, we know there is a column called <code>title</code> inside of the <code>shakes</code> dataframe. Inside of <code>mutate()</code>, for example, you can call this column just by calling <code>title</code>:</p>
-<pre class="language-r"><code class="language-r">mutate(shakes,
+<pre class="r"><code>mutate(shakes,
        title.length = nchar(title))</code></pre>
 <pre><code>## # A tibble: 37 x 5
 ##    title                     genre   n.words n.words.1k title.length
@@ -646,11 +639,11 @@ text.var.2 &lt;- &quot;my favorite number is 7&quot; # Disclaimer: Not actually 
 ## 10 Henry V                   History   26119       26.1            7
 ## # … with 27 more rows</code></pre>
 <p>However, if we try to calculate the character lengths of each of Shakespeare’s play titles <em>outside</em> of <code>mutate()</code>, it doesn’t seem to work:</p>
-<pre class="language-r"><code class="language-r">nchar(title)</code></pre>
+<pre class="r"><code>nchar(title)</code></pre>
 <pre><code>## Error in nchar(title): cannot coerce type &#39;closure&#39; to vector of type &#39;character&#39;</code></pre>
 <p>Because we are outside of <code>mutate()</code>, we do not have the ability to call dataframe columns on their own. We have to use another method to tell R which dataframe a column lives in.</p>
 <p>We use a special operator to do this: the dollar sign <code>$</code>. <code>$</code> tells R when a variable name, in this case a column name, is a sub-variable of a larger variable, in this case a dataframe. In this way, we can tell R that <code>title</code> is not floating around on its own, but is a column in the dataframe <code>shakes</code>.</p>
-<pre class="language-r"><code class="language-r">shakes$title</code></pre>
+<pre class="r"><code>shakes$title</code></pre>
 <pre><code>##  [1] &quot;All&#39;s Well That Ends Well&quot; &quot;Antony and Cleopatra&quot;     
 ##  [3] &quot;As You Like It&quot;            &quot;Comedy of Errors&quot;         
 ##  [5] &quot;Coriolanus&quot;                &quot;Cymbeline&quot;                
@@ -672,7 +665,7 @@ text.var.2 &lt;- &quot;my favorite number is 7&quot; # Disclaimer: Not actually 
 ## [37] &quot;Winter&#39;s Tale&quot;</code></pre>
 <p>You may also notice when typing in RStudio, that if you type <code>shakes$</code>, you’ll suddenly see a little tab-complete selector pop up, listing out the names of all the columns in <code>shakes</code>. You can either type more to narrow down to the column you want, and then hit Tab to auto-complete the column name, or use the arrow keys to scroll up and down through the column names to select the one you want (and hit Tab to auto-complete in this case as well).</p>
 <p>Note that when you call the column in this way, the printed output doesn’t look like it did when we printed the entire dataframe. When you call a dataframe column on its own using <code>$</code>, R temporarily treats it as separate from the dataframe that it came from.</p>
-<pre class="language-r"><code class="language-r">nchar(shakes$title)</code></pre>
+<pre class="r"><code>nchar(shakes$title)</code></pre>
 <pre><code>##  [1] 25 20 14 16 10  9  6 16 17  7 16 17 18 10 13  9  9 20  7 19 18 22 23 22  7
 ## [26]  8 10 11 16 19  7 15 16 20 13 23 13</code></pre>
 <p>A dataframe column on its own like this, separated from the rest of the dataframe, is a <em>vector.</em> Vectors can exist totally separate from dataframes, or they can be bound together as dataframe columns. A vector can have any number of values in it, but is always width 1 (which makes sense when you think of them as columns of data).</p>
@@ -682,21 +675,21 @@ text.var.2 &lt;- &quot;my favorite number is 7&quot; # Disclaimer: Not actually 
 <div id="vectors" class="section level2">
 <h2>Vectors</h2>
 <p>A vector is a sequence of pieces of information that are <strong>all the same data type</strong> (for the computer) and meaningfully related (for you). A vector is like one column of data with a particular length (depending on the number of elements in the vector).</p>
-<pre class="language-r"><code class="language-r">num.vector &lt;- c(1, 2, 3, 4, 5)
+<pre class="r"><code>num.vector &lt;- c(1, 2, 3, 4, 5)
 length(num.vector)</code></pre>
 <pre><code>## [1] 5</code></pre>
 <p>Fun stuff: notice that a single piece of data is in fact a vector with length 1.</p>
-<pre class="language-r"><code class="language-r">length(first.var)</code></pre>
+<pre class="r"><code>length(first.var)</code></pre>
 <pre><code>## [1] 1</code></pre>
 <p>The individual pieces of data inside one vector are called <strong>elements.</strong></p>
 <p>Vectors, whether or not they’re dataframe columns, can be any of the data types we just learned about.</p>
-<pre class="language-r"><code class="language-r">char.vector &lt;- c(&quot;apple&quot;, &quot;banana&quot;, &quot;cantaloupe&quot;, &quot;dragonfruit&quot;)
+<pre class="r"><code>char.vector &lt;- c(&quot;apple&quot;, &quot;banana&quot;, &quot;cantaloupe&quot;, &quot;dragonfruit&quot;)
 length(char.vector)</code></pre>
 <pre><code>## [1] 4</code></pre>
-<pre class="language-r"><code class="language-r">logical.vector &lt;- c(TRUE, TRUE, FALSE, TRUE)</code></pre>
+<pre class="r"><code>logical.vector &lt;- c(TRUE, TRUE, FALSE, TRUE)</code></pre>
 <p>As you can see above, the function <code>c()</code> is the primary way to construct freestanding vectors. You list out all the pieces of data you want to put into the vector inside of <code>c()</code>, separated with commas.</p>
 <p>Buuuut R lets you do some special stuff to create certain useful numeric vectors. You can use the colon <code>:</code> between any two integers to create a vector of all the integers between the values on either side of the colon (inclusive).</p>
-<pre class="language-r"><code class="language-r">num.vector.2 &lt;- 1:5
+<pre class="r"><code>num.vector.2 &lt;- 1:5
 
 num.vector.2</code></pre>
 <pre><code>## [1] 1 2 3 4 5</code></pre>
@@ -707,17 +700,17 @@ num.vector.2</code></pre>
 <p>To tell R that you are indexing into a vector, you put the index inside hard brackets [] after the name of your vector variable.</p>
 <p>You can index one piece of data, by putting one index number inside the hard brackets, to index the nth value of that vector. R starts indexing at 1; the first element in your vector is at index 1.</p>
 <p>You can only index into your vector using VALID indices; that is, indices that actually correspond to elements in the vector. Essentially, you can’t index using a number that is larger than the length of your vector.</p>
-<pre class="language-r"><code class="language-r">char.vector[1]</code></pre>
+<pre class="r"><code>char.vector[1]</code></pre>
 <pre><code>## [1] &quot;apple&quot;</code></pre>
 <p>You can also index multiple pieces of data out of a vector. This returns another, shorter, vector! You do this by putting a valid numeric vector inside the brackets.
 Remember the colon <code>:</code> operator from above? It’s handy to create vectors for indexing a sequence of values:</p>
-<pre class="language-r"><code class="language-r">char.vector[1:3]</code></pre>
+<pre class="r"><code>char.vector[1:3]</code></pre>
 <pre><code>## [1] &quot;apple&quot;      &quot;banana&quot;     &quot;cantaloupe&quot;</code></pre>
 <p>But you can also index using any valid numeric vector constructed using <code>c()</code>.</p>
-<pre class="language-r"><code class="language-r">char.vector[c(1, 4)]</code></pre>
+<pre class="r"><code>char.vector[c(1, 4)]</code></pre>
 <pre><code>## [1] &quot;apple&quot;       &quot;dragonfruit&quot;</code></pre>
 <p>You can also index to <em>exclude</em> elements from a vector, using negative numbers. This will return a vector <em>missing</em> the values you negative-indexed.</p>
-<pre class="language-r"><code class="language-r">char.vector[-2]</code></pre>
+<pre class="r"><code>char.vector[-2]</code></pre>
 <pre><code>## [1] &quot;apple&quot;       &quot;cantaloupe&quot;  &quot;dragonfruit&quot;</code></pre>
 </div>
 </div>
@@ -729,7 +722,7 @@ Remember the colon <code>:</code> operator from above? It’s handy to create ve
 <h2>Factor data</h2>
 <p>Character data, as described above, is R’s all-purpose data type for text-based data. But R knows that sometimes you might have a column composed of text to label your within-subject task conditions, between-subject groups, etc. <strong>Factor data</strong> is a data type built on top of character data that gives you special properties that are useful when a column/vector contains <em>grouping</em> information.</p>
 <p>For example, we can consider the <code>genre</code> column from the <code>shakes</code> dataframe we loaded previously. This column contains categorical information about which of three genres each Shakespeare play belongs to, so this is a natural fit for the factor data type.</p>
-<pre class="language-r"><code class="language-r"># This column wasn&#39;t originally factor, so I&#39;m coercing it to factor here.
+<pre class="r"><code># This column wasn&#39;t originally factor, so I&#39;m coercing it to factor here.
 # There are a suite of R functions designed for pushing data from one type to another
 as.factor(shakes$genre)</code></pre>
 <pre><code>##  [1] Comedy  Tragedy Comedy  Comedy  Tragedy Tragedy Tragedy History History
@@ -748,15 +741,15 @@ as.factor(shakes$genre)</code></pre>
 <div id="non-data-data" class="section level2">
 <h2>Non-data data</h2>
 <p>You know what’s the worst? Missing data! But it happens to the best of us. When you have a missing data point in an Excel spreadsheet, you might leave that cell blank. But in R, you need to put a placeholder in that spot. There’s a special data type, <code>NA</code>, used as the missing data placeholder.</p>
-<pre class="language-r"><code class="language-r">na.vector &lt;- c(1, 2, 3, NA, 5)</code></pre>
+<pre class="r"><code>na.vector &lt;- c(1, 2, 3, NA, 5)</code></pre>
 <p>When you call vectorized (one-to-one) functions on a vector containing <code>NA</code>, the element in the output vector corresponding to the <code>NA</code> in the input vector will be <code>NA</code>.</p>
-<pre class="language-r"><code class="language-r">na.vector + 1</code></pre>
+<pre class="r"><code>na.vector + 1</code></pre>
 <pre><code>## [1]  2  3  4 NA  6</code></pre>
 <p>When you call summarizing (many-to-one) functions on a vector containing <code>NA</code>, the summary value will be <code>NA</code>…</p>
-<pre class="language-r"><code class="language-r">mean(na.vector)</code></pre>
+<pre class="r"><code>mean(na.vector)</code></pre>
 <pre><code>## [1] NA</code></pre>
 <p>unless you specify in the function that you want the value to be calculated as if the <code>NA</code>s aren’t there.</p>
-<pre class="language-r"><code class="language-r">mean(na.vector, na.rm = TRUE)</code></pre>
+<pre class="r"><code>mean(na.vector, na.rm = TRUE)</code></pre>
 <pre><code>## [1] 2.75</code></pre>
 </div>
 </div>

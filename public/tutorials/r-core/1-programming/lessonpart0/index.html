@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
-  <meta name="generator" content="Hugo 0.67.1" />
+  <meta name="generator" content="Hugo 0.74.3" />
 
   
   <meta name="description" content="CU Psychology Scientific Computing">
@@ -329,15 +329,12 @@ div .highlightsec {
   <div class="container">
     <article>
       
-<script src="../../../../rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 <div id="TOC">
 <ul>
-<li><a href="#working-with-rstudio">Working with RStudio</a>
-<ul>
+<li><a href="#working-with-rstudio">Working with RStudio</a><ul>
 <li><a href="#installing-r-rstudio">Installing R &amp; RStudio</a></li>
-<li><a href="#getting-oriented-to-the-rstudio-window">Getting oriented to the RStudio window</a>
-<ul>
+<li><a href="#getting-oriented-to-the-rstudio-window">Getting oriented to the RStudio window</a><ul>
 <li><a href="#r-project-files">R project files</a></li>
 <li><a href="#console-window">Console window</a></li>
 <li><a href="#editor-window">Editor window</a></li>
@@ -346,17 +343,14 @@ div .highlightsec {
 </ul></li>
 <li><a href="#installing-and-loading-packages">Installing and loading packages</a></li>
 </ul></li>
-<li><a href="#working-directories-file-paths-etc">Working directories, file paths, etc</a>
-<ul>
+<li><a href="#working-directories-file-paths-etc">Working directories, file paths, etc</a><ul>
 <li><a href="#the-working-directory">The working directory</a></li>
-<li><a href="#file-paths">File paths</a>
-<ul>
+<li><a href="#file-paths">File paths</a><ul>
 <li><a href="#absolute-file-paths">Absolute file paths</a></li>
 <li><a href="#relative-file-paths">Relative file paths</a></li>
 <li><a href="#special-file-path-keywords">Special file path keywords</a></li>
 </ul></li>
-<li><a href="#reading-data-into-r">Reading data into R</a>
-<ul>
+<li><a href="#reading-data-into-r">Reading data into R</a><ul>
 <li><a href="#generating-a-file-path-using-here">Generating a file path using here()</a></li>
 <li><a href="#reading-the-data-into-r">Reading the data into R</a></li>
 <li><a href="#loading-the-file-as-an-r-object">Loading the file as an R object</a></li>
@@ -424,7 +418,7 @@ div .highlightsec {
 <h2>Installing and loading packages</h2>
 <p>Packages are bundles of functions in R, usually made by experienced programmers, that you can use to make life easier! Oftentimes, if there’s something you want to do in R, there already exists a function to do it, that you can find in a package.</p>
 <p>Since these packages don’t come with base R, you have to install them.</p>
-<pre class="language-r"><code class="language-r"># You will need these packages in later parts of the workshop!
+<pre class="r"><code># You will need these packages in later parts of the workshop!
 install.packages(pkgs = c(&quot;car&quot;,
                           &quot;moments&quot;,
                           &quot;tidyverse&quot;,
@@ -434,7 +428,7 @@ install.packages(pkgs = c(&quot;car&quot;,
 
 # You can also do this through the GUI, using the &quot;Packages&quot; tab in the lower-right window of RStudio.</code></pre>
 <p>Then, once they’re installed on your computer, you again have to tell R to <em>load</em> the packages into your active R session. This allows you to quickly and easily call the functions in those packages. While you only have to install packages once, you have to load them in every R session that you want to use them. (Why they don’t load automatically? I don’t know! But if you’d like to configure R to load packages automatically every time you open R, see <a href="https://www.r-bloggers.com/load-packages-automatically-in-rstudio/">these instructions</a>.)</p>
-<pre class="language-r"><code class="language-r"># Use library() to load a package ONCE IT&#39;S INSTALLED.
+<pre class="r"><code># Use library() to load a package ONCE IT&#39;S INSTALLED.
 # You can put the package name as a string
 library(&quot;car&quot;)
 # OR unquoted, as a variable name. Some functions don&#39;t care whether you use quotes or not, but some do.
@@ -450,8 +444,8 @@ library(effects)</code></pre>
 <div id="the-working-directory" class="section level2">
 <h2>The working directory</h2>
 <p>Every R session has a <em>working directory,</em> or a “home base” folder. Essentially, this is the folder that R is “in”. R is not actually installed in this folder, mind you! The working directory is the first folder where R looks for raw data files to load in. You can find out what folder is your working directory using the <code>getwd()</code> command as below.</p>
-<pre class="language-r"><code class="language-r">getwd()</code></pre>
-<pre><code>## [1] &quot;/Users/mthieu/Repos/cu-psych-r-tutorial/content/tutorials/1_programming&quot;</code></pre>
+<pre class="r"><code>getwd()</code></pre>
+<pre><code>## [1] &quot;/Users/emily/Documents/GitHub/cu-psych-comp-tutorial/content/tutorials/r-core/1-programming&quot;</code></pre>
 <p>If you run this command on your own computer, you’ll get a different folder. And that’s okay! Our folder structures on our computers are all different.</p>
 <p>When you launch R by opening an R project file (our preferred way of opening R), R automatically sets your working directory to be the folder that this R project file is saved in. Thus, if your R project file is in the same folder as your raw data, scripts, etc, this is a neat short-cut to start R in the folder all of your stuff is saved in.</p>
 <p><strong>We do not recommend changing your working directory during an active R session.</strong> R project files automatically set your working directory for you, so you don’t need to physically set your working directory when you open up R if you open up an R project file. Additionally, when you use R project files, you can open multiple R instances in different working directories if you need to work on multiple projects at once, so you shouldn’t need to change your working directory inside one R session.</p>
@@ -507,13 +501,13 @@ library(effects)</code></pre>
 <p>Let’s say you want to load a CSV file containing data on Shakespeare’s plays in R. This file is called <code>shakes.csv</code>, and it is located in the folder for this R project. In particular, it is saved inside the “1_programming” subfolder, which is located within the “R” subfolder in the main project folder:</p>
 <p><img src="../../assets/images/filepath.png" /></p>
 <p>To generate a file path using <code>here()</code>, list the names of each subfolder in quotes, followed by the file name in quotes. Please note that these subfolder names should be listed from highest in the folder structure to lowest (ending with the subfolder where the data file is located).</p>
-<pre class="language-r"><code class="language-r">here(&quot;content&quot;, &quot;tutorials&quot;, &quot;1_programming&quot;, &quot;shakes.csv&quot;)</code></pre>
-<pre><code>## [1] &quot;/Users/mthieu/Repos/cu-psych-r-tutorial/content/tutorials/1_programming/shakes.csv&quot;</code></pre>
+<pre class="r"><code>here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;1-programming&quot;, &quot;shakes.csv&quot;)</code></pre>
+<pre><code>## [1] &quot;/Users/emily/Documents/GitHub/cu-psych-comp-tutorial/content/tutorials/r-core/1-programming/shakes.csv&quot;</code></pre>
 </div>
 <div id="reading-the-data-into-r" class="section level3">
 <h3>Reading the data into R</h3>
 <p>Then, to examine this file in R, place the file path inside the parentheses in the <code>read_csv()</code> function. You could do this by copying and pasting the full file path outputted by the <code>here()</code> function, but it is simpler to “nest” the <code>here()</code> function inside <code>read_csv()</code>.</p>
-<pre class="language-r"><code class="language-r">read_csv(here(&quot;content&quot;, &quot;tutorials&quot;, &quot;1_programming&quot;, &quot;shakes.csv&quot;))</code></pre>
+<pre class="r"><code>read_csv(here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;1-programming&quot;, &quot;shakes.csv&quot;))</code></pre>
 <pre><code>## # A tibble: 37 x 3
 ##    title                     genre   n.words
 ##    &lt;chr&gt;                     &lt;chr&gt;     &lt;dbl&gt;
@@ -533,7 +527,7 @@ library(effects)</code></pre>
 <div id="loading-the-file-as-an-r-object" class="section level3">
 <h3>Loading the file as an R object</h3>
 <p>To load the file into your R environment, give it a name (e.g., <code>shakes</code>) and use the <code>&lt;-</code> (the <em>assignment operator</em>) to save the data contained in the CSV into an R object with that name.</p>
-<pre class="language-r"><code class="language-r">shakes &lt;- read_csv(here(&quot;content&quot;, &quot;tutorials&quot;, &quot;1_programming&quot;, &quot;shakes.csv&quot;))</code></pre>
+<pre class="r"><code>shakes &lt;- read_csv(here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;1-programming&quot;, &quot;shakes.csv&quot;))</code></pre>
 <p>Once you have done so, you will see this object listed in the Environment tab in the upper right section of your RStudio window.</p>
 </div>
 </div>

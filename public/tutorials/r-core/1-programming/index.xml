@@ -16,7 +16,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/1-programming/lessonpart0/</guid>
-      <description>Working with RStudio  Installing R &amp;amp; RStudio Getting oriented to the RStudio window  R project files Console window Editor window Environment/history window Files/pkgs/help window  Installing and loading packages  Working directories, file paths, etc  The working directory File paths  Absolute file paths Relative file paths Special file path keywords  Reading data into R  Generating a file path using here() Reading the data into R Loading the file as an R object     Welcome to the CU Psychology Scientific Computing workshop!</description>
+      <description>Working with RStudio Installing R &amp;amp; RStudio Getting oriented to the RStudio window R project files Console window Editor window Environment/history window Files/pkgs/help window  Installing and loading packages  Working directories, file paths, etc The working directory File paths Absolute file paths Relative file paths Special file path keywords  Reading data into R Generating a file path using here() Reading the data into R Loading the file as an R object     Welcome to the CU Psychology Scientific Computing workshop!</description>
     </item>
     
     <item>
@@ -25,7 +25,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/1-programming/lessonpart1/</guid>
-      <description>Variables Data types  Numeric data  Arithmetic operators  Logical data Character data Dataframe columns have data types too  Data structures  Data frames  Working with dataframe columns Summarizing dataframe columns Indexing into dataframes  Vectors  Indexing into vectors   Data types pt 2  Factor data Non-data data    Welcome (back) to the CU Psychology Scientific Computing Workshop! As a reminder, the documents for the introduction to programming cover the following:</description>
+      <description>Variables Data types Numeric data Arithmetic operators  Logical data Character data Dataframe columns have data types too  Data structures Data frames Working with dataframe columns Summarizing dataframe columns Indexing into dataframes  Vectors Indexing into vectors   Data types pt 2 Factor data Non-data data    Welcome (back) to the CU Psychology Scientific Computing Workshop! As a reminder, the documents for the introduction to programming cover the following:</description>
     </item>
     
     <item>
