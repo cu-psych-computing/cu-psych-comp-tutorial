@@ -11,10 +11,6 @@ library(tidyverse)
 library(here)
 ```
 
-## Return home
-
-Click [here](../..) to return to the main CU psychology R tutorials page.
-
 ## Goals of this lesson
 
 Students will learn:
@@ -66,7 +62,7 @@ list.files(here())
 #### What kind of file do you have?
 ```{r}
 # For .csv files
-mydata <- read_csv(here("content", "tutorials", "2_dataCleaning", "Study1.csv"))
+mydata <- read_csv(here("content", "tutorials", "r-core", "2-dataCleaning", "Study1.csv"))
 
 
 # Other options include:
@@ -74,7 +70,7 @@ mydata <- read_csv(here("content", "tutorials", "2_dataCleaning", "Study1.csv"))
 # read_delim, for when you have a separator that's not standard
 
 ## For getting data that's already in R-format
-load("Study1.rda")
+load(here("content", "tutorials", "r-core", "2-dataCleaning", "Study1.rda"))
 
 ## For getting data from another program:
 #install.packages("foreign")
@@ -259,7 +255,7 @@ Here I'm using the function `merge()`, which is one of the base functions in R, 
 
 ```{r}
 #First load the new data
-mydata2 <- read_csv(here("content", "tutorials", "2_dataCleaning", "Study1_Followup.csv"))
+mydata2 <- read_csv(here("content", "tutorials", "r-core", "2-dataCleaning", "Study1_Followup.csv"))
 
 # Merge the two dataframes. To make sure the rows match up, we use the 'by' argument to specify that IDs should match. That way even if the data is in a different order you will get scores matched togther correctly.
 
@@ -298,19 +294,19 @@ You can always save data frames as a .csv for easy sharing and viewing outside o
 
 ```{r, eval = FALSE}
 # Write data to a .csv
-write_csv(mydata, path = here("content", "tutorials", "2_dataCleaning", "Study1_Clean.csv"))
+write_csv(mydata, path = here("content", "tutorials", "r-core", "2-dataCleaning", "Study1_Clean.csv"))
 ```
 
 However, you can also save in an R format that lets you save multiple variables/objects in the same file. For example, you might want to have a long and wide format, or one dataframe with all the data and one with just subject information. Saving as a .rda file allows you to save multiple objects at once for easy loading into R. You can also have the outputs of statistical models saved in these, along with their data.
 
 ```{r, eval = FALSE}
 # Save a .rda. Add as many objects as you want, separated by commas
-save(mydata_Long, mydata_Wide, file = here("content", "tutorials", "2_dataCleaning",  "Study1_clean.rda"))
+save(mydata_Long, mydata_Wide, file = here("content", "tutorials", "r-core", "2-dataCleaning",  "Study1_clean.rda"))
 ```
 
 ## Data Challenge!
 
-Go to the file [CleaningChallenge_NoCode.Rmd](2_dataCleaning/CleaningChallenge_NoCode.Rmd) for your data challenge. This challenge will include skills from this tutorial, but it will also ask you to explore new functions we didn't cover. Remember to use the help command in R (?<function name>) and google as necessary. You'll also be using three files from "Study 2", so make sure they're in your folder: [README_Study2.txt](2_dataCleaning/README_Study2.txt), [Study2_Subjects.csv](2_dataCleaning/Study2_Subjects.csv), and [Study2_Trials.csv](2_dataCleaning/Study2_Trials.csv).
+Go to the file [CleaningChallenge_NoCode.Rmd](2-dataCleaning/CleaningChallenge_NoCode.Rmd) for your data challenge. This challenge will include skills from this tutorial, but it will also ask you to explore new functions we didn't cover. Remember to use the help command in R (?<function name>) and google as necessary. You'll also be using three files from "Study 2", so make sure they're in your folder: [README_Study2.txt](2-dataCleaning/README_Study2.txt), [Study2_Subjects.csv](2-dataCleaning/Study2_Subjects.csv), and [Study2_Trials.csv](2-dataCleaning/Study2_Trials.csv).
 
 ## Future Directions
 

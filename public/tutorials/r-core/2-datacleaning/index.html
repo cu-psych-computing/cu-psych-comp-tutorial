@@ -333,7 +333,6 @@ div .highlightsec {
 
 <div id="TOC">
 <ul>
-<li><a href="#return-home">Return home</a></li>
 <li><a href="#goals-of-this-lesson">Goals of this lesson</a></li>
 <li><a href="#install-packages">Install Packages</a></li>
 <li><a href="#getting-your-data-into-r">Getting your Data into R</a>
@@ -363,10 +362,6 @@ div .highlightsec {
 </ul>
 </div>
 
-<div id="return-home" class="section level2">
-<h2>Return home</h2>
-<p>Click <a href="../..">here</a> to return to the main CU psychology R tutorials page.</p>
-</div>
 <div id="goals-of-this-lesson" class="section level2">
 <h2>Goals of this lesson</h2>
 <p>Students will learn:</p>
@@ -385,7 +380,7 @@ div .highlightsec {
 <div id="entering-data-directly" class="section level3">
 <h3>Entering data directly</h3>
 <p>In some cases, you may want to enter data directly into R. This is easy with a small number of cases.</p>
-<pre class="language-r"><code class="language-r"># Direct Data Entry
+<pre class="r"><code># Direct Data Entry
 dataframe &lt;- tibble(name = c(&quot;Monica&quot;, &quot;Michelle&quot;, &quot;Paul&quot;, &quot;Ellen&quot;),
                     score = c(20, 16, 35, 19),
                     year = c(2, 5, 2, 1))</code></pre>
@@ -397,23 +392,23 @@ dataframe &lt;- tibble(name = c(&quot;Monica&quot;, &quot;Michelle&quot;, &quot;
 <h4>What’s your working directory and where is the file you want?</h4>
 <p>Your working directory is the directory (and subdirectories) where the files you’re working with are stored. Whenever possible, you should open the files you run in R from a .Rproj link; by doing so, the folder in which that file was located will automatically be your working directory.</p>
 <p>You can check your working directory using the <code>here()</code> function.</p>
-<pre class="language-r"><code class="language-r">here()</code></pre>
+<pre class="r"><code>here()</code></pre>
 <pre><code>## [1] &quot;/Users/mthieu/Repos/cu-psych-r-tutorial&quot;</code></pre>
 <p>You can access a list of the files within your working directory using the <code>list.files()</code> function…</p>
-<pre class="language-r"><code class="language-r">list.files(here())</code></pre>
+<pre class="r"><code>list.files(here())</code></pre>
 <pre><code>##  [1] &quot;_output.yml&quot;               &quot;config.toml&quot;              
 ##  [3] &quot;content&quot;                   &quot;cu-psych-r-tutorial.Rproj&quot;
 ##  [5] &quot;index.Rmd&quot;                 &quot;layouts&quot;                  
 ##  [7] &quot;pollev_figs&quot;               &quot;public&quot;                   
 ##  [9] &quot;README.md&quot;                 &quot;renv&quot;                     
-## [11] &quot;renv.lock&quot;                 &quot;static&quot;                   
-## [13] &quot;themes&quot;</code></pre>
+## [11] &quot;renv.lock&quot;                 &quot;resources&quot;                
+## [13] &quot;static&quot;                    &quot;themes&quot;</code></pre>
 <p>…as well as in the “Files” tab in the module at the bottom right corner of your RStudio window.</p>
 </div>
 <div id="what-kind-of-file-do-you-have" class="section level4">
 <h4>What kind of file do you have?</h4>
-<pre class="language-r"><code class="language-r"># For .csv files
-mydata &lt;- read_csv(here(&quot;content&quot;, &quot;tutorials&quot;, &quot;2_dataCleaning&quot;, &quot;Study1.csv&quot;))</code></pre>
+<pre class="r"><code># For .csv files
+mydata &lt;- read_csv(here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;2-dataCleaning&quot;, &quot;Study1.csv&quot;))</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   ID = col_double(),
@@ -426,12 +421,12 @@ mydata &lt;- read_csv(here(&quot;content&quot;, &quot;tutorials&quot;, &quot;2_d
 ##   T3 = col_double(),
 ##   T4 = col_double()
 ## )</code></pre>
-<pre class="language-r"><code class="language-r"># Other options include:
+<pre class="r"><code># Other options include:
 # read_tsv, for tab-delimited files
 # read_delim, for when you have a separator that&#39;s not standard
 
 ## For getting data that&#39;s already in R-format
-load(&quot;Study1.rda&quot;)
+load(here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;2-dataCleaning&quot;, &quot;Study1.rda&quot;))
 
 ## For getting data from another program:
 #install.packages(&quot;foreign&quot;)
@@ -449,15 +444,15 @@ load(&quot;Study1.rda&quot;)
 <p>Start by checking that you have the expected number of rows and columns in your data frame. You can do this by looking at the Environment window, or by asking R.</p>
 <div id="how-is-your-data-frame-structured" class="section level3">
 <h3>How is your data frame structured?</h3>
-<pre class="language-r"><code class="language-r"># Number of rows and number of columns
+<pre class="r"><code># Number of rows and number of columns
 numberSubjects &lt;- nrow(mydata)
 ncol(mydata)</code></pre>
 <pre><code>## [1] 9</code></pre>
-<pre class="language-r"><code class="language-r"># Names of columns
+<pre class="r"><code># Names of columns
 names(mydata)</code></pre>
 <pre><code>## [1] &quot;ID&quot;          &quot;Age&quot;         &quot;Sex&quot;         &quot;Condition&quot;   &quot;Personality&quot;
 ## [6] &quot;T1&quot;          &quot;T2&quot;          &quot;T3&quot;          &quot;T4&quot;</code></pre>
-<pre class="language-r"><code class="language-r"># look at the first few rows
+<pre class="r"><code># look at the first few rows
 mydata</code></pre>
 <pre><code>##    ID Age    Sex Condition Personality T1 T2 T3 T4
 ## 1   1  21 Female         0          67  5  2  3  1
@@ -527,7 +522,7 @@ mydata</code></pre>
 <div id="rename-a-variable" class="section level3">
 <h3>Rename a variable</h3>
 <p>We’ll demonstrate the <code>%&gt;%</code> command for our first cleaning step. Look back at your data frame. What is that fifth variable? What does that even mean? Luckily, this is your study and you know that it’s a personality questionnaire measuring neuroticism. Let’s fix that using <code>recode()</code> from the <code>dplyr</code> package.</p>
-<pre class="language-r"><code class="language-r"># Simple command with no pipe, commented out so we don&#39;t run both.
+<pre class="r"><code># Simple command with no pipe, commented out so we don&#39;t run both.
 #mydata &lt;- rename(mydata, Neuroticism=Personality) ## NewVariableName = OldVariableName
 
 # Simple command with pipe
@@ -587,7 +582,7 @@ mydata</code></pre>
 ## 49 49  18 Female         1          75  7  6  5  2
 ## 50 50  23 Female         0          45  4  6  6  6</code></pre>
 <p>It might seem like the first version is simpler, but it won’t be once you start stacking functions together. For example, let’s rearrange our variables (using <code>select()</code>) while also renameing the variables called T1, T2, T3, and T4. Note that we keep adding <code>%&gt;%</code> between each function.</p>
-<pre class="language-r"><code class="language-r">mydata &lt;- mydata %&gt;% 
+<pre class="r"><code>mydata &lt;- mydata %&gt;% 
   rename(Day1 = T1, Day2 = T2, Day3 = T3, Day4 = T4) %&gt;% 
   select(ID, Condition, Age, everything())
   
@@ -596,30 +591,30 @@ mydata</code></pre>
 <div id="check-for-missing-data" class="section level3">
 <h3>Check for missing data</h3>
 <p>One problem you may have is missing data. Sometimes this is something you already know about, but you should check your data frame anyway to make sure nothing got missed in a data entry error. For small datasets, you can do this visually, but for larger ones you can ask R.</p>
-<pre class="language-r"><code class="language-r"># This command asks for rows that are not complete. 
+<pre class="r"><code># This command asks for rows that are not complete. 
 mydata %&gt;% 
   filter(!complete.cases(.))</code></pre>
 <pre><code>##   ID Condition Age    Sex Neuroticism Day1 Day2 Day3 Day4
 ## 1 39         1  NA Female          53    1    3    1    3</code></pre>
 <p>In this case, the missing value is the Age value in row 39. You know you have this info somewhere on a paper form, so you go dig it up and want to replace it.</p>
-<pre class="language-r"><code class="language-r"># Directly replace a missing value
+<pre class="r"><code># Directly replace a missing value
 mydata &lt;- mydata %&gt;% 
   mutate(Age = if_else(ID == 39, 30L, Age))</code></pre>
 </div>
 <div id="check-for-correct-values" class="section level3">
 <h3>Check for correct values</h3>
 <p>To look at some of the other variables, let’s use the <code>table()</code> function. This works well for factors or variables with only a few different values. Our condition and sex variables are good here.</p>
-<pre class="language-r"><code class="language-r"># Make tables of categorical variables
+<pre class="r"><code># Make tables of categorical variables
 table(mydata$Condition)</code></pre>
 <pre><code>## 
 ##  0  1 
 ## 22 28</code></pre>
-<pre class="language-r"><code class="language-r">table(mydata$Sex)</code></pre>
+<pre class="r"><code>table(mydata$Sex)</code></pre>
 <pre><code>## 
 ## Female  Femle   Male 
 ##     21      3     26</code></pre>
 <p>When we look at the table for the Sex variable, we see another data entry problem. We have a third category that should really be another case of “Female”. Here we are going to use the function <code>recode</code> from the <code>dplyr</code> package.</p>
-<pre class="language-r"><code class="language-r"># Replace bad category label
+<pre class="r"><code># Replace bad category label
 mydata &lt;- mydata %&gt;% 
   mutate(Sex = dplyr::recode(Sex, Femle = &quot;Female&quot;))
 
@@ -627,22 +622,22 @@ table(mydata$Sex)</code></pre>
 <pre><code>## 
 ## Female   Male 
 ##     24     26</code></pre>
-<pre class="language-r"><code class="language-r">table(mydata$Age)</code></pre>
+<pre class="r"><code>table(mydata$Age)</code></pre>
 <pre><code>## 
 ## 18 19 20 21 22 23 24 25 30 
 ##  3  5  4 10  6  8  8  5  1</code></pre>
 <p>Now let’s look at the continuous variables. You can also look at these with the table function, but sometimes it’s easier to visualize. The <code>hist()</code> function, which creates histograms, is good here.</p>
-<pre class="language-r"><code class="language-r"># Create histograms to see data distribution
+<pre class="r"><code># Create histograms to see data distribution
 hist(mydata$Age)</code></pre>
-<p><img src="../../../tutorials/2_dataCleaning/index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
-<pre class="language-r"><code class="language-r">hist(mydata$Neuroticism)</code></pre>
-<p><img src="../../../tutorials/2_dataCleaning/index_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
+<p><img src="../../../tutorials/r-core/2-dataCleaning/index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<pre class="r"><code>hist(mydata$Neuroticism)</code></pre>
+<p><img src="../../../tutorials/r-core/2-dataCleaning/index_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
 <p>Looks like we have a potential outlier on the neuroticism score. This could be an entry error, but it could also be a real value that just happens to be really low. This is why data inspection is so important for later analysis – now you know that value is there, it’s up to you to decide how to deal with it.</p>
 </div>
 <div id="filtering-data" class="section level3">
 <h3>Filtering data</h3>
 <p>Let’s say we have decided a prori to exclude outliers 3SD above or below the mean. We will use the filter() function in <code>tidyverse</code> to clean the dataset.</p>
-<pre class="language-r"><code class="language-r"># mark upper and lower boundaries of data
+<pre class="r"><code># mark upper and lower boundaries of data
 # anything above upper or below lower will be excluded as outlier.
 upper &lt;- mean(mydata$Neuroticism) + 3*sd(mydata$Neuroticism)
 lower &lt;- mean(mydata$Neuroticism)- 3*sd(mydata$Neuroticism)
@@ -654,8 +649,8 @@ mydata &lt;- mydata %&gt;%
 # check that we excluded 1 outlier. 
 nrow(mydata)</code></pre>
 <pre><code>## [1] 49</code></pre>
-<pre class="language-r"><code class="language-r">hist(mydata$Neuroticism)</code></pre>
-<p><img src="../../../tutorials/2_dataCleaning/index_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<pre class="r"><code>hist(mydata$Neuroticism)</code></pre>
+<p><img src="../../../tutorials/r-core/2-dataCleaning/index_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>
 </div>
 <div id="getting-ready-for-analysis" class="section level2">
@@ -664,7 +659,7 @@ nrow(mydata)</code></pre>
 <div id="recoding-variables" class="section level3">
 <h3>Recoding variables</h3>
 <p>Sometimes we want to treat categorical variables as factors, but sometimes we want to pretend they’re numeric (as in a regression, when binary variables can be coded as 0 and 1). Right now, Condition is coded as a binary numeric variable, but that’s not very informative, so you’d rather have the values be descriptive. Here, the function <code>recode()</code> from the <code>dplyr</code> package is really useful again, but we’re going to use a different version that will also turn the variable from numeric or factor data. We’ll also create a second variable instead of overwriting Condition.</p>
-<pre class="language-r"><code class="language-r"># Transform into factor with labels using mutate () and recode_factor() 
+<pre class="r"><code># Transform into factor with labels using mutate () and recode_factor() 
 mydata &lt;- mydata %&gt;%
   mutate(ConditionF = recode_factor(Condition, &#39;0&#39;=&#39;Control&#39;, &#39;1&#39;=&#39;Treatment&#39;))
 
@@ -676,7 +671,7 @@ summary(mydata$ConditionF)</code></pre>
 <div id="calculating-new-variables" class="section level3">
 <h3>Calculating new variables</h3>
 <p>You may also want to recalculate or rescale some variables. For example, we can turn Neuroticism into a Z score, or calculate an average response across the four time points. Here we are using <code>mutate()</code>, a dplyr function used for adding new variables to a data frame. Mutate is nice because it makes use of other functions, such as <code>scale()</code> to make Z scores or <code>rowMeans()</code> to calculate means.</p>
-<pre class="language-r"><code class="language-r"># calculate Z scores using mutate()  and scale() 
+<pre class="r"><code># calculate Z scores using mutate()  and scale() 
 mydata &lt;- mydata %&gt;%
   mutate(NeuroticismZ = scale(Neuroticism, center = TRUE, scale = TRUE),
          # Scale creates a matrix with width 1,
@@ -684,8 +679,8 @@ mydata &lt;- mydata %&gt;%
          NeuroticismZ = c(NeuroticismZ))
 
 hist(mydata$NeuroticismZ)</code></pre>
-<p><img src="../../../tutorials/2_dataCleaning/index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
-<pre class="language-r"><code class="language-r"># calculate means across multiple columns using rowMeans
+<p><img src="../../../tutorials/r-core/2-dataCleaning/index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<pre class="r"><code># calculate means across multiple columns using rowMeans
 # note that cbind is necessary here because rowMeans expects a Matrix
 
 mydata &lt;- mydata %&gt;% 
@@ -695,14 +690,14 @@ mydata &lt;- mydata %&gt;%
 <h3>Combining data from multiple sources</h3>
 <p>Sometimes, data might be spread across multiple spreadsheets, and you’ll want to combine those for your analysis. For example, maybe this study had a follow-up survey on Day 30. Scores from that survey were entered into another spreadsheet, which only has the subject ID and that score. We want to include that score into our data.</p>
 <p>Here I’m using the function <code>merge()</code>, which is one of the base functions in R, not part of the tidyverse.</p>
-<pre class="language-r"><code class="language-r">#First load the new data
-mydata2 &lt;- read_csv(here(&quot;content&quot;, &quot;tutorials&quot;, &quot;2_dataCleaning&quot;, &quot;Study1_Followup.csv&quot;))</code></pre>
+<pre class="r"><code>#First load the new data
+mydata2 &lt;- read_csv(here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;2-dataCleaning&quot;, &quot;Study1_Followup.csv&quot;))</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   ID = col_double(),
 ##   Day30 = col_double()
 ## )</code></pre>
-<pre class="language-r"><code class="language-r"># Merge the two dataframes. To make sure the rows match up, we use the &#39;by&#39; argument to specify that IDs should match. That way even if the data is in a different order you will get scores matched togther correctly.
+<pre class="r"><code># Merge the two dataframes. To make sure the rows match up, we use the &#39;by&#39; argument to specify that IDs should match. That way even if the data is in a different order you will get scores matched togther correctly.
 
 mydata &lt;- inner_join(mydata, mydata2, by = &quot;ID&quot;)
 
@@ -712,7 +707,7 @@ mydata &lt;- inner_join(mydata, mydata2, by = &quot;ID&quot;)
 <div id="shaping-data" class="section level3">
 <h3>Shaping data</h3>
 <p>Finally, you may want to change the layout of your data. Right now, our data frame is in “wide” format, which means that each row is a subject, and each observation gets its own column. For some analyses, you’ll need to use “long” format, where each row is an observation, and columns specify things like time and ID to differentiate the observations. There are lots of packages that can handle data reshaping, but I’ll show the <code>pivot_longer()</code> and <code>pivot_wider()</code> functions from <code>tidyr</code>.</p>
-<pre class="language-r"><code class="language-r"># names_to is the name for the new column that will identify which observation it is
+<pre class="r"><code># names_to is the name for the new column that will identify which observation it is
 # values_to is the name for the new column that will have the actual values in it.
 # In theory, you can name these whatever you want,
 # but to keep everyone on the same page, name the key &quot;Time&quot; and the value &quot;Score&quot;.
@@ -731,15 +726,15 @@ mydata_Wide &lt;- pivot_wider(mydata_Long,
 <h2>Saving your work</h2>
 <p>Once you’ve created a data cleaning script like this one, you’ll have a record of all the edits you’ve made on the raw data, and you can recreate your cleaned data just by running the script again. However, it’s often easier to save your cleaned data as its own file <strong>(never overwrite the raw data)</strong>, so when you come back to do analysis you don’t have to bother with all the cleaning steps.</p>
 <p>You can always save data frames as a .csv for easy sharing and viewing outside of R.</p>
-<pre class="language-r"><code class="language-r"># Write data to a .csv
-write_csv(mydata, path = here(&quot;content&quot;, &quot;tutorials&quot;, &quot;2_dataCleaning&quot;, &quot;Study1_Clean.csv&quot;))</code></pre>
+<pre class="r"><code># Write data to a .csv
+write_csv(mydata, path = here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;2-dataCleaning&quot;, &quot;Study1_Clean.csv&quot;))</code></pre>
 <p>However, you can also save in an R format that lets you save multiple variables/objects in the same file. For example, you might want to have a long and wide format, or one dataframe with all the data and one with just subject information. Saving as a .rda file allows you to save multiple objects at once for easy loading into R. You can also have the outputs of statistical models saved in these, along with their data.</p>
-<pre class="language-r"><code class="language-r"># Save a .rda. Add as many objects as you want, separated by commas
-save(mydata_Long, mydata_Wide, file = here(&quot;content&quot;, &quot;tutorials&quot;, &quot;2_dataCleaning&quot;,  &quot;Study1_clean.rda&quot;))</code></pre>
+<pre class="r"><code># Save a .rda. Add as many objects as you want, separated by commas
+save(mydata_Long, mydata_Wide, file = here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;2-dataCleaning&quot;,  &quot;Study1_clean.rda&quot;))</code></pre>
 </div>
 <div id="data-challenge" class="section level2">
 <h2>Data Challenge!</h2>
-<p>Go to the file <a href="2_dataCleaning/CleaningChallenge_NoCode.Rmd">CleaningChallenge_NoCode.Rmd</a> for your data challenge. This challenge will include skills from this tutorial, but it will also ask you to explore new functions we didn’t cover. Remember to use the help command in R (?<function name>) and google as necessary. You’ll also be using three files from “Study 2”, so make sure they’re in your folder: <a href="2_dataCleaning/README_Study2.txt">README_Study2.txt</a>, <a href="2_dataCleaning/Study2_Subjects.csv">Study2_Subjects.csv</a>, and <a href="2_dataCleaning/Study2_Trials.csv">Study2_Trials.csv</a>.</p>
+<p>Go to the file <a href="2-dataCleaning/CleaningChallenge_NoCode.Rmd">CleaningChallenge_NoCode.Rmd</a> for your data challenge. This challenge will include skills from this tutorial, but it will also ask you to explore new functions we didn’t cover. Remember to use the help command in R (?<function name>) and google as necessary. You’ll also be using three files from “Study 2”, so make sure they’re in your folder: <a href="2-dataCleaning/README_Study2.txt">README_Study2.txt</a>, <a href="2-dataCleaning/Study2_Subjects.csv">Study2_Subjects.csv</a>, and <a href="2-dataCleaning/Study2_Trials.csv">Study2_Trials.csv</a>.</p>
 </div>
 <div id="future-directions" class="section level2">
 <h2>Future Directions</h2>
