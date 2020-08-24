@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.67.1" />
+
+  
+  <meta name="description" content="CU Psychology Scientific Computing">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../favicon-16x16.png">
+
+  
+  <link rel="manifest" href="../../../site.webmanifest">
+
+  
+  <link rel="mask-icon" href="../../../safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="../../../css/bootstrap.min.css" />
+
+  <script src="https://kit.fontawesome.com/7eb067db85.js" crossorigin="anonymous"></script>
+
+  
+  <title>Programming, pt 2 | Columbia Psychology Scientific Computing</title>
+  
+
+  <style>
+
+.h1, h1 {
+  font-size:42px;
+  font-weight:600;
+  margin:25px 0;
+}
+
+.h2, h2 {
+  font-size:32px;
+  font-weight:600;
+  margin:48px 0 16px;
+}
+
+.h3, h3 {
+  font-size:22px;
+  font-weight:600;
+  margin:30px 0 16px;
+}
+
+.h4, h4 {
+  font-size:15px;
+  font-weight:600;
+  font-style:italic;
+  margin:10px 0;
+}
+
+.h5, h5 {
+  font-size:15px;
+}
+
+.h6, h6 {
+  font-size:15px;
+}
+
+body {
+  min-width: 300px;
+  font-size:15px;
+  color: #212529;
+}
+
+a {
+  color: #007bff;
+}
+
+a:hover,
+a:focus {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.navbar-light {
+  padding: 10px 3%;
+  margin-bottom: 1em;
+  background-color: #f8f9fa;
+  box-shadow: 0 1px 3px rgba(0,0,0,.11);
+  font-size: 14px;
+}
+
+.navbar-brand {
+  font-size: 17px;
+  font-weight: 600;
+  color: #007bff;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  font-size: 14px;
+  color: #212529;
+}
+
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link:focus {
+  text-decoration: none;
+  color: #007bff;
+}
+
+@media print {
+  .navbar {
+    display: none;
+  }
+}
+
+.navbar-light .navbar-toggler {
+  border: none;
+}
+
+article {
+  padding-top: 60px;
+  padding-bottom: 80px;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.container {
+  max-width: 1000px;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+
+.footer {
+  padding:15px 0;
+  text-align:center;
+  background-color:#262626;
+  color:#ffffff;
+  font-size:12px;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+@media only screen and (max-width: 991px) {
+  .footer {
+    position: static;
+  }
+}
+
+@media print {
+  .footer {
+    display: none;
+  }
+}
+
+div .highlightsec {
+  background-color: #eee;
+  padding: 20px 20px 5px 20px;
+  border-left:solid #007bff 3px;
+}
+
+.accordion .card,
+.accordion .card:last-child .card-header {
+  border: none;
+}
+
+.accordion .card-header {
+  padding: 0 0 0 7px;
+  color: #212529;
+  border-bottom-color: #ffffff;
+}
+
+.accordion .card-header h2 {
+  margin: 0;
+}
+
+.accordion .btn-link,
+.accordion .btn-link {
+  text-decoration: none;
+  color: #212529;
+}
+
+.accordion .btn-link:hover {
+  text-decoration: none;
+  color: #0056b3;
+}
+
+.accordion .btn-link:focus {
+  text-decoration: none;
+  color: #212529;
+}
+
+</style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-ligh fixed-top">
+  <div class="container responsive-menu">
+    <a class="navbar-brand" href="../../../">Columbia Psychology Scientific Computing</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+      aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa fa-bars"></i>
+          </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+          
+      <ul class="navbar-nav ml-auto">
+          
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../">
+            
+              <span>Home</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../who/">
+            
+              <span>Who We Are</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../workshop/">
+            
+              <span>Workshop</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../meetings/">
+            
+              <span>Meetings</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../tutorials/">
+            
+              <span>Tutorials</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../resources/">
+            
+              <span>Resources</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../license/">
+            
+              <span>License</span>
+          </a>
+        </li>
+          
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      
+<script src="../../../rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#pseudocode">Pseudocode</a></li>
+<li><a href="#relational-operators">Relational operators</a>
+<ul>
+<li><a href="#filtering-data">Filtering data</a></li>
+<li><a href="#operating-on-filtered-data">Operating on filtered data</a></li>
+</ul></li>
+<li><a href="#logical-operators">Logical operators</a></li>
+<li><a href="#conditional-operators">Conditional operators</a></li>
+<li><a href="#functions">Functions</a>
+<ul>
+<li><a href="#anatomy-of-a-function">Anatomy of a function</a></li>
+<li><a href="#writing-your-own-function">Writing your own function</a></li>
+</ul></li>
+<li><a href="#getting-assistance">Getting assistance</a>
+<ul>
+<li><a href="#on-your-own">On your own</a>
+<ul>
+<li><a href="#the-help-docs">The help docs</a></li>
+<li><a href="#the-internet">The internet</a></li>
+</ul></li>
+<li><a href="#asking-someone-else">Asking someone else</a>
+<ul>
+<li><a href="#how-to-ask">How to ask</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+
+<p>Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder, the documents for the introduction to programming cover the following:</p>
+<ol start="0" style="list-style-type: decimal">
+<li><a href="lessonPart0.html">Finding your way around RStudio</a></li>
+<li><a href="lessonPart1.html">Variables, data types, vectors</a></li>
+<li>Coding strategy, relational &amp; logical operators <strong>this document!</strong></li>
+</ol>
+<p>Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things!</p>
+<div id="pseudocode" class="section level1">
+<h1>Pseudocode</h1>
+<p>This is <strong>so important to do before you write a single line of code.</strong></p>
+<p>Before you try to write any code, you should talk through what you want to do in plain English before you actually try to code it. This is how you will actually figure out what you need your code to do, and then what functions you need to do the things you want.</p>
+<p>As an example, let’s load a dataframe from a study one of the instructors worked as an undergrad. It’s saved within the folders for this project as a CSV file.</p>
+<pre class="language-r"><code class="language-r">data &lt;- read_csv(here(&quot;static&quot;, &quot;R&quot;, &quot;3_descriptives&quot;, &quot;uncapher_2016_one_condition_dataset.csv&quot;))
+
+# Don&#39;t worry about the following command; I&#39;m just shortening the dataframe. You&#39;ll understand what this means later! Just run it now.
+data &lt;- data %&gt;%
+  filter(groupStatus != &quot;&quot;) %&gt;%
+  select(subjNum:bis)
+
+# Let&#39;s take a quick look at the dataframe by running a line with its name:
+data</code></pre>
+<pre><code>## # A tibble: 68 x 17
+##    subjNum groupStatus numDist conf  hitCount allOldCount rtHit faCount
+##      &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1      96 LMM               0 hi           9          25 0.861       4
+##  2      30 LMM               0 hi          15          25 1.88        3
+##  3     104 LMM               0 hi           6          25 0.840       0
+##  4      80 LMM               0 hi          16          25 0.872       4
+##  5      66 LMM               0 hi          16          25 0.940       1
+##  6      47 LMM               0 hi          17          25 0.831      15
+##  7      48 LMM               0 hi          14          25 1.16        0
+##  8      24 LMM               0 hi          15          25 0.920       3
+##  9      11 LMM               0 hi           7          25 0.824       1
+## 10     124 LMM               0 hi           6          25 1.24        0
+## # … with 58 more rows, and 9 more variables: allNewCount &lt;dbl&gt;, rtFA &lt;dbl&gt;,
+## #   distPresent &lt;chr&gt;, hitRate &lt;dbl&gt;, faRate &lt;dbl&gt;, dprime &lt;dbl&gt;, mmi &lt;dbl&gt;,
+## #   adhd &lt;dbl&gt;, bis &lt;dbl&gt;</code></pre>
+<p>In this dataframe, each row contains the data for a single subject in the study.</p>
+<p>Let’s say I want to calculate the mean hit rate for all subjects in the group “HMM”. I need to <em>operationalize</em> this statement into a series of pieces that can be directly translated into R commands:</p>
+<ol style="list-style-type: decimal">
+<li>Figure out which subjects were in the “HMM” condition.</li>
+<li>Grab the data for only these “HMM” subjects.</li>
+<li>Calculate the mean of the values in the hit rate column for only these “HMM” subjects.</li>
+</ol>
+<p>Each of these instructions that I’ve laid out corresponds to a distinct R command–in this case, we need to:</p>
+<ol style="list-style-type: decimal">
+<li>Use a relational operator to determine which rows (i.e., subjects) in the group status column are equal to (<code>==</code>) “HMM”.</li>
+<li><code>filter()</code> the dataframe so it only includes these “HMM” rows.</li>
+<li>Use <code>summarize()</code> to call <code>mean()</code> on the hit rate column in the filtered dataframe.</li>
+</ol>
+<p>And now we can go ahead and write the code to do this bit of calculation. This pseudocoding exercise was pretty brief. Pseudocoding can be quick, but it can often become complex for larger data processing or analysis tasks! Still, the time you take to brainstorm some pseudocode will save you time you might have otherwise spent puzzling over which functions to use and how.</p>
+</div>
+<div id="relational-operators" class="section level1">
+<h1>Relational operators</h1>
+<p>Most of the time, when you want to do things in R, you want to do them in <em>some conditions but not others.</em></p>
+<p><strong>Relational operators</strong> are the first key to making this happen. These are essentially inequality operators like the ones you would encounter in algebra.</p>
+<p>The following is a <strong>relational statement.</strong> This is a command involving a relational operator that returns <code>TRUE</code> or <code>FALSE</code> based on whether the statement is true or false.</p>
+<pre class="language-r"><code class="language-r">2 &gt; 1</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>Here are a few more relational statements. Do you expect each one to return <code>TRUE</code> or <code>FALSE</code>, based on what’s written?</p>
+<pre class="language-r"><code class="language-r">2 &lt; 1</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="language-r"><code class="language-r">99 == 99</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="language-r"><code class="language-r">99 != 100</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>Here are the relational operators:</p>
+<ul>
+<li><code>&gt;</code> (greater than)</li>
+<li><code>&lt;</code> (less than)</li>
+<li><code>&gt;=</code> (greater than or equal to)</li>
+<li><code>&lt;=</code> (less than or equal to)</li>
+<li><code>==</code> (is equal to–NOTE that it is <em>two</em> equals signs, <em>one</em> equals sign does something different)</li>
+<li><code>!=</code> (is not equal to)</li>
+<li><code>%in%</code> (is contained by; this is useful when you need to see whether the element on the left matches any of a vector of elements on the right)</li>
+</ul>
+<p>Here’s a few examples of <code>%in%</code> in action, in case this is a little less intuitive than the others:</p>
+<pre class="language-r"><code class="language-r">1 %in% 1:5</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="language-r"><code class="language-r">char.vector &lt;- c(&quot;apple&quot;, &quot;banana&quot;, &quot;cantaloupe&quot;, &quot;dragonfruit&quot;)
+
+&quot;apple&quot; %in% char.vector</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="language-r"><code class="language-r">&quot;orange&quot; %in% char.vector</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>Note that <code>%in%</code> takes a <em>vector</em> on the right side, and looks for <em>full matches</em> from the element on the left to the elements on the right. As we touched on in Part 1, it may be helpful to think of a vector as a single column of data.</p>
+<p>To match a piece of character data into a single, LONGER piece of character data on the right (e.g. matching one word into a sentence), you have to use other strategies we won’t get into here.</p>
+<p>In most cases, you can use <code>==</code> and <code>!=</code> to compare character data too–if you want to see if one piece of character data is the same as another piece.</p>
+<pre class="language-r"><code class="language-r">&quot;word&quot; == &quot;word&quot;</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="language-r"><code class="language-r">text.var &lt;- &quot;statistics&quot;
+
+text.var == &quot;statistics&quot;</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>Hey, if we think about the pseudocode from earlier, we can use <code>==</code> to determine which values in the <code>groupStatus</code> column are equal to <code>"HMM"</code>.</p>
+<pre class="language-r"><code class="language-r">data &lt;- mutate(data,
+          isHMM = (groupStatus == &quot;HMM&quot;))</code></pre>
+<p>Relational operators are vectorized–see that feeding in a vector (i.e., a column of data) on the left of the relational statement returns a logical vector (i.e., a separate column of TRUE / FALSE values), not just one logical!</p>
+<div id="filtering-data" class="section level2">
+<h2>Filtering data</h2>
+<p>Relational statements are often helpful when you are interested in filtering your data. Now that we’ve used a relational statement above to generate a logical column indicating which subjects are members of the HMM group, we can use the <code>filter()</code> function in <code>tidyverse</code> to filter only the rows belonging to the HMM group.</p>
+<p>Filtering involves specifying a dataframe and a logical vector (e.g., the <code>isHMM</code> column we created above). When you filter a dataframe, only the rows in the dataframe with a <code>TRUE</code> in the logical column’s values will remain.</p>
+<p>We can do this by indicating that we only want rows with “TRUE” in the new “isHMM” column we created (option 1):</p>
+<pre class="language-r"><code class="language-r"># Here, we are creating a new R object (data_HMM) that contains the smaller, filtered dataframe
+data_HMM &lt;- filter(data,
+              isHMM == TRUE)</code></pre>
+<p>…or we can skip the middle step of creating the “isHMM” column, and simply filter the dataframe using the relational statement (<code>groupStatus == "HMM"</code>) we used to create that column a few lines back (option 2):</p>
+<pre class="language-r"><code class="language-r"># Here, we are creating a new R object (data_HMM) that contains the smaller, filtered dataframe
+data_HMM &lt;- filter(data,
+              groupStatus == &quot;HMM&quot;)</code></pre>
+<p>We will end up with the same filtered dataframe either way. (Because it is more efficient, people tend to go with option 2.)</p>
+</div>
+<div id="operating-on-filtered-data" class="section level2">
+<h2>Operating on filtered data</h2>
+<p>By filtering using logical data, we can also perform functions on only a smaller, filtered subset of the dataframe. For instance, whereas it is possible to examine the mean hit rate for all subjects in the original dataframe:</p>
+<pre class="language-r"><code class="language-r"># Notice that we are using the original `data` dataframe here
+summarize(data,
+          meanHitRate = mean(hitRate))</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   meanHitRate
+##         &lt;dbl&gt;
+## 1       0.369</code></pre>
+<p>…filtering the data allows you to examine the mean hit rate for <em>only</em> the subjects in the HMM group.</p>
+<pre class="language-r"><code class="language-r"># Here, instead, we are using the filtered `data_HMM` dataframe
+summarize(data_HMM,
+          meanHitRate = mean(hitRate))</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   meanHitRate
+##         &lt;dbl&gt;
+## 1       0.357</code></pre>
+</div>
+</div>
+<div id="logical-operators" class="section level1">
+<h1>Logical operators</h1>
+<p>Relational statements will get you a long way. Sometimes, though, you need to know whether groups of conditions are true or false. You can combine the <code>TRUE</code>s and <code>FALSE</code>s of relational statements using Boolean logical operators.</p>
+<p>These are the core Boolean operators you’ll need in most cases:</p>
+<ul>
+<li><code>!</code> (NOT operator; this returns the opposite of whatever follows it)</li>
+<li><code>&amp;</code> (AND operator; this returns <code>TRUE</code> if both statements on either side are both true</li>
+<li><code>|</code> (Pipe, or shift-backslash–OR operator; this returns <code>TRUE</code> if <em>at least one</em> of the statements on either side is true)</li>
+</ul>
+<p>Here are examples of the Boolean operators at work.</p>
+<p>The <code>!</code> NOT operator:</p>
+<pre class="language-r"><code class="language-r">!TRUE # What do you expect this to return?</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="language-r"><code class="language-r">data &lt;- mutate(data,
+          isLMM = !(groupStatus == &quot;HMM&quot;))
+# This should return TRUE for all the times where groupStatus is &quot;LMM&quot;</code></pre>
+<p>The <code>&amp;</code> AND operator:</p>
+<pre class="language-r"><code class="language-r">1 == 1 &amp; 2 == 2 # See what this returns</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="language-r"><code class="language-r">1 == 1 &amp; 2 != 2 # Versus this</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>The <code>|</code> OR operator:</p>
+<pre class="language-r"><code class="language-r">1 == 1 | 2 == 2</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="language-r"><code class="language-r">1 == 1 | 2 != 2</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>Relational operators also obey order of operations re: parentheses (). See below:</p>
+<pre class="language-r"><code class="language-r">(1 == 1 &amp; 2 != 2)</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="language-r"><code class="language-r">!(1 == 1 &amp; 2 != 2)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="language-r"><code class="language-r">(1 == 1) &amp; (2 != 2)</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="language-r"><code class="language-r">(1 == 1) &amp; !(2 != 2)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>Other useful functions will also output <code>TRUE</code> or <code>FALSE</code>, so you can use these similarly to relational statements to generate logical output based on the content of some data.</p>
+<p>Remember the <code>NA</code> data type? Many times, you will want to know which elements of a dataframe column are missing.</p>
+<pre class="language-r"><code class="language-r">data &lt;- mutate(data,
+          rtFA_missing = is.na(rtFA))</code></pre>
+<p>There are many more of these <code>is.whatever()</code> functions! You can look them up in the help–chances are
+there’ll be one to check whichever data type you’re looking for.</p>
+</div>
+<div id="conditional-operators" class="section level1">
+<h1>Conditional operators</h1>
+<p>Sometimes, you want to run commands or set values based on whether certain things are true or false. For example, imagine that you have some continuous outcome variable, and you want to recode that continuous outcome variable categorically.</p>
+<p>We can use what we’ve learned about logical statements so far, in conjunction with some new commands!</p>
+<p>Let’s consider the column <code>adhd</code> in our dataframe <code>data</code>. This is the participant’s score on the ADHD Adult Self-Report Scale (short form). The inventory scoring instructions say that any participant with a score of 4 or above is considered “potentially diagnostic of ADHD”. If we wanted to add a variable that indicated whether someone did or did not have a suprathreshold ADHD score, what would we do?</p>
+<p>Let’s first brainstorm some pseudocode:</p>
+<ol style="list-style-type: decimal">
+<li>Call the column for ADHD</li>
+<li>Create a new column and fill in the following values based on the corresponding values in ADHD
+<ol style="list-style-type: decimal">
+<li>If the ADHD score is 4 or above, then label the new column as ADHD diagnostic</li>
+<li>Otherwise (if the ADHD score is less than 4), label the new column as ADHD non-diagnostic</li>
+</ol></li>
+</ol>
+<p>Now, our pseudocode has just introduced a word we haven’t previously seen: <em>if</em>. What we need here is a command that will direct R to judge whether some condition is true, and then perform some action ONLY if that condition is true.</p>
+<p>If-based code is great for promoting reproducibility. You can just tell R to check that a certain condition is true, and you’ll always get the result you want, no matter what order the rows of your data are in, or any other particulars.</p>
+<p>Now introducing a new function, that’ll let us create a new column that specifies whether a condition is true in an existing column: <code>if_else()</code>. (Please note the underscore! Although there is also a similar <code>ifelse()</code> function in base R, we recommend using the <code>if_else()</code> function in the <code>tidyverse</code> package.)</p>
+<p>First, <code>if_else()</code> takes a <em>condition</em>: this is any statement that evaluates to <strong>logical</strong> data. It’s a question in R that must yield a TRUE or FALSE answer. (In the examples we will review today, we will focus on conditions involving columns of logical data.)</p>
+<p>Then, <code>if_else()</code> creates a new column the same length as the existing column specified in the condition. Each element of this new column will be filled in with some value based on whether the condition came out as <code>TRUE</code> or <code>FALSE</code> for that row. If the condition is <code>TRUE</code> for a given row, <code>if_else()</code> fills in the new column in that same row with value specified in the second argument. Otherwise, if the condition is <code>FALSE</code> for that row, <code>if_else()</code> fills in the new column with the value specified in the third argument.</p>
+<p>In plain English, <code>if_else(condition, A, B)</code> essentially does the following:</p>
+<ol style="list-style-type: decimal">
+<li>Check whether a condition is true or false for each row in a column.</li>
+<li>If the condition is true for that row, fill in the same row in the new column with value A.</li>
+<li>Otherwise, if the condition is false for that row, fill in the same row in the new column with value B.</li>
+</ol>
+<p><code>if_else()</code> is a vectorized function! Remember that this means that if you input a vector (i.e., a column) in the first argument, you’ll get a vector of the same length as your output, because the operation is done on each vector element (i.e., each row) separately.</p>
+<pre class="language-r"><code class="language-r">data &lt;- mutate(data,
+          adhdCoded = if_else(adhd &gt;= 4, &quot;adhd&quot;, &quot;no adhd&quot;))</code></pre>
+</div>
+<div id="functions" class="section level1">
+<h1>Functions</h1>
+<p>We’ve already used a variety of functions (<code>mean()</code>, <code>is.na()</code>, <code>if_else()</code>, and more), so the behavior of functions should be somewhat familiar to you. <strong>Functions take inputs, do stuff to them, and give you an output that’s had the stuff done to it.</strong></p>
+<div id="anatomy-of-a-function" class="section level2">
+<h2>Anatomy of a function</h2>
+<p>Right now, we’ll take a moment to go over the pieces of a function a little more formally so you know how to use them to their fullest extent.</p>
+<p>Below is an example (fake) function call. This function takes the inputs <code>input1</code> and <code>input2</code>, does the function <code>function()</code> to those inputs, and returns an output which can be stored in a variable. Here are the relevant pieces:</p>
+<p><code>output &lt;- function(argument1 = input1, argument2 = input2)</code></p>
+<ul>
+<li><code>function()</code>: This is the function that will DO SOMETHING to your inputs.
+Whenever you are referencing a function by name, you should always write it with the two parentheses () after the function name so people know you’re referring to a function and not a variable.
+The name of a function will tell you something about what a function does. You can/should look it up if you’re not sure though!</li>
+<li><code>argument1</code>, <code>argument2</code>, etc: These are <strong>arguments</strong> to a function–this is the information that a function <em>expects</em> and <em>is prepared to operate on</em>.
+The name of an argument will tell you something what an argument represents and how it should be formatted. (More on this later)</li>
+<li><code>input1</code>, <code>input2</code>, etc: These are variables that you created that will actually get fed into your function. This is the information that will actually get operated on. These can be data that live in your environment, or these can be settings (like switches and knobs, if your function was an actual machine) that are turned to a specific value.</li>
+<li><code>output</code>: This is the variable that will hold your output information.
+As you can see, we are <em>assigning</em> the value that’s output from <code>function()</code> to the variable <code>output</code> using the <code>&lt;-</code> left-facing arrow operator. Just like before with printing variable values to console, if you run a function without assigning its output to a variable, the output will print to console (so you can read it) but it will not be stored anywhere (so you can’t perform any further operations on that output).</li>
+</ul>
+</div>
+<div id="writing-your-own-function" class="section level2">
+<h2>Writing your own function</h2>
+<p>Many times in R, you’ll find yourself wanting to do the same thing multiple times. You can do this by <em>writing your own function</em> that you’ll then call to do whatever it is you need to do, whenever you need to do it. This will save you time. You don’t have to copy and paste certain blocks of code that you use a bunch–instead, make it into a function and you can call it quickly whenever you need it!</p>
+<p>Any function you make will have basically the same format, and will be created using the <code>function()</code> function:</p>
+<pre class="language-r"><code class="language-r">functionName &lt;- function(argument1, argument2, ...) {
+  function_code
+  function_code
+  more_function_code
+  return(output_value)
+}</code></pre>
+<p>The body of the function will come between the curly brackets, and the last line of the body should be whatever the function is going to spit out at the end.</p>
+<p>Let’s say you’re collaborating with a British colleague who is sending you data they are collecting so that you can analyze it. One of the variables is the temperature of the room where the experiment took place, in Celsius. Your colleague is constantly sending you new data as they collect it, but you’d really rather work with values in Fahrenheit. We can create a function to do the conversion for you so you don’t have to look up the formula every time.</p>
+<pre class="language-r"><code class="language-r"># Here&#39;s the function, with a formula from the internet
+# The input argument is the temperature in Celsius
+# A variable called TempF is created within the function
+# which is the result of taking TempC and transforming it
+# We then return the value of TempF
+
+C2F &lt;- function(tempC) {
+  tempF &lt;- tempC * 1.8 + 32
+  return(tempF)
+}</code></pre>
+<p>Now, you can call your own homemade function. First, let’s load some data to test it with.</p>
+<pre class="language-r"><code class="language-r"># This is a CSV file of the average monthly high temperature (Celsius) in Colombo, Sri Lanka.
+read_csv(&quot;colombo.csv&quot;)</code></pre>
+<pre><code>## # A tibble: 12 x 2
+##    month     celsius
+##    &lt;chr&gt;       &lt;dbl&gt;
+##  1 January      30.2
+##  2 February     30.7
+##  3 March        31.6
+##  4 April        31.8
+##  5 May          30.8
+##  6 June         29.7
+##  7 July         29.7
+##  8 August       29.8
+##  9 September    29.8
+## 10 October      29.7
+## 11 November     29.8
+## 12 December     29.7</code></pre>
+<pre class="language-r"><code class="language-r"># Let&#39;s load this dataframe as an object in our R environment
+temps &lt;- read_csv(&quot;colombo.csv&quot;)</code></pre>
+<p>Using <code>mutate()</code>, we can use the output to create new columns just like any function that already comes with R. Let’s try it out by creating a new column of Fahrenheit data.</p>
+<pre class="language-r"><code class="language-r"># Using mutate and our new C2F() function, I can convert the values to Fahrenheit
+mutate(temps,
+       fahrenheit = C2F(celsius))</code></pre>
+<pre><code>## # A tibble: 12 x 3
+##    month     celsius fahrenheit
+##    &lt;chr&gt;       &lt;dbl&gt;      &lt;dbl&gt;
+##  1 January      30.2       86.4
+##  2 February     30.7       87.3
+##  3 March        31.6       88.9
+##  4 April        31.8       89.2
+##  5 May          30.8       87.4
+##  6 June         29.7       85.5
+##  7 July         29.7       85.5
+##  8 August       29.8       85.6
+##  9 September    29.8       85.6
+## 10 October      29.7       85.5
+## 11 November     29.8       85.6
+## 12 December     29.7       85.5</code></pre>
+<p><strong>Keep in mind:</strong> R is not so strict about the names you give to your functions. Sometimes, you can get into a pickle when homemade functions have the same name as pre-existing functions, and R doesn’t know which function you’re referring to. For this reason, <em>avoid giving homemade functions the same names as pre-existing functions.</em> For example, avoid creating homemade functions named <code>mean</code>, <code>median</code>, and other names that you know for sure also belong to pre-existing functions. (If you’re ever not sure if a function name already belongs to a function, you can use the <a href="#The-help-docs">help pages</a> to see if a help page exists for a particular function. If a help page does exist, then a function already has that name.)</p>
+</div>
+</div>
+<div id="getting-assistance" class="section level1">
+<h1>Getting assistance</h1>
+<div id="on-your-own" class="section level2">
+<h2>On your own</h2>
+<div id="the-help-docs" class="section level3">
+<h3>The help docs</h3>
+<p>In RStudio, you can use the “Help” tab in the lower right corner of your window to search for the help page for a function you’re having trouble with. You can type the name of your problem function into the search bar and pull up the help page!</p>
+<p>You can also use the function <code>?</code> in console, in front of the function you’re looking up, to pull up the same info in the “Help” tab. For example, to open the help page for the <code>mean()</code> function, I would run <code>?mean</code> in console.</p>
+<p>The help document for the function you’re looking for should have a description of:</p>
+<ul>
+<li>the function’s arguments
+<ul>
+<li>what type of data they expect</li>
+<li>what part of the function’s behavior they control</li>
+</ul></li>
+<li>what they intend the function to be used for</li>
+<li>explanations of any equations used inside the function</li>
+<li>examples of function calls that work, that you can copy and paste into console and run to inspect output</li>
+</ul>
+</div>
+<div id="the-internet" class="section level3">
+<h3>The internet</h3>
+<p>Sometimes you’ll run into issues that the help docs don’t completely resolve, and that’s okay. The internet is here to help, if you know how to ask it!</p>
+<div id="how-to-google-for-help" class="section level4">
+<h4>How to Google for help</h4>
+<p>Sometimes it can be unclear what keywords to enter to find a solution to your code issue. The following strategies can give you a handle:</p>
+<ul>
+<li>Start your query with “r”–it’s not perfect, since it’s a single letter and not a full word like “python” or “matlab”, but this helps to return results that are R-related</li>
+<li>If you’re looking for help with a function from a specific package, include the package name in your query</li>
+<li>If a command you’re trying to run fails, and returns an error message, enter the name of the function and <em>copy and paste the error message into the query</em>
+<ul>
+<li>your query should look like “r [package name] [function name] [text of error message]”</li>
+</ul></li>
+<li>If you aren’t getting an explicit error message, but a command you’re trying to run is not behaving as you expect, try “r [package name] [function name] won’t [the task you’re trying to do]”</li>
+<li>If you have your pseudocode planned out, but don’t know what functions to use to execute your pseudocode, try “r how to [your pseudocode here]”
+<ul>
+<li>be sure to remove any variable names that are specific to your own data before you Google</li>
+</ul></li>
+</ul>
+</div>
+<div id="stack-overflow-and-other-qa-sites" class="section level4">
+<h4>Stack Overflow and other Q&amp;A sites</h4>
+<p>Often, a successful Google search for help will yield links to posts on Stack Overflow, a Q&amp;A site where people can post questions about code to solicit answers from other users, or from other Q&amp;A sites (email records from old R help mailing lists, for example).</p>
+<p>When parsing a Stack Overflow post, look for the following:</p>
+<ul>
+<li>Read the question to determine how similar this asker’s situation is to yours (and thus how likely the posted answers are to solve your problem)
+<ul>
+<li>Good question posts will have example code that should run if you copy and paste it into console. If this code is there, you can run it to see if it looks like your own data situation</li>
+</ul></li>
+<li>Check out the provided answers
+<ul>
+<li>If there is a green check mark on the left of the “top” answer, the question asker has “accepted” the answer, or marked it as the most helpful answer. It has solved the asker’s problem, and hopefully will solve yours too!</li>
+<li>Answers may have upvotes from other users (not the question asker). You can browse answers, including the “accepted” answer, to try multiple possible solutions and find the one that’s best for your situation.</li>
+</ul></li>
+</ul>
+<p>Other Q&amp;A sites may or may not have as smooth of a setup as Stack Overflow, but if you are careful to inspect the question to see if it’s relevant to your own problem, you should be able to assess whether the answer provided will help you.</p>
+</div>
+<div id="r-user-blogs" class="section level4">
+<h4>R user blogs</h4>
+<p>Plenty of R users post little tutorials (like this one!) online to help other R users. I’ve encountered many of these blog posts while Googling for help, and found many of them useful! Sometimes these may be from larger sites like <a href="https://www.r-bloggers.com/">r-bloggers.com</a> that post submissions from many users, or they may be from personal blogs maintained by one person.</p>
+<p>A good blog post will, like a good Stack Overflow post, have example code that you can copy/paste into your own console and run to follow along with the blog post. This way, you can see if the blog post indeed applies to your particular issue.</p>
+</div>
+</div>
+</div>
+<div id="asking-someone-else" class="section level2">
+<h2>Asking someone else</h2>
+<p>Sometimes, though, after careful Googling and combing through search results to test all suggested solutions, you still don’t have a solution for your R issue. At this time, you can ask someone else for assistance.</p>
+<p>You can ask any number of folks, including people in your lab, people in your department, and/or people on the internet (e.g. posting to a help list). At Columbia, we’re currently maintaining a <a href="https://join.slack.com/t/cu-psych-r-users/shared_invite/enQtMjk5MTExNjkxOTkwLTY2MjJkMGY1ZmU1MzM0ZTA0NTM2ZDJjZjFjMzU4YmRjZDJiMWQyMjJkMzVkMjc0YTE0OTg4ZmU2NjdlYzZiNjk">Slack group</a> for R help, where you can join and post questions.</p>
+<div id="how-to-ask" class="section level3">
+<h3>How to ask</h3>
+<p>When asking someone for help with your R issue, they’ll be best equipped to help you if you provide them with the right info about your problem to give them an idea of what to suggest. Be sure to provide the following pieces of information to anyone you’re asking for help from:</p>
+<ul>
+<li>The nature of the dataset you’re working with (what kinds of data you’re trying to analyze, what data types they are, etc.)</li>
+<li>Your pseudocode, so they know what exactly you’re trying to accomplish</li>
+<li>The code that isn’t working
+<ul>
+<li>If contacting someone through email/help list/etc, you can copy and paste the code that’s not working</li>
+<li>Clarify any variable names in the code that are specific to your data</li>
+<li>If using functions from a specific package, say what those packages are</li>
+<li>If code fails with an error message, include the text of the error message</li>
+</ul></li>
+<li>What you’ve tried already to solve this
+<ul>
+<li>If you tried solutions in any Stack Overflow posts, R user blogs, etc, include links to those pages</li>
+<li>Copy and paste any solution code you tried if it still isn’t working, explaining variable names and including error messages if applicable</li>
+</ul></li>
+</ul>
+<p>Including this info will make it much easier for someone else to identify the cause of the issue you’re experiencing and suggest solutions for you. Help them help you!</p>
+</div>
+</div>
+</div>
+
+    </article>
+  </div>
+
+  
+<script src="../../../js/jquery-3.3.1.slim.min.js"></script>
+<script src="../../../js/bootstrap.bundle.min.js"></script>
+
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+
+  
+</body>
+
+<footer class="footer">
+  © 2020 Columbia Psychology Scientific Computing
+</footer>
+
+</html>

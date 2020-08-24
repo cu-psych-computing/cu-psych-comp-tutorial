@@ -1,8 +1,6 @@
 ---
 title: "Programming Challenge"
 author: "Monica Thieu"
-date: "November 26, 2017"
-output: html_document
 ---
 
 ```{r setup, include=FALSE}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Main tutorial on Columbia Psychology Scientific Computing</title>
+    <link>/tutorials/</link>
+    <description>Recent content in Main tutorial on Columbia Psychology Scientific Computing</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="/tutorials/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Getting your data ready for analysis</title>
+      <link>/tutorials/2_datacleaning/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/2_datacleaning/</guid>
+      <description>Return home Goals of this lesson Install Packages Getting your Data into R  Entering data directly Reading data into R  Inspecting your data  How is your data frame structured? Brief intro to tidyverse Rename a variable Check for missing data Check for correct values Filtering data  Getting ready for analysis  Recoding variables Calculating new variables Combining data from multiple sources Shaping data  Saving your work Data Challenge!</description>
+    </item>
+    
+  </channel>
+</rss>

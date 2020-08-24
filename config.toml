@@ -42,13 +42,17 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   url = "/meetings/"
   weight = 4
   [[menu.main]]
+  name = "Tutorials"
+  url = "/tutorials/"
+  weight = 5
+  [[menu.main]]
   name = "Resources"
   url = "/resources/"
-  weight = 5
+  weight = 6
   [[menu.main]]
   name = "License"
   url = "/license/"
-  weight = 6
+  weight = 7
 
 [markup]
   defaultMarkdownHandler = "goldmark"

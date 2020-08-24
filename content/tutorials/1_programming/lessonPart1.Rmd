@@ -1,11 +1,8 @@
 ---
-title: "CU Psych R Tutorial"
-subtitle: "Programming, pt 1"
+title: "Programming, pt 1"
+subtitle: "CU Psych Scientific Computing Workshop"
 author: "Monica Thieu"
-output:
-  html_document:
-    toc: true
-    toc_float: true
+tags: ["core", "r"]
 ---
 
 ```{r setup, include=FALSE}
@@ -66,7 +63,7 @@ And as we saw earlier, you can assign whole dataframes into variables. We'll be 
 (Quick review question: Am I calling the below file path using an _absolute_ or _relative_ path? How can you tell?)
 
 ```{r}
-shakes <- read_csv(here::here("R", "1_programming", "shakes.csv"))
+shakes <- read_csv(here::here("content", "tutorials", "1_programming", "shakes.csv"))
 ```
 
 You can overwrite the values of variables, simply by assigning some other value to the same name.

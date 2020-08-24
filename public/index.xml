@@ -11,6 +11,15 @@
     
     
     <item>
+      <title>Getting your data ready for analysis</title>
+      <link>/tutorials/2_datacleaning/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/2_datacleaning/</guid>
+      <description>Return home Goals of this lesson Install Packages Getting your Data into R  Entering data directly Reading data into R  Inspecting your data  How is your data frame structured? Brief intro to tidyverse Rename a variable Check for missing data Check for correct values Filtering data  Getting ready for analysis  Recoding variables Calculating new variables Combining data from multiple sources Shaping data  Saving your work Data Challenge!</description>
+    </item>
+    
+    <item>
       <title>License</title>
       <link>/license/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -31,6 +40,33 @@ You are free:
 Upcoming To be announced.
  Past Under construction! Documentation of past meetings will be added soon.
   </description>
+    </item>
+    
+    <item>
+      <title>Programming, pt 0</title>
+      <link>/tutorials/1_programming/lessonpart0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/1_programming/lessonpart0/</guid>
+      <description>Working with RStudio  Installing R &amp;amp; RStudio Getting oriented to the RStudio window  R project files Console window Editor window Environment/history window Files/pkgs/help window  Installing and loading packages  Working directories, file paths, etc  The working directory File paths  Absolute file paths Relative file paths Special file path keywords  Reading data into R  Generating a file path using here() Reading the data into R Loading the file as an R object     Welcome to the CU Psychology Scientific Computing workshop!</description>
+    </item>
+    
+    <item>
+      <title>Programming, pt 1</title>
+      <link>/tutorials/1_programming/lessonpart1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/1_programming/lessonpart1/</guid>
+      <description>Variables Data types  Numeric data  Arithmetic operators  Logical data Character data Dataframe columns have data types too  Data structures  Data frames  Working with dataframe columns Summarizing dataframe columns Indexing into dataframes  Vectors  Indexing into vectors   Data types pt 2  Factor data Non-data data    Welcome (back) to the CU Psychology Scientific Computing Workshop! As a reminder, the documents for the introduction to programming cover the following:</description>
+    </item>
+    
+    <item>
+      <title>Programming, pt 2</title>
+      <link>/tutorials/1_programming/lessonpart2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/1_programming/lessonpart2/</guid>
+      <description>Pseudocode Relational operators  Filtering data Operating on filtered data  Logical operators Conditional operators Functions  Anatomy of a function Writing your own function  Getting assistance  On your own  The help docs The internet  Asking someone else  How to ask     Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder, the documents for the introduction to programming cover the following:</description>
     </item>
     
     <item>

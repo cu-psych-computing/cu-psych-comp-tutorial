@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>core on Columbia Psychology Scientific Computing</title>
+    <link>/tags/core/</link>
+    <description>Recent content in core on Columbia Psychology Scientific Computing</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="/tags/core/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Programming, pt 0</title>
+      <link>/tutorials/1_programming/lessonpart0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/1_programming/lessonpart0/</guid>
+      <description>Working with RStudio  Installing R &amp;amp; RStudio Getting oriented to the RStudio window  R project files Console window Editor window Environment/history window Files/pkgs/help window  Installing and loading packages  Working directories, file paths, etc  The working directory File paths  Absolute file paths Relative file paths Special file path keywords  Reading data into R  Generating a file path using here() Reading the data into R Loading the file as an R object     Welcome to the CU Psychology Scientific Computing workshop!</description>
+    </item>
+    
+    <item>
+      <title>Programming, pt 1</title>
+      <link>/tutorials/1_programming/lessonpart1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/1_programming/lessonpart1/</guid>
+      <description>Variables Data types  Numeric data  Arithmetic operators  Logical data Character data Dataframe columns have data types too  Data structures  Data frames  Working with dataframe columns Summarizing dataframe columns Indexing into dataframes  Vectors  Indexing into vectors   Data types pt 2  Factor data Non-data data    Welcome (back) to the CU Psychology Scientific Computing Workshop! As a reminder, the documents for the introduction to programming cover the following:</description>
+    </item>
+    
+    <item>
+      <title>Programming, pt 2</title>
+      <link>/tutorials/1_programming/lessonpart2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/1_programming/lessonpart2/</guid>
+      <description>Pseudocode Relational operators  Filtering data Operating on filtered data  Logical operators Conditional operators Functions  Anatomy of a function Writing your own function  Getting assistance  On your own  The help docs The internet  Asking someone else  How to ask     Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder, the documents for the introduction to programming cover the following:</description>
+    </item>
+    
+  </channel>
+</rss>

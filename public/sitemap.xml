@@ -3,7 +3,19 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/tags/core/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/2_datacleaning/</loc>
+  </url>
+  
+  <url>
     <loc>/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/1_programming/</loc>
   </url>
   
   <url>
@@ -11,7 +23,27 @@
   </url>
   
   <url>
+    <loc>/tutorials/</loc>
+  </url>
+  
+  <url>
     <loc>/meetings/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/1_programming/lessonpart0/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/1_programming/lessonpart1/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/1_programming/lessonpart2/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/r/</loc>
   </url>
   
   <url>
