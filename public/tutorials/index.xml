@@ -28,5 +28,14 @@
       <description>Return home Goals of this lesson Install Packages Getting your Data into R  Entering data directly Reading data into R  Inspecting your data  How is your data frame structured? Brief intro to tidyverse Rename a variable Check for missing data Check for correct values Filtering data  Getting ready for analysis  Recoding variables Calculating new variables Combining data from multiple sources Shaping data  Saving your work Data Challenge!</description>
     </item>
     
+    <item>
+      <title>Plotting Tutorial Using ggplot2!</title>
+      <link>/tutorials/4_plotting/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/4_plotting/</guid>
+      <description>Return home 0: What is this tutorial? What’s ggplot2? 1: First Load Tidyverse, which includes ggplot2! 2: Load in Sample Data (NHANES) 3: Scatter Plot &amp;amp; Basic ggplot Syntax  3a: Histograms with ggplot  4: Dot Plot Organized by Grouping Factor  4a: Visualizing Distributions with Violin Plots  5: Summary Plots 6: Fitting Lines To The Data 7: Titles, Axis Labels 7: Facetting 8: Color 9: Themes 10: Saving To Files 11: Heatmaps 12: Basic Time Series Plot 13: Final Points   Return home Click here to return to the main CU psychology R tutorials page.</description>
+    </item>
+    
   </channel>
 </rss>

@@ -52,6 +52,15 @@ Upcoming To be announced.
     </item>
     
     <item>
+      <title>Plotting Tutorial Using ggplot2!</title>
+      <link>/tutorials/4_plotting/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/4_plotting/</guid>
+      <description>Return home 0: What is this tutorial? What’s ggplot2? 1: First Load Tidyverse, which includes ggplot2! 2: Load in Sample Data (NHANES) 3: Scatter Plot &amp;amp; Basic ggplot Syntax  3a: Histograms with ggplot  4: Dot Plot Organized by Grouping Factor  4a: Visualizing Distributions with Violin Plots  5: Summary Plots 6: Fitting Lines To The Data 7: Titles, Axis Labels 7: Facetting 8: Color 9: Themes 10: Saving To Files 11: Heatmaps 12: Basic Time Series Plot 13: Final Points   Return home Click here to return to the main CU psychology R tutorials page.</description>
+    </item>
+    
+    <item>
       <title>Programming, pt 0</title>
       <link>/tutorials/1_programming/lessonpart0/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
