@@ -11,6 +11,15 @@
     
     
     <item>
+      <title>Descriptives</title>
+      <link>/tutorials/3_descriptives/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/3_descriptives/</guid>
+      <description>Return home Goals for this tutorial: 0. Open dataset and load package 1. Familiarize yourself with the data 2. Selecting relevant variables 3. Basic Descriptives  Summarizing data  4. Grouping data 5. Extra: Working with a long dataset  How many unique subjects are in the data Make sure you know how many trials there were per subj. Combine summary statistics with the full data frame  6.</description>
+    </item>
+    
+    <item>
       <title>Getting your data ready for analysis</title>
       <link>/tutorials/2_datacleaning/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
