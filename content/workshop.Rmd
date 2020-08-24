@@ -1,8 +1,9 @@
 ---
 title: "Workshop"
 author: "Psych Methods Support"
-date: "8/21/2020"
-output: html_document
+output:
+  blogdown::html_page:
+    toc: false
 ---
 
 ```{r setup, include=FALSE}
