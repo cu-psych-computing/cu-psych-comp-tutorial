@@ -1,3 +1,0 @@
----
-title: Additional R tutorials
----

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Intro to programming in R on Columbia Psychology Scientific Computing</title>
+    <link>/tutorials/r-core/1-programming/</link>
+    <description>Recent content in Intro to programming in R on Columbia Psychology Scientific Computing</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="/tutorials/r-core/1-programming/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Programming, pt 0</title>
+      <link>/tutorials/r-core/1-programming/lessonpart0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-core/1-programming/lessonpart0/</guid>
+      <description>Welcome to the CU Psychology Scientific Computing workshop!
+Programming is telling a computer to do some action to some input info to get output info that you want. When it comes to working with data in R, programming is how we tell R to load data, process it, plot it, fit models to it, and so on (everything!).
+In this first section of our tutorial, we will learn about this info that goes in and out, as well as the actions that transform info into what we want.</description>
+    </item>
+    
+    <item>
+      <title>Programming, pt 1</title>
+      <link>/tutorials/r-core/1-programming/lessonpart1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-core/1-programming/lessonpart1/</guid>
+      <description>Welcome (back) to the CU Psychology Scientific Computing Workshop! As a reminder, the documents for the introduction to programming cover the following:
+Finding your way around RStudio Variables, data types, vectors this document! Coding strategy, relational &amp;amp; logical operators  Variables  a variable is how we store information in a way that the computer can operate on it has a value: the info itself and a name: the cue by which we call upon the info to the computer  If you think about how variables like x and y are used in algebra, calculus, etc, that can be a useful way to conceptualize them.</description>
+    </item>
+    
+    <item>
+      <title>Programming, pt 2</title>
+      <link>/tutorials/r-core/1-programming/lessonpart2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-core/1-programming/lessonpart2/</guid>
+      <description>Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder, the documents for the introduction to programming cover the following:
+Finding your way around RStudio Variables, data types, vectors Coding strategy, relational &amp;amp; logical operators this document!  Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things!
+Pseudocode This is so important to do before you write a single line of code.</description>
+    </item>
+    
+  </channel>
+</rss>
