@@ -110,15 +110,10 @@ text.var == &quot;statistics&quot;</code></pre>
 <h2>Filtering data</h2>
 <p>Relational statements are often helpful when you are interested in filtering your data. Now that we’ve used a relational statement above to generate a logical column indicating which subjects are members of the HMM group, we can use the <code>filter()</code> function in <code>tidyverse</code> to filter only the rows belonging to the HMM group.</p>
 <p>Filtering involves specifying a dataframe and a logical vector (e.g., the <code>isHMM</code> column we created above). When you filter a dataframe, only the rows in the dataframe with a <code>TRUE</code> in the logical column’s values will remain.</p>
-<p>We can do this by indicating that we only want rows with “TRUE” in the new “isHMM” column we created (option 1):</p>
-<pre class="r"><code># Here, we are creating a new R object (data_HMM) that contains the smaller, filtered dataframe
-data_HMM &lt;- filter(data,
-              isHMM == TRUE)</code></pre>
-<p>…or we can skip the middle step of creating the “isHMM” column, and simply filter the dataframe using the relational statement (<code>groupStatus == "HMM"</code>) we used to create that column a few lines back (option 2):</p>
+<p>We can do this by using the same relational statement (<code>groupStatus == "HMM"</code>) we used to create the <code>isHMM</code> column a few lines back:</p>
 <pre class="r"><code># Here, we are creating a new R object (data_HMM) that contains the smaller, filtered dataframe
 data_HMM &lt;- filter(data,
               groupStatus == &quot;HMM&quot;)</code></pre>
-<p>We will end up with the same filtered dataframe either way. (Because it is more efficient, people tend to go with option 2.)</p>
 </div>
 <div id="operating-on-filtered-data" class="section level2">
 <h2>Operating on filtered data</h2>
