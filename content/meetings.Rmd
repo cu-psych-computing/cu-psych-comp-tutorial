@@ -1,0 +1,27 @@
+---
+title: "Meetings"
+author: "Psych Methods Support"
+output:
+  blogdown::html_page:
+    toc: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Meetings
+
+Come and learn with us at one of our meetings! Topics span various early-intermediate to advanced strategies for asking psychological research questions using scientific computing tools.
+
+## Upcoming
+
+---
+
+To be announced.
+
+## Past
+
+---
+
+Under construction! Documentation of past meetings will be added soon.

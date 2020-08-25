@@ -1,0 +1,59 @@
+---
+title: "Who We Are"
+author: "Psych Methods Support"
+output:
+  blogdown::html_page:
+    toc: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Who We Are
+
+## 2020 - 2021 Graduate Methods Support Advisors
+
+---
+
+<div class="row">
+<div class="col-md-6">
+### Emily Nakkawita
+
+- <b>Research interests: </b>how goal pursuit processes differ based on individuals' unique motivational orientations
+- <b>Method specialties: </b>surveys, web-based response latency tasks
+- <b>Tool/language specialties: </b>R, generating manuscripts with Papaja, Javascript/HTML customization in Qualtrics, M-Turk, Prolific
+- <b>Favorite NYC neighborhood: </b>Park Slope
+- <b>Office hours: </b>To be announced
+</div>
+
+<div class="col-md-6">
+### Hannah Tarder-Stoll
+
+- <b>Research interests: </b>how memory is flexibly used to predict future events at different timescales
+- <b>Method specialties: </b>cognitive tasks (in-person and web-based), neuroimaging, virtual reality
+- <b>Tool/language specialties: </b>R, Python, Unity, Inquisit
+- <b>Favorite NYC neighborhood: </b>Astoria
+- <b>Office hours: </b>To be announced
+</div>
+</div>
+
+## Contributors to Scientific Computing Workshop
+
+---
+
+The lesson materials for the introductory workshop are the evolving product of several contributors, past and present, from the Columbia University psychology department. Below are all of the people who have contributed and edited content for the workshop since its inception.
+
+[Paul Bloom](https://github.com/pab2163){target="_blank"}
+
+[Emily Nakkawita](https://github.com/emilynakka){target="_blank"}
+
+[Jonathan Nicholas](https://github.com/boomsbloom){target="_blank"}
+
+[Hannah Tarder-Stoll](https://github.com/hannahtarder-stoll){target="_blank"}
+
+[Ellen Tedeschi](https://github.com/etedeschi){target="_blank"}
+
+[Monica Thieu](https://github.com/monicathieu){target="_blank"}
+
+[Michelle VanTieghem](https://github.com/mvantieghem){target="_blank"}

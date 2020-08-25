@@ -1,0 +1,50 @@
+---
+title: "Statistics Data challenge"
+output: html_document
+---
+
+
+# Data Challenge:
+Now it's your turn! The datasets for the challenge are from Garcia-et-al 2015, examining regulatory mode: assessment and locomotion, in a cohort of adolescents. The original paper can be found here: https://www.ncbi.nlm.nih.gov/pubmed/?term=Garcia+D%5BAuthor%5D+2015+regulatory+mode
+
+```{r}
+df <- read.csv("Garcia-et-al-_2015_-data.csv")
+
+```
+# 1. Does Positive affect correlate with locomotion or assessment? Does negative affect correlate with locomotion or assessment? 
+```{r}
+
+```
+
+#2. Test whether there are gender differences in locomotion or assessment
+```{r}
+
+```
+
+
+#2. conduct a multiple regression to test whether Negative Affect predicts Assessment when controlling for positive affect, age and gender. Plot the results using the effect package. 
+```{r}
+
+```
+
+
+# Test whether gender moderates the effects of negative affect on Assessment. Plot the interaction using the effect package.
+
+```{r}
+```
+
+
+# Bonus Data Challenge
+Use ggplot to visualize your results.
+hint: you can add two dataframes to ggplot: raw data, and fitted data.
+```{r}
+
+
+
+
+
+
+
+
+
+```

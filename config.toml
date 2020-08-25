@@ -1,0 +1,86 @@
+baseURL = "https://cu-psych-computing.github.io/cu-psych-comp-tutorial/"
+languageCode = "en-us"
+title = "Columbia Psychology Scientific Computing"
+theme = "minimal-bootstrap-hugo-theme"
+relativeURLs = true
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+
+[taxonomies]
+  tag = "tags"
+
+[permalinks]
+    post = "/:slug/"
+
+[params]
+  description = "CU Psychology Scientific Computing"
+  customDateFormat = "Jan 2, 2006"
+  customCodeStyle = true
+  customBlockquoteStyle = true
+  showPostSummary = false
+  googleAnalytics = "UA-123456789-1"
+  cookieConsent = false
+  includeBootstrapJs = true
+  faviconSafariPinnedTabColor = "#5bbad5"
+  faviconMsApplicationTileColor = "#da532c"
+  faviconThemeColor = "#ffffff"
+
+[menu]
+  [[menu.main]]
+  name = "Home"
+  url = "/"
+  weight = 1
+  [[menu.main]]
+  name = "Who We Are"
+  url = "/who/"
+  weight = 2
+  [[menu.main]]
+  name = "Workshop"
+  url = "/workshop/"
+  weight = 3
+  [[menu.main]]
+  name = "Meetings"
+  url = "/meetings/"
+  weight = 4
+  [[menu.main]]
+  name = "Tutorials"
+  url = "/tutorials/"
+  weight = 5
+  [[menu.main]]
+  name = "Resources"
+  url = "/resources/"
+  weight = 6
+  [[menu.main]]
+  name = "License"
+  url = "/license/"
+  weight = 7
+
+[markup]
+  defaultMarkdownHandler = "goldmark"
+  [markup.goldmark]
+    [markup.goldmark.extensions]
+      definitionList = true
+      footnote = true
+      linkify = true
+      strikethrough = true
+      table = true
+      taskList = true
+      typographer = true
+    [markup.goldmark.parser]
+      attribute = true
+      autoHeadingID = true
+    [markup.goldmark.renderer]
+      hardWraps = false
+      unsafe = true
+      xHTML = false
+  [markup.highlight]
+    codeFences = true
+    hl_Lines = ""
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = true
+    noClasses = true
+    style = "friendly"
+    tabWidth = 4
+  [markup.tableOfContents]
+    endLevel = 6
+    startLevel = 2

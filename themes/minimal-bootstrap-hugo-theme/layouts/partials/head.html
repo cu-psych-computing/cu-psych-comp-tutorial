@@ -1,0 +1,54 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  {{ hugo.Generator }}
+
+  {{ with .Site.Params.description }}
+  <meta name="description" content="{{ . }}">
+  {{ end }}
+
+  {{ $appleTouchIcon := "apple-touch-icon.png" }}
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ $appleTouchIcon | absURL }}">
+
+  {{ $favicon32x32 := "favicon-32x32.png" }}
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ $favicon32x32 | absURL }}">
+
+  {{ $favicon16x16 := "favicon-16x16.png" }}
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ $favicon16x16 | absURL }}">
+
+  {{ $siteWebmanifest := "site.webmanifest" }}
+  <link rel="manifest" href="{{ $siteWebmanifest | absURL }}">
+
+  {{ $safariPinnedTab := "safari-pinned-tab.svg" }}
+  <link rel="mask-icon" href="{{ $safariPinnedTab | absURL }}" color="{{ .Site.Params.faviconSafariPinnedTabColor }}">
+
+  <meta name="msapplication-TileColor" content="{{ .Site.Params.faviconMsApplicationTileColor }}">
+
+  <meta name="theme-color" content="{{ .Site.Params.faviconThemeColor }}">
+
+  {{ $bootstrapCss := "css/bootstrap.min.css" }}
+  <link rel="stylesheet" href="{{ $bootstrapCss | absURL }}" />
+  
+  <!-- add after bootstrap.min.css -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"
+  />
+
+  <script src="https://kit.fontawesome.com/7eb067db85.js" crossorigin="anonymous"></script>
+
+  {{ if .IsHome }}
+  {{ $homepage := "Home" }}
+  {{ with .Site.Menus.nav }}
+    {{ range first 1 . }}
+      {{ $homepage = .Name }}
+    {{ end }}
+  {{ end }}
+  <title>{{ $homepage }} | {{ .Site.Title }}</title>
+  {{ else }}
+  <title>{{ .Title }} | {{ .Site.Title }}</title>
+  {{ end }}
+
+  {{ partial "style.html" . }}
+</head>

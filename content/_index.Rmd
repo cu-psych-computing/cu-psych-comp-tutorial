@@ -1,0 +1,79 @@
+---
+title: "Home"
+author: "Psych Methods Support"
+output:
+  blogdown::html_page:
+    toc: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Welcome!
+
+**This site is under construction**; please pardon our web dust.
+
+## Individual Scientific Computing Support
+
+---
+
+CU psychology graduate students can stop by to chat about using computing tools at any stage of the research process. Use cases include, but are not limited to:
+
+- Conducting pre-study power analysis
+- Setting up tools for administering tasks in-person and online
+- Cleaning and analyzing data
+- Preparing presentations and manuscripts
+
+During the Fall 2020 semester, the [graduate methods support advisors](/who/) will be holding office hours by appointment. To schedule a time that works well for you, or for email support, please contact [psych-methods-support@columbia.edu](mailto:psych-methods-support@columbia.edu){target="_blank"}.
+
+## Scientific Computing Workshop
+
+---
+
+This is our core introductory scientfic computing syllabus. The materials here are designed to be suitable for learners with little to no prior programming experience.
+
+### Intro to Programming and Data Cleaning in R
+
+<p><a href="/R/1_programming/lessonPart0.html" target="_blank">Acquainting Yourself with RStudio</a></p>
+<p><a href="/R/1_programming/lessonPart1.html" target="_blank">Intro to Programming and Data Cleaning in R, Part 1</a></p>
+<p><a href="/R/1_programming/lessonPart2.html" target="_blank">Intro to Programming and Data Cleaning in R, Part 2</a></p>
+
+### Data Manipulation and Plotting in R
+
+<p><a href="/R/2_dataCleaning/lesson.html" target="_blank">Data Cleaning in R</a></p>
+<p><a href="/R/3_descriptives/lesson.html" target="_blank">Data Manipulation in R</a></p>
+<p><a href="/R/4_plotting/lesson.html" target="_blank">Plotting in R with <code>ggplot2</code></a></p>
+
+### Intro to Data Cleaning, Manipulation, and Plotting in Python
+
+<p><a href="/python/1_r2PythonTranslation/2_introProgramming.html" target="_blank">Intro to Python for R Users</a></p>
+<p><a href="/python/2_dataCleaning/lesson.html" target="_blank">Data Cleaning in Python</a></p>
+<p><a href="/python/3_descriptives/lesson.html" target="_blank">Data Manipulation in Python</a></p>
+<p><a href="/python/4_plotting/lesson.html" target="_blank">Plotting in Python with <code>seaborn</code></a></p>
+
+## Additional Instructional Materials
+
+---
+
+Many of these materials were originally prepared as presentations for Columbia Psychology R users, but are also designed to be stand-alone tutorials that you can read through and learn from remotely. These materials span a wider range of learner skill levels, and assume basic experience with scientific computing.
+
+### Accelerated `ggplot2`
+
+<p><a href="/R/extraTutorials/ggplotExtra/ggplot_summer2018_part1.html" target="_blank">Basic plotting in `ggplot2`</a></p>
+<p><a href="/R/extraTutorials/ggplotExtra/ggplot_summer2018_part2.html" target="_blank">More advanced `ggplot2`-ing (plotting using model fits + raw data)</a></p>
+
+### A Guided Tour of the `tidyverse`
+
+<p><a href="/R/extraTutorials/tidyverseGuide/tidyguide_1.html" target="_blank">Data manipulation basics</a></p>
+<p><a href="/R/extraTutorials/tidyverseGuide/tidyguide_2.html" target="_blank">Nested dfs, `map`-ing, and more</a></p>
+
+### Additional Tutorials
+
+<p><a href="/R/extraTutorials/simulation/basicSimulationPower.html" target="_blank">Basic data simulation & power analysis</a></p>
+<p><a href="/R/extraTutorials/brms/multilevelModelsWithBrms.html" target="_blank">Multilevel modeling with `brms` (focus on partial pooling)</a></p>
+<p><a href="/R/extraTutorials/Rmarkdown/example-r-markdown.html" target="_blank">Intro to RMarkdown</a></p>
+
+---
+
+<p style="text-align:center;"><img src="/images/funplot.png" alt="R is fun" width = "65%" height = "65%"></p>
