@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Additional R tutorials on Columbia Psychology Scientific Computing</title>
+    <link>/tutorials/r-extra/</link>
+    <description>Recent content in Additional R tutorials on Columbia Psychology Scientific Computing</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="/tutorials/r-extra/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Tidy walkthrough, part 1</title>
+      <link>/tutorials/r-extra/tidyverse-guide/tidyguide-1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-extra/tidyverse-guide/tidyguide-1/</guid>
+      <description>Goals for this vignette  Demonstrate (what I think are) key first-level features of the tidyverse Illustrate psychology use cases for tidyverse functions Hopefully convince you to join the cult of tidy  We shall do this by walking through various use cases you might encounter with your data. I’ll jump in with specific examples of functions when appropriate, to highlight solutions for particular situations you might run into with your own data.</description>
+    </item>
+    
+    <item>
+      <title>Tidy walkthrough, part 2</title>
+      <link>/tutorials/r-extra/tidyverse-guide/tidyguide-2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-extra/tidyverse-guide/tidyguide-2/</guid>
+      <description>Goals for this vignette Hello (again)! This is a continuation of our tour through base tidyverse. Our goals are the same as before:
+ Demonstrate (what I think are) key first-level features of the tidyverse Illustrate psychology use cases for tidyverse functions Hopefully convince you to join the cult of tidy  This time, we’ll be moving ahead to some more complex use cases utilizing some more advanced programming tactics.</description>
+    </item>
+    
+  </channel>
+</rss>
