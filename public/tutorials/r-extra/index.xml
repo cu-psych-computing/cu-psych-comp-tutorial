@@ -16,7 +16,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/tidyverse-guide/tidyguide-1/</guid>
-      <description>Goals for this vignette  Please keep in mind!  Quick cheat-list of key functions from various pkgs Brief intro to the pipe Initializing fake data Loading data Visually inspecting data Subsetting data  Subsetting by column Subsetting by row  Logical subsetting Subsetting rows by position Getting only unique/un-duplicated rows Subsetting random rows  Subsetting by row and column simultaneously  Manipulating data  Creating/modifying columns  Nice helpers  Calculating summary statistics  Special versions of summarize()  Grouping  Mutating grouped data Summarizing grouped data When to ungroup your df  Creating new rows  Repeating existing rows Completing combinations of grouping variables   Reshaping data  From wide to long  Pivot-longering multiple distinct variables at once  From long to wide  Pivot-widering multiple distinct variables at once   Coming up in part 2   Goals for this vignette  Demonstrate (what I think are) key first-level features of the tidyverse Illustrate psychology use cases for tidyverse functions Hopefully convince you to join the cult of tidy  We shall do this by walking through various use cases you might encounter with your data.</description>
+      <description>Goals for this vignette  Demonstrate (what I think are) key first-level features of the tidyverse Illustrate psychology use cases for tidyverse functions Hopefully convince you to join the cult of tidy  We shall do this by walking through various use cases you might encounter with your data. I’ll jump in with specific examples of functions when appropriate, to highlight solutions for particular situations you might run into with your own data.</description>
     </item>
     
     <item>
@@ -25,7 +25,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/tidyverse-guide/tidyguide-2/</guid>
-      <description>Goals for this vignette Quick cheat-list of key functions from various pkgs Initializing fake data Joining dfs Nested dfs  A brief (re)view of lists Lists as df columns  A df with a list-column still behaves like a df, mostly df-ception: df list-columns that contain other dfs   Vectorizing to the high heavens  Vectorizing: it’s like a for loop, but not Tidy vectorizing  Intro to map() Special versions of map() Using map() on list-columns inside a df  When not to vectorize  Working with model objects en masse  Fitting a whole lotta models Extracting model coefficients  Plotting data   Goals for this vignette Hello (again)!</description>
+      <description>Goals for this vignette Hello (again)! This is a continuation of our tour through base tidyverse. Our goals are the same as before:
+ Demonstrate (what I think are) key first-level features of the tidyverse Illustrate psychology use cases for tidyverse functions Hopefully convince you to join the cult of tidy  This time, we’ll be moving ahead to some more complex use cases utilizing some more advanced programming tactics.</description>
     </item>
     
   </channel>

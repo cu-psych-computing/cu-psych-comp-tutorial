@@ -32,6 +32,12 @@
 
   
   <link rel="stylesheet" href="../../../../css/bootstrap.min.css" />
+  
+  
+  <link
+    rel="stylesheet"
+    href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"
+  />
 
   <script src="https://kit.fontawesome.com/7eb067db85.js" crossorigin="anonymous"></script>
 
@@ -44,26 +50,34 @@
 .h1, h1 {
   font-size:42px;
   font-weight:600;
-  margin:25px 0;
+  margin-top: -51px;
+  padding-top: 76px;
+  padding-bottom: 25px;
 }
 
 .h2, h2 {
   font-size:32px;
   font-weight:600;
-  margin:48px 0 16px;
+  margin-top: -51px;
+  padding-top: 99px;
+  padding-bottom: 16px;
 }
 
 .h3, h3 {
   font-size:22px;
   font-weight:600;
-  margin:30px 0 16px;
+  margin-top: -51px;
+  padding-top: 81px;
+  padding-bottom: 16px;
 }
 
 .h4, h4 {
   font-size:15px;
   font-weight:600;
   font-style:italic;
-  margin:10px 0;
+  margin-top: -51px;
+  padding-top: 61px;
+  padding-bottom: 10px;
 }
 
 .h5, h5 {
@@ -78,6 +92,7 @@ body {
   min-width: 300px;
   font-size:15px;
   color: #212529;
+  margin-top: 51px;
 }
 
 a {
@@ -126,7 +141,7 @@ a:focus {
 }
 
 article {
-  padding-top: 60px;
+  padding-top: 30px;
   padding-bottom: 80px;
   padding-left: 5%;
   padding-right: 5%;
@@ -243,10 +258,31 @@ div .highlightsec {
   color: #212529;
 }
 
+nav[data-toggle=toc] .nav-link.active, nav[data-toggle=toc] .nav-link.active:focus, nav[data-toggle=toc] .nav-link.active:hover, nav[data-toggle=toc] .nav>li>a:hover {
+    color: #007bff;
+    border-left: 2px solid #007bff;
+}
+
+ 
+@media (max-width: 768px) {
+   
+  nav.affix[data-toggle='toc'] {
+    position: static;
+  }
+
+   
+   
+  nav[data-toggle='toc'] .nav .active .nav {
+    display: none;
+  }
+   
+   
+}
+
 </style>
 </head>
 
-<body>
+<body data-spy="scroll" data-target="#toc">
   <nav class="navbar navbar-expand-lg navbar-light bg-ligh fixed-top">
   <div class="container responsive-menu">
     <a class="navbar-brand" href="../../../../">Columbia Psychology Scientific Computing</a>
@@ -326,39 +362,37 @@ div .highlightsec {
   </div>
 </nav>
   
+<script src="../../../../js/jquery-3.3.1.slim.min.js"></script>
+<script src="../../../../js/bootstrap.bundle.min.js"></script>
+
+    
+  <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+
+  
+  
   <div class="container">
     <article>
       
 
-<div id="TOC">
-<ul>
-<li><a href="#working-with-rstudio">Working with RStudio</a><ul>
-<li><a href="#installing-r-rstudio">Installing R &amp; RStudio</a></li>
-<li><a href="#getting-oriented-to-the-rstudio-window">Getting oriented to the RStudio window</a><ul>
-<li><a href="#r-project-files">R project files</a></li>
-<li><a href="#console-window">Console window</a></li>
-<li><a href="#editor-window">Editor window</a></li>
-<li><a href="#environmenthistory-window">Environment/history window</a></li>
-<li><a href="#filespkgshelp-window">Files/pkgs/help window</a></li>
-</ul></li>
-<li><a href="#installing-and-loading-packages">Installing and loading packages</a></li>
-</ul></li>
-<li><a href="#working-directories-file-paths-etc">Working directories, file paths, etc</a><ul>
-<li><a href="#the-working-directory">The working directory</a></li>
-<li><a href="#file-paths">File paths</a><ul>
-<li><a href="#absolute-file-paths">Absolute file paths</a></li>
-<li><a href="#relative-file-paths">Relative file paths</a></li>
-<li><a href="#special-file-path-keywords">Special file path keywords</a></li>
-</ul></li>
-<li><a href="#reading-data-into-r">Reading data into R</a><ul>
-<li><a href="#generating-a-file-path-using-here">Generating a file path using here()</a></li>
-<li><a href="#reading-the-data-into-r">Reading the data into R</a></li>
-<li><a href="#loading-the-file-as-an-r-object">Loading the file as an R object</a></li>
-</ul></li>
-</ul></li>
-</ul>
-</div>
 
+<!-- Students: Please disregard this initial code. The R tutorial begins at Line 36. -->
+<div class="container">
+<div class="row">
+<div class="col-sm-3 sticky">
+<p><nav id="toc" data-toggle="toc" class="sticky-top" style="top:100px;"></nav></p>
+</div>
+<div class="col-sm-9" style="top:25px">
 <p>Welcome to the CU Psychology Scientific Computing workshop!</p>
 <p>Programming is telling a computer to do some action to some input info to get output info that you want. When it comes to working with data in R, programming is how we tell R to load data, process it, plot it, fit models to it, and so on (everything!).</p>
 <p>In this first section of our tutorial, we will learn about this info that goes in and out, as well as the actions that transform info into what we want.</p>
@@ -369,42 +403,29 @@ div .highlightsec {
 <li><a href="lessonPart1.html">Variables, data types, vectors</a></li>
 <li><a href="lessonPart2.html">Coding strategy, relational &amp; logical operators</a></li>
 </ol>
-<div id="working-with-rstudio" class="section level1">
-<h1>Working with RStudio</h1>
-<div id="installing-r-rstudio" class="section level2">
-<h2>Installing R &amp; RStudio</h2>
+<h1 id="working-with-rstudio">Working with RStudio</h1>
+<h2 id="installing-r-rstudio">Installing R &amp; RStudio</h2>
 <p>To install R, visit the <a href="https://cran.r-project.org/mirrors.html">CRAN website</a> to download the appropriate version of R for your operating system (Linux, Mac, or Windows). Run the installer contained within your downloaded file.</p>
 <p>To install RStudio, visit the <a href="https://www.rstudio.com/products/rstudio/download/#download">RStudio website</a> to download the appropriate version of RStudio for your operating system. Again, run the installer that downloads to your computer.</p>
 <p><strong>When you want to work with R, just open RStudio. You should never need to open R directly.</strong> RStudio requires R to run (which is why you have to download the two programs separately), but gives you a bunch of useful bonus tools that don’t come standard with R, so we will only ever be opening RStudio to use R.</p>
-</div>
-<div id="getting-oriented-to-the-rstudio-window" class="section level2">
-<h2>Getting oriented to the RStudio window</h2>
-<div id="r-project-files" class="section level3">
-<h3>R project files</h3>
+<h2 id="getting-oriented-to-the-rstudio-window">Getting oriented to the RStudio window</h2>
+<h3 id="r-project-files">R project files</h3>
 <p>Whenever you are working in RStudio, you’ll likely be working with a particular set of code scripts, raw data, and other files that are all saved in a particular folder. An <a href="https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects"><strong>R project file</strong></a> tells RStudio “this folder is a place where I am doing R stuff related to one complete project” and helps you keep your different data analysis projects organized.</p>
 <p>You can create an R project file inside of a folder where you plan to do R work, or you can open an existing R project file in a folder you’ve already set up.</p>
 <p><em>Note: Although R projects may not be something you’ll always learn in intro stats classes, etc., we advise using them most of the time for helping organize files/your life! More on this later.</em></p>
-</div>
-<div id="console-window" class="section level3">
-<h3>Console window</h3>
+<h3 id="console-window">Console window</h3>
 <p>In the automatic configuration of RStudio’s panes/mini-windows, the console is likely in the bottom left. In general, you can type R commands in the console, and press Enter to execute those commands. This is where you can execute R code!</p>
 <p><em>Note: the console is a great place to try out new stuff, but it doesn’t save your code as one piece the way a script does – for the most part it is good practice to be writing scripts</em></p>
-</div>
-<div id="editor-window" class="section level3">
-<h3>Editor window</h3>
+<h3 id="editor-window">Editor window</h3>
 <p>In everyday RStudio life, though, you’ll likely spend most of your time in the editor window (default position should be upper left pane). This is where you <strong>edit R script files.</strong> R scripts are files that contain R code typed out that you can write once, and then run as many times as you want. You’ll do the vast majority of your code writing in script files, so that you can have records of the data processing and analyses you’ve written.</p>
-</div>
-<div id="environmenthistory-window" class="section level3">
-<h3>Environment/history window</h3>
+<h3 id="environmenthistory-window">Environment/history window</h3>
 <p>In this window (default position: upper right pane), you can see some useful stuff pertaining to your current R session:</p>
 <ul>
 <li>Environment: this is where you can see all of the data you currently have loaded in your R session, or any other variables you’ve created.</li>
 <li>History: this is where you can see your command history of all the R commands you’ve run in this session. Use it wisely!</li>
 </ul>
 <p>Should you connect RStudio to GitHub, you’ll also see a small Git manager tab in this window as well.</p>
-</div>
-<div id="filespkgshelp-window" class="section level3">
-<h3>Files/pkgs/help window</h3>
+<h3 id="filespkgshelp-window">Files/pkgs/help window</h3>
 <p>In this window (default position: lower right pane), you can see even more useful stuff:</p>
 <ul>
 <li>Files: This is a rudimentary file browser, in case you want to use this to click through your folders and open R scripts.</li>
@@ -412,10 +433,7 @@ div .highlightsec {
 <li>Packages: This is a list of all the packages (we’ll talk about these soon!) you have installed. You can load packages into your session by clicking the check mark, or install new packages/update existing ones using the buttons you see on the top of the tab.</li>
 <li>Help: You can search for and read documentation of any R function here. I spend a lot of time here!</li>
 </ul>
-</div>
-</div>
-<div id="installing-and-loading-packages" class="section level2">
-<h2>Installing and loading packages</h2>
+<h2 id="installing-and-loading-packages">Installing and loading packages</h2>
 <p>Packages are bundles of functions in R, usually made by experienced programmers, that you can use to make life easier! Oftentimes, if there’s something you want to do in R, there already exists a function to do it, that you can find in a package.</p>
 <p>Since these packages don’t come with base R, you have to install them.</p>
 <pre class="r"><code># You will need these packages in later parts of the workshop!
@@ -436,22 +454,16 @@ library(moments)
 library(tidyverse)
 library(here)
 library(effects)</code></pre>
-</div>
-</div>
-<div id="working-directories-file-paths-etc" class="section level1">
-<h1>Working directories, file paths, etc</h1>
+<h1 id="working-directories-file-paths-etc">Working directories, file paths, etc</h1>
 <p>Before we actually get started with messing in R, we need to understand how R interacts with files on your computer. Any data that gets loaded in or saved out is saved on your computer proper, and you can access all of these files through R.</p>
-<div id="the-working-directory" class="section level2">
-<h2>The working directory</h2>
+<h2 id="the-working-directory">The working directory</h2>
 <p>Every R session has a <em>working directory,</em> or a “home base” folder. Essentially, this is the folder that R is “in”. R is not actually installed in this folder, mind you! The working directory is the first folder where R looks for raw data files to load in. You can find out what folder is your working directory using the <code>getwd()</code> command as below.</p>
 <pre class="r"><code>getwd()</code></pre>
 <pre><code>## [1] &quot;/Users/emily/Documents/GitHub/cu-psych-comp-tutorial/content/tutorials/r-core/1-programming&quot;</code></pre>
 <p>If you run this command on your own computer, you’ll get a different folder. And that’s okay! Our folder structures on our computers are all different.</p>
 <p>When you launch R by opening an R project file (our preferred way of opening R), R automatically sets your working directory to be the folder that this R project file is saved in. Thus, if your R project file is in the same folder as your raw data, scripts, etc, this is a neat short-cut to start R in the folder all of your stuff is saved in.</p>
 <p><strong>We do not recommend changing your working directory during an active R session.</strong> R project files automatically set your working directory for you, so you don’t need to physically set your working directory when you open up R if you open up an R project file. Additionally, when you use R project files, you can open multiple R instances in different working directories if you need to work on multiple projects at once, so you shouldn’t need to change your working directory inside one R session.</p>
-</div>
-<div id="file-paths" class="section level2">
-<h2>File paths</h2>
+<h2 id="file-paths">File paths</h2>
 <p>Every single file and folder on your computer has an address. You can navigate these paths in your computer’s built in file browser, but in order for R to be able to access these files, you have to tell R the address.</p>
 <p>You can think of your computer’s main drive as a building, with only one front door, and a series of rooms (folders), which may contain stuff (files) or doors leading to more rooms (sub-folders). You can walk through any series of connected doors to get to the room you’re looking for. A file path is a set of directions of which rooms to walk through to get to a particular room (folder) or object (file) in a room. Because each room/folder on your computer has a name, file path directions look like the following:</p>
 <ul>
@@ -459,8 +471,7 @@ library(effects)</code></pre>
 <li>Windows: <code>"Folder name\Sub-folder name\File"</code> (note the backward slashes this time!)</li>
 </ul>
 <p>There are two ways of specifying file paths: <em>absolute</em> and <em>relative,</em> which we’ll get to next.</p>
-<div id="absolute-file-paths" class="section level3">
-<h3>Absolute file paths</h3>
+<h3 id="absolute-file-paths">Absolute file paths</h3>
 <p>An <strong>absolute file path</strong> is a file’s full address on your computer. An absolute path tells you how to get to a file starting from the <strong>root folder,</strong> which is essentially the one invisible giant folder holding literally everything saved on your computer. In your computer-building, the root folder is the front door.</p>
 <p>If you give the directions to a room in your computer-building by <em>starting at the front entrance,</em> your computer will always be able to follow those directions correctly by “teleporting” to the front entrance (computers have powers like that) and then following the directions to get to the room of interest.</p>
 <p>The way you specify that a file path starts from the root folder (the front entrance to your computer) differs operating systems:</p>
@@ -468,16 +479,12 @@ library(effects)</code></pre>
 <li>Mac/Linux: Start your file path with <em>a single forward slash,</em> e.g. <code>"/Users/me/Documents/etc"</code></li>
 <li>Windows: Start your file path with <em>the name of your drive,</em> e.g. <code>"C:\Users\me\My Documents\etc"</code></li>
 </ul>
-</div>
-<div id="relative-file-paths" class="section level3">
-<h3>Relative file paths</h3>
+<h3 id="relative-file-paths">Relative file paths</h3>
 <p>Meanwhile, relative file paths don’t involve any sort of teleportation. Relative file paths are directions that assume you’re starting in the current working directory (remember from earlier?).</p>
 <p>Relative file paths are shorter to type (because you don’t need to specify all the directions to get from the root folder to the current working directory), but they do depend on what the current working directory is. If your working directory is set to a folder other than what you expect, your computer will not be able to follow the relative path you provide because it will be looking for file/folder names that may not exist in its starting location. This is another big reason not to change your working directory during your R session–you don’t want to break your relative paths on accident!</p>
 <p>To specify a relative path, you only need to start your path with file or folder name that exists in your current working directory. If my current working directory is “plant foods”, containing a subfolder for “fruits” and a subfolder for “vegetables”, and I’m looking for a file called “apple.jpg” inside the “fruits” folder, I merely need to type the path as <code>"fruits/apple.jpg"</code> <em>with no forward-slash or drive name in front of it.</em></p>
 <p>Any path that does <em>not</em> start with a forward-slash or drive name is assumed to be a relative path, so your computer will start looking in your current working directory.</p>
-</div>
-<div id="special-file-path-keywords" class="section level3">
-<h3>Special file path keywords</h3>
+<h3 id="special-file-path-keywords">Special file path keywords</h3>
 <p>The following are special keywords you can use in file paths:</p>
 <ul>
 <li>All OSs (I think):
@@ -490,22 +497,16 @@ library(effects)</code></pre>
 <li>tilde <code>~</code>: This refers to your <em>home folder.</em> This is a special folder designated on your computer as a… home base (duh). This is probably the folder associated with your user account on your computer, so it should be located at <code>"/Users/your_username"</code>. Your Documents folder, among other folders, is in your home folder, so the path <code>"~/Documents"</code> is equivalent to <code>"/Users/your_username/Documents"</code>.</li>
 </ul></li>
 </ul>
-</div>
-</div>
-<div id="reading-data-into-r" class="section level2">
-<h2>Reading data into R</h2>
+<h2 id="reading-data-into-r">Reading data into R</h2>
 <p>One reason file paths are useful is that they allow you to read data (e.g., from an existing spreadsheet or text file) into R. In order to load such a file, you will need to specify the file path so R knows where the data is located.</p>
 <p>Although you can figure out the file path on your own, even frequent R users can find it confusing to do so. Thankfully, a function called <code>here()</code> (in the <code>here</code> package) can easily generate an absolute file path for you, as long as you know which folders your file is located in.</p>
-<div id="generating-a-file-path-using-here" class="section level3">
-<h3>Generating a file path using here()</h3>
+<h3 id="generating-a-file-path-using-here">Generating a file path using here()</h3>
 <p>Let’s say you want to load a CSV file containing data on Shakespeare’s plays in R. This file is called <code>shakes.csv</code>, and it is located in the folder for this R project. In particular, it is saved inside the “1_programming” subfolder, which is located within the “R” subfolder in the main project folder:</p>
 <p><img src="../../assets/images/filepath.png" /></p>
 <p>To generate a file path using <code>here()</code>, list the names of each subfolder in quotes, followed by the file name in quotes. Please note that these subfolder names should be listed from highest in the folder structure to lowest (ending with the subfolder where the data file is located).</p>
 <pre class="r"><code>here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;1-programming&quot;, &quot;shakes.csv&quot;)</code></pre>
 <pre><code>## [1] &quot;/Users/emily/Documents/GitHub/cu-psych-comp-tutorial/content/tutorials/r-core/1-programming/shakes.csv&quot;</code></pre>
-</div>
-<div id="reading-the-data-into-r" class="section level3">
-<h3>Reading the data into R</h3>
+<h3 id="reading-the-data-into-r">Reading the data into R</h3>
 <p>Then, to examine this file in R, place the file path inside the parentheses in the <code>read_csv()</code> function. You could do this by copying and pasting the full file path outputted by the <code>here()</code> function, but it is simpler to “nest” the <code>here()</code> function inside <code>read_csv()</code>.</p>
 <pre class="r"><code>read_csv(here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;1-programming&quot;, &quot;shakes.csv&quot;))</code></pre>
 <pre><code>## # A tibble: 37 x 3
@@ -523,9 +524,7 @@ library(effects)</code></pre>
 ## 10 Henry V                   History   26119
 ## # … with 27 more rows</code></pre>
 <p>After running the line above, you will see a preview of the file in R. Sometimes this kind of quick preview is helpful! However, in order to do more with the data, you will want to save a copy of the file as an object in your R environment. (You can tell that the file has <em>not</em> yet been loaded into your environment by taking a look at the Environment tab in the upper right section of your RStudio window. Unless you were working in R before this workshop began, you will see a message noting that it is empty!)</p>
-</div>
-<div id="loading-the-file-as-an-r-object" class="section level3">
-<h3>Loading the file as an R object</h3>
+<h3 id="loading-the-file-as-an-r-object">Loading the file as an R object</h3>
 <p>To load the file into your R environment, give it a name (e.g., <code>shakes</code>) and use the <code>&lt;-</code> (the <em>assignment operator</em>) to save the data contained in the CSV into an R object with that name.</p>
 <pre class="r"><code>shakes &lt;- read_csv(here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;1-programming&quot;, &quot;shakes.csv&quot;))</code></pre>
 <p>Once you have done so, you will see this object listed in the Environment tab in the upper right section of your RStudio window.</p>
@@ -536,23 +535,6 @@ library(effects)</code></pre>
     </article>
   </div>
 
-  
-<script src="../../../../js/jquery-3.3.1.slim.min.js"></script>
-<script src="../../../../js/bootstrap.bundle.min.js"></script>
-
-  
-  
-  <script>
-  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-  ga('create', 'UA-123456789-1', 'auto');
-  ga('send', 'pageview');
-  </script>
-  <script async src='https://www.google-analytics.com/analytics.js'></script>
-  
-
-  
-
-  
 </body>
 
 <footer class="footer">

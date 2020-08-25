@@ -10,6 +10,14 @@ library(tidyverse)
 library(here)
 ```
 
+<!-- Students: Please disregard this initial code. The R tutorial begins at Line 21. -->
+<div class="container">
+<div class="row">
+<div class="col-sm-3 sticky">
+<nav id="toc" data-toggle="toc" class="sticky-top" style="top:100px;"></nav>
+</div>
+<div class="col-sm-9">
+
 # Return home
 
 Click [here](../..) to return to the main CU psychology R tutorials page.
@@ -25,7 +33,7 @@ This dataset examines the relationship between multitasking and working memory. 
 
 ```{r, message = FALSE, warning = FALSE}
 # use read.csv function to open data into R 
-df <- read_csv(here("content", "tutorials", "3_descriptives", "uncapher_2016_repeated_measures_dataset.csv"))
+df <- read_csv(here("content", "tutorials", "r-core", "3-descriptives", "uncapher_2016_repeated_measures_dataset.csv"))
 
 # we will continue using tidyverse tools
 # so we have library()-ed tidyverse at the very top of this document

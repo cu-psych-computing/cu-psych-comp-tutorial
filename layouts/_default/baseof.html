@@ -3,8 +3,14 @@
 
 {{ partial "head.html" . }}
 
-<body>
+<body data-spy="scroll" data-target="#toc">
   {{ partial "nav.html" . }}
+  {{ partial "bootstrap-js.html" . }}
+    <!-- add after bootstrap.min.js -->
+  <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+  {{ partial "google-analytics-async.html" . }}
+  {{ partial "mastodon-js.html" . }}
+  {{ partial "cookie-consent.html" . }}
   
   <div class="container">
     <article>
@@ -12,10 +18,6 @@
     </article>
   </div>
 
-  {{ partial "bootstrap-js.html" . }}
-  {{ partial "google-analytics-async.html" . }}
-  {{ partial "mastodon-js.html" . }}
-  {{ partial "cookie-consent.html" . }}
 </body>
 
 {{ partial "footer.html" . }}

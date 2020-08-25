@@ -32,6 +32,12 @@
 
   
   <link rel="stylesheet" href="../../../css/bootstrap.min.css" />
+  
+  
+  <link
+    rel="stylesheet"
+    href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"
+  />
 
   <script src="https://kit.fontawesome.com/7eb067db85.js" crossorigin="anonymous"></script>
 
@@ -44,26 +50,34 @@
 .h1, h1 {
   font-size:42px;
   font-weight:600;
-  margin:25px 0;
+  margin-top: -51px;
+  padding-top: 76px;
+  padding-bottom: 25px;
 }
 
 .h2, h2 {
   font-size:32px;
   font-weight:600;
-  margin:48px 0 16px;
+  margin-top: -51px;
+  padding-top: 99px;
+  padding-bottom: 16px;
 }
 
 .h3, h3 {
   font-size:22px;
   font-weight:600;
-  margin:30px 0 16px;
+  margin-top: -51px;
+  padding-top: 81px;
+  padding-bottom: 16px;
 }
 
 .h4, h4 {
   font-size:15px;
   font-weight:600;
   font-style:italic;
-  margin:10px 0;
+  margin-top: -51px;
+  padding-top: 61px;
+  padding-bottom: 10px;
 }
 
 .h5, h5 {
@@ -78,6 +92,7 @@ body {
   min-width: 300px;
   font-size:15px;
   color: #212529;
+  margin-top: 51px;
 }
 
 a {
@@ -126,7 +141,7 @@ a:focus {
 }
 
 article {
-  padding-top: 60px;
+  padding-top: 30px;
   padding-bottom: 80px;
   padding-left: 5%;
   padding-right: 5%;
@@ -243,10 +258,31 @@ div .highlightsec {
   color: #212529;
 }
 
+nav[data-toggle=toc] .nav-link.active, nav[data-toggle=toc] .nav-link.active:focus, nav[data-toggle=toc] .nav-link.active:hover, nav[data-toggle=toc] .nav>li>a:hover {
+    color: #007bff;
+    border-left: 2px solid #007bff;
+}
+
+ 
+@media (max-width: 768px) {
+   
+  nav.affix[data-toggle='toc'] {
+    position: static;
+  }
+
+   
+   
+  nav[data-toggle='toc'] .nav .active .nav {
+    display: none;
+  }
+   
+   
+}
+
 </style>
 </head>
 
-<body>
+<body data-spy="scroll" data-target="#toc">
   <nav class="navbar navbar-expand-lg navbar-light bg-ligh fixed-top">
   <div class="container responsive-menu">
     <a class="navbar-brand" href="../../../">Columbia Psychology Scientific Computing</a>
@@ -326,41 +362,37 @@ div .highlightsec {
   </div>
 </nav>
   
+<script src="../../../js/jquery-3.3.1.slim.min.js"></script>
+<script src="../../../js/bootstrap.bundle.min.js"></script>
+
+    
+  <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+
+  
+  
   <div class="container">
     <article>
       
-<script src="../../../rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
-<div id="TOC">
-<ul>
-<li><a href="#goals-of-this-lesson">Goals of this lesson</a></li>
-<li><a href="#install-packages">Install Packages</a></li>
-<li><a href="#getting-your-data-into-r">Getting your Data into R</a>
-<ul>
-<li><a href="#entering-data-directly">Entering data directly</a></li>
-<li><a href="#reading-data-into-r">Reading data into R</a></li>
-</ul></li>
-<li><a href="#inspecting-your-data">Inspecting your data</a>
-<ul>
-<li><a href="#how-is-your-data-frame-structured">How is your data frame structured?</a></li>
-<li><a href="#brief-intro-to-tidyverse">Brief intro to <code>tidyverse</code></a></li>
-<li><a href="#rename-a-variable">Rename a variable</a></li>
-<li><a href="#check-for-missing-data">Check for missing data</a></li>
-<li><a href="#check-for-correct-values">Check for correct values</a></li>
-<li><a href="#filtering-data">Filtering data</a></li>
-</ul></li>
-<li><a href="#getting-ready-for-analysis">Getting ready for analysis</a>
-<ul>
-<li><a href="#recoding-variables">Recoding variables</a></li>
-<li><a href="#calculating-new-variables">Calculating new variables</a></li>
-<li><a href="#combining-data-from-multiple-sources">Combining data from multiple sources</a></li>
-<li><a href="#shaping-data">Shaping data</a></li>
-</ul></li>
-<li><a href="#saving-your-work">Saving your work</a></li>
-<li><a href="#data-challenge">Data Challenge!</a></li>
-<li><a href="#future-directions">Future Directions</a></li>
-</ul>
+
+<!-- Students: Please disregard this initial code. The R tutorial begins at Line 22. -->
+<div class="container">
+<div class="row">
+<div class="col-sm-3 sticky">
+<p><nav id="toc" data-toggle="toc" class="sticky-top" style="top:100px;"></nav></p>
 </div>
+<div class="col-sm-9">
 
 <div id="goals-of-this-lesson" class="section level2">
 <h2>Goals of this lesson</h2>
@@ -393,16 +425,15 @@ dataframe &lt;- tibble(name = c(&quot;Monica&quot;, &quot;Michelle&quot;, &quot;
 <p>Your working directory is the directory (and subdirectories) where the files you’re working with are stored. Whenever possible, you should open the files you run in R from a .Rproj link; by doing so, the folder in which that file was located will automatically be your working directory.</p>
 <p>You can check your working directory using the <code>here()</code> function.</p>
 <pre class="r"><code>here()</code></pre>
-<pre><code>## [1] &quot;/Users/mthieu/Repos/cu-psych-r-tutorial&quot;</code></pre>
+<pre><code>## [1] &quot;/Users/emily/Documents/GitHub/cu-psych-comp-tutorial&quot;</code></pre>
 <p>You can access a list of the files within your working directory using the <code>list.files()</code> function…</p>
 <pre class="r"><code>list.files(here())</code></pre>
 <pre><code>##  [1] &quot;_output.yml&quot;               &quot;config.toml&quot;              
 ##  [3] &quot;content&quot;                   &quot;cu-psych-r-tutorial.Rproj&quot;
 ##  [5] &quot;index.Rmd&quot;                 &quot;layouts&quot;                  
-##  [7] &quot;pollev_figs&quot;               &quot;public&quot;                   
-##  [9] &quot;README.md&quot;                 &quot;renv&quot;                     
-## [11] &quot;renv.lock&quot;                 &quot;resources&quot;                
-## [13] &quot;static&quot;                    &quot;themes&quot;</code></pre>
+##  [7] &quot;OLD-FILES&quot;                 &quot;public&quot;                   
+##  [9] &quot;README.md&quot;                 &quot;resources&quot;                
+## [11] &quot;static&quot;                    &quot;themes&quot;</code></pre>
 <p>…as well as in the “Files” tab in the module at the bottom right corner of your RStudio window.</p>
 </div>
 <div id="what-kind-of-file-do-you-have" class="section level4">
@@ -744,23 +775,6 @@ save(mydata_Long, mydata_Wide, file = here(&quot;content&quot;, &quot;tutorials&
     </article>
   </div>
 
-  
-<script src="../../../js/jquery-3.3.1.slim.min.js"></script>
-<script src="../../../js/bootstrap.bundle.min.js"></script>
-
-  
-  
-  <script>
-  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-  ga('create', 'UA-123456789-1', 'auto');
-  ga('send', 'pageview');
-  </script>
-  <script async src='https://www.google-analytics.com/analytics.js'></script>
-  
-
-  
-
-  
 </body>
 
 <footer class="footer">

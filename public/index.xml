@@ -16,7 +16,9 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/3-descriptives/</guid>
-      <description>Return home Goals for this tutorial: 0. Open dataset and load package 1. Familiarize yourself with the data 2. Selecting relevant variables 3. Basic Descriptives  Summarizing data  4. Grouping data 5. Extra: Working with a long dataset  How many unique subjects are in the data Make sure you know how many trials there were per subj. Combine summary statistics with the full data frame  6.</description>
+      <description>Return home Click here to return to the main CU psychology R tutorials page.
+ Goals for this tutorial: Learn how to group and categorize data in R Learn how to generate descriptive statistics in R   0. Open dataset and load package This dataset examines the relationship between multitasking and working memory. Link here to original paper by Uncapher et al. 2016.
+# use read.csv function to open data into R df &amp;lt;- read_csv(here(&amp;quot;content&amp;quot;, &amp;quot;tutorials&amp;quot;, &amp;quot;r-core&amp;quot;, &amp;quot;3-descriptives&amp;quot;, &amp;quot;uncapher_2016_repeated_measures_dataset.</description>
     </item>
     
     <item>
@@ -25,7 +27,9 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/2-datacleaning/</guid>
-      <description>Goals of this lesson Install Packages Getting your Data into R  Entering data directly Reading data into R  Inspecting your data  How is your data frame structured? Brief intro to tidyverse Rename a variable Check for missing data Check for correct values Filtering data  Getting ready for analysis  Recoding variables Calculating new variables Combining data from multiple sources Shaping data  Saving your work Data Challenge!</description>
+      <description>Goals of this lesson Students will learn:
+How to open various data types in R How to check for missing or problematic data and address issues. How to filter, rearrange and shape data in preparation for analysis.   Install Packages tidyverse is one package with many tools. We will introduce you to this package in this lesson, and continue using tidyverse in the next module.
+ Getting your Data into R Entering data directly In some cases, you may want to enter data directly into R.</description>
     </item>
     
     <item>
@@ -57,7 +61,11 @@ Upcoming To be announced.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/5-models/</guid>
-      <description>Basics for modeling in R  Functions:  Basic models  Syntax:  Basic model formula To add multiple factors Interactions  Output of models  Linear models Anova  Visualizing models Advanced models    Welcome to the lesson on modeling in R! Goals: 1. Learn about functions and syntax for models in R 2. Practice examples of different model types 3. Understand how to obtain model results in R</description>
+      <description>Welcome to the lesson on modeling in R!
+Goals:
+Learn about functions and syntax for models in R Practice examples of different model types Understand how to obtain model results in R
+ Learn how to visualize the results of the models  Let’s get some data.
+We will use the same data we are already familiar with from the Descriptives lesson. We will compute a group for high and low ADHD, so we can use that in our models.</description>
     </item>
     
     <item>
@@ -66,7 +74,9 @@ Upcoming To be announced.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/4-plotting/</guid>
-      <description>Return home 0: What is this tutorial? What’s ggplot2? 1: First Load Tidyverse, which includes ggplot2! 2: Load in Sample Data (NHANES) 3: Scatter Plot &amp;amp; Basic ggplot Syntax  3a: Histograms with ggplot  4: Dot Plot Organized by Grouping Factor  4a: Visualizing Distributions with Violin Plots  5: Summary Plots 6: Fitting Lines To The Data 7: Titles, Axis Labels 7: Facetting 8: Color 9: Themes 10: Saving To Files 11: Heatmaps 12: Basic Time Series Plot 13: Final Points   Return home Click here to return to the main CU psychology R tutorials page.</description>
+      <description>Return home Click here to return to the main CU psychology R tutorials page.
+ 0: What is this tutorial? What’s ggplot2? ggplot2 is a package in R that allows for highly customizable and pretty plots! Here, were going to learn a few basics of making plots using ggplot that will hopefully get you well on your way to making informative and beautiful data visualizations!
+ 1: First Load Tidyverse, which includes ggplot2!</description>
     </item>
     
     <item>
@@ -75,7 +85,9 @@ Upcoming To be announced.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/1-programming/lessonpart0/</guid>
-      <description>Working with RStudio Installing R &amp;amp; RStudio Getting oriented to the RStudio window R project files Console window Editor window Environment/history window Files/pkgs/help window  Installing and loading packages  Working directories, file paths, etc The working directory File paths Absolute file paths Relative file paths Special file path keywords  Reading data into R Generating a file path using here() Reading the data into R Loading the file as an R object     Welcome to the CU Psychology Scientific Computing workshop!</description>
+      <description>Welcome to the CU Psychology Scientific Computing workshop!
+Programming is telling a computer to do some action to some input info to get output info that you want. When it comes to working with data in R, programming is how we tell R to load data, process it, plot it, fit models to it, and so on (everything!).
+In this first section of our tutorial, we will learn about this info that goes in and out, as well as the actions that transform info into what we want.</description>
     </item>
     
     <item>
@@ -84,7 +96,8 @@ Upcoming To be announced.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/1-programming/lessonpart1/</guid>
-      <description>Variables Data types Numeric data Arithmetic operators  Logical data Character data Dataframe columns have data types too  Data structures Data frames Working with dataframe columns Summarizing dataframe columns Indexing into dataframes  Vectors Indexing into vectors   Data types pt 2 Factor data Non-data data    Welcome (back) to the CU Psychology Scientific Computing Workshop! As a reminder, the documents for the introduction to programming cover the following:</description>
+      <description>Welcome (back) to the CU Psychology Scientific Computing Workshop! As a reminder, the documents for the introduction to programming cover the following:
+Finding your way around RStudio Variables, data types, vectors this document! Coding strategy, relational &amp;amp; logical operators  Variables  a variable is how we store information in a way that the computer can operate on it has a value: the info itself and a name: the cue by which we call upon the info to the computer  If you think about how variables like x and y are used in algebra, calculus, etc, that can be a useful way to conceptualize them.</description>
     </item>
     
     <item>
@@ -93,7 +106,9 @@ Upcoming To be announced.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/1-programming/lessonpart2/</guid>
-      <description>Pseudocode Relational operators  Filtering data Operating on filtered data  Logical operators Conditional operators Functions  Anatomy of a function Writing your own function  Getting assistance  On your own  The help docs The internet  Asking someone else  How to ask     Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder, the documents for the introduction to programming cover the following:</description>
+      <description>Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder, the documents for the introduction to programming cover the following:
+Finding your way around RStudio Variables, data types, vectors Coding strategy, relational &amp;amp; logical operators this document!  Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things!
+Pseudocode This is so important to do before you write a single line of code.</description>
     </item>
     
     <item>
@@ -111,7 +126,7 @@ Upcoming To be announced.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/tidyverse-guide/tidyguide-1/</guid>
-      <description>Goals for this vignette  Please keep in mind!  Quick cheat-list of key functions from various pkgs Brief intro to the pipe Initializing fake data Loading data Visually inspecting data Subsetting data  Subsetting by column Subsetting by row  Logical subsetting Subsetting rows by position Getting only unique/un-duplicated rows Subsetting random rows  Subsetting by row and column simultaneously  Manipulating data  Creating/modifying columns  Nice helpers  Calculating summary statistics  Special versions of summarize()  Grouping  Mutating grouped data Summarizing grouped data When to ungroup your df  Creating new rows  Repeating existing rows Completing combinations of grouping variables   Reshaping data  From wide to long  Pivot-longering multiple distinct variables at once  From long to wide  Pivot-widering multiple distinct variables at once   Coming up in part 2   Goals for this vignette  Demonstrate (what I think are) key first-level features of the tidyverse Illustrate psychology use cases for tidyverse functions Hopefully convince you to join the cult of tidy  We shall do this by walking through various use cases you might encounter with your data.</description>
+      <description>Goals for this vignette  Demonstrate (what I think are) key first-level features of the tidyverse Illustrate psychology use cases for tidyverse functions Hopefully convince you to join the cult of tidy  We shall do this by walking through various use cases you might encounter with your data. I’ll jump in with specific examples of functions when appropriate, to highlight solutions for particular situations you might run into with your own data.</description>
     </item>
     
     <item>
@@ -120,7 +135,8 @@ Upcoming To be announced.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/tidyverse-guide/tidyguide-2/</guid>
-      <description>Goals for this vignette Quick cheat-list of key functions from various pkgs Initializing fake data Joining dfs Nested dfs  A brief (re)view of lists Lists as df columns  A df with a list-column still behaves like a df, mostly df-ception: df list-columns that contain other dfs   Vectorizing to the high heavens  Vectorizing: it’s like a for loop, but not Tidy vectorizing  Intro to map() Special versions of map() Using map() on list-columns inside a df  When not to vectorize  Working with model objects en masse  Fitting a whole lotta models Extracting model coefficients  Plotting data   Goals for this vignette Hello (again)!</description>
+      <description>Goals for this vignette Hello (again)! This is a continuation of our tour through base tidyverse. Our goals are the same as before:
+ Demonstrate (what I think are) key first-level features of the tidyverse Illustrate psychology use cases for tidyverse functions Hopefully convince you to join the cult of tidy  This time, we’ll be moving ahead to some more complex use cases utilizing some more advanced programming tactics.</description>
     </item>
     
     <item>

@@ -11,6 +11,14 @@ library(tidyverse)
 library(here)
 ```
 
+<!-- Students: Please disregard this initial code. The R tutorial begins at Line 22. -->
+<div class="container">
+<div class="row">
+<div class="col-sm-3 sticky">
+<nav id="toc" data-toggle="toc" class="sticky-top" style="top:100px;"></nav>
+</div>
+<div class="col-sm-9" style="top:25px">
+
 Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder, the documents for the introduction to programming cover the following:
 
 0. [Finding your way around RStudio](lessonPart0.html)
@@ -28,7 +36,7 @@ Before you try to write any code, you should talk through what you want to do in
 As an example, let's load a dataframe from a study one of the instructors worked as an undergrad. It's saved within the folders for this project as a CSV file.
 
 ```{r, message = FALSE, warning = FALSE}
-data <- read_csv(here("static", "R", "3_descriptives", "uncapher_2016_one_condition_dataset.csv"))
+data <- read_csv(here("content", "tutorials", "r-core", "3-descriptives", "uncapher_2016_one_condition_dataset.csv"))
 
 # Don't worry about the following command; I'm just shortening the dataframe. You'll understand what this means later! Just run it now.
 data <- data %>%

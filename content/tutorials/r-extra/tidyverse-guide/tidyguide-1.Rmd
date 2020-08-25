@@ -9,6 +9,14 @@ knitr::opts_chunk$set(echo = TRUE)
 require(tidyverse)
 ```
 
+<!-- Students: Please disregard this initial code. The R tutorial begins at Line 20. -->
+<div class="container">
+<div class="row">
+<div class="col-sm-3 sticky">
+<nav id="toc" data-toggle="toc" class="sticky-top" style="top:100px;"></nav>
+</div>
+<div class="col-sm-9" style="top:25px">
+
 # Goals for this vignette
 
 * Demonstrate (what I think are) key first-level features of the tidyverse

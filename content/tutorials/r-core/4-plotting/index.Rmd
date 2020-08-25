@@ -10,6 +10,14 @@ library(tidyverse)
 library(here)
 ```
 
+<!-- Students: Please disregard this initial code. The R tutorial begins at Line 21. -->
+<div class="container">
+<div class="row">
+<div class="col-sm-3 sticky">
+<nav id="toc" data-toggle="toc" class="sticky-top" style="top:100px;"></nav>
+</div>
+<div class="col-sm-9" style="top:25px">
+
 ## Return home
 
 Click [here](../..) to return to the main CU psychology R tutorials page.
@@ -42,14 +50,12 @@ Height  -  Height in inches
 BMI     -  BMI, measured in kg/(m^2)
 
 ```{r}
-nhanes <- read_csv(here("content", "tutorials", "4_plotting", "NHANES1990.csv"))
-
+nhanes <- read_csv(here("content", "tutorials", "r-core", "4-plotting", "NHANES1990.csv"))
 
 nhanes <- mutate(nhanes,
                  Age = Age/12, # convert age to years
                  Urban = dplyr::recode(Urban, '1' = 'Metro Area', '2' = 'Non-Metro Area'),
                  Region = dplyr::recode(Region, '1' = 'Northeast', '2' = 'Midwest', '3' = 'South', '4' = 'West'))
-
 
 nhanes
 ```

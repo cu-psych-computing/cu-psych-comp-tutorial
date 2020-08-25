@@ -11,18 +11,29 @@ library(here)
 library(effects)
 ```
 
- Welcome to the lesson on modeling in R! 
+<!-- Students: Please disregard this initial code. The R tutorial begins at Line 22. -->
+<div class="container">
+<div class="row">
+<div class="col-sm-3 sticky">
+<nav id="toc" data-toggle="toc" class="sticky-top" style="top:100px;"></nav>
+</div>
+<div class="col-sm-9" style="top:25px">
+
+Welcome to the lesson on modeling in R! 
+
 Goals: 
+
 1. Learn about functions and syntax for models in R 
 2. Practice examples of different model types 
 3. Understand how to obtain model results in R  
 4. Learn how to visualize the results of the models
 
- Let's get some data. 
+Let's get some data. 
+
 We will use the same data we are already familiar with from the Descriptives lesson. We will compute a group for high and low ADHD, so we can use that in our models. 
 
 ```{r}
-df <- read_csv(here("content", "tutorials", "5_models", "uncapher_2016_repeated_measures_dataset.csv"))
+df <- read_csv(here("content", "tutorials", "r-core", "5-models", "uncapher_2016_repeated_measures_dataset.csv"))
 head(df)
 ```
 
@@ -41,7 +52,8 @@ names(df)
 
 # Basics for modeling in R 
 
-## Functions:
+## Functions
+
 ### Basic models 
 For each model type, there is a different function. Many of these are available in base R.
 
@@ -55,7 +67,8 @@ Always use the `?` to see more details for the model you're using.
 
 The first argument is always the model formula, which follows a standard syntax.
 
-## Syntax: 
+## Syntax
+
 ### Basic model formula
 For any type of model with an IV and DV, there is a common syntax. The "~" delineates the direction of the model, where the DV is always on the left of the ~ and the predictors are always on the right.
 

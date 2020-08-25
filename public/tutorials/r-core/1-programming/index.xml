@@ -16,7 +16,9 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/1-programming/lessonpart0/</guid>
-      <description>Working with RStudio Installing R &amp;amp; RStudio Getting oriented to the RStudio window R project files Console window Editor window Environment/history window Files/pkgs/help window  Installing and loading packages  Working directories, file paths, etc The working directory File paths Absolute file paths Relative file paths Special file path keywords  Reading data into R Generating a file path using here() Reading the data into R Loading the file as an R object     Welcome to the CU Psychology Scientific Computing workshop!</description>
+      <description>Welcome to the CU Psychology Scientific Computing workshop!
+Programming is telling a computer to do some action to some input info to get output info that you want. When it comes to working with data in R, programming is how we tell R to load data, process it, plot it, fit models to it, and so on (everything!).
+In this first section of our tutorial, we will learn about this info that goes in and out, as well as the actions that transform info into what we want.</description>
     </item>
     
     <item>
@@ -25,7 +27,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/1-programming/lessonpart1/</guid>
-      <description>Variables Data types Numeric data Arithmetic operators  Logical data Character data Dataframe columns have data types too  Data structures Data frames Working with dataframe columns Summarizing dataframe columns Indexing into dataframes  Vectors Indexing into vectors   Data types pt 2 Factor data Non-data data    Welcome (back) to the CU Psychology Scientific Computing Workshop! As a reminder, the documents for the introduction to programming cover the following:</description>
+      <description>Welcome (back) to the CU Psychology Scientific Computing Workshop! As a reminder, the documents for the introduction to programming cover the following:
+Finding your way around RStudio Variables, data types, vectors this document! Coding strategy, relational &amp;amp; logical operators  Variables  a variable is how we store information in a way that the computer can operate on it has a value: the info itself and a name: the cue by which we call upon the info to the computer  If you think about how variables like x and y are used in algebra, calculus, etc, that can be a useful way to conceptualize them.</description>
     </item>
     
     <item>
@@ -34,7 +37,9 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/1-programming/lessonpart2/</guid>
-      <description>Pseudocode Relational operators  Filtering data Operating on filtered data  Logical operators Conditional operators Functions  Anatomy of a function Writing your own function  Getting assistance  On your own  The help docs The internet  Asking someone else  How to ask     Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder, the documents for the introduction to programming cover the following:</description>
+      <description>Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder, the documents for the introduction to programming cover the following:
+Finding your way around RStudio Variables, data types, vectors Coding strategy, relational &amp;amp; logical operators this document!  Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things!
+Pseudocode This is so important to do before you write a single line of code.</description>
     </item>
     
   </channel>

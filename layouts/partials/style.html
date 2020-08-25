@@ -3,26 +3,34 @@
 .h1, h1 {
   font-size:42px;
   font-weight:600;
-  margin:25px 0;
+  margin-top: -51px;
+  padding-top: 76px;
+  padding-bottom: 25px;
 }
 
 .h2, h2 {
   font-size:32px;
   font-weight:600;
-  margin:48px 0 16px;
+  margin-top: -51px;
+  padding-top: 99px;
+  padding-bottom: 16px;
 }
 
 .h3, h3 {
   font-size:22px;
   font-weight:600;
-  margin:30px 0 16px;
+  margin-top: -51px;
+  padding-top: 81px;
+  padding-bottom: 16px;
 }
 
 .h4, h4 {
   font-size:15px;
   font-weight:600;
   font-style:italic;
-  margin:10px 0;
+  margin-top: -51px;
+  padding-top: 61px;
+  padding-bottom: 10px;
 }
 
 .h5, h5 {
@@ -37,6 +45,7 @@ body {
   min-width: 300px;
   font-size:15px;
   color: #212529;
+  margin-top: 51px;
 }
 
 a {
@@ -85,7 +94,7 @@ a:focus {
 }
 
 article {
-  padding-top: 60px;
+  padding-top: 30px;
   padding-bottom: 80px;
   padding-left: 5%;
   padding-right: 5%;
@@ -200,6 +209,29 @@ div .highlightsec {
 .accordion .btn-link:focus {
   text-decoration: none;
   color: #212529;
+}
+
+nav[data-toggle=toc] .nav-link.active, nav[data-toggle=toc] .nav-link.active:focus, nav[data-toggle=toc] .nav-link.active:hover, nav[data-toggle=toc] .nav>li>a:hover {
+    color: #007bff;
+    border-left: 2px solid #007bff;
+}
+
+/* small screens */
+@media (max-width: 768px) {
+  /* override the Affix plugin so that the navigation isn't sticky */
+  nav.affix[data-toggle='toc'] {
+    position: static;
+  }
+
+  /* PICK ONE */
+  /* don't expand nested items, which pushes down the rest of the page when navigating */
+  nav[data-toggle='toc'] .nav .active .nav {
+    display: none;
+  }
+  /* alternatively, if you *do* want the second-level navigation to be shown (as seen on this page on mobile), use this */
+  /*nav[data-toggle='toc'] .nav .nav {
+    display: block;
+  }*/
 }
 
 </style>

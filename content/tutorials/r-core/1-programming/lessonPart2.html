@@ -5,37 +5,15 @@ author: "Monica Thieu"
 tags: ["core", "r"]
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
-<div id="TOC">
-<ul>
-<li><a href="#pseudocode">Pseudocode</a></li>
-<li><a href="#relational-operators">Relational operators</a>
-<ul>
-<li><a href="#filtering-data">Filtering data</a></li>
-<li><a href="#operating-on-filtered-data">Operating on filtered data</a></li>
-</ul></li>
-<li><a href="#logical-operators">Logical operators</a></li>
-<li><a href="#conditional-operators">Conditional operators</a></li>
-<li><a href="#functions">Functions</a>
-<ul>
-<li><a href="#anatomy-of-a-function">Anatomy of a function</a></li>
-<li><a href="#writing-your-own-function">Writing your own function</a></li>
-</ul></li>
-<li><a href="#getting-assistance">Getting assistance</a>
-<ul>
-<li><a href="#on-your-own">On your own</a>
-<ul>
-<li><a href="#the-help-docs">The help docs</a></li>
-<li><a href="#the-internet">The internet</a></li>
-</ul></li>
-<li><a href="#asking-someone-else">Asking someone else</a>
-<ul>
-<li><a href="#how-to-ask">How to ask</a></li>
-</ul></li>
-</ul></li>
-</ul>
+
+<!-- Students: Please disregard this initial code. The R tutorial begins at Line 22. -->
+<div class="container">
+<div class="row">
+<div class="col-sm-3 sticky">
+<p><nav id="toc" data-toggle="toc" class="sticky-top" style="top:100px;"></nav></p>
 </div>
+<div class="col-sm-9" style="top:25px">
 
 <p>Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder, the documents for the introduction to programming cover the following:</p>
 <ol start="0" style="list-style-type: decimal">
@@ -49,7 +27,7 @@ tags: ["core", "r"]
 <p>This is <strong>so important to do before you write a single line of code.</strong></p>
 <p>Before you try to write any code, you should talk through what you want to do in plain English before you actually try to code it. This is how you will actually figure out what you need your code to do, and then what functions you need to do the things you want.</p>
 <p>As an example, let’s load a dataframe from a study one of the instructors worked as an undergrad. It’s saved within the folders for this project as a CSV file.</p>
-<pre class="language-r"><code class="language-r">data &lt;- read_csv(here(&quot;static&quot;, &quot;R&quot;, &quot;3_descriptives&quot;, &quot;uncapher_2016_one_condition_dataset.csv&quot;))
+<pre class="r"><code>data &lt;- read_csv(here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;3-descriptives&quot;, &quot;uncapher_2016_one_condition_dataset.csv&quot;))
 
 # Don&#39;t worry about the following command; I&#39;m just shortening the dataframe. You&#39;ll understand what this means later! Just run it now.
 data &lt;- data %&gt;%
@@ -94,14 +72,14 @@ data</code></pre>
 <p>Most of the time, when you want to do things in R, you want to do them in <em>some conditions but not others.</em></p>
 <p><strong>Relational operators</strong> are the first key to making this happen. These are essentially inequality operators like the ones you would encounter in algebra.</p>
 <p>The following is a <strong>relational statement.</strong> This is a command involving a relational operator that returns <code>TRUE</code> or <code>FALSE</code> based on whether the statement is true or false.</p>
-<pre class="language-r"><code class="language-r">2 &gt; 1</code></pre>
+<pre class="r"><code>2 &gt; 1</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>Here are a few more relational statements. Do you expect each one to return <code>TRUE</code> or <code>FALSE</code>, based on what’s written?</p>
-<pre class="language-r"><code class="language-r">2 &lt; 1</code></pre>
+<pre class="r"><code>2 &lt; 1</code></pre>
 <pre><code>## [1] FALSE</code></pre>
-<pre class="language-r"><code class="language-r">99 == 99</code></pre>
+<pre class="r"><code>99 == 99</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<pre class="language-r"><code class="language-r">99 != 100</code></pre>
+<pre class="r"><code>99 != 100</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>Here are the relational operators:</p>
 <ul>
@@ -114,25 +92,25 @@ data</code></pre>
 <li><code>%in%</code> (is contained by; this is useful when you need to see whether the element on the left matches any of a vector of elements on the right)</li>
 </ul>
 <p>Here’s a few examples of <code>%in%</code> in action, in case this is a little less intuitive than the others:</p>
-<pre class="language-r"><code class="language-r">1 %in% 1:5</code></pre>
+<pre class="r"><code>1 %in% 1:5</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<pre class="language-r"><code class="language-r">char.vector &lt;- c(&quot;apple&quot;, &quot;banana&quot;, &quot;cantaloupe&quot;, &quot;dragonfruit&quot;)
+<pre class="r"><code>char.vector &lt;- c(&quot;apple&quot;, &quot;banana&quot;, &quot;cantaloupe&quot;, &quot;dragonfruit&quot;)
 
 &quot;apple&quot; %in% char.vector</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<pre class="language-r"><code class="language-r">&quot;orange&quot; %in% char.vector</code></pre>
+<pre class="r"><code>&quot;orange&quot; %in% char.vector</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <p>Note that <code>%in%</code> takes a <em>vector</em> on the right side, and looks for <em>full matches</em> from the element on the left to the elements on the right. As we touched on in Part 1, it may be helpful to think of a vector as a single column of data.</p>
 <p>To match a piece of character data into a single, LONGER piece of character data on the right (e.g. matching one word into a sentence), you have to use other strategies we won’t get into here.</p>
 <p>In most cases, you can use <code>==</code> and <code>!=</code> to compare character data too–if you want to see if one piece of character data is the same as another piece.</p>
-<pre class="language-r"><code class="language-r">&quot;word&quot; == &quot;word&quot;</code></pre>
+<pre class="r"><code>&quot;word&quot; == &quot;word&quot;</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<pre class="language-r"><code class="language-r">text.var &lt;- &quot;statistics&quot;
+<pre class="r"><code>text.var &lt;- &quot;statistics&quot;
 
 text.var == &quot;statistics&quot;</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>Hey, if we think about the pseudocode from earlier, we can use <code>==</code> to determine which values in the <code>groupStatus</code> column are equal to <code>"HMM"</code>.</p>
-<pre class="language-r"><code class="language-r">data &lt;- mutate(data,
+<pre class="r"><code>data &lt;- mutate(data,
           isHMM = (groupStatus == &quot;HMM&quot;))</code></pre>
 <p>Relational operators are vectorized–see that feeding in a vector (i.e., a column of data) on the left of the relational statement returns a logical vector (i.e., a separate column of TRUE / FALSE values), not just one logical!</p>
 <div id="filtering-data" class="section level2">
@@ -140,11 +118,11 @@ text.var == &quot;statistics&quot;</code></pre>
 <p>Relational statements are often helpful when you are interested in filtering your data. Now that we’ve used a relational statement above to generate a logical column indicating which subjects are members of the HMM group, we can use the <code>filter()</code> function in <code>tidyverse</code> to filter only the rows belonging to the HMM group.</p>
 <p>Filtering involves specifying a dataframe and a logical vector (e.g., the <code>isHMM</code> column we created above). When you filter a dataframe, only the rows in the dataframe with a <code>TRUE</code> in the logical column’s values will remain.</p>
 <p>We can do this by indicating that we only want rows with “TRUE” in the new “isHMM” column we created (option 1):</p>
-<pre class="language-r"><code class="language-r"># Here, we are creating a new R object (data_HMM) that contains the smaller, filtered dataframe
+<pre class="r"><code># Here, we are creating a new R object (data_HMM) that contains the smaller, filtered dataframe
 data_HMM &lt;- filter(data,
               isHMM == TRUE)</code></pre>
 <p>…or we can skip the middle step of creating the “isHMM” column, and simply filter the dataframe using the relational statement (<code>groupStatus == "HMM"</code>) we used to create that column a few lines back (option 2):</p>
-<pre class="language-r"><code class="language-r"># Here, we are creating a new R object (data_HMM) that contains the smaller, filtered dataframe
+<pre class="r"><code># Here, we are creating a new R object (data_HMM) that contains the smaller, filtered dataframe
 data_HMM &lt;- filter(data,
               groupStatus == &quot;HMM&quot;)</code></pre>
 <p>We will end up with the same filtered dataframe either way. (Because it is more efficient, people tend to go with option 2.)</p>
@@ -152,7 +130,7 @@ data_HMM &lt;- filter(data,
 <div id="operating-on-filtered-data" class="section level2">
 <h2>Operating on filtered data</h2>
 <p>By filtering using logical data, we can also perform functions on only a smaller, filtered subset of the dataframe. For instance, whereas it is possible to examine the mean hit rate for all subjects in the original dataframe:</p>
-<pre class="language-r"><code class="language-r"># Notice that we are using the original `data` dataframe here
+<pre class="r"><code># Notice that we are using the original `data` dataframe here
 summarize(data,
           meanHitRate = mean(hitRate))</code></pre>
 <pre><code>## # A tibble: 1 x 1
@@ -160,7 +138,7 @@ summarize(data,
 ##         &lt;dbl&gt;
 ## 1       0.369</code></pre>
 <p>…filtering the data allows you to examine the mean hit rate for <em>only</em> the subjects in the HMM group.</p>
-<pre class="language-r"><code class="language-r"># Here, instead, we are using the filtered `data_HMM` dataframe
+<pre class="r"><code># Here, instead, we are using the filtered `data_HMM` dataframe
 summarize(data_HMM,
           meanHitRate = mean(hitRate))</code></pre>
 <pre><code>## # A tibble: 1 x 1
@@ -180,33 +158,33 @@ summarize(data_HMM,
 </ul>
 <p>Here are examples of the Boolean operators at work.</p>
 <p>The <code>!</code> NOT operator:</p>
-<pre class="language-r"><code class="language-r">!TRUE # What do you expect this to return?</code></pre>
+<pre class="r"><code>!TRUE # What do you expect this to return?</code></pre>
 <pre><code>## [1] FALSE</code></pre>
-<pre class="language-r"><code class="language-r">data &lt;- mutate(data,
+<pre class="r"><code>data &lt;- mutate(data,
           isLMM = !(groupStatus == &quot;HMM&quot;))
 # This should return TRUE for all the times where groupStatus is &quot;LMM&quot;</code></pre>
 <p>The <code>&amp;</code> AND operator:</p>
-<pre class="language-r"><code class="language-r">1 == 1 &amp; 2 == 2 # See what this returns</code></pre>
+<pre class="r"><code>1 == 1 &amp; 2 == 2 # See what this returns</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<pre class="language-r"><code class="language-r">1 == 1 &amp; 2 != 2 # Versus this</code></pre>
+<pre class="r"><code>1 == 1 &amp; 2 != 2 # Versus this</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <p>The <code>|</code> OR operator:</p>
-<pre class="language-r"><code class="language-r">1 == 1 | 2 == 2</code></pre>
+<pre class="r"><code>1 == 1 | 2 == 2</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<pre class="language-r"><code class="language-r">1 == 1 | 2 != 2</code></pre>
+<pre class="r"><code>1 == 1 | 2 != 2</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>Relational operators also obey order of operations re: parentheses (). See below:</p>
-<pre class="language-r"><code class="language-r">(1 == 1 &amp; 2 != 2)</code></pre>
+<pre class="r"><code>(1 == 1 &amp; 2 != 2)</code></pre>
 <pre><code>## [1] FALSE</code></pre>
-<pre class="language-r"><code class="language-r">!(1 == 1 &amp; 2 != 2)</code></pre>
+<pre class="r"><code>!(1 == 1 &amp; 2 != 2)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<pre class="language-r"><code class="language-r">(1 == 1) &amp; (2 != 2)</code></pre>
+<pre class="r"><code>(1 == 1) &amp; (2 != 2)</code></pre>
 <pre><code>## [1] FALSE</code></pre>
-<pre class="language-r"><code class="language-r">(1 == 1) &amp; !(2 != 2)</code></pre>
+<pre class="r"><code>(1 == 1) &amp; !(2 != 2)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>Other useful functions will also output <code>TRUE</code> or <code>FALSE</code>, so you can use these similarly to relational statements to generate logical output based on the content of some data.</p>
 <p>Remember the <code>NA</code> data type? Many times, you will want to know which elements of a dataframe column are missing.</p>
-<pre class="language-r"><code class="language-r">data &lt;- mutate(data,
+<pre class="r"><code>data &lt;- mutate(data,
           rtFA_missing = is.na(rtFA))</code></pre>
 <p>There are many more of these <code>is.whatever()</code> functions! You can look them up in the help–chances are
 there’ll be one to check whichever data type you’re looking for.</p>
@@ -237,7 +215,7 @@ there’ll be one to check whichever data type you’re looking for.</p>
 <li>Otherwise, if the condition is false for that row, fill in the same row in the new column with value B.</li>
 </ol>
 <p><code>if_else()</code> is a vectorized function! Remember that this means that if you input a vector (i.e., a column) in the first argument, you’ll get a vector of the same length as your output, because the operation is done on each vector element (i.e., each row) separately.</p>
-<pre class="language-r"><code class="language-r">data &lt;- mutate(data,
+<pre class="r"><code>data &lt;- mutate(data,
           adhdCoded = if_else(adhd &gt;= 4, &quot;adhd&quot;, &quot;no adhd&quot;))</code></pre>
 </div>
 <div id="functions" class="section level1">
@@ -263,7 +241,7 @@ As you can see, we are <em>assigning</em> the value that’s output from <code>f
 <h2>Writing your own function</h2>
 <p>Many times in R, you’ll find yourself wanting to do the same thing multiple times. You can do this by <em>writing your own function</em> that you’ll then call to do whatever it is you need to do, whenever you need to do it. This will save you time. You don’t have to copy and paste certain blocks of code that you use a bunch–instead, make it into a function and you can call it quickly whenever you need it!</p>
 <p>Any function you make will have basically the same format, and will be created using the <code>function()</code> function:</p>
-<pre class="language-r"><code class="language-r">functionName &lt;- function(argument1, argument2, ...) {
+<pre class="r"><code>functionName &lt;- function(argument1, argument2, ...) {
   function_code
   function_code
   more_function_code
@@ -271,7 +249,7 @@ As you can see, we are <em>assigning</em> the value that’s output from <code>f
 }</code></pre>
 <p>The body of the function will come between the curly brackets, and the last line of the body should be whatever the function is going to spit out at the end.</p>
 <p>Let’s say you’re collaborating with a British colleague who is sending you data they are collecting so that you can analyze it. One of the variables is the temperature of the room where the experiment took place, in Celsius. Your colleague is constantly sending you new data as they collect it, but you’d really rather work with values in Fahrenheit. We can create a function to do the conversion for you so you don’t have to look up the formula every time.</p>
-<pre class="language-r"><code class="language-r"># Here&#39;s the function, with a formula from the internet
+<pre class="r"><code># Here&#39;s the function, with a formula from the internet
 # The input argument is the temperature in Celsius
 # A variable called TempF is created within the function
 # which is the result of taking TempC and transforming it
@@ -282,7 +260,7 @@ C2F &lt;- function(tempC) {
   return(tempF)
 }</code></pre>
 <p>Now, you can call your own homemade function. First, let’s load some data to test it with.</p>
-<pre class="language-r"><code class="language-r"># This is a CSV file of the average monthly high temperature (Celsius) in Colombo, Sri Lanka.
+<pre class="r"><code># This is a CSV file of the average monthly high temperature (Celsius) in Colombo, Sri Lanka.
 read_csv(&quot;colombo.csv&quot;)</code></pre>
 <pre><code>## # A tibble: 12 x 2
 ##    month     celsius
@@ -299,10 +277,10 @@ read_csv(&quot;colombo.csv&quot;)</code></pre>
 ## 10 October      29.7
 ## 11 November     29.8
 ## 12 December     29.7</code></pre>
-<pre class="language-r"><code class="language-r"># Let&#39;s load this dataframe as an object in our R environment
+<pre class="r"><code># Let&#39;s load this dataframe as an object in our R environment
 temps &lt;- read_csv(&quot;colombo.csv&quot;)</code></pre>
 <p>Using <code>mutate()</code>, we can use the output to create new columns just like any function that already comes with R. Let’s try it out by creating a new column of Fahrenheit data.</p>
-<pre class="language-r"><code class="language-r"># Using mutate and our new C2F() function, I can convert the values to Fahrenheit
+<pre class="r"><code># Using mutate and our new C2F() function, I can convert the values to Fahrenheit
 mutate(temps,
        fahrenheit = C2F(celsius))</code></pre>
 <pre><code>## # A tibble: 12 x 3

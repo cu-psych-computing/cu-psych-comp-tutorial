@@ -32,6 +32,12 @@
 
   
   <link rel="stylesheet" href="../../../css/bootstrap.min.css" />
+  
+  
+  <link
+    rel="stylesheet"
+    href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"
+  />
 
   <script src="https://kit.fontawesome.com/7eb067db85.js" crossorigin="anonymous"></script>
 
@@ -44,26 +50,34 @@
 .h1, h1 {
   font-size:42px;
   font-weight:600;
-  margin:25px 0;
+  margin-top: -51px;
+  padding-top: 76px;
+  padding-bottom: 25px;
 }
 
 .h2, h2 {
   font-size:32px;
   font-weight:600;
-  margin:48px 0 16px;
+  margin-top: -51px;
+  padding-top: 99px;
+  padding-bottom: 16px;
 }
 
 .h3, h3 {
   font-size:22px;
   font-weight:600;
-  margin:30px 0 16px;
+  margin-top: -51px;
+  padding-top: 81px;
+  padding-bottom: 16px;
 }
 
 .h4, h4 {
   font-size:15px;
   font-weight:600;
   font-style:italic;
-  margin:10px 0;
+  margin-top: -51px;
+  padding-top: 61px;
+  padding-bottom: 10px;
 }
 
 .h5, h5 {
@@ -78,6 +92,7 @@ body {
   min-width: 300px;
   font-size:15px;
   color: #212529;
+  margin-top: 51px;
 }
 
 a {
@@ -126,7 +141,7 @@ a:focus {
 }
 
 article {
-  padding-top: 60px;
+  padding-top: 30px;
   padding-bottom: 80px;
   padding-left: 5%;
   padding-right: 5%;
@@ -243,10 +258,31 @@ div .highlightsec {
   color: #212529;
 }
 
+nav[data-toggle=toc] .nav-link.active, nav[data-toggle=toc] .nav-link.active:focus, nav[data-toggle=toc] .nav-link.active:hover, nav[data-toggle=toc] .nav>li>a:hover {
+    color: #007bff;
+    border-left: 2px solid #007bff;
+}
+
+ 
+@media (max-width: 768px) {
+   
+  nav.affix[data-toggle='toc'] {
+    position: static;
+  }
+
+   
+   
+  nav[data-toggle='toc'] .nav .active .nav {
+    display: none;
+  }
+   
+   
+}
+
 </style>
 </head>
 
-<body>
+<body data-spy="scroll" data-target="#toc">
   <nav class="navbar navbar-expand-lg navbar-light bg-ligh fixed-top">
   <div class="container responsive-menu">
     <a class="navbar-brand" href="../../../">Columbia Psychology Scientific Computing</a>
@@ -326,46 +362,51 @@ div .highlightsec {
   </div>
 </nav>
   
+<script src="../../../js/jquery-3.3.1.slim.min.js"></script>
+<script src="../../../js/bootstrap.bundle.min.js"></script>
+
+    
+  <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+
+  
+  
   <div class="container">
     <article>
        
 
-<script src="../../../rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
-<div id="TOC">
-<ul>
-<li><a href="#basics-for-modeling-in-r">Basics for modeling in R</a>
-<ul>
-<li><a href="#functions">Functions:</a>
-<ul>
-<li><a href="#basic-models">Basic models</a></li>
-</ul></li>
-<li><a href="#syntax">Syntax:</a>
-<ul>
-<li><a href="#basic-model-formula">Basic model formula</a></li>
-<li><a href="#to-add-multiple-factors">To add multiple factors</a></li>
-<li><a href="#interactions">Interactions</a></li>
-</ul></li>
-<li><a href="#output-of-models">Output of models</a>
-<ul>
-<li><a href="#linear-models">Linear models</a></li>
-<li><a href="#anova">Anova</a></li>
-</ul></li>
-<li><a href="#visualizing-models">Visualizing models</a></li>
-<li><a href="#advanced-models">Advanced models</a></li>
-</ul></li>
-</ul>
+
+<!-- Students: Please disregard this initial code. The R tutorial begins at Line 22. -->
+<div class="container">
+<div class="row">
+<div class="col-sm-3 sticky">
+<p><nav id="toc" data-toggle="toc" class="sticky-top" style="top:100px;"></nav></p>
 </div>
+<div class="col-sm-9" style="top:25px">
 
-<p>Welcome to the lesson on modeling in R!
-Goals:
-1. Learn about functions and syntax for models in R
-2. Practice examples of different model types
-3. Understand how to obtain model results in R<br />
-4. Learn how to visualize the results of the models</p>
-<p>Let’s get some data.
-We will use the same data we are already familiar with from the Descriptives lesson. We will compute a group for high and low ADHD, so we can use that in our models.</p>
-<pre class="language-r"><code class="language-r">df &lt;- read_csv(here(&quot;content&quot;, &quot;tutorials&quot;, &quot;5_models&quot;, &quot;uncapher_2016_repeated_measures_dataset.csv&quot;))</code></pre>
+<p>Welcome to the lesson on modeling in R!</p>
+<p>Goals:</p>
+<ol style="list-style-type: decimal">
+<li>Learn about functions and syntax for models in R</li>
+<li>Practice examples of different model types</li>
+<li>Understand how to obtain model results in R<br />
+</li>
+<li>Learn how to visualize the results of the models</li>
+</ol>
+<p>Let’s get some data.</p>
+<p>We will use the same data we are already familiar with from the Descriptives lesson. We will compute a group for high and low ADHD, so we can use that in our models.</p>
+<pre class="r"><code>df &lt;- read_csv(here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;5-models&quot;, &quot;uncapher_2016_repeated_measures_dataset.csv&quot;))</code></pre>
 <pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -389,7 +430,7 @@ We will use the same data we are already familiar with from the Descriptives les
 ##   adhd = col_double(),
 ##   bis = col_double()
 ## )</code></pre>
-<pre class="language-r"><code class="language-r">head(df)</code></pre>
+<pre class="r"><code>head(df)</code></pre>
 <pre><code>## # A tibble: 6 x 19
 ##      X1     X subjNum groupStatus numDist conf  hitCount allOldCount rtHit
 ##   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;
@@ -403,7 +444,7 @@ We will use the same data we are already familiar with from the Descriptives les
 ## #   distPresent &lt;chr&gt;, hitRate &lt;dbl&gt;, faRate &lt;dbl&gt;, dprime &lt;dbl&gt;, mmi &lt;dbl&gt;,
 ## #   adhd &lt;dbl&gt;, bis &lt;dbl&gt;</code></pre>
 <p>clean up the data for these models</p>
-<pre class="language-r"><code class="language-r"> df &lt;- df %&gt;%   
+<pre class="r"><code> df &lt;- df %&gt;%   
     # only keep data from the task when distractor was present
    dplyr::filter(numDist == 6) %&gt;%
    # only include high or low groups for multitasking.
@@ -419,7 +460,7 @@ names(df)</code></pre>
 <div id="basics-for-modeling-in-r" class="section level1">
 <h1>Basics for modeling in R</h1>
 <div id="functions" class="section level2">
-<h2>Functions:</h2>
+<h2>Functions</h2>
 <div id="basic-models" class="section level3">
 <h3>Basic models</h3>
 <p>For each model type, there is a different function. Many of these are available in base R.</p>
@@ -433,13 +474,13 @@ Always use the <code>?</code> to see more details for the model you’re using.<
 </div>
 </div>
 <div id="syntax" class="section level2">
-<h2>Syntax:</h2>
+<h2>Syntax</h2>
 <div id="basic-model-formula" class="section level3">
 <h3>Basic model formula</h3>
 <p>For any type of model with an IV and DV, there is a common syntax. The “~” delineates the direction of the model, where the DV is always on the left of the ~ and the predictors are always on the right.</p>
 <p>Y ~ X</p>
 <p>Example of t-test</p>
-<pre class="language-r"><code class="language-r">t.test(dprime ~ adhdF, data = df)</code></pre>
+<pre class="r"><code>t.test(dprime ~ adhdF, data = df)</code></pre>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -453,7 +494,7 @@ Always use the <code>?</code> to see more details for the model you’re using.<
 ##                1.134668                1.027639</code></pre>
 <p><em>When working with a dataframe, you can either index your data with <code>$</code> or provide a second argument in the function, delineating which data your variables come from – the output will be identical. However, we recommend the 2nd option, as it ensures that you will be always working with columns from the same data frame, and is less susceptible to mistakes</em></p>
 <p>Example of a linear regression</p>
-<pre class="language-r"><code class="language-r">lm(dprime ~ adhd, data = df)</code></pre>
+<pre class="r"><code>lm(dprime ~ adhd, data = df)</code></pre>
 <pre><code>## 
 ## Call:
 ## lm(formula = dprime ~ adhd, data = df)
@@ -462,7 +503,7 @@ Always use the <code>?</code> to see more details for the model you’re using.<
 ## (Intercept)         adhd  
 ##     1.00259      0.03232</code></pre>
 <p>Example of an anova</p>
-<pre class="language-r"><code class="language-r">aov(dprime ~ adhdF, data = df)</code></pre>
+<pre class="r"><code>aov(dprime ~ adhdF, data = df)</code></pre>
 <pre><code>## Call:
 ##    aov(formula = dprime ~ adhdF, data = df)
 ## 
@@ -479,7 +520,7 @@ Always use the <code>?</code> to see more details for the model you’re using.<
 <p>(in anova or linear regression), simply add a “+” for each variable on the right of the formula</p>
 <p><em>Y ~ X1 + X2 + X3</em></p>
 <p>Here is a linear model example with 2 predictors (continuous)</p>
-<pre class="language-r"><code class="language-r">lm(dprime ~ adhd + bis, data = df)</code></pre>
+<pre class="r"><code>lm(dprime ~ adhd + bis, data = df)</code></pre>
 <pre><code>## 
 ## Call:
 ## lm(formula = dprime ~ adhd + bis, data = df)
@@ -488,7 +529,7 @@ Always use the <code>?</code> to see more details for the model you’re using.<
 ## (Intercept)         adhd          bis  
 ##    1.501210     0.076428    -0.009878</code></pre>
 <p>Here is an ANOVA example with 2 predictors (continuous)</p>
-<pre class="language-r"><code class="language-r">aov(dprime ~ adhdF + bis, data = df)</code></pre>
+<pre class="r"><code>aov(dprime ~ adhdF + bis, data = df)</code></pre>
 <pre><code>## Call:
 ##    aov(formula = dprime ~ adhdF + bis, data = df)
 ## 
@@ -509,7 +550,7 @@ You still need to add each variable alone to calculate their main effects.</p>
 <p>Alternatively, a shortcut is to use an asterix "*" that provides a shortcut. It will automatically create an interaction regressor AND the main effects for each variable.</p>
 <p>Y ~ X1*X2 is identical to Y ~ X1 + X2 + X1:X2</p>
 <p>Example of an interaction between 2 continous variables in linear regression:</p>
-<pre class="language-r"><code class="language-r">lm(dprime ~ adhd*bis, data = df)</code></pre>
+<pre class="r"><code>lm(dprime ~ adhd*bis, data = df)</code></pre>
 <pre><code>## 
 ## Call:
 ## lm(formula = dprime ~ adhd * bis, data = df)
@@ -518,7 +559,7 @@ You still need to add each variable alone to calculate their main effects.</p>
 ## (Intercept)         adhd          bis     adhd:bis  
 ##    2.506924    -0.286411    -0.027917     0.006095</code></pre>
 <p>Example of an interaction between 2 categorical variables in anova</p>
-<pre class="language-r"><code class="language-r">aov(dprime ~ adhdF*groupStatus, data = df)</code></pre>
+<pre class="r"><code>aov(dprime ~ adhdF*groupStatus, data = df)</code></pre>
 <pre><code>## Call:
 ##    aov(formula = dprime ~ adhdF * groupStatus, data = df)
 ## 
@@ -532,7 +573,7 @@ You still need to add each variable alone to calculate their main effects.</p>
 <p>In the case where there is no IV/DV (i.e. correlation between 2 continuous variables), there is no “~”.
 Instead there is a “,”" to delineate 2 different variables.</p>
 <p>Example of a correlation</p>
-<pre class="language-r"><code class="language-r">cor.test(df$dprime, df$adhd)</code></pre>
+<pre class="r"><code>cor.test(df$dprime, df$adhd)</code></pre>
 <pre><code>## 
 ##  Pearson&#39;s product-moment correlation
 ## 
@@ -556,7 +597,7 @@ a) the formula of your model
 b) residuals
 c) coefficients of the model (estimate, st. error, t-value, p-value)
 d) overall model results (RSE, R-squared, F-statistics, p-value)</p>
-<pre class="language-r"><code class="language-r"># first, we will save our model object and call it lm1
+<pre class="r"><code># first, we will save our model object and call it lm1
 lm1 &lt;-  lm(dprime ~ adhd, data = df)
 # then we will ask for the summary of the model results
 summary(lm1)</code></pre>
@@ -578,14 +619,14 @@ summary(lm1)</code></pre>
 ## Residual standard error: 0.5377 on 66 degrees of freedom
 ## Multiple R-squared:  0.009974,   Adjusted R-squared:  -0.005027 
 ## F-statistic: 0.6649 on 1 and 66 DF,  p-value: 0.4178</code></pre>
-<pre class="language-r"><code class="language-r"># save the model 
+<pre class="r"><code># save the model 
 save (lm1, file = &quot;my_model.Rda&quot;)</code></pre>
 <p>We can index specific components of the output. What if I want to save the coefficients to a table?</p>
-<pre class="language-r"><code class="language-r">summary(lm1)$coefficients</code></pre>
+<pre class="r"><code>summary(lm1)$coefficients</code></pre>
 <pre><code>##               Estimate Std. Error   t value     Pr(&gt;|t|)
 ## (Intercept) 1.00258818 0.11474797 8.7373063 1.275135e-12
 ## adhd        0.03231744 0.03963347 0.8154078 4.177719e-01</code></pre>
-<pre class="language-r"><code class="language-r"># save the table for later
+<pre class="r"><code># save the table for later
 my_table &lt;- summary(lm1)$coefficients
 save(my_table, file = &quot;my_table.Rda&quot;)</code></pre>
 </div>
@@ -593,14 +634,14 @@ save(my_table, file = &quot;my_table.Rda&quot;)</code></pre>
 <h3>Anova</h3>
 <p>The output includes the results for each factor in the model.</p>
 <p>Here is an example for a one-way anova</p>
-<pre class="language-r"><code class="language-r">a1 &lt;- aov(dprime ~ adhdF, data = df)
+<pre class="r"><code>a1 &lt;- aov(dprime ~ adhdF, data = df)
 
 summary(a1)</code></pre>
 <pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)
 ## adhdF        1  0.195  0.1946   0.673  0.415
 ## Residuals   66 19.080  0.2891</code></pre>
 <p>Here is an example for a 2x2 anova</p>
-<pre class="language-r"><code class="language-r">a2 &lt;- aov(dprime ~ adhdF * groupStatus, data = df)
+<pre class="r"><code>a2 &lt;- aov(dprime ~ adhdF * groupStatus, data = df)
 
 summary(a2)</code></pre>
 <pre><code>##                   Df Sum Sq Mean Sq F value Pr(&gt;F)  
@@ -617,16 +658,16 @@ summary(a2)</code></pre>
 <p>There are many ways (and packages) to plot the output of your models.</p>
 <p>We will start with a handy package, <a href="https://cran.r-project.org/web/packages/effects/effects.pdf"><code>effects</code></a>, that plots the effects of many model types. Note that these plots are made with base R, not ggplot2, so you can’t use ggplot2 tools to tweak their appearance.</p>
 <p>Let’s plot the effect of ADHD on dprime from our linear model.</p>
-<pre class="language-r"><code class="language-r"># This function requires the X variable in quotes, and the saved model object
+<pre class="r"><code># This function requires the X variable in quotes, and the saved model object
 plot(effect(&quot;adhd&quot;, lm1))</code></pre>
-<p><img src="../../../tutorials/5_models/index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="../../../tutorials/r-core/5-models/index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>There are many more options you can add to customize the plot!</p>
-<pre class="language-r"><code class="language-r">plot(effect(&quot;adhd&quot;, lm1), rug = F, colors = &quot;red&quot;, xlab = &quot;ADHD symptoms&quot;, ylab = &quot;D-prime&quot;,
+<pre class="r"><code>plot(effect(&quot;adhd&quot;, lm1), rug = F, colors = &quot;red&quot;, xlab = &quot;ADHD symptoms&quot;, ylab = &quot;D-prime&quot;,
      axes=list(grid=TRUE))</code></pre>
-<p><img src="../../../tutorials/5_models/index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="../../../tutorials/r-core/5-models/index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <p>Visualizing continuous x continous interactions</p>
-<pre class="language-r"><code class="language-r">plot(effect(&quot;adhdF:groupStatus&quot;, a2), xlab = &quot;&quot;, colors = c(&quot;Blue&quot;, &quot;Black&quot;))</code></pre>
-<p><img src="../../../tutorials/5_models/index_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<pre class="r"><code>plot(effect(&quot;adhdF:groupStatus&quot;, a2), xlab = &quot;&quot;, colors = c(&quot;Blue&quot;, &quot;Black&quot;))</code></pre>
+<p><img src="../../../tutorials/r-core/5-models/index_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>if you want to really make beautiful graphs and customizations of your models,
 we encourage you to experiment with ggplot!</p>
 </div>
@@ -642,23 +683,6 @@ However, the opportunities for modeling in R are endless! There is a package for
     </article>
   </div>
 
-  
-<script src="../../../js/jquery-3.3.1.slim.min.js"></script>
-<script src="../../../js/bootstrap.bundle.min.js"></script>
-
-  
-  
-  <script>
-  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-  ga('create', 'UA-123456789-1', 'auto');
-  ga('send', 'pageview');
-  </script>
-  <script async src='https://www.google-analytics.com/analytics.js'></script>
-  
-
-  
-
-  
 </body>
 
 <footer class="footer">
