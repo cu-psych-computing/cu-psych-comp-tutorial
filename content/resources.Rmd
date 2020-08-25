@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ---
 
-- [Columbia Psychology scientific computing users Slack group](https://join.slack.com/t/cu-psych-r-users/shared_invite/enQtMjk5MTExNjkxOTkwLTY2MjJkMGY1ZmU1MzM0ZTA0NTM2ZDJjZjFjMzU4YmRjZDJiMWQyMjJkMzVkMjc0YTE0OTg4ZmU2NjdlYzZiNjk){target="_blank"})
+- [Columbia Psychology scientific computing users Slack group](https://join.slack.com/t/cu-psych-r-users/shared_invite/enQtMjk5MTExNjkxOTkwLTY2MjJkMGY1ZmU1MzM0ZTA0NTM2ZDJjZjFjMzU4YmRjZDJiMWQyMjJkMzVkMjc0YTE0OTg4ZmU2NjdlYzZiNjk){target="_blank"}
 
 ## Full, Freestanding General-Use R Tutorials
 
