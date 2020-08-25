@@ -4,15 +4,8 @@ author: "Monica Thieu"
 tags: ["extra", "r"]
 ---
 
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
-
-<!-- Students: Please disregard this initial code. The R tutorial begins at Line 20. -->
-<div class="container">
-<div class="row">
-<div class="col-sm-3 sticky">
-<p><nav id="toc" data-toggle="toc" class="sticky-top" style="top:100px;"></nav></p>
-</div>
-<div class="col-sm-9" style="top:25px">
 
 <div id="goals-for-this-vignette" class="section level1">
 <h1>Goals for this vignette</h1>
@@ -128,16 +121,16 @@ raw &lt;- tibble(id = 1L:20L,
 <pre><code>## # A tibble: 1,000 x 10
 ##       id   age gender   q_1   q_2   q_3 trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1     1    31 male    20.8  39.7  25.3         1      0        0 1.78 
-##  2     1    31 male    20.8  39.7  25.3         2      1        1 4.46 
-##  3     1    31 male    20.8  39.7  25.3         3      1        1 4.54 
-##  4     1    31 male    20.8  39.7  25.3         4      0        0 1.29 
-##  5     1    31 male    20.8  39.7  25.3         5      1        1 3.63 
-##  6     1    31 male    20.8  39.7  25.3         6      1        1 2.81 
-##  7     1    31 male    20.8  39.7  25.3         7      1        1 3.83 
-##  8     1    31 male    20.8  39.7  25.3         8      0        0 4.09 
-##  9     1    31 male    20.8  39.7  25.3         9      0        0 2.66 
-## 10     1    31 male    20.8  39.7  25.3        10      1        1 0.757
+##  1     1    32 female  19.2  30.2  21.8         1      1        1  3.83
+##  2     1    32 female  19.2  30.2  21.8         2      1        0  2.78
+##  3     1    32 female  19.2  30.2  21.8         3      0        0  4.94
+##  4     1    32 female  19.2  30.2  21.8         4      1        1  4.41
+##  5     1    32 female  19.2  30.2  21.8         5      1        0  2.85
+##  6     1    32 female  19.2  30.2  21.8         6      1        0  4.03
+##  7     1    32 female  19.2  30.2  21.8         7      1        1  5.36
+##  8     1    32 female  19.2  30.2  21.8         8      1        0  2.76
+##  9     1    32 female  19.2  30.2  21.8         9      0        0  3.08
+## 10     1    32 female  19.2  30.2  21.8        10      0        1  5.08
 ## # … with 990 more rows</code></pre>
 <p>You can see that the default print output of tibbles is kind of like the output of <code>str()</code> on steroids.</p>
 <p>Compared to a dataframe, a tibble:</p>
@@ -175,16 +168,16 @@ raw %&gt;%
 <pre><code>## # A tibble: 1,000 x 7
 ##       id   age gender trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1     1    31 male           1      0        0 1.78 
-##  2     1    31 male           2      1        1 4.46 
-##  3     1    31 male           3      1        1 4.54 
-##  4     1    31 male           4      0        0 1.29 
-##  5     1    31 male           5      1        1 3.63 
-##  6     1    31 male           6      1        1 2.81 
-##  7     1    31 male           7      1        1 3.83 
-##  8     1    31 male           8      0        0 4.09 
-##  9     1    31 male           9      0        0 2.66 
-## 10     1    31 male          10      1        1 0.757
+##  1     1    32 female         1      1        1  3.83
+##  2     1    32 female         2      1        0  2.78
+##  3     1    32 female         3      0        0  4.94
+##  4     1    32 female         4      1        1  4.41
+##  5     1    32 female         5      1        0  2.85
+##  6     1    32 female         6      1        0  4.03
+##  7     1    32 female         7      1        1  5.36
+##  8     1    32 female         8      1        0  2.76
+##  9     1    32 female         9      0        0  3.08
+## 10     1    32 female        10      0        1  5.08
 ## # … with 990 more rows</code></pre>
 <p>Note that you can use <code>select()</code> to <em>rename</em> columns as well; simply put the new name in the argument name spot, and the old name in the argument value spot.</p>
 <pre class="r"><code># Renaming columns is so smooth in the tidyverse!
@@ -193,16 +186,16 @@ raw %&gt;%
 <pre><code>## # A tibble: 1,000 x 7
 ##    subject_id   age gender trial_num is_old response    rt
 ##         &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1          1    31 male           1      0        0 1.78 
-##  2          1    31 male           2      1        1 4.46 
-##  3          1    31 male           3      1        1 4.54 
-##  4          1    31 male           4      0        0 1.29 
-##  5          1    31 male           5      1        1 3.63 
-##  6          1    31 male           6      1        1 2.81 
-##  7          1    31 male           7      1        1 3.83 
-##  8          1    31 male           8      0        0 4.09 
-##  9          1    31 male           9      0        0 2.66 
-## 10          1    31 male          10      1        1 0.757
+##  1          1    32 female         1      1        1  3.83
+##  2          1    32 female         2      1        0  2.78
+##  3          1    32 female         3      0        0  4.94
+##  4          1    32 female         4      1        1  4.41
+##  5          1    32 female         5      1        0  2.85
+##  6          1    32 female         6      1        0  4.03
+##  7          1    32 female         7      1        1  5.36
+##  8          1    32 female         8      1        0  2.76
+##  9          1    32 female         9      0        0  3.08
+## 10          1    32 female        10      0        1  5.08
 ## # … with 990 more rows</code></pre>
 <p>There also exists a version of <code>select()</code> called <code>rename()</code> which behaves exactly as <code>select()</code> does, except that <code>rename()</code> never subsets columns, and always gives you all the columns of your original df (renamed or otherwise).</p>
 <p>You can specify columns in <code>select()</code> by naming each individual column you want, or you can select groups of columns in the following ways.</p>
@@ -212,16 +205,16 @@ raw %&gt;%
 <pre><code>## # A tibble: 1,000 x 3
 ##       id   age gender
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt; 
-##  1     1    31 male  
-##  2     1    31 male  
-##  3     1    31 male  
-##  4     1    31 male  
-##  5     1    31 male  
-##  6     1    31 male  
-##  7     1    31 male  
-##  8     1    31 male  
-##  9     1    31 male  
-## 10     1    31 male  
+##  1     1    32 female
+##  2     1    32 female
+##  3     1    32 female
+##  4     1    32 female
+##  5     1    32 female
+##  6     1    32 female
+##  7     1    32 female
+##  8     1    32 female
+##  9     1    32 female
+## 10     1    32 female
 ## # … with 990 more rows</code></pre>
 <p>You can also use any one of a series of special helper functions provided by <code>dplyr</code> to select columns in a regex-style way. Like so:</p>
 <pre class="r"><code>raw %&gt;%
@@ -229,16 +222,16 @@ raw %&gt;%
 <pre><code>## # A tibble: 1,000 x 4
 ##       id   q_1   q_2   q_3
 ##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1     1  20.8  39.7  25.3
-##  2     1  20.8  39.7  25.3
-##  3     1  20.8  39.7  25.3
-##  4     1  20.8  39.7  25.3
-##  5     1  20.8  39.7  25.3
-##  6     1  20.8  39.7  25.3
-##  7     1  20.8  39.7  25.3
-##  8     1  20.8  39.7  25.3
-##  9     1  20.8  39.7  25.3
-## 10     1  20.8  39.7  25.3
+##  1     1  19.2  30.2  21.8
+##  2     1  19.2  30.2  21.8
+##  3     1  19.2  30.2  21.8
+##  4     1  19.2  30.2  21.8
+##  5     1  19.2  30.2  21.8
+##  6     1  19.2  30.2  21.8
+##  7     1  19.2  30.2  21.8
+##  8     1  19.2  30.2  21.8
+##  9     1  19.2  30.2  21.8
+## 10     1  19.2  30.2  21.8
 ## # … with 990 more rows</code></pre>
 <p>Check the the reference page for <code>tidyselect::select_helpers</code> to see all of these helper functions that are available to you.</p>
 <p>Note that the order in which you specify columns/helper calls determines the ordering of the columns in your output.</p>
@@ -247,16 +240,16 @@ raw %&gt;%
 <pre><code>## # A tibble: 1,000 x 3
 ##    gender   age    id
 ##    &lt;chr&gt;  &lt;int&gt; &lt;int&gt;
-##  1 male      31     1
-##  2 male      31     1
-##  3 male      31     1
-##  4 male      31     1
-##  5 male      31     1
-##  6 male      31     1
-##  7 male      31     1
-##  8 male      31     1
-##  9 male      31     1
-## 10 male      31     1
+##  1 female    32     1
+##  2 female    32     1
+##  3 female    32     1
+##  4 female    32     1
+##  5 female    32     1
+##  6 female    32     1
+##  7 female    32     1
+##  8 female    32     1
+##  9 female    32     1
+## 10 female    32     1
 ## # … with 990 more rows</code></pre>
 <p>In this way, you can explicitly use <code>select()</code> to reorder columns without dropping columns. To do this, use the <code>tidyselect</code> helper function <code>everything()</code>:</p>
 <pre class="r"><code>raw %&gt;%
@@ -264,16 +257,16 @@ raw %&gt;%
 <pre><code>## # A tibble: 1,000 x 10
 ##       id gender   age   q_1   q_2   q_3 trial_num is_old response    rt
 ##    &lt;int&gt; &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1     1 male      31  20.8  39.7  25.3         1      0        0 1.78 
-##  2     1 male      31  20.8  39.7  25.3         2      1        1 4.46 
-##  3     1 male      31  20.8  39.7  25.3         3      1        1 4.54 
-##  4     1 male      31  20.8  39.7  25.3         4      0        0 1.29 
-##  5     1 male      31  20.8  39.7  25.3         5      1        1 3.63 
-##  6     1 male      31  20.8  39.7  25.3         6      1        1 2.81 
-##  7     1 male      31  20.8  39.7  25.3         7      1        1 3.83 
-##  8     1 male      31  20.8  39.7  25.3         8      0        0 4.09 
-##  9     1 male      31  20.8  39.7  25.3         9      0        0 2.66 
-## 10     1 male      31  20.8  39.7  25.3        10      1        1 0.757
+##  1     1 female    32  19.2  30.2  21.8         1      1        1  3.83
+##  2     1 female    32  19.2  30.2  21.8         2      1        0  2.78
+##  3     1 female    32  19.2  30.2  21.8         3      0        0  4.94
+##  4     1 female    32  19.2  30.2  21.8         4      1        1  4.41
+##  5     1 female    32  19.2  30.2  21.8         5      1        0  2.85
+##  6     1 female    32  19.2  30.2  21.8         6      1        0  4.03
+##  7     1 female    32  19.2  30.2  21.8         7      1        1  5.36
+##  8     1 female    32  19.2  30.2  21.8         8      1        0  2.76
+##  9     1 female    32  19.2  30.2  21.8         9      0        0  3.08
+## 10     1 female    32  19.2  30.2  21.8        10      0        1  5.08
 ## # … with 990 more rows</code></pre>
 <p><code>everything()</code> essentially returns all the names of the other, not-explicitly-named columns, and keeps them all in their original order <em>minus</em> the columns you explicitly specified. You can use this syntax to pull a selected number of columns to the far left of your df, and then leave all other columns in their previous order.</p>
 <p>You can also use <code>select()</code> to keep all columns <em>except</em> ones you specify. For this, use the <code>-</code> operator like so:</p>
@@ -282,16 +275,16 @@ raw %&gt;%
 <pre><code>## # A tibble: 1,000 x 9
 ##       id   age   q_1   q_2   q_3 trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1     1    31  20.8  39.7  25.3         1      0        0 1.78 
-##  2     1    31  20.8  39.7  25.3         2      1        1 4.46 
-##  3     1    31  20.8  39.7  25.3         3      1        1 4.54 
-##  4     1    31  20.8  39.7  25.3         4      0        0 1.29 
-##  5     1    31  20.8  39.7  25.3         5      1        1 3.63 
-##  6     1    31  20.8  39.7  25.3         6      1        1 2.81 
-##  7     1    31  20.8  39.7  25.3         7      1        1 3.83 
-##  8     1    31  20.8  39.7  25.3         8      0        0 4.09 
-##  9     1    31  20.8  39.7  25.3         9      0        0 2.66 
-## 10     1    31  20.8  39.7  25.3        10      1        1 0.757
+##  1     1    32  19.2  30.2  21.8         1      1        1  3.83
+##  2     1    32  19.2  30.2  21.8         2      1        0  2.78
+##  3     1    32  19.2  30.2  21.8         3      0        0  4.94
+##  4     1    32  19.2  30.2  21.8         4      1        1  4.41
+##  5     1    32  19.2  30.2  21.8         5      1        0  2.85
+##  6     1    32  19.2  30.2  21.8         6      1        0  4.03
+##  7     1    32  19.2  30.2  21.8         7      1        1  5.36
+##  8     1    32  19.2  30.2  21.8         8      1        0  2.76
+##  9     1    32  19.2  30.2  21.8         9      0        0  3.08
+## 10     1    32  19.2  30.2  21.8        10      0        1  5.08
 ## # … with 990 more rows</code></pre>
 <p>You can combine the <code>-</code> with the <code>:</code> operator, or with one of the <code>tidyselect</code> helpers we saw before:</p>
 <pre class="r"><code>raw %&gt;%
@@ -299,32 +292,32 @@ raw %&gt;%
 <pre><code>## # A tibble: 1,000 x 6
 ##       id   age gender   q_1   q_2   q_3
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1     1    31 male    20.8  39.7  25.3
-##  2     1    31 male    20.8  39.7  25.3
-##  3     1    31 male    20.8  39.7  25.3
-##  4     1    31 male    20.8  39.7  25.3
-##  5     1    31 male    20.8  39.7  25.3
-##  6     1    31 male    20.8  39.7  25.3
-##  7     1    31 male    20.8  39.7  25.3
-##  8     1    31 male    20.8  39.7  25.3
-##  9     1    31 male    20.8  39.7  25.3
-## 10     1    31 male    20.8  39.7  25.3
+##  1     1    32 female  19.2  30.2  21.8
+##  2     1    32 female  19.2  30.2  21.8
+##  3     1    32 female  19.2  30.2  21.8
+##  4     1    32 female  19.2  30.2  21.8
+##  5     1    32 female  19.2  30.2  21.8
+##  6     1    32 female  19.2  30.2  21.8
+##  7     1    32 female  19.2  30.2  21.8
+##  8     1    32 female  19.2  30.2  21.8
+##  9     1    32 female  19.2  30.2  21.8
+## 10     1    32 female  19.2  30.2  21.8
 ## # … with 990 more rows</code></pre>
 <pre class="r"><code>raw %&gt;%
   select(-starts_with(&quot;q&quot;))</code></pre>
 <pre><code>## # A tibble: 1,000 x 7
 ##       id   age gender trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1     1    31 male           1      0        0 1.78 
-##  2     1    31 male           2      1        1 4.46 
-##  3     1    31 male           3      1        1 4.54 
-##  4     1    31 male           4      0        0 1.29 
-##  5     1    31 male           5      1        1 3.63 
-##  6     1    31 male           6      1        1 2.81 
-##  7     1    31 male           7      1        1 3.83 
-##  8     1    31 male           8      0        0 4.09 
-##  9     1    31 male           9      0        0 2.66 
-## 10     1    31 male          10      1        1 0.757
+##  1     1    32 female         1      1        1  3.83
+##  2     1    32 female         2      1        0  2.78
+##  3     1    32 female         3      0        0  4.94
+##  4     1    32 female         4      1        1  4.41
+##  5     1    32 female         5      1        0  2.85
+##  6     1    32 female         6      1        0  4.03
+##  7     1    32 female         7      1        1  5.36
+##  8     1    32 female         8      1        0  2.76
+##  9     1    32 female         9      0        0  3.08
+## 10     1    32 female        10      0        1  5.08
 ## # … with 990 more rows</code></pre>
 </div>
 <div id="subsetting-by-row" class="section level2">
@@ -339,16 +332,16 @@ raw %&gt;%
 <pre><code>## # A tibble: 50 x 10
 ##       id   age gender   q_1   q_2   q_3 trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1    13    34 male    21.5  18.0  45.2         1      0        0  3.57
-##  2    13    34 male    21.5  18.0  45.2         2      1        0  1.72
-##  3    13    34 male    21.5  18.0  45.2         3      1        1  2.35
-##  4    13    34 male    21.5  18.0  45.2         4      1        1  4.26
-##  5    13    34 male    21.5  18.0  45.2         5      1        1  1.69
-##  6    13    34 male    21.5  18.0  45.2         6      1        0  3.84
-##  7    13    34 male    21.5  18.0  45.2         7      0        0  4.34
-##  8    13    34 male    21.5  18.0  45.2         8      1        1  3.02
-##  9    13    34 male    21.5  18.0  45.2         9      0        0  2.98
-## 10    13    34 male    21.5  18.0  45.2        10      1        1  2.15
+##  1    13    35 male    21.8  17.4  36.4         1      1        1 0.779
+##  2    13    35 male    21.8  17.4  36.4         2      1        0 2.61 
+##  3    13    35 male    21.8  17.4  36.4         3      0        0 7.41 
+##  4    13    35 male    21.8  17.4  36.4         4      1        0 2.74 
+##  5    13    35 male    21.8  17.4  36.4         5      0        0 4.12 
+##  6    13    35 male    21.8  17.4  36.4         6      1        1 1.17 
+##  7    13    35 male    21.8  17.4  36.4         7      1        1 3.20 
+##  8    13    35 male    21.8  17.4  36.4         8      0        0 2.32 
+##  9    13    35 male    21.8  17.4  36.4         9      0        1 4.42 
+## 10    13    35 male    21.8  17.4  36.4        10      0        0 3.90 
 ## # … with 40 more rows</code></pre>
 <p><code>filter()</code> takes logical statements with <code>&amp;</code> and <code>|</code> in them like you might use in bracket indexing.</p>
 <pre class="r"><code># would I ordinarily use a %in% call for this?
@@ -358,16 +351,16 @@ raw %&gt;%
 <pre><code>## # A tibble: 100 x 10
 ##       id   age gender   q_1   q_2   q_3 trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1    13    34 male    21.5  18.0  45.2         1      0        0  3.57
-##  2    13    34 male    21.5  18.0  45.2         2      1        0  1.72
-##  3    13    34 male    21.5  18.0  45.2         3      1        1  2.35
-##  4    13    34 male    21.5  18.0  45.2         4      1        1  4.26
-##  5    13    34 male    21.5  18.0  45.2         5      1        1  1.69
-##  6    13    34 male    21.5  18.0  45.2         6      1        0  3.84
-##  7    13    34 male    21.5  18.0  45.2         7      0        0  4.34
-##  8    13    34 male    21.5  18.0  45.2         8      1        1  3.02
-##  9    13    34 male    21.5  18.0  45.2         9      0        0  2.98
-## 10    13    34 male    21.5  18.0  45.2        10      1        1  2.15
+##  1    13    35 male    21.8  17.4  36.4         1      1        1 0.779
+##  2    13    35 male    21.8  17.4  36.4         2      1        0 2.61 
+##  3    13    35 male    21.8  17.4  36.4         3      0        0 7.41 
+##  4    13    35 male    21.8  17.4  36.4         4      1        0 2.74 
+##  5    13    35 male    21.8  17.4  36.4         5      0        0 4.12 
+##  6    13    35 male    21.8  17.4  36.4         6      1        1 1.17 
+##  7    13    35 male    21.8  17.4  36.4         7      1        1 3.20 
+##  8    13    35 male    21.8  17.4  36.4         8      0        0 2.32 
+##  9    13    35 male    21.8  17.4  36.4         9      0        1 4.42 
+## 10    13    35 male    21.8  17.4  36.4        10      0        0 3.90 
 ## # … with 90 more rows</code></pre>
 <p><code>filter()</code> also has a nice feature: specifying separate logical statements as separate arguments, separated by commas, implicitly acts like chaining the statements together with <code>&amp;</code>, since the intersection of logical vectors is probably the most common use case for row subsetting.</p>
 <pre class="r"><code>raw %&gt;%
@@ -376,16 +369,16 @@ raw %&gt;%
 <pre><code>## # A tibble: 25 x 7
 ##       id   age gender trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1    13    34 male           2      1        0 1.72 
-##  2    13    34 male           3      1        1 2.35 
-##  3    13    34 male           4      1        1 4.26 
-##  4    13    34 male           5      1        1 1.69 
-##  5    13    34 male           6      1        0 3.84 
-##  6    13    34 male           8      1        1 3.02 
-##  7    13    34 male          10      1        1 2.15 
-##  8    13    34 male          13      1        1 0.335
-##  9    13    34 male          15      1        1 2.58 
-## 10    13    34 male          16      1        0 4.03 
+##  1    13    35 male           1      1        1 0.779
+##  2    13    35 male           2      1        0 2.61 
+##  3    13    35 male           4      1        0 2.74 
+##  4    13    35 male           6      1        1 1.17 
+##  5    13    35 male           7      1        1 3.20 
+##  6    13    35 male          11      1        1 1.20 
+##  7    13    35 male          12      1        1 2.83 
+##  8    13    35 male          14      1        1 3.54 
+##  9    13    35 male          16      1        1 3.51 
+## 10    13    35 male          19      1        1 2.07 
 ## # … with 15 more rows</code></pre>
 </div>
 <div id="subsetting-rows-by-position" class="section level3">
@@ -396,16 +389,16 @@ raw %&gt;%
 <pre><code>## # A tibble: 10 x 10
 ##       id   age gender   q_1   q_2   q_3 trial_num is_old response     rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt;  &lt;dbl&gt;
-##  1     8    19 female  24.3  38.2  29.4         1      1        1  3.69 
-##  2     8    19 female  24.3  38.2  29.4         2      0        0  1.20 
-##  3     8    19 female  24.3  38.2  29.4         3      0        0  3.46 
-##  4     8    19 female  24.3  38.2  29.4         4      0        0 -0.995
-##  5     8    19 female  24.3  38.2  29.4         5      0        1  2.95 
-##  6     8    19 female  24.3  38.2  29.4         6      0        0  2.03 
-##  7     8    19 female  24.3  38.2  29.4         7      0        0  2.01 
-##  8     8    19 female  24.3  38.2  29.4         8      0        0  2.20 
-##  9     8    19 female  24.3  38.2  29.4         9      0        0  3.24 
-## 10     8    19 female  24.3  38.2  29.4        10      1        1  1.31</code></pre>
+##  1     8    23 female  31.1  32.4  33.5         1      0        0  0.662
+##  2     8    23 female  31.1  32.4  33.5         2      1        0  3.27 
+##  3     8    23 female  31.1  32.4  33.5         3      0        0  6.29 
+##  4     8    23 female  31.1  32.4  33.5         4      0        0  3.93 
+##  5     8    23 female  31.1  32.4  33.5         5      0        0  2.04 
+##  6     8    23 female  31.1  32.4  33.5         6      0        1  4.36 
+##  7     8    23 female  31.1  32.4  33.5         7      0        1 -0.677
+##  8     8    23 female  31.1  32.4  33.5         8      0        1  4.89 
+##  9     8    23 female  31.1  32.4  33.5         9      0        0  0.439
+## 10     8    23 female  31.1  32.4  33.5        10      1        1  2.68</code></pre>
 </div>
 <div id="getting-only-uniqueun-duplicated-rows" class="section level3">
 <h3>Getting only unique/un-duplicated rows</h3>
@@ -418,46 +411,49 @@ raw %&gt;%
 <pre><code>## # A tibble: 20 x 3
 ##       id gender   age
 ##    &lt;int&gt; &lt;chr&gt;  &lt;int&gt;
-##  1     1 male      31
-##  2     2 female    18
-##  3     3 male      31
-##  4     4 male      25
-##  5     5 male      25
-##  6     6 male      22
-##  7     7 female    34
-##  8     8 female    19
-##  9     9 female    32
-## 10    10 male      34
-## 11    11 female    34
-## 12    12 female    30
-## 13    13 male      34
-## 14    14 female    29
-## 15    15 male      23
-## 16    16 female    35
-## 17    17 female    29
-## 18    18 female    34
-## 19    19 male      31
-## 20    20 female    33</code></pre>
+##  1     1 female    32
+##  2     2 female    34
+##  3     3 female    29
+##  4     4 female    24
+##  5     5 male      21
+##  6     6 female    27
+##  7     7 female    24
+##  8     8 female    23
+##  9     9 male      20
+## 10    10 male      19
+## 11    11 female    30
+## 12    12 male      25
+## 13    13 male      35
+## 14    14 male      26
+## 15    15 female    29
+## 16    16 female    30
+## 17    17 female    33
+## 18    18 female    21
+## 19    19 male      26
+## 20    20 male      33</code></pre>
 <p>You can, of course, call <code>distinct()</code> on multiple columns, which will retain every unique combination of values in said columns once.</p>
 <pre class="r"><code>raw %&gt;%
   # note that all other columns are now DROPPED
   distinct(gender, age)</code></pre>
-<pre><code>## # A tibble: 13 x 2
+<pre><code>## # A tibble: 16 x 2
 ##      age gender
 ##    &lt;int&gt; &lt;chr&gt; 
-##  1    31 male  
-##  2    18 female
-##  3    25 male  
-##  4    22 male  
-##  5    34 female
-##  6    19 female
-##  7    32 female
-##  8    34 male  
-##  9    30 female
-## 10    29 female
-## 11    23 male  
-## 12    35 female
-## 13    33 female</code></pre>
+##  1    32 female
+##  2    34 female
+##  3    29 female
+##  4    24 female
+##  5    21 male  
+##  6    27 female
+##  7    23 female
+##  8    20 male  
+##  9    19 male  
+## 10    30 female
+## 11    25 male  
+## 12    35 male  
+## 13    26 male  
+## 14    33 female
+## 15    21 female
+## 16    33 male</code></pre>
 </div>
 <div id="subsetting-random-rows" class="section level3">
 <h3>Subsetting random rows</h3>
@@ -471,11 +467,11 @@ raw %&gt;%
 <pre><code>## # A tibble: 5 x 3
 ##      id   age gender
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt; 
-## 1    14    29 female
-## 2    12    30 female
-## 3    10    34 male  
-## 4     1    31 male  
-## 5     3    31 male</code></pre>
+## 1    11    30 female
+## 2    13    35 male  
+## 3     7    24 female
+## 4    19    26 male  
+## 5    16    30 female</code></pre>
 </div>
 </div>
 <div id="subsetting-by-row-and-column-simultaneously" class="section level2">
@@ -488,16 +484,16 @@ raw %&gt;%
 <pre><code>## # A tibble: 50 x 7
 ##       id   age gender trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1    13    34 male           1      0        0  3.57
-##  2    13    34 male           2      1        0  1.72
-##  3    13    34 male           3      1        1  2.35
-##  4    13    34 male           4      1        1  4.26
-##  5    13    34 male           5      1        1  1.69
-##  6    13    34 male           6      1        0  3.84
-##  7    13    34 male           7      0        0  4.34
-##  8    13    34 male           8      1        1  3.02
-##  9    13    34 male           9      0        0  2.98
-## 10    13    34 male          10      1        1  2.15
+##  1    13    35 male           1      1        1 0.779
+##  2    13    35 male           2      1        0 2.61 
+##  3    13    35 male           3      0        0 7.41 
+##  4    13    35 male           4      1        0 2.74 
+##  5    13    35 male           5      0        0 4.12 
+##  6    13    35 male           6      1        1 1.17 
+##  7    13    35 male           7      1        1 3.20 
+##  8    13    35 male           8      0        0 2.32 
+##  9    13    35 male           9      0        1 4.42 
+## 10    13    35 male          10      0        0 3.90 
 ## # … with 40 more rows</code></pre>
 </div>
 </div>
@@ -515,16 +511,16 @@ raw %&gt;%
 <pre><code>## # A tibble: 1,000 x 8
 ##       id   age gender trial_num is_old response    rt rt_ms
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1     1    31 male           1      0        0 1.78   1776
-##  2     1    31 male           2      1        1 4.46   4456
-##  3     1    31 male           3      1        1 4.54   4540
-##  4     1    31 male           4      0        0 1.29   1290
-##  5     1    31 male           5      1        1 3.63   3629
-##  6     1    31 male           6      1        1 2.81   2811
-##  7     1    31 male           7      1        1 3.83   3826
-##  8     1    31 male           8      0        0 4.09   4094
-##  9     1    31 male           9      0        0 2.66   2657
-## 10     1    31 male          10      1        1 0.757   757
+##  1     1    32 female         1      1        1  3.83  3829
+##  2     1    32 female         2      1        0  2.78  2778
+##  3     1    32 female         3      0        0  4.94  4944
+##  4     1    32 female         4      1        1  4.41  4414
+##  5     1    32 female         5      1        0  2.85  2854
+##  6     1    32 female         6      1        0  4.03  4032
+##  7     1    32 female         7      1        1  5.36  5359
+##  8     1    32 female         8      1        0  2.76  2758
+##  9     1    32 female         9      0        0  3.08  3083
+## 10     1    32 female        10      0        1  5.08  5075
 ## # … with 990 more rows</code></pre>
 <p>You can do anything inside a <code>mutate()</code> call that:</p>
 <ul>
@@ -546,26 +542,26 @@ raw %&gt;%
 <pre><code>## # A tibble: 20 x 4
 ##       id   age gender group    
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;    
-##  1     1    31 male   treatment
-##  2     2    18 female control  
-##  3     3    31 male   treatment
-##  4     4    25 male   control  
-##  5     5    25 male   treatment
-##  6     6    22 male   control  
-##  7     7    34 female treatment
-##  8     8    19 female control  
-##  9     9    32 female treatment
-## 10    10    34 male   control  
-## 11    11    34 female treatment
-## 12    12    30 female control  
-## 13    13    34 male   treatment
-## 14    14    29 female control  
-## 15    15    23 male   treatment
-## 16    16    35 female control  
-## 17    17    29 female treatment
-## 18    18    34 female control  
-## 19    19    31 male   treatment
-## 20    20    33 female control</code></pre>
+##  1     1    32 female treatment
+##  2     2    34 female control  
+##  3     3    29 female treatment
+##  4     4    24 female control  
+##  5     5    21 male   treatment
+##  6     6    27 female control  
+##  7     7    24 female treatment
+##  8     8    23 female control  
+##  9     9    20 male   treatment
+## 10    10    19 male   control  
+## 11    11    30 female treatment
+## 12    12    25 male   control  
+## 13    13    35 male   treatment
+## 14    14    26 male   control  
+## 15    15    29 female treatment
+## 16    16    30 female control  
+## 17    17    33 female treatment
+## 18    18    21 female control  
+## 19    19    26 male   treatment
+## 20    20    33 male   control</code></pre>
 <div id="nice-helpers" class="section level3">
 <h3>Nice helpers</h3>
 <p>This section features a bunch of handy functions you can use inside <code>mutate()</code> (but not exclusively! they work on any old vector too) to do all sorts of magical things. Again, this is not an exhaustive walkthrough of all the tidy functions you might find useful–this is a limited subset of functions/cases that I find myself running into regularly.</p>
@@ -580,16 +576,16 @@ raw %&gt;%
 <pre><code>## # A tibble: 1,000 x 8
 ##       id   age gender trial_num is_old response    rt nrows
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
-##  1     1    31 male           1      0        0 1.78   1000
-##  2     1    31 male           2      1        1 4.46   1000
-##  3     1    31 male           3      1        1 4.54   1000
-##  4     1    31 male           4      0        0 1.29   1000
-##  5     1    31 male           5      1        1 3.63   1000
-##  6     1    31 male           6      1        1 2.81   1000
-##  7     1    31 male           7      1        1 3.83   1000
-##  8     1    31 male           8      0        0 4.09   1000
-##  9     1    31 male           9      0        0 2.66   1000
-## 10     1    31 male          10      1        1 0.757  1000
+##  1     1    32 female         1      1        1  3.83  1000
+##  2     1    32 female         2      1        0  2.78  1000
+##  3     1    32 female         3      0        0  4.94  1000
+##  4     1    32 female         4      1        1  4.41  1000
+##  5     1    32 female         5      1        0  2.85  1000
+##  6     1    32 female         6      1        0  4.03  1000
+##  7     1    32 female         7      1        1  5.36  1000
+##  8     1    32 female         8      1        0  2.76  1000
+##  9     1    32 female         9      0        0  3.08  1000
+## 10     1    32 female        10      0        1  5.08  1000
 ## # … with 990 more rows</code></pre>
 <p>Observe that the value of the column <code>nrows</code> is equal to the number of rows reported in the tibble output. You can use this number for all sorts of stuff–I frequently find myself creating a helper column in my dfs with the row index, by doing something like <code>my_df %&gt;% mutate(index = 1:n())</code>.</p>
 </div>
@@ -606,16 +602,16 @@ raw %&gt;%
 <pre><code>## # A tibble: 1,000 x 10
 ##       id   age gender   q_1   q_2   q_3 trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1     1    31 M       20.8  39.7  25.3         1      0        0 1.78 
-##  2     1    31 M       20.8  39.7  25.3         2      1        1 4.46 
-##  3     1    31 M       20.8  39.7  25.3         3      1        1 4.54 
-##  4     1    31 M       20.8  39.7  25.3         4      0        0 1.29 
-##  5     1    31 M       20.8  39.7  25.3         5      1        1 3.63 
-##  6     1    31 M       20.8  39.7  25.3         6      1        1 2.81 
-##  7     1    31 M       20.8  39.7  25.3         7      1        1 3.83 
-##  8     1    31 M       20.8  39.7  25.3         8      0        0 4.09 
-##  9     1    31 M       20.8  39.7  25.3         9      0        0 2.66 
-## 10     1    31 M       20.8  39.7  25.3        10      1        1 0.757
+##  1     1    32 F       19.2  30.2  21.8         1      1        1  3.83
+##  2     1    32 F       19.2  30.2  21.8         2      1        0  2.78
+##  3     1    32 F       19.2  30.2  21.8         3      0        0  4.94
+##  4     1    32 F       19.2  30.2  21.8         4      1        1  4.41
+##  5     1    32 F       19.2  30.2  21.8         5      1        0  2.85
+##  6     1    32 F       19.2  30.2  21.8         6      1        0  4.03
+##  7     1    32 F       19.2  30.2  21.8         7      1        1  5.36
+##  8     1    32 F       19.2  30.2  21.8         8      1        0  2.76
+##  9     1    32 F       19.2  30.2  21.8         9      0        0  3.08
+## 10     1    32 F       19.2  30.2  21.8        10      0        1  5.08
 ## # … with 990 more rows</code></pre>
 <p>Note that to call <code>recode()</code> on a numeric, or otherwise not variable-name-safe, input vector, you have to use backtick `` quotes to force the non-variable-able values to render as variables.</p>
 <pre class="r"><code>raw %&gt;%
@@ -625,16 +621,16 @@ raw %&gt;%
 <pre><code>## # A tibble: 1,000 x 10
 ##       id   age gender   q_1   q_2   q_3 trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;dbl&gt;
-##  1     1    31 male    20.8  39.7  25.3         1 new           0 1.78 
-##  2     1    31 male    20.8  39.7  25.3         2 old           1 4.46 
-##  3     1    31 male    20.8  39.7  25.3         3 old           1 4.54 
-##  4     1    31 male    20.8  39.7  25.3         4 new           0 1.29 
-##  5     1    31 male    20.8  39.7  25.3         5 old           1 3.63 
-##  6     1    31 male    20.8  39.7  25.3         6 old           1 2.81 
-##  7     1    31 male    20.8  39.7  25.3         7 old           1 3.83 
-##  8     1    31 male    20.8  39.7  25.3         8 new           0 4.09 
-##  9     1    31 male    20.8  39.7  25.3         9 new           0 2.66 
-## 10     1    31 male    20.8  39.7  25.3        10 old           1 0.757
+##  1     1    32 female  19.2  30.2  21.8         1 old           1  3.83
+##  2     1    32 female  19.2  30.2  21.8         2 old           0  2.78
+##  3     1    32 female  19.2  30.2  21.8         3 new           0  4.94
+##  4     1    32 female  19.2  30.2  21.8         4 old           1  4.41
+##  5     1    32 female  19.2  30.2  21.8         5 old           0  2.85
+##  6     1    32 female  19.2  30.2  21.8         6 old           0  4.03
+##  7     1    32 female  19.2  30.2  21.8         7 old           1  5.36
+##  8     1    32 female  19.2  30.2  21.8         8 old           0  2.76
+##  9     1    32 female  19.2  30.2  21.8         9 new           0  3.08
+## 10     1    32 female  19.2  30.2  21.8        10 new           1  5.08
 ## # … with 990 more rows</code></pre>
 </div>
 <div id="if_else-and-case_when" class="section level4">
@@ -649,26 +645,26 @@ raw %&gt;%
 <pre><code>## # A tibble: 20 x 4
 ##       id   age gender age_bin
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;  
-##  1     1    31 male   old    
-##  2     2    18 female young  
-##  3     3    31 male   old    
-##  4     4    25 male   young  
-##  5     5    25 male   young  
-##  6     6    22 male   young  
-##  7     7    34 female old    
-##  8     8    19 female young  
-##  9     9    32 female old    
-## 10    10    34 male   old    
-## 11    11    34 female old    
-## 12    12    30 female old    
-## 13    13    34 male   old    
-## 14    14    29 female young  
-## 15    15    23 male   young  
-## 16    16    35 female old    
-## 17    17    29 female young  
-## 18    18    34 female old    
-## 19    19    31 male   old    
-## 20    20    33 female old</code></pre>
+##  1     1    32 female old    
+##  2     2    34 female old    
+##  3     3    29 female young  
+##  4     4    24 female young  
+##  5     5    21 male   young  
+##  6     6    27 female young  
+##  7     7    24 female young  
+##  8     8    23 female young  
+##  9     9    20 male   young  
+## 10    10    19 male   young  
+## 11    11    30 female old    
+## 12    12    25 male   young  
+## 13    13    35 male   old    
+## 14    14    26 male   young  
+## 15    15    29 female young  
+## 16    16    30 female old    
+## 17    17    33 female old    
+## 18    18    21 female young  
+## 19    19    26 male   young  
+## 20    20    33 male   old</code></pre>
 <p><code>dplyr::case_when()</code> is a function that lets you create a vector based on a switch statement. A switch statement is essentially a neater if-else if-else if-… statement, that lets you specify a series of conditions, one of which you’d expect to be true for each piece of data going in.</p>
 <p>Notice the particular syntax that <code>case_when()</code> expects to let it do its job: the logical statement is specified on the left, then a tilde <code>~</code>, then the desired output value on the right. The last logical statement, <code>TRUE ~ ...</code>, functions as a final “else” statement in this large if-else chain, which assigns a default output to any values that aren’t <code>TRUE</code> for any other conditions in the statement. I like to have the final case either be <code>NA</code>, or the existing value of the old vector (if overwriting an existing vector).</p>
 <p>Below is one of my common use cases for <code>case_when()</code>–to bin numeric values. (I prefer using this to <code>base::cut()</code> because I find that this reads much more cleanly to my eyes.)</p>
@@ -681,26 +677,26 @@ raw %&gt;%
 <pre><code>## # A tibble: 20 x 4
 ##       id   age gender age_bin
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;  
-##  1     1    31 male   old    
-##  2     2    18 female young  
-##  3     3    31 male   old    
-##  4     4    25 male   medium 
-##  5     5    25 male   medium 
-##  6     6    22 male   young  
-##  7     7    34 female old    
-##  8     8    19 female young  
-##  9     9    32 female old    
-## 10    10    34 male   old    
-## 11    11    34 female old    
-## 12    12    30 female old    
-## 13    13    34 male   old    
-## 14    14    29 female medium 
-## 15    15    23 male   medium 
-## 16    16    35 female old    
-## 17    17    29 female medium 
-## 18    18    34 female old    
-## 19    19    31 male   old    
-## 20    20    33 female old</code></pre>
+##  1     1    32 female old    
+##  2     2    34 female old    
+##  3     3    29 female medium 
+##  4     4    24 female medium 
+##  5     5    21 male   young  
+##  6     6    27 female medium 
+##  7     7    24 female medium 
+##  8     8    23 female medium 
+##  9     9    20 male   young  
+## 10    10    19 male   young  
+## 11    11    30 female old    
+## 12    12    25 male   medium 
+## 13    13    35 male   old    
+## 14    14    26 male   medium 
+## 15    15    29 female medium 
+## 16    16    30 female old    
+## 17    17    33 female old    
+## 18    18    21 female young  
+## 19    19    26 male   medium 
+## 20    20    33 male   old</code></pre>
 <p><code>case_when()</code> lets you specify all manner of logical statements, so you can let your heart go wild!</p>
 <pre class="r"><code># You will probably never need this specific coding
 # This is just to show how you can have slightly more complex logical statements
@@ -713,26 +709,26 @@ raw %&gt;%
 <pre><code>## # A tibble: 20 x 4
 ##       id   age gender age_gender
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;     
-##  1     1    31 male   old male  
-##  2     2    18 female female    
-##  3     3    31 male   old male  
-##  4     4    25 male   &lt;NA&gt;      
-##  5     5    25 male   &lt;NA&gt;      
-##  6     6    22 male   &lt;NA&gt;      
-##  7     7    34 female old female
-##  8     8    19 female female    
-##  9     9    32 female old female
-## 10    10    34 male   old male  
-## 11    11    34 female old female
-## 12    12    30 female old female
-## 13    13    34 male   old male  
-## 14    14    29 female female    
-## 15    15    23 male   &lt;NA&gt;      
-## 16    16    35 female old female
-## 17    17    29 female female    
-## 18    18    34 female old female
-## 19    19    31 male   old male  
-## 20    20    33 female old female</code></pre>
+##  1     1    32 female old female
+##  2     2    34 female old female
+##  3     3    29 female female    
+##  4     4    24 female female    
+##  5     5    21 male   &lt;NA&gt;      
+##  6     6    27 female female    
+##  7     7    24 female female    
+##  8     8    23 female female    
+##  9     9    20 male   &lt;NA&gt;      
+## 10    10    19 male   &lt;NA&gt;      
+## 11    11    30 female old female
+## 12    12    25 male   &lt;NA&gt;      
+## 13    13    35 male   old male  
+## 14    14    26 male   &lt;NA&gt;      
+## 15    15    29 female female    
+## 16    16    30 female old female
+## 17    17    33 female old female
+## 18    18    21 female female    
+## 19    19    26 male   &lt;NA&gt;      
+## 20    20    33 male   old male</code></pre>
 <p><strong>Important:</strong> <code>case_when()</code> evaluates its logical statements <em>in the order you specify them</em>, just like an if-else if statement. <strong>If you have some values for which multiple of your conditions are true, the values will be assigned to the first true condition listed in your statement.</strong> Observe the behavior of the following call, versus the one immediately above:</p>
 <pre class="r"><code># Now, ALL the values of age_gender where gender == &quot;female&quot; will be &quot;female&quot;,
 # because that condition was satisfied BEFORE the case_when() statement could check
@@ -746,26 +742,26 @@ raw %&gt;%
 <pre><code>## # A tibble: 20 x 4
 ##       id   age gender age_gender
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;     
-##  1     1    31 male   old male  
-##  2     2    18 female female    
-##  3     3    31 male   old male  
-##  4     4    25 male   &lt;NA&gt;      
-##  5     5    25 male   &lt;NA&gt;      
-##  6     6    22 male   &lt;NA&gt;      
-##  7     7    34 female female    
-##  8     8    19 female female    
-##  9     9    32 female female    
-## 10    10    34 male   old male  
-## 11    11    34 female female    
-## 12    12    30 female female    
-## 13    13    34 male   old male  
-## 14    14    29 female female    
-## 15    15    23 male   &lt;NA&gt;      
-## 16    16    35 female female    
-## 17    17    29 female female    
-## 18    18    34 female female    
-## 19    19    31 male   old male  
-## 20    20    33 female female</code></pre>
+##  1     1    32 female female    
+##  2     2    34 female female    
+##  3     3    29 female female    
+##  4     4    24 female female    
+##  5     5    21 male   &lt;NA&gt;      
+##  6     6    27 female female    
+##  7     7    24 female female    
+##  8     8    23 female female    
+##  9     9    20 male   &lt;NA&gt;      
+## 10    10    19 male   &lt;NA&gt;      
+## 11    11    30 female female    
+## 12    12    25 male   &lt;NA&gt;      
+## 13    13    35 male   old male  
+## 14    14    26 male   &lt;NA&gt;      
+## 15    15    29 female female    
+## 16    16    30 female female    
+## 17    17    33 female female    
+## 18    18    21 female female    
+## 19    19    26 male   &lt;NA&gt;      
+## 20    20    33 male   old male</code></pre>
 <p>As long as you remember that <code>case_when()</code> statements check conditions sequentially, and you’re deliberate when you specify conditions that might simultaneously be true, you should be okay.</p>
 <p>By the way, notice that a <code>case_when()</code> statement for the case where every logical condition is testing for equality with <code>==</code> is equivalent to calling <code>recode()</code> to do the same thing.</p>
 <pre class="r"><code>raw %&gt;%
@@ -776,26 +772,26 @@ raw %&gt;%
 <pre><code>## # A tibble: 20 x 3
 ##       id   age gender
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt; 
-##  1     1    31 M     
-##  2     2    18 F     
-##  3     3    31 M     
-##  4     4    25 M     
-##  5     5    25 M     
-##  6     6    22 M     
-##  7     7    34 F     
-##  8     8    19 F     
-##  9     9    32 F     
-## 10    10    34 M     
-## 11    11    34 F     
-## 12    12    30 F     
-## 13    13    34 M     
-## 14    14    29 F     
-## 15    15    23 M     
-## 16    16    35 F     
-## 17    17    29 F     
-## 18    18    34 F     
-## 19    19    31 M     
-## 20    20    33 F</code></pre>
+##  1     1    32 F     
+##  2     2    34 F     
+##  3     3    29 F     
+##  4     4    24 F     
+##  5     5    21 M     
+##  6     6    27 F     
+##  7     7    24 F     
+##  8     8    23 F     
+##  9     9    20 M     
+## 10    10    19 M     
+## 11    11    30 F     
+## 12    12    25 M     
+## 13    13    35 M     
+## 14    14    26 M     
+## 15    15    29 F     
+## 16    16    30 F     
+## 17    17    33 F     
+## 18    18    21 F     
+## 19    19    26 M     
+## 20    20    33 M</code></pre>
 <p>The above <code>case_when()</code> call is equivalent to the following <code>recode()</code> call:</p>
 <pre class="r"><code>raw %&gt;%
   distinct(id, age, gender) %&gt;%
@@ -805,26 +801,26 @@ raw %&gt;%
 <pre><code>## # A tibble: 20 x 3
 ##       id   age gender
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt; 
-##  1     1    31 M     
-##  2     2    18 F     
-##  3     3    31 M     
-##  4     4    25 M     
-##  5     5    25 M     
-##  6     6    22 M     
-##  7     7    34 F     
-##  8     8    19 F     
-##  9     9    32 F     
-## 10    10    34 M     
-## 11    11    34 F     
-## 12    12    30 F     
-## 13    13    34 M     
-## 14    14    29 F     
-## 15    15    23 M     
-## 16    16    35 F     
-## 17    17    29 F     
-## 18    18    34 F     
-## 19    19    31 M     
-## 20    20    33 F</code></pre>
+##  1     1    32 F     
+##  2     2    34 F     
+##  3     3    29 F     
+##  4     4    24 F     
+##  5     5    21 M     
+##  6     6    27 F     
+##  7     7    24 F     
+##  8     8    23 F     
+##  9     9    20 M     
+## 10    10    19 M     
+## 11    11    30 F     
+## 12    12    25 M     
+## 13    13    35 M     
+## 14    14    26 M     
+## 15    15    29 F     
+## 16    16    30 F     
+## 17    17    33 F     
+## 18    18    21 F     
+## 19    19    26 M     
+## 20    20    33 M</code></pre>
 <p>The <code>recode()</code> call is a lot less verbose. In the case where you can use <code>recode()</code> in place of <code>case_when()</code>, I recommend that. In situations where you need the full flexibility that <code>case_when()</code> affords you, then continue on your merry way!</p>
 </div>
 <div id="coalesce-and-na_if" class="section level4">
@@ -839,26 +835,26 @@ raw %&gt;%
 <pre><code>## # A tibble: 20 x 3
 ##       id gender female
 ##    &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; 
-##  1     1 male   &lt;NA&gt;  
+##  1     1 female female
 ##  2     2 female female
-##  3     3 male   &lt;NA&gt;  
-##  4     4 male   &lt;NA&gt;  
+##  3     3 female female
+##  4     4 female female
 ##  5     5 male   &lt;NA&gt;  
-##  6     6 male   &lt;NA&gt;  
+##  6     6 female female
 ##  7     7 female female
 ##  8     8 female female
-##  9     9 female female
+##  9     9 male   &lt;NA&gt;  
 ## 10    10 male   &lt;NA&gt;  
 ## 11    11 female female
-## 12    12 female female
+## 12    12 male   &lt;NA&gt;  
 ## 13    13 male   &lt;NA&gt;  
-## 14    14 female female
-## 15    15 male   &lt;NA&gt;  
+## 14    14 male   &lt;NA&gt;  
+## 15    15 female female
 ## 16    16 female female
 ## 17    17 female female
 ## 18    18 female female
 ## 19    19 male   &lt;NA&gt;  
-## 20    20 female female</code></pre>
+## 20    20 male   &lt;NA&gt;</code></pre>
 <p>Bear in mind that <code>na_if()</code> is a specialized case of <code>if_else(column == value_to_remove, NA, column)</code>, and so you should use <code>if_else()</code> if you want to replace things using any comparison other than direct equality.</p>
 <p>To replace missing values in a column with non-missing values, use <code>coalesce()</code>. You can use this a few ways.</p>
 <p>First off, you can replace all missing values with the same new value.</p>
@@ -870,26 +866,26 @@ raw %&gt;%
 <pre><code>## # A tibble: 20 x 4
 ##       id gender female gender2
 ##    &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  
-##  1     1 male   &lt;NA&gt;   male   
+##  1     1 female female female 
 ##  2     2 female female female 
-##  3     3 male   &lt;NA&gt;   male   
-##  4     4 male   &lt;NA&gt;   male   
+##  3     3 female female female 
+##  4     4 female female female 
 ##  5     5 male   &lt;NA&gt;   male   
-##  6     6 male   &lt;NA&gt;   male   
+##  6     6 female female female 
 ##  7     7 female female female 
 ##  8     8 female female female 
-##  9     9 female female female 
+##  9     9 male   &lt;NA&gt;   male   
 ## 10    10 male   &lt;NA&gt;   male   
 ## 11    11 female female female 
-## 12    12 female female female 
+## 12    12 male   &lt;NA&gt;   male   
 ## 13    13 male   &lt;NA&gt;   male   
-## 14    14 female female female 
-## 15    15 male   &lt;NA&gt;   male   
+## 14    14 male   &lt;NA&gt;   male   
+## 15    15 female female female 
 ## 16    16 female female female 
 ## 17    17 female female female 
 ## 18    18 female female female 
 ## 19    19 male   &lt;NA&gt;   male   
-## 20    20 female female female</code></pre>
+## 20    20 male   &lt;NA&gt;   male</code></pre>
 <p>You can also use <code>coalesce()</code> to zip together a series of vectors, where every time one has a missing value the other one has a non-missing value.</p>
 <pre class="r"><code>raw %&gt;%
   distinct(id, gender) %&gt;%
@@ -901,26 +897,26 @@ raw %&gt;%
 <pre><code>## # A tibble: 20 x 5
 ##       id gender female male  gender2
 ##    &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;  
-##  1     1 male   &lt;NA&gt;   male  male   
+##  1     1 female female &lt;NA&gt;  female 
 ##  2     2 female female &lt;NA&gt;  female 
-##  3     3 male   &lt;NA&gt;   male  male   
-##  4     4 male   &lt;NA&gt;   male  male   
+##  3     3 female female &lt;NA&gt;  female 
+##  4     4 female female &lt;NA&gt;  female 
 ##  5     5 male   &lt;NA&gt;   male  male   
-##  6     6 male   &lt;NA&gt;   male  male   
+##  6     6 female female &lt;NA&gt;  female 
 ##  7     7 female female &lt;NA&gt;  female 
 ##  8     8 female female &lt;NA&gt;  female 
-##  9     9 female female &lt;NA&gt;  female 
+##  9     9 male   &lt;NA&gt;   male  male   
 ## 10    10 male   &lt;NA&gt;   male  male   
 ## 11    11 female female &lt;NA&gt;  female 
-## 12    12 female female &lt;NA&gt;  female 
+## 12    12 male   &lt;NA&gt;   male  male   
 ## 13    13 male   &lt;NA&gt;   male  male   
-## 14    14 female female &lt;NA&gt;  female 
-## 15    15 male   &lt;NA&gt;   male  male   
+## 14    14 male   &lt;NA&gt;   male  male   
+## 15    15 female female &lt;NA&gt;  female 
 ## 16    16 female female &lt;NA&gt;  female 
 ## 17    17 female female &lt;NA&gt;  female 
 ## 18    18 female female &lt;NA&gt;  female 
 ## 19    19 male   &lt;NA&gt;   male  male   
-## 20    20 female female &lt;NA&gt;  female</code></pre>
+## 20    20 male   &lt;NA&gt;   male  male</code></pre>
 <p>Here’s a more explicit example of using <code>coalesce()</code> to zip together more than two vectors:</p>
 <pre class="r"><code>coalesce(c(1, NA, NA, NA, NA),
          c(NA, NA, NA, NA, 5),
@@ -958,7 +954,7 @@ summaries</code></pre>
 <pre><code>## # A tibble: 1 x 2
 ##   rt_mean rt_median
 ##     &lt;dbl&gt;     &lt;dbl&gt;
-## 1    3.02      3.09</code></pre>
+## 1    2.97      2.94</code></pre>
 <div id="special-versions-of-summarize" class="section level3">
 <h3>Special versions of summarize()</h3>
 <p><code>summarize()</code> lets you custom-specify every summary statistic you want to calculate, which is very nice indeed. Sometimes, however, you may have cases where you would like to calculate the same statistic(s) on very many variables, and you wouldn’t like to type each of those out. We can handle this!</p>
@@ -987,7 +983,7 @@ tibble(chars = letters[1:10],
 <pre><code>## # A tibble: 1 x 6
 ##   nums1_avg nums2_avg nums3_avg nums1_median nums2_median nums3_median
 ##       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
-## 1    -0.187      91.3      7.52       0.0447         85.9         11.6</code></pre>
+## 1    -0.232      96.2     0.405       -0.585         96.4         2.06</code></pre>
 <p>The first true argument of <code>summarize_if()</code> is <code>.predicate</code>, where you specify the tester function that should return <code>TRUE</code> or <code>FALSE</code> for every <strong>column</strong> in your starter df.</p>
 <p>The next argument is <code>.funs</code>, where you specify the summary function(s) you would like done to all of the columns for which <code>.predicate</code> returns <code>TRUE</code>. <code>dplyr</code> provides the helper function <code>funs()</code> to generate a list of function calls in the right format to be fed into <code>summarize_if()</code>. All you need is to specify the input function calls, each separated by a comma. The period <strong>.</strong> in the function calls represents “this df in which we are working”. This allows you to tell <code>tidyverse</code> functions which argument in your summary functions will receive the data from the starter df that’s being summarized. This is useful in cases where you have a summary function where the data isn’t the first argument; this way you can make sure the data to be summarized doesn’t get sent into the wrong argument and gum up the works.</p>
 <p>You can see that <code>funs()</code> allows you to name the function calls you enter inside it, and that <code>summarize_if()</code> automatically appends the provided names of functions to the output cols.</p>
@@ -1003,7 +999,7 @@ tibble(chars = letters[1:10],
 <pre><code>## # A tibble: 1 x 4
 ##   nums1_avg nums2_avg nums1_median nums2_median
 ##       &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
-## 1    -0.237      101.       -0.121         101.</code></pre>
+## 1    0.0482      94.4       -0.109         92.4</code></pre>
 <p>With <code>tidyselect</code> helpers:</p>
 <pre class="r"><code>tibble(chars = letters[1:10],
        nums1 = rnorm(10, mean = 0, sd = 1)) %&gt;%
@@ -1015,7 +1011,7 @@ tibble(chars = letters[1:10],
 <pre><code>## # A tibble: 1 x 4
 ##   nums1_avg nums2_avg nums1_median nums2_median
 ##       &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
-## 1    0.0457      101.       -0.151         97.1</code></pre>
+## 1     0.109      103.        0.109         111.</code></pre>
 <p>Note that here, you have to wrap your <code>tidyselect</code> call (in this case <code>starts_with()</code>) inside a <code>vars()</code> call. <code>dplyr::vars()</code> is a helper function that lets you use <code>tidyselect</code> helper functions inside other <code>tidyverse</code> functions that aren’t <code>select()</code>.</p>
 </div>
 </div>
@@ -1030,16 +1026,16 @@ raw %&gt;%
 ## # Groups:   id [20]
 ##       id   age gender   q_1   q_2   q_3 trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1     1    31 male    20.8  39.7  25.3         1      0        0 1.78 
-##  2     1    31 male    20.8  39.7  25.3         2      1        1 4.46 
-##  3     1    31 male    20.8  39.7  25.3         3      1        1 4.54 
-##  4     1    31 male    20.8  39.7  25.3         4      0        0 1.29 
-##  5     1    31 male    20.8  39.7  25.3         5      1        1 3.63 
-##  6     1    31 male    20.8  39.7  25.3         6      1        1 2.81 
-##  7     1    31 male    20.8  39.7  25.3         7      1        1 3.83 
-##  8     1    31 male    20.8  39.7  25.3         8      0        0 4.09 
-##  9     1    31 male    20.8  39.7  25.3         9      0        0 2.66 
-## 10     1    31 male    20.8  39.7  25.3        10      1        1 0.757
+##  1     1    32 female  19.2  30.2  21.8         1      1        1  3.83
+##  2     1    32 female  19.2  30.2  21.8         2      1        0  2.78
+##  3     1    32 female  19.2  30.2  21.8         3      0        0  4.94
+##  4     1    32 female  19.2  30.2  21.8         4      1        1  4.41
+##  5     1    32 female  19.2  30.2  21.8         5      1        0  2.85
+##  6     1    32 female  19.2  30.2  21.8         6      1        0  4.03
+##  7     1    32 female  19.2  30.2  21.8         7      1        1  5.36
+##  8     1    32 female  19.2  30.2  21.8         8      1        0  2.76
+##  9     1    32 female  19.2  30.2  21.8         9      0        0  3.08
+## 10     1    32 female  19.2  30.2  21.8        10      0        1  5.08
 ## # … with 990 more rows</code></pre>
 <p>You can group by as many variables as you would like. Each group will be composed of the observations belonging to one of the unique combinations of grouping variable levels present in your data.</p>
 <pre class="r"><code>raw %&gt;%
@@ -1048,16 +1044,16 @@ raw %&gt;%
 ## # Groups:   id, is_old [40]
 ##       id   age gender   q_1   q_2   q_3 trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1     1    31 male    20.8  39.7  25.3         1      0        0 1.78 
-##  2     1    31 male    20.8  39.7  25.3         2      1        1 4.46 
-##  3     1    31 male    20.8  39.7  25.3         3      1        1 4.54 
-##  4     1    31 male    20.8  39.7  25.3         4      0        0 1.29 
-##  5     1    31 male    20.8  39.7  25.3         5      1        1 3.63 
-##  6     1    31 male    20.8  39.7  25.3         6      1        1 2.81 
-##  7     1    31 male    20.8  39.7  25.3         7      1        1 3.83 
-##  8     1    31 male    20.8  39.7  25.3         8      0        0 4.09 
-##  9     1    31 male    20.8  39.7  25.3         9      0        0 2.66 
-## 10     1    31 male    20.8  39.7  25.3        10      1        1 0.757
+##  1     1    32 female  19.2  30.2  21.8         1      1        1  3.83
+##  2     1    32 female  19.2  30.2  21.8         2      1        0  2.78
+##  3     1    32 female  19.2  30.2  21.8         3      0        0  4.94
+##  4     1    32 female  19.2  30.2  21.8         4      1        1  4.41
+##  5     1    32 female  19.2  30.2  21.8         5      1        0  2.85
+##  6     1    32 female  19.2  30.2  21.8         6      1        0  4.03
+##  7     1    32 female  19.2  30.2  21.8         7      1        1  5.36
+##  8     1    32 female  19.2  30.2  21.8         8      1        0  2.76
+##  9     1    32 female  19.2  30.2  21.8         9      0        0  3.08
+## 10     1    32 female  19.2  30.2  21.8        10      0        1  5.08
 ## # … with 990 more rows</code></pre>
 <p>To remove grouping from your df, use <code>ungroup()</code>. No arguments needed!</p>
 <pre class="r"><code># Notice that the tibble output no longer tells you that groups are present in this df
@@ -1067,16 +1063,16 @@ raw %&gt;%
 <pre><code>## # A tibble: 1,000 x 10
 ##       id   age gender   q_1   q_2   q_3 trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1     1    31 male    20.8  39.7  25.3         1      0        0 1.78 
-##  2     1    31 male    20.8  39.7  25.3         2      1        1 4.46 
-##  3     1    31 male    20.8  39.7  25.3         3      1        1 4.54 
-##  4     1    31 male    20.8  39.7  25.3         4      0        0 1.29 
-##  5     1    31 male    20.8  39.7  25.3         5      1        1 3.63 
-##  6     1    31 male    20.8  39.7  25.3         6      1        1 2.81 
-##  7     1    31 male    20.8  39.7  25.3         7      1        1 3.83 
-##  8     1    31 male    20.8  39.7  25.3         8      0        0 4.09 
-##  9     1    31 male    20.8  39.7  25.3         9      0        0 2.66 
-## 10     1    31 male    20.8  39.7  25.3        10      1        1 0.757
+##  1     1    32 female  19.2  30.2  21.8         1      1        1  3.83
+##  2     1    32 female  19.2  30.2  21.8         2      1        0  2.78
+##  3     1    32 female  19.2  30.2  21.8         3      0        0  4.94
+##  4     1    32 female  19.2  30.2  21.8         4      1        1  4.41
+##  5     1    32 female  19.2  30.2  21.8         5      1        0  2.85
+##  6     1    32 female  19.2  30.2  21.8         6      1        0  4.03
+##  7     1    32 female  19.2  30.2  21.8         7      1        1  5.36
+##  8     1    32 female  19.2  30.2  21.8         8      1        0  2.76
+##  9     1    32 female  19.2  30.2  21.8         9      0        0  3.08
+## 10     1    32 female  19.2  30.2  21.8        10      0        1  5.08
 ## # … with 990 more rows</code></pre>
 <div id="mutating-grouped-data" class="section level3">
 <h3>Mutating grouped data</h3>
@@ -1104,16 +1100,16 @@ raw %&gt;%
 ## # Groups:   id [20]
 ##       id   age gender trial_num is_old response    rt rt_z_across[,1]
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;           &lt;dbl&gt;
-##  1     1    31 male           1      0        0 1.78           -0.807
-##  2     1    31 male           2      1        1 4.46            0.936
-##  3     1    31 male           3      1        1 4.54            0.991
-##  4     1    31 male           4      0        0 1.29           -1.12 
-##  5     1    31 male           5      1        1 3.63            0.398
-##  6     1    31 male           6      1        1 2.81           -0.134
-##  7     1    31 male           7      1        1 3.83            0.526
-##  8     1    31 male           8      0        0 4.09            0.701
-##  9     1    31 male           9      0        0 2.66           -0.234
-## 10     1    31 male          10      1        1 0.757          -1.47 
+##  1     1    32 female         1      1        1  3.83          0.583 
+##  2     1    32 female         2      1        0  2.78         -0.132 
+##  3     1    32 female         3      0        0  4.94          1.34  
+##  4     1    32 female         4      1        1  4.41          0.980 
+##  5     1    32 female         5      1        0  2.85         -0.0806
+##  6     1    32 female         6      1        0  4.03          0.721 
+##  7     1    32 female         7      1        1  5.36          1.62  
+##  8     1    32 female         8      1        0  2.76         -0.146 
+##  9     1    32 female         9      0        0  3.08          0.0753
+## 10     1    32 female        10      0        1  5.08          1.43  
 ## # … with 990 more rows, and 1 more variable: rt_z_within[,1] &lt;dbl&gt;</code></pre>
 <p>Here, <code>scale()</code> (a base R function to mean-center or z-score vectors) demonstrates different behavior when called on an ungrouped df (the first call) vs on a grouped df (the second call). In this case, the first call z-scores across <em>all observations in the vector, across subject,</em> while the second, grouped, call z-scores <em>independently within each subject.</em></p>
 <p>Sometimes, you’ll want to <code>mutate()</code> considering every observation in the df, and sometimes you’ll want to <code>mutate()</code> independently for each group in your df. You can do both! Just be mindful of the grouping status of your df at all times.</p>
@@ -1128,26 +1124,26 @@ raw %&gt;%
 <pre><code>## # A tibble: 20 x 2
 ##       id rt_median
 ##    &lt;int&gt;     &lt;dbl&gt;
-##  1     1      3.44
-##  2     2      3.01
-##  3     3      3.47
-##  4     4      2.49
-##  5     5      3.24
-##  6     6      3.13
-##  7     7      2.93
-##  8     8      2.93
-##  9     9      3.26
-## 10    10      2.81
-## 11    11      3.46
-## 12    12      2.87
-## 13    13      3.29
-## 14    14      3.24
-## 15    15      3.35
-## 16    16      2.55
-## 17    17      3.68
-## 18    18      2.75
-## 19    19      2.67
-## 20    20      3.40</code></pre>
+##  1     1      2.99
+##  2     2      3.34
+##  3     3      3.20
+##  4     4      3.16
+##  5     5      2.93
+##  6     6      3.14
+##  7     7      2.62
+##  8     8      2.92
+##  9     9      3.09
+## 10    10      2.85
+## 11    11      2.99
+## 12    12      2.40
+## 13    13      3.12
+## 14    14      2.85
+## 15    15      2.93
+## 16    16      3.40
+## 17    17      2.84
+## 18    18      2.97
+## 19    19      3.21
+## 20    20      2.86</code></pre>
 <p>Observe that the grouping variable is output by <code>summarize()</code> as well as the calculated summary statistic, because the values of the grouping variable are necessary to mark out which summary statistic belongs to which grouping levels.</p>
 <p>We shouldn’t be surprised about the output of <code>summarize()</code> when we feed in data that has been grouped by multiple variables.</p>
 <pre class="r"><code># for example, if you wanted to tabulate summary statistics for multiple conditions within subject
@@ -1159,16 +1155,16 @@ raw %&gt;%
 ## # Groups:   id [20]
 ##       id is_old rt_median
 ##    &lt;int&gt;  &lt;int&gt;     &lt;dbl&gt;
-##  1     1      0      3.21
-##  2     1      1      3.63
-##  3     2      0      2.97
-##  4     2      1      3.18
-##  5     3      0      2.83
-##  6     3      1      3.60
-##  7     4      0      3.08
-##  8     4      1      2.46
-##  9     5      0      3.11
-## 10     5      1      3.37
+##  1     1      0      2.90
+##  2     1      1      3.35
+##  3     2      0      3.39
+##  4     2      1      3.02
+##  5     3      0      2.93
+##  6     3      1      3.36
+##  7     4      0      3.23
+##  8     4      1      3.15
+##  9     5      0      2.52
+## 10     5      1      3.48
 ## # … with 30 more rows</code></pre>
 <p>The special summarizing functions, like <code>summarize_if()</code> and <code>summarize_at()</code>, will also obey grouping.</p>
 </div>
@@ -1225,12 +1221,12 @@ raw %&gt;%
 <pre><code>## # A tibble: 10 x 3
 ##    x         y     n
 ##    &lt;chr&gt; &lt;int&gt; &lt;int&gt;
-##  1 a         0     1
-##  2 a         1     2
-##  3 b         0     1
-##  4 b         1     2
-##  5 c         0     2
-##  6 c         1     1
+##  1 a         0     2
+##  2 a         1     1
+##  3 b         0     0
+##  4 b         1     3
+##  5 c         0     1
+##  6 c         1     2
 ##  7 d         0     1
 ##  8 d         1     2
 ##  9 e         0     1
@@ -1272,9 +1268,9 @@ crossing(x = letters[1:2], y = letters[3:4], z = 1:2)</code></pre>
 <pre><code>## # A tibble: 3 x 4
 ##      id rt_min rt_median rt_max
 ##   &lt;int&gt;  &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;
-## 1    13  0.335      3.29   5.65
-## 2    12 -0.163      2.87   5.29
-## 3     1  0.177      3.44   7.38</code></pre>
+## 1     3  0.176      3.20   5.84
+## 2    16  0.345      3.40   6.00
+## 3    13  0.779      3.12   7.41</code></pre>
 <p>You can see this df is wide, because different observations of summary RT (minimum, median, and maximum) are each in their own column. (This data does have the utility of having one row per subject. Wide data is not necessarily always bad!)</p>
 <p>When we <code>gather()</code> this wide df and thus make it long, we expect to have one column for RT, and another column indicating whether that RT is a minimum, median, or maximum.</p>
 <p><code>gather()</code> takes three main arguments (peep the other ones in the docs if you want to futz around):</p>
@@ -1289,34 +1285,34 @@ crossing(x = letters[1:2], y = letters[3:4], z = 1:2)</code></pre>
 
 summaries_long</code></pre>
 <pre><code>## # A tibble: 9 x 3
-##      id statistic     rt
-##   &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;
-## 1    13 rt_min     0.335
-## 2    13 rt_median  3.29 
-## 3    13 rt_max     5.65 
-## 4    12 rt_min    -0.163
-## 5    12 rt_median  2.87 
-## 6    12 rt_max     5.29 
-## 7     1 rt_min     0.177
-## 8     1 rt_median  3.44 
-## 9     1 rt_max     7.38</code></pre>
+##      id statistic    rt
+##   &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;
+## 1     3 rt_min    0.176
+## 2     3 rt_median 3.20 
+## 3     3 rt_max    5.84 
+## 4    16 rt_min    0.345
+## 5    16 rt_median 3.40 
+## 6    16 rt_max    6.00 
+## 7    13 rt_min    0.779
+## 8    13 rt_median 3.12 
+## 9    13 rt_max    7.41</code></pre>
 <p>To trim off prefixes of key/indicator variable, you can use the <code>names_prefix</code> argument to tell R to drop a particular string from the beginning of each column name before pivoting.</p>
 <pre class="r"><code>summaries_long &lt;- summaries %&gt;%
   pivot_longer(cols = starts_with(&quot;rt&quot;), names_to = &quot;statistic&quot;, values_to = &quot;rt&quot;, names_prefix = &quot;rt_&quot;)
 
 summaries_long</code></pre>
 <pre><code>## # A tibble: 9 x 3
-##      id statistic     rt
-##   &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;
-## 1    13 min        0.335
-## 2    13 median     3.29 
-## 3    13 max        5.65 
-## 4    12 min       -0.163
-## 5    12 median     2.87 
-## 6    12 max        5.29 
-## 7     1 min        0.177
-## 8     1 median     3.44 
-## 9     1 max        7.38</code></pre>
+##      id statistic    rt
+##   &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;
+## 1     3 min       0.176
+## 2     3 median    3.20 
+## 3     3 max       5.84 
+## 4    16 min       0.345
+## 5    16 median    3.40 
+## 6    16 max       6.00 
+## 7    13 min       0.779
+## 8    13 median    3.12 
+## 9    13 max       7.41</code></pre>
 <div id="pivot-longering-multiple-distinct-variables-at-once" class="section level3">
 <h3>Pivot-longering multiple distinct variables at once</h3>
 <p>You can also use <code>pivot_longer()</code> to pivot <em>multiple value variables at once.</em> If you have multiple unique variables in a wide df that are all bound by the same indicator conditions, you can modify the arguments of <code>pivot_longer()</code> and get the job done.</p>
@@ -1332,8 +1328,8 @@ summaries_qs</code></pre>
 <pre><code>## # A tibble: 2 x 7
 ##   gender q_1_min q_2_min q_3_min q_1_max q_2_max q_3_max
 ##   &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-## 1 female    12.5    20.2    19.6    51.4    46.7    45.6
-## 2 male      10.5    18.0    14.1    40.5    47.5    45.2</code></pre>
+## 1 female    13.5    5.74    9.32    40.7    50.1    49.6
+## 2 male      21.8   13.2    13.4     43.3    44.9    50.6</code></pre>
 <p>Say I want to get this into a long df where each questionnaire has its own column, and there’s one indicator column for whether the score is a minimum or maximum score, and that indicator corresponds across all three questionnaire columns.</p>
 <p><code>pivot_longer()</code> in its usual won’t get me all the way there:</p>
 <pre class="r"><code>summaries_qs %&gt;%
@@ -1341,18 +1337,18 @@ summaries_qs</code></pre>
 <pre><code>## # A tibble: 12 x 3
 ##    gender extreme q_score
 ##    &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt;
-##  1 female q_1_min    12.5
-##  2 female q_2_min    20.2
-##  3 female q_3_min    19.6
-##  4 female q_1_max    51.4
-##  5 female q_2_max    46.7
-##  6 female q_3_max    45.6
-##  7 male   q_1_min    10.5
-##  8 male   q_2_min    18.0
-##  9 male   q_3_min    14.1
-## 10 male   q_1_max    40.5
-## 11 male   q_2_max    47.5
-## 12 male   q_3_max    45.2</code></pre>
+##  1 female q_1_min   13.5 
+##  2 female q_2_min    5.74
+##  3 female q_3_min    9.32
+##  4 female q_1_max   40.7 
+##  5 female q_2_max   50.1 
+##  6 female q_3_max   49.6 
+##  7 male   q_1_min   21.8 
+##  8 male   q_2_min   13.2 
+##  9 male   q_3_min   13.4 
+## 10 male   q_1_max   43.3 
+## 11 male   q_2_max   44.9 
+## 12 male   q_3_max   50.6</code></pre>
 <p>You can see that the key/indicator column, <code>extreme</code>, actually contains information for two distinct variables: which questionnaire the score is from, AND which extreme the score is for. <code>pivot_longer()</code> can handle this, but we need to tell it where to get the names for all the new columns from, since there’s more than one value column now.</p>
 <p>Here, we feed a vector into the <code>names_to</code> argument, telling it which part of the old column names should go into the names column (here <code>extreme</code>) and which should be split out into value columns (with the special phrase <code>".value"</code>). Then we use <code>names_pattern</code> to specify capture groups to tell R how to break up the column names.</p>
 <pre class="r"><code>summaries_qs %&gt;%
@@ -1362,10 +1358,10 @@ summaries_qs</code></pre>
 <pre><code>## # A tibble: 4 x 5
 ##   gender extreme   q_1   q_2   q_3
 ##   &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 female min      12.5  20.2  19.6
-## 2 female max      51.4  46.7  45.6
-## 3 male   min      10.5  18.0  14.1
-## 4 male   max      40.5  47.5  45.2</code></pre>
+## 1 female min      13.5  5.74  9.32
+## 2 female max      40.7 50.1  49.6 
+## 3 male   min      21.8 13.2  13.4 
+## 4 male   max      43.3 44.9  50.6</code></pre>
 </div>
 </div>
 <div id="from-long-to-wide" class="section level2">
@@ -1384,20 +1380,20 @@ summaries_long %&gt;%
 <pre><code>## # A tibble: 3 x 4
 ##      id rt_min rt_median rt_max
 ##   &lt;int&gt;  &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;
-## 1    13  0.335      3.29   5.65
-## 2    12 -0.163      2.87   5.29
-## 3     1  0.177      3.44   7.38</code></pre>
+## 1     3  0.176      3.20   5.84
+## 2    16  0.345      3.40   6.00
+## 3    13  0.779      3.12   7.41</code></pre>
 <p><code>pivot_wider()</code> automatically sets the column names of the new wide-split columns to whatever the indicator values were in the key column. Keep this in mind if you’re modifying the indicator values to be cleaner–you may want to modify them again if you plan to spread your data, to put the name of the value back into the indicator conditions.</p>
 <p>For example, the below is nice in long form but a little less clear in wide form, because we now don’t necessarily know what the min/median/max are calculated on:</p>
 <pre class="r"><code>summaries %&gt;%
   pivot_longer(cols = starts_with(&quot;rt&quot;), names_to = &quot;statistic&quot;, values_to = &quot;rt&quot;, names_prefix = &quot;rt_&quot;) %&gt;%
   pivot_wider(names_from = statistic, values_from = rt)</code></pre>
 <pre><code>## # A tibble: 3 x 4
-##      id    min median   max
-##   &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-## 1    13  0.335   3.29  5.65
-## 2    12 -0.163   2.87  5.29
-## 3     1  0.177   3.44  7.38</code></pre>
+##      id   min median   max
+##   &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1     3 0.176   3.20  5.84
+## 2    16 0.345   3.40  6.00
+## 3    13 0.779   3.12  7.41</code></pre>
 <div id="pivot-widering-multiple-distinct-variables-at-once" class="section level3">
 <h3>Pivot-widering multiple distinct variables at once</h3>
 <p>Similarly to <code>pivot_longer()</code>, <code>pivot_wider()</code>’s default behavior is to only let you pivot one value column at a time. Again, if you want to widen multiple unique variables that have repeated measures over the same conditions, you can modify the arguments of <code>pivot_wider()</code> to achieve this.</p>
@@ -1413,8 +1409,8 @@ summaries_qs_long %&gt;%
 <pre><code>## # A tibble: 2 x 7
 ##   gender q_1_min q_1_max q_2_min q_2_max q_3_min q_3_max
 ##   &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-## 1 female    12.5    51.4    20.2    46.7    19.6    45.6
-## 2 male      10.5    40.5    18.0    47.5    14.1    45.2</code></pre>
+## 1 female    13.5    40.7    5.74    50.1    9.32    49.6
+## 2 male      21.8    43.3   13.2     44.9   13.4     50.6</code></pre>
 <p>If you want to change the separator character that splits up the new appended names, you can use the <code>names_sep</code> argument. As you can see here, the default separator is an underscore.</p>
 </div>
 </div>

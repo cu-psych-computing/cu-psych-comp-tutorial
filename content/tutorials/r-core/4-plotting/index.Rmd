@@ -10,18 +10,6 @@ library(tidyverse)
 library(here)
 ```
 
-<!-- Students: Please disregard this initial code. The R tutorial begins at Line 21. -->
-<div class="container">
-<div class="row">
-<div class="col-sm-3 sticky">
-<nav id="toc" data-toggle="toc" class="sticky-top" style="top:100px;"></nav>
-</div>
-<div class="col-sm-9" style="top:25px">
-
-## Return home
-
-Click [here](../..) to return to the main CU psychology R tutorials page.
-
 ## 0: What is this tutorial? What's ggplot2?
 
 ggplot2 is a package in R that allows for highly customizable and pretty plots! Here, were going to learn a few basics of making plots using ggplot that will hopefully get you well on your way to making informative and beautiful data visualizations!

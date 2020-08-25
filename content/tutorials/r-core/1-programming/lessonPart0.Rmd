@@ -25,14 +25,6 @@ tags: ["core", "r"]
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<!-- Students: Please disregard this initial code. The R tutorial begins at Line 36. -->
-<div class="container">
-<div class="row">
-<div class="col-sm-3 sticky">
-<nav id="toc" data-toggle="toc" class="sticky-top" style="top:100px;"></nav>
-</div>
-<div class="col-sm-9" style="top:25px">
-
 Welcome to the CU Psychology Scientific Computing workshop!
 
 Programming is telling a computer to do some action to some input info to get output info that you want. When it comes to working with data in R, programming is how we tell R to load data, process it, plot it, fit models to it, and so on (everything!). 

@@ -10,18 +10,6 @@ library(tidyverse)
 library(here)
 ```
 
-<!-- Students: Please disregard this initial code. The R tutorial begins at Line 21. -->
-<div class="container">
-<div class="row">
-<div class="col-sm-3 sticky">
-<nav id="toc" data-toggle="toc" class="sticky-top" style="top:100px;"></nav>
-</div>
-<div class="col-sm-9">
-
-# Return home
-
-Click [here](../..) to return to the main CU psychology R tutorials page.
-
 # Goals for this tutorial:
 
 1. Learn how to group and categorize data in R 
