@@ -1,0 +1,901 @@
+---
+title: "Tidy Walkthrough, Part 1"
+subtitle: "Data manipulation basics"
+author: "Monica Thieu"
+tags: ["extra", "R"]
+weight: 701
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(tidyverse)
+```
+
+# Goals for this vignette
+
+* Demonstrate (what I think are) key first-level features of the tidyverse
+* Illustrate psychology use cases for tidyverse functions
+* Hopefully convince you to join the cult of tidy
+
+We shall do this by walking through various use cases you might encounter with your data. I'll jump in with specific examples of functions when appropriate, to highlight solutions for particular situations you might run into with your own data.
+
+## Please keep in mind!
+
+This vignette is **not** intended to be an exhaustive walkthrough of all functions from the indicated `tidyverse` packages.
+
+For reference, please see the excellent reference pages online for the relevant package. For a more detailed self-teaching experience, please refer to the incredible [R for Data Science online textbook](http://r4ds.had.co.nz/){target="_blank"} by Garrett Grolemund and Hadley Wickham, which teaches using `tidyverse` functions.
+
+# Links to Files
+
+The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial){target="_blank"}. This particular file is located here: `/content/tutorials/r-extra/tidyverse-guide/tidyguide-1.rmd`.
+
+# Quick cheat-list of key functions from various pkgs
+
+Remember that each of these pkgs contain other functions too! Often these other functions are more specific use cases of the primary functions that crop up often enough that you'd want a separate function for them.
+
+To see all the functions in each pkg, visit their reference pages at [tidyverse.org](https://tidyverse.org){target="_blank"}! I love these reference pages so much.
+
+* `%>%`
+* `tidyr`
+    + `gather()` & `spread()` for making long and wide
+    + `separate()` & `unite()` for fixing key columns (pre/post-processing for `gather()`/`spread()`)
+    + `expand()`, `crossing()`, etc.-- like `expand.grid()` but a little more predictable
+* `dplyr`
+    + `select()`, `filter()`, `distinct()` for subsetting and reordering dfs/tibbles
+    + `group_by()`/`ungroup()` for setting groups
+    + `mutate()` for your column manipulation workhorse
+    + `summarize()` for squishing multiple rows down to summary statistics
+    + `arrange()` to sort dfs/tibbles more easily
+    
+# Brief intro to the pipe
+
+Before we begin...
+
+Enter the pipe `%>%`! The pipe does one simple, but key, thing: **takes the object on the left-hand side and feeds it into the first argument of the function on the right-hand side.** This means that:
+
+* `a %>% foo()` is equivalent to `foo(a)`. Fine and good
+* `a %>% foo() %>% bar(arg = TRUE)` is equivalent to `bar(foo(a), arg = TRUE)`. Now, nested function calls read left-to-right!
+* Most common use case: `df_new <- df_old %>% foo() %>% bar(arg = TRUE) %>% baz()` is equivalent to `df_new <- baz(bar(foo(df_old), arg = TRUE))`. Now, you can chain a series of preprocessing commands to operate on a dataframe all at once, and easily read those commands as typed in your script. No more accidentally not running some key preprocessing command that causes later code to break!
+
+Note that #pipelife requires functions to:
+
+* take as their first argument the object to be operated upon
+* return the same object (or an analog of said), but now operated upon
+
+Essentially all functions from the tidyverse are pipe-safe, but bear this in mind when trying to incorporate functions from base R or other packages into your tidy new world.
+
+# Initializing fake data
+
+We'll use a simulated dataset for this vignette, so you don't need to worry about any dependencies involving datasets you don't have access to while you're following along.
+
+Here, I'll simulate a recognition memory task, where each fake subject sees a series of objects, some they've seen before in a learning phase, and some they haven't. For each object, which is either old (they saw it before) or new (they did not see it before), subjects must respond "old" if they think they saw it before, or "new" if they think they didn't see it before. I'll also simulate some person-level demographic variables (age, gender) and trait variables (questionnaire scores).
+
+If you have `tidyverse` loaded, all this code should run if you try to run it in your R console. I'm using functions that I'll introduce later, so don't worry if you don't fully understand this right now! Feel free to skip past this.
+
+```{r}
+# 20 fake subjects, 50 fake trials per subject
+
+# Will simulate the person-level variables FIRST,
+# then expand to simulate the trial-level variables
+raw <- tibble(id = 1L:20L,
+              age = sample(18L:35L, size = 20, replace = TRUE),
+              # assuming binary gender for the purposes of this simulation
+              gender = sample(c("male", "female"), size = 20, replace = TRUE)) %>%
+  # simulating some "questionnaire" scores; person-level
+  mutate(q_1 = rnorm(n = n(), mean = 30, sd = 10),
+              q_2 = rnorm(n = n(), mean = 30, sd = 10),
+              q_3 = rnorm(n = n(), mean = 30, sd = 10)) %>%
+  # slice() subsets rows by position; you can use it to repeat rows by repeating position indices
+  slice(rep(1:n(), each = 50)) %>%
+  # We'll get to this in a bit--this causes every "group"
+  # aka every set of rows with the same value for "id", to behave as an independent df
+  group_by(id) %>%
+  # I just want to have a column for "trial order", I like those in my task data
+  mutate(trial_num = 1:n(),
+         # Each subject sees half OLD and half NEW trials in this recognition memory task
+         is_old = rep(0L:1L, times = n()/2),
+         # I'm shuffling the order of "old" and "new" trials in my fake memory task
+         is_old = sample(is_old),
+         # This will generate binary "old"/"new" responses corresponding roughly to a d' of 1
+         # yep, everyone has the same d' today
+         response = if_else(is_old == 1,
+                            rbinom(n = n(), size = 1, prob = 0.7),
+                            rbinom(n = n(), size = 1, prob = 0.3)),
+         rt = rnorm(n = n(), mean = 3, sd = 1.5)) %>%
+  ungroup()
+```
+
+# Loading data
+
+In today's example, we won't actually be loading any data, because we're generating simulated data. If you do have real data you're looking to analyze, though, chances are you have it saved in tabular form (e.g. a CSV) and you need to read it into R. You might be using something like  `base::read.csv()` to do this.
+
+As it happens, the tidyverse features a package, `readr`, which provides file reading functions that operate in the same family as `base::read.table()`, `base::read.csv()`, etc. I like to use these file reading functions, `readr::read_csv()` (note that `tidyverse` functions tend to use underscores instead of periods!) in particular, because they run a little more quickly and predictably than their base R counterparts.
+
+The command you'd use would look a little something like this, aka very similar to base R:
+
+```{r, eval = FALSE}
+data <- read_csv("/path/to/data.csv")
+```
+
+Features of `readr` file reading functions include:
+
+* default args:
+    + `header` always `TRUE`
+    + `stringsAsFactors` always `FALSE` (better safe than sorry!)
+* attempts to guess the data type of each column it reads and _tells you_ what data type it guessed for each one, **or** you can manually specify the data type of each column upon reading in the data
+* always returns a tibble
+
+Now, there will be cases when you need the fine-grained control over delimiter assumptions, header assumptions, and such that the base R file reading functions afford you. Most of the time, though, I find that `read_csv()` suits my needs well.
+
+**PS:** In our companion R package, [`cuPsychRTools`](https://github.com/cu-psych-r-users/cuPsychRTools){target="_blank"}, we provide helper functions like `read_csv_multi()`, which wraps `read_csv()` to allow you to specify a vector of files to read instead of just one file. This way, you can read in multiple data files that contain different observations of the same data (e.g. a psychological task run on multiple subjects, with each subject's data in a separate file) and have them all output into one very long df!
+
+# Visually inspecting data
+
+The tidyverse introduces the _tibble_ (via the `tibble` package, which is loaded automatically when you load the whole `tidyverse`). You can think of a tibble as a dataframe, but a little better. One of the reasons I like to work with tibbles is that visually inspecting them using the console is quite easy:
+
+```{r}
+raw
+```
+
+You can see that the default print output of tibbles is kind of like the output of `str()` on steroids.
+
+Compared to a dataframe, a tibble:
+
+* has a cleaner & more informative `print()` method
+    + automatically tells you the data type of each column
+    + prints only the top 10 rows for longer tibbles (but you can customize how many rows show)
+    + in some RStudio themes, prints numbers in certain colors to help you quickly identify negatives, decimals, etc
+* is stricter when you create tibbles using `tibble()`, or when you index (with [] or $)
+
+There are a couple other useful things that tibbles do that dataframes don't, but the strictness and the print method are the two most useful things that I find. As you'll see, imposing a bit more strictness on R can have the beneficial side effect of minimizing buggy cases in your own code, since you're forced to be more explicit.
+
+By the way, note that packages within the tidyverse work together--raw rectangular data read in using `readr` is given the tibble class by default.
+
+A tibble isn't too far off from a dataframe in its underlying properties, though.
+
+```{r}
+class(raw)
+```
+
+`"tbl_df"` is the class name for tibbles. As you can see, **tibbles still have the `"data.frame"` class, so they can do most anything dataframes do.** (There are the occasional older non-tidyverse functions that get confused when they see tibbles, and that's okay, you can always call `as.data.frame(your_tibble)` if you need to in a pinch.)
+
+Non-tibble dataframes can be coerced to tibble using `as_tibble()`. This shouldn't change any of the existing data type of any of the columns.
+
+**For the rest of this vignette, I will refer to data of a tabular structure (dataframe or tibble) as a _df_. Know that while the tidyverse is tibble-optimized, everything WORKS on a dataframe, so you can still think of your data structures as dataframes. Hence, I'll use the term _df_ to help you with mental consistency.**
+
+# Subsetting data
+
+We'll deal with subsetting dfs two ways: choosing a subset of columns and a subset of rows.
+
+## Subsetting by column
+
+`dplyr::select()` is the workhorse function for subsetting a df by column. You simply need to name the columns you would like to select!
+
+Note that these are **unquoted** variable names and not a character vector. Tidyverse functions allow you to call column names bare as variables inside of them.
+
+```{r}
+# This auto-indenting biz after the pipe works because the pipe is a left-right operator
+# Remember that raw is getting piped into select() as the first argument
+# so the only enumerated arguments inside select() are the columns of interest,
+# which is kind of nice!
+raw %>%
+  select(id, age, gender, trial_num, is_old, response, rt)
+```
+
+Note that you can use `select()` to _rename_ columns as well; simply put the new name in the argument name spot, and the old name in the argument value spot.
+
+```{r}
+# Renaming columns is so smooth in the tidyverse!
+raw %>%
+  select(subject_id = id, age, gender, trial_num, is_old, response, rt)
+```
+
+There also exists a version of `select()` called `rename()` which behaves exactly as `select()` does, except that `rename()` never subsets columns, and always gives you all the columns of your original df (renamed or otherwise).
+
+You can specify columns in `select()` by naming each individual column you want, or you can select groups of columns in the following ways.
+
+You can use the colon `:` to select all columns between the ones named, kind of like when creating integer vectors using the colon:
+
+```{r}
+raw %>%
+  select(id:gender)
+```
+
+You can also use any one of a series of special helper functions provided by `dplyr` to select columns in a regex-style way. Like so:
+
+```{r}
+raw %>%
+  select(id, starts_with("q"))
+```
+
+Check the the reference page for `tidyselect::select_helpers` to see all of these helper functions that are available to you.
+
+Note that the order in which you specify columns/helper calls determines the ordering of the columns in your output.
+
+```{r}
+raw %>%
+  select(gender, age, id)
+```
+
+In this way, you can explicitly use `select()` to reorder columns without dropping columns. To do this, use the `tidyselect` helper function `everything()`:
+
+```{r}
+raw %>%
+  select(id, gender, everything())
+```
+
+`everything()` essentially returns all the names of the other, not-explicitly-named columns, and keeps them all in their original order _minus_ the columns you explicitly specified. You can use this syntax to pull a selected number of columns to the far left of your df, and then leave all other columns in their previous order.
+
+You can also use `select()` to keep all columns _except_ ones you specify. For this, use the `-` operator like so:
+
+```{r}
+raw %>%
+  select(-gender)
+```
+
+You can combine the `-` with the `:` operator, or with one of the `tidyselect` helpers we saw before:
+
+```{r}
+raw %>%
+  select(-(trial_num:rt))
+```
+
+```{r}
+raw %>%
+  select(-starts_with("q"))
+```
+
+## Subsetting by row
+
+There are a number of `dplyr` functions which will, in some way, reduce the number of rows in your df.
+
+### Logical subsetting
+
+`filter()` will return a df subset for only those rows that return `TRUE` for the logical statements specified in its arguments.
+
+Notice that, as with other functions in the tidyverse, you call df columns as bare variable names, without needing `$` or `[]` indexing.
+
+```{r}
+raw %>%
+  filter(id == 13)
+```
+
+`filter()` takes logical statements with `&` and `|` in them like you might use in bracket indexing.
+
+```{r}
+# would I ordinarily use a %in% call for this?
+# Yes I would, but this is just to show how the or operator | works here
+raw %>%
+  filter(id == 13 | id == 17)
+```
+
+`filter()` also has a nice feature: specifying separate logical statements as separate arguments, separated by commas, implicitly acts like chaining the statements together with `&`, since the intersection of logical vectors is probably the most common use case for row subsetting.
+
+```{r}
+raw %>%
+  select(id, age, gender, trial_num, is_old, response, rt) %>%
+  filter(id == 13, is_old == 1)
+```
+
+### Subsetting rows by position
+
+Should you find this necessary, you can subset rows by numeric index using `dplyr::slice()`. It takes any numeric vector of valid indices as input.
+
+```{r}
+raw %>%
+  slice(351:360)
+```
+
+
+### Getting only unique/un-duplicated rows
+
+Another function that technically "subsets" data, but not logically: `distinct()` is the `dplyr` function for removing rows with duplicate observations.
+
+```{r}
+raw %>%
+  # First, I'm removing columns with trialwise observations so that all remaining values are in fact duplicated
+  select(id, gender, age) %>%
+  # the .keep_all argument specifies whether to drop columns that aren't being distinct-ed by
+  distinct(id, .keep_all = TRUE)
+```
+
+You can, of course, call `distinct()` on multiple columns, which will retain every unique combination of values in said columns once.
+
+```{r}
+raw %>%
+  # note that all other columns are now DROPPED
+  distinct(gender, age)
+```
+
+### Subsetting random rows
+
+This is something you might need to do on occasion. For example, sometimes when I want to plot single-subject data for just a few subjects from a dataset, I want to select a random subset of subjects so I'm not always just looking at the subjects who happened to be at the top of the df for whatever reason.
+
+`dplyr` contains the functions `sample_n()` and `sample_frac()`, which wrap `base::sample()` to let you quickly get a random subset of rows, specified either by number of rows to get or by fraction of total rows to get.
+
+Note that these work best if your df has one row per subject, because these behave a very particular way on [grouped dfs](#grouping) (more on these later).
+
+```{r}
+raw %>%
+  # this will create a df with only one row per subject
+  distinct(id, gender, age) %>%
+  sample_n(5)
+```
+
+## Subsetting by row and column simultaneously
+
+Thanks to the pipe `%>%`, you can chain a `select()` call with a `filter()` (or otherwise) call to subset by row and by column in the same command.
+
+In this case, order doesn't super matter, so it's a matter of personal preference as to which you ought to call first. I would generally recommend putting all renaming calls (if you are renaming any columns) as early as possible to allow the rest of the code to be consistent with itself re: column names.
+
+```{r}
+raw %>%
+  select(id, age, gender, trial_num, is_old, response, rt) %>%
+  filter(id == 13)
+```
+
+# Manipulating data
+
+`dplyr` is the home for most of the functions of the tidyverse that deal with manipulating your data in some kind of way--creating new data, calculating summary data, etc. We'll tour these functions by breaking them down into their use cases.
+
+## Creating/modifying columns
+
+`dplyr::mutate()` will be your workhorse function for creating new columns or modifying existing ones in a df.
+
+Inside of every `mutate()` call, as with previous `tidyverse` functions, column names are fed in as symbols (like variables, without quotes) without needing to $ index them from the parent df every time.
+
+```{r}
+raw %>%
+  # just to make the output narrower
+  select(-starts_with("q")) %>%
+  mutate(rt_ms = round(rt * 1000))
+```
+
+You can do anything inside a `mutate()` call that:
+
+* is totally element-wise
+* returns a vector of length 1 (this will recycle)
+* returns a vector of the same length as the total number of rows
+
+Like `tibble()` for creating tibbles, `mutate()` will _not_ recycle vectors longer than 1 but shorter than the input df. I like this behavior, as it has protected me on many occasions from creating columns that didn't contain what I meant them to! If you do have a vector that you WANT recycled into a column, I would feed that vector into `rep()` so that you can explicitly create an output vector of the right length.
+
+```{r, eval = FALSE}
+# This won't run
+raw %>%
+  distinct(id, gender, age) %>%
+  mutate(group = c("treatment", "control"))
+```
+
+```{r}
+# This will run, because I've wrapped the offending vector in rep() to force it to be the right length
+# you can use any of the rep() args to control the length of the output vector
+# I'll explain n() in a little bit also
+raw %>%
+  distinct(id, gender, age) %>%
+  mutate(group = rep(c("treatment", "control"), length.out = n()))
+```
+
+### Nice helpers
+
+This section features a bunch of handy functions you can use inside `mutate()` (but not exclusively! they work on any old vector too) to do all sorts of magical things. Again, this is not an exhaustive walkthrough of all the tidy functions you might find useful--this is a limited subset of functions/cases that I find myself running into regularly.
+
+#### n()
+
+`n()` is a shortcut (only usable inside other tidyverse functions, alas) that returns the number of rows in the current df. I find it a lot safer than using `length(my_df)` inside of calls operating on `my_df` (for example).
+
+You can call it inside of other functions inside of `mutate()` as well.
+
+```{r}
+raw %>%
+  # again, to make the print output narrower
+  select(-starts_with("q")) %>%
+  mutate(nrows = n())
+```
+
+Observe that the value of the column `nrows` is equal to the number of rows reported in the tibble output. You can use this number for all sorts of stuff--I frequently find myself creating a helper column in my dfs with the row index, by doing something like `my_df %>% mutate(index = 1:n())`.
+
+#### recode()
+
+`recode()` will point-replace specified values in a vector with other values. It's most useful when you would have otherwise used a series of nested if-else calls to reassign old values of your column to new values.
+
+It has a particular syntax: the _old_ values must be _argument names_ (on the left of the `=`) and formatted as bare variable names, and the _new_ values can be specified as strings or numbers respectively.
+
+As with other functions in the tidyverse, `recode()` won't let you try to put substitute values of different data types inside of it--all new values must be the same type.
+
+You also don't have to replace every existing value (you can leave values the way they are by just not listing them in the `recode()` call), but again, all values in the output vector must be the same data type.
+
+```{r}
+raw %>%
+  mutate(gender = recode(gender,
+                         male = "M",
+                         female = "F"))
+```
+
+Note that to call `recode()` on a numeric, or otherwise not variable-name-safe, input vector, you have to use backtick `` quotes to force the non-variable-able values to render as variables.
+
+```{r}
+raw %>%
+  mutate(is_old = recode(is_old,
+                         `1` = "old",
+                         `0` = "new"))
+```
+
+
+#### if_else() and case_when()
+
+`dplyr::if_else()` (again, observe the underscore in the function name) is a stricter & faster version of `base::ifelse()`, your workhorse conditional vector modifying function. In line with the tidy way, `if_else()` will yell at you if your values for `true` and `false` aren't the same data type, to try to protect you from accidental data typing disaster.
+
+```{r}
+raw %>%
+  distinct(id, age, gender) %>%
+  # I know being over 30 isn't OLD. Just for illustration!
+  mutate(age_bin = if_else(age >= 30,
+                           "old",
+                           "young"))
+```
+
+`dplyr::case_when()` is a function that lets you create a vector based on a switch statement. A switch statement is essentially a neater if-else if-else if-... statement, that lets you specify a series of conditions, one of which you'd expect to be true for each piece of data going in.
+
+Notice the particular syntax that `case_when()` expects to let it do its job: the logical statement is specified on the left, then a tilde `~`, then the desired output value on the right. The last logical statement, `TRUE ~ ...`, functions as a final "else" statement in this large if-else chain, which assigns a default output to any values that aren't `TRUE` for any other conditions in the statement. I like to have the final case either be `NA`, or the existing value of the old vector (if overwriting an existing vector).
+
+Below is one of my common use cases for `case_when()`--to bin numeric values. (I prefer using this to `base::cut()` because I find that this reads much more cleanly to my eyes.)
+
+```{r}
+raw %>%
+  distinct(id, age, gender) %>%
+  mutate(age_bin = case_when(age >= 30 ~ "old",
+                             age > 22 & age < 30 ~ "medium",
+                             age <= 22 ~ "young",
+                             TRUE ~ NA_character_))
+```
+
+`case_when()` lets you specify all manner of logical statements, so you can let your heart go wild!
+
+```{r}
+# You will probably never need this specific coding
+# This is just to show how you can have slightly more complex logical statements
+raw %>%
+  distinct(id, age, gender) %>%
+  mutate(age_gender = case_when(age >= 30 & gender == "male" ~ "old male",
+                                age >= 30 & gender == "female" ~ "old female",
+                                gender == "female" ~ "female",
+                                TRUE ~ NA_character_))
+```
+
+**Important:** `case_when()` evaluates its logical statements _in the order you specify them_, just like an if-else if statement. **If you have some values for which multiple of your conditions are true, the values will be assigned to the first true condition listed in your statement.** Observe the behavior of the following call, versus the one immediately above:
+
+```{r}
+# Now, ALL the values of age_gender where gender == "female" will be "female",
+# because that condition was satisfied BEFORE the case_when() statement could check
+# the age >= 30 & gender == "female" statement
+raw %>%
+  distinct(id, age, gender) %>%
+  mutate(age_gender = case_when(gender == "female" ~ "female",
+                                age >= 30 & gender == "male" ~ "old male",
+                                age >= 30 & gender == "female" ~ "old female",
+                                TRUE ~ NA_character_))
+```
+
+As long as you remember that `case_when()` statements check conditions sequentially, and you're deliberate when you specify conditions that might simultaneously be true, you should be okay.
+
+By the way, notice that a `case_when()` statement for the case where every logical condition is testing for equality with `==` is equivalent to calling `recode()` to do the same thing.
+
+```{r}
+raw %>%
+  distinct(id, age, gender) %>%
+  mutate(gender = case_when(gender == "male" ~ "M",
+                            gender == "female" ~ "F",
+                            TRUE ~ gender))
+```
+
+The above `case_when()` call is equivalent to the following `recode()` call:
+
+```{r}
+raw %>%
+  distinct(id, age, gender) %>%
+  mutate(gender = recode(gender,
+                         male = "M",
+                         female = "F"))
+```
+
+The `recode()` call is a lot less verbose. In the case where you can use `recode()` in place of `case_when()`, I recommend that. In situations where you need the full flexibility that `case_when()` affords you, then continue on your merry way!
+
+#### coalesce() and na_if()
+
+One thing you might find yourself doing a lot with `if_else()` calls is replacing values in a column with `NA`, or replacing `NA` values in a column with something else. `dplyr` helper functions are here to help you save a few keystrokes!
+
+To replace a particular value in a column with `NA`, use the aptly named `na_if()`.
+
+```{r}
+raw %>%
+  distinct(id, gender) %>%
+  # In this example, I'm saving the result into a new column,
+  # but you could easily overwrite the contents of an old column
+  mutate(female = na_if(gender, "male"))
+```
+
+Bear in mind that `na_if()` is a specialized case of `if_else(column == value_to_remove, NA, column)`, and so you should use `if_else()` if you want to replace things using any comparison other than direct equality.
+
+To replace missing values in a column with non-missing values, use `coalesce()`. You can use this a few ways.
+
+First off, you can replace all missing values with the same new value.
+
+```{r}
+raw %>%
+  distinct(id, gender) %>%
+  mutate(female = na_if(gender, "male"),
+         # See that I'm calling coalesce() on the column with NAs I just created
+         gender2 = coalesce(female, "male"))
+```
+
+You can also use `coalesce()` to zip together a series of vectors, where every time one has a missing value the other one has a non-missing value.
+
+```{r}
+raw %>%
+  distinct(id, gender) %>%
+  mutate(female = na_if(gender, "male"),
+         male = na_if(gender, "female"),
+         # notice that coalesce is being called on two columns,
+         # specified as bare variables
+         gender2 = coalesce(female, male))
+```
+
+Here's a more explicit example of using `coalesce()` to zip together more than two vectors:
+
+```{r}
+coalesce(c(1, NA, NA, NA, NA),
+         c(NA, NA, NA, NA, 5),
+         c(NA, NA, NA, 4, NA),
+         c(NA, NA, 3, NA, NA),
+         c(NA, 2, NA, NA, NA))
+```
+
+As with many other tidy functions, `coalesce()` obeys order, so if there are cases where more than one of your input vectors have a non-missing value, your output vector will take the value of the _first_ vector with an non-missing value.
+
+```{r}
+coalesce(c(1, NA, NA, NA, NA),
+         c(NA, 3, NA, NA, 5),
+         c(NA, NA, NA, 4, NA),
+         c(NA, NA, 3, NA, NA),
+         c(NA, 2, NA, NA, NA))
+```
+
+#### stringr
+
+If you don't already use `stringr`, it's a fantastic package in the tidyverse that makes string manipulation a breeze. Detecting string matches, subsetting strings, removing white space, you name it, `stringr` probably has a function for it!
+
+There won't be any code examples here because there are so many functions in this package that you might want to use that I don't know which ones to show. If you want to peruse what the package has to offer, please check out [the official `stringr` cheatsheet](https://github.com/rstudio/cheatsheets/blob/master/strings.pdf){target="_blank"} to get the full experience!
+
+## Calculating summary statistics
+
+Handily, `dplyr`'s general function for calculating summary statistics is `summarize()`! You can use this to generate any single summary value on a vector you can think of--mean, median, SD, you name it.
+
+What can you use to generate a summary statistic? In this case, _any function that operates on a vector (or multiple vectors) and returns a single value (length 1) as output._ Gotta be length 1!
+
+In `summarize()`, as in `mutate()`, the argument name will be the name of the new column generated by the code provided in the argument value.
+
+(If you DON'T specify the column name (by leaving the argument name empty), the code you provided to calculate the column will automatically be substituted in as the name for the column. Don't do this...)
+
+```{r}
+# Just trying not to overload any function names
+summaries <- raw %>%
+  summarize(rt_mean = mean(rt),
+            rt_median = median(rt))
+
+summaries
+```
+
+### Special versions of summarize()
+
+`summarize()` lets you custom-specify every summary statistic you want to calculate, which is very nice indeed. Sometimes, however, you may have cases where you would like to calculate the same statistic(s) on very many variables, and you wouldn't like to type each of those out. We can handle this!
+
+The two functions I use most often for this purpose are `summarize_if()` and `summarize_at()`.
+
+`summarize_if()` lets you specify summary functions, and then applies those functions to _every column in your starting df that meets some logical criteria._ For example, let's say you want to calculate the mean and median of every column in a df that contains numeric data.
+
+```{r}
+# Creating one character column and three numeric columns so you can see that the character column shan't appear in the output of summarize_if()
+tibble(chars = letters[1:10],
+       nums1 = rnorm(10, mean = 0, sd = 1)) %>%
+  mutate(nums2 = rnorm(n(), mean = 100, sd = 20),
+         nums3 = rnorm(n(), mean = 0, sd = 20)) %>%
+  summarize_if(is.numeric, funs(avg = mean(.),
+                                median = median(.)))
+```
+
+The first true argument of `summarize_if()` is `.predicate`, where you specify the tester function that should return `TRUE` or `FALSE` for every **column** in your starter df.
+
+The next argument is `.funs`, where you specify the summary function(s) you would like done to all of the columns for which `.predicate` returns `TRUE`. `dplyr` provides the helper function `funs()` to generate a list of function calls in the right format to be fed into `summarize_if()`. All you need is to specify the input function calls, each separated by a comma. The period **.** in the function calls represents "this df in which we are working". This allows you to tell `tidyverse` functions which argument in your summary functions will receive the data from the starter df that's being summarized. This is useful in cases where you have a summary function where the data isn't the first argument; this way you can make sure the data to be summarized doesn't get sent into the wrong argument and gum up the works.
+
+You can see that `funs()` allows you to name the function calls you enter inside it, and that `summarize_if()` automatically appends the provided names of functions to the output cols.
+
+The other specialty summarizing function, `summarize_at()`, does not use a logical predicate function to choose columns to summarize, but instead allows you to specify by name all the columns to summarize.
+
+Instead of specifying a function in `.predicate`, that argument is replaced with `.vars`, where you specify the variables you want. You can do this a couple of ways:
+
+With a character vector explicitly naming each column you want as a string:
+
+```{r}
+tibble(chars = letters[1:10],
+       nums1 = rnorm(10, mean = 0, sd = 1)) %>%
+  mutate(nums2 = rnorm(n(), mean = 100, sd = 20),
+         nums3 = rnorm(n(), mean = 0, sd = 20)) %>%
+  summarize_at(c("nums1", "nums2"), funs(avg = mean(.),
+                                         median = median(.)))
+```
+
+With `tidyselect` helpers:
+
+```{r}
+tibble(chars = letters[1:10],
+       nums1 = rnorm(10, mean = 0, sd = 1)) %>%
+  mutate(nums2 = rnorm(n(), mean = 100, sd = 20),
+         # This one doesn't start with "nums" like the other two do, notice!
+         numbers3 = rnorm(n(), mean = 0, sd = 20)) %>%
+  summarize_at(vars(starts_with("nums")), funs(avg = mean(.),
+                                               median = median(.)))
+```
+
+Note that here, you have to wrap your `tidyselect` call (in this case `starts_with()`) inside a `vars()` call. `dplyr::vars()` is a helper function that lets you use `tidyselect` helper functions inside other `tidyverse` functions that aren't `select()`.
+
+## Grouping
+
+`dplyr` supports _grouping_ within dfs/tibbles. This means that, if groups are defined in your df, all operations that in some way operate along the nrows of your df now operate _independently for each group._ Your df still looks the same, but this grouping metadata will affect the behavior of some other `dplyr` functions called on your data.
+
+To group your data, call `dplyr::group_by()`, listing the variable(s) you want to group by.
+
+```{r}
+# grouping by one variable
+raw %>%
+  group_by(id)
+```
+
+You can group by as many variables as you would like. Each group will be composed of the observations belonging to one of the unique combinations of grouping variable levels present in your data.
+
+```{r}
+raw %>%
+  group_by(id, is_old)
+```
+
+To remove grouping from your df, use `ungroup()`. No arguments needed!
+
+```{r}
+# Notice that the tibble output no longer tells you that groups are present in this df
+raw %>%
+  group_by(id, is_old) %>%
+  ungroup()
+```
+
+### Mutating grouped data
+
+If we think back to the two types of vector operations `mutate()` supports, you can think about how grouping affects these operations.
+
+* Grouping **does not** affect:
+    + truly element-wise operations
+    + operations returning a vector length 1
+* Grouping **does** affect:
+    + operations using all values in the column (z-scoring, ranking, etc)
+    + operations referencing the number of rows in the df (e.g. `n()`)
+
+For all operations that use all values in the column, grouping causes these operations _to see each group as if it were its own independent df._
+
+```{r}
+raw %>%
+  # Just to make the df narrower for printing
+  select(-starts_with("q")) %>%
+  mutate(rt_z_across = scale(rt)) %>%
+  group_by(id) %>%
+  mutate(rt_z_within = scale(rt))
+```
+
+Here, `scale()` (a base R function to mean-center or z-score vectors) demonstrates different behavior when called on an ungrouped df (the first call) vs on a grouped df (the second call). In this case, the first call z-scores across _all observations in the vector, across subject,_ while the second, grouped, call z-scores _independently within each subject._
+
+Sometimes, you'll want to `mutate()` considering every observation in the df, and sometimes you'll want to `mutate()` independently for each group in your df. You can do both! Just be mindful of the grouping status of your df at all times.
+
+### Summarizing grouped data
+
+Grouping is incredibly useful in conjunction with the `summarize()` functions, because it allows a smooth, modular way to specify when you want summary statistics calculated separately for every level of some grouping variable. 
+
+```{r}
+raw %>%
+  group_by(id) %>%
+  summarize(rt_median = median(rt))
+```
+
+Observe that the grouping variable is output by `summarize()` as well as the calculated summary statistic, because the values of the grouping variable are necessary to mark out which summary statistic belongs to which grouping levels.
+
+We shouldn't be surprised about the output of `summarize()` when we feed in data that has been grouped by multiple variables.
+
+```{r}
+# for example, if you wanted to tabulate summary statistics for multiple conditions within subject
+raw %>%
+  group_by(id, is_old) %>%
+  summarize(rt_median = median(rt))
+```
+
+The special summarizing functions, like `summarize_if()` and `summarize_at()`, will also obey grouping.
+
+### When to ungroup your df
+
+Some tidyverse functions either run more slowly on grouped data, or have unwanted behavior on grouped data. **For the following functions, I would recommend ungrouping your df before applying:**
+
+* `filter()`, because it runs rather slowly on grouped dfs
+    + UNLESS! You may want to filter your df based on rankings within a grouping variable (e.g. the row with the minimum RT for every subject). In this case, something like `filter(rt == min(rt))` would return one row per group if called on a grouped df.
+* `complete()` and `crossing()` from `tidyr` (more on these below)
+
+## Creating new rows
+
+### Repeating existing rows
+
+This strategy is inspired by a Stack Overflow post that I can't seem to find now, but I find this useful when I am generating simulated datasets with multilevel structure. Essentially, because `dplyr::slice()` and other numeric indexing methods (base R bracket indexing included) allow you to index the same position multiple times to get repeats in your output, you can repeat rows in your df by using `slice()` to index the same row multiple times.
+
+If you want to repeat every row in your df, you can use the below syntax to `rep()` every index in your df (`1:n()`) `each` number of times. Specifying `each` instead of `times` ensures that all repeats of the same row stay next to each other, which is useful if you use this strategy to expand simulated person-level data to accommodate multiple observations per person.
+
+```{r}
+tibble(x = letters[1:5]) %>%
+  slice(rep(1:n(), each = 3))
+```
+
+
+### Completing combinations of grouping variables
+
+There might be situations (particularly, those that are about to be fed into a `summarize()` call) where you want to complete combinations of grouping variables that might not exist in your data. For example, you might be working with a task where each trial can have a correct or incorrect response, and you'd like to use `summarize()` to count up the total number of correct and incorrect responses per person. If you have some star subject who gets all their trials correct, there will be no instances of that subject and the "incorrect" response value, so instead of showing a count of 0 rows, the summary will just be missing that row.
+
+After you've called `summarize()`, you can use `tidyr::complete()` to create all the grouping variable combos you might have been missing (because they had no instances to count).
+
+```{r}
+tibble(x = letters[1:5]) %>%
+  slice(rep(1:n(), each = 3)) %>%
+  mutate(y = rbinom(n(), 1, 0.5)) %>%
+  count(x, y) %>%
+  # complete() must be called on ungrouped data, otherwise it attempts to complete the groups independently, which means it doesn't recognize when one group has levels of a variable that another group doesn't have
+  ungroup() %>%
+  complete(x, y, fill = list(n = 0L))
+```
+
+More broadly, you can use `tidyr` functions to do what you might do using `base::expand.grid()`, but with a bit more control. `tidyr::crossing()` is directly analogous to `base::expand.grid()`, in that it will create every possible combination of each of the provided variable levels.
+
+```{r}
+# in crossing(), vectors listed first will repeat slowest
+crossing(x = letters[1:2], y = letters[3:4], z = 1:2)
+```
+
+# Reshaping data 
+
+`tidyr` provides the functions you'll need to reshape your data. Once you get the hang of them, hopefully you'll find the functions easy to use, because they have essentially no ancillary arguments specifying _how_ you want your data reshaped. Each of the tidy reshaping functions does only one thing, so what they lose in flexibility they gain in predictability, so you should get either what you expect, or an error, when you call these functions.
+
+## From wide to long
+
+`tidyr::pivot_longer()` is how we'll be taking data from wide form to long form. We'll take wide data that has different conditions of an observed/calculated variable in different columns, and make it long, so that all those values of the same variable are in one column, with another column indicating what condition that value comes form.
+
+(If you want a deeper review on tidy data structure, and what wide form and long form mean, read [this vignette](https://tidyr.tidyverse.org/articles/tidy-data.html){target="_blank"}.)
+
+In this example, I'm first going to calculate some related summary statistics on reaction time to create wide data, because our original trialwise data is in long form.
+
+```{r}
+summaries <- raw %>%
+  group_by(id) %>%
+  summarize(rt_min = min(rt),
+            rt_median = median(rt),
+            rt_max = max(rt)) %>%
+  # Note that I'm using sample_n() here to just make the output df shorter by selecting some subjs
+  sample_n(3)
+
+summaries
+```
+
+You can see this df is wide, because different observations of summary RT (minimum, median, and maximum) are each in their own column. (This data does have the utility of having one row per subject. Wide data is not necessarily always bad!)
+
+When we `gather()` this wide df and thus make it long, we expect to have one column for RT, and another column indicating whether that RT is a minimum, median, or maximum.
+
+`gather()` takes three main arguments (peep the other ones in the docs if you want to futz around):
+
+* `key`: you specify the name of the new column (doesn't exist yet!) containing your indicator variable for the conditions of your value variable
+* `value`: you specify the name of the column that contains values of the variable themselves
+* `...`: you specify all of the columns that actually contain values to be `gather()`-ed. Note that here, you can specify columns just as you would in `select()`, including using `tidyselect()` helpers.
+
+```{r}
+summaries_long <- summaries %>%
+  # if I wanted to use tidyselect helpers, I could use starts_with("rt") here
+  pivot_longer(cols = c(rt_min, rt_median, rt_max), names_to = "statistic", values_to = "rt")
+
+summaries_long
+```
+
+To trim off prefixes of key/indicator variable, you can use the `names_prefix` argument to tell R to drop a particular string from the beginning of each column name before pivoting.
+
+```{r}
+summaries_long <- summaries %>%
+  pivot_longer(cols = starts_with("rt"), names_to = "statistic", values_to = "rt", names_prefix = "rt_")
+
+summaries_long
+```
+
+### Pivot-longering multiple distinct variables at once
+
+You can also use `pivot_longer()` to pivot _multiple value variables at once._ If you have multiple unique variables in a wide df that are all bound by the same indicator conditions, you can modify the arguments of `pivot_longer()` and get the job done.
+
+Below, I'm first going to create a summary df where we have observations of multiple variables (in this case, the three "questionnaire" scores), and each has multiple observation conditions (the minimum and maximum score on that questionnaire within each gender). 
+
+```{r}
+summaries_qs <- raw %>%
+  select(id, gender, starts_with("q")) %>%
+  distinct(id, .keep_all = TRUE) %>%
+  group_by(gender) %>%
+  summarize_at(vars(starts_with("q")), funs(min = min(.),
+                                            max = max(.)))
+
+summaries_qs
+```
+
+Say I want to get this into a long df where each questionnaire has its own column, and there's one indicator column for whether the score is a minimum or maximum score, and that indicator corresponds across all three questionnaire columns.
+
+`pivot_longer()` in its usual won't get me all the way there:
+
+```{r}
+summaries_qs %>%
+  pivot_longer(cols = starts_with("q"), names_to = "extreme", values_to = "q_score")
+```
+
+You can see that the key/indicator column, `extreme`, actually contains information for two distinct variables: which questionnaire the score is from, AND which extreme the score is for. `pivot_longer()` can handle this, but we need to tell it where to get the names for all the new columns from, since there's more than one value column now.
+
+Here, we feed a vector into the `names_to` argument, telling it which part of the old column names should go into the names column (here `extreme`) and which should be split out into value columns (with the special phrase `".value"`). Then we use `names_pattern` to specify capture groups to tell R how to break up the column names.
+
+```{r}
+summaries_qs %>%
+  pivot_longer(cols = starts_with("q"),
+               names_to = c(".value", "extreme"),
+               names_pattern = "(._.*)_(.*)")
+```
+
+## From long to wide
+
+To go from long form to wide form, you'll use `tidyr::pivot_wider()`.
+
+`pivot_wider()`'s main arguments are analogous to `pivot_longer()`'s, but not exactly the same because you're doing something different:
+
+* `names_from`: the name of the _existing_ column that is the key/indicator column. You must specify this as a bare variable name, because you're referring to an existing column.
+* `values_from`: the name of the _existing_ value column. Again, specify as a bare variable name.
+
+```{r}
+summaries_long <- summaries %>%
+  pivot_longer(cols = starts_with("rt"), names_to = "statistic", values_to = "rt")
+
+summaries_long %>%
+  pivot_wider(names_from = statistic, values_from = rt)
+```
+
+`pivot_wider()` automatically sets the column names of the new wide-split columns to whatever the indicator values were in the key column. Keep this in mind if you're modifying the indicator values to be cleaner--you may want to modify them again if you plan to spread your data, to put the name of the value back into the indicator conditions.
+
+For example, the below is nice in long form but a little less clear in wide form, because we now don't necessarily know what the min/median/max are calculated on:
+
+```{r}
+summaries %>%
+  pivot_longer(cols = starts_with("rt"), names_to = "statistic", values_to = "rt", names_prefix = "rt_") %>%
+  pivot_wider(names_from = statistic, values_from = rt)
+```
+
+### Pivot-widering multiple distinct variables at once
+
+Similarly to `pivot_longer()`, `pivot_wider()`'s default behavior is to only let you pivot one value column at a time. Again, if you want to widen multiple unique variables that have repeated measures over the same conditions, you can modify the arguments of `pivot_wider()` to achieve this.
+
+With `pivot_wider()`, the main thing you change is to pass either a vector of column names or a `tidyselect` call to `values_from`, instead of just one column. With multiple columns going in as the argument, usually `pivot_wider()` knows how to pivot those columns and make their new names.
+
+```{r}
+summaries_qs_long <- summaries_qs %>%
+  pivot_longer(cols = starts_with("q"),
+               names_to = c(".value", "extreme"),
+               names_pattern = "(._.*)_(.*)")
+
+summaries_qs_long %>%
+  pivot_wider(names_from = extreme,
+              values_from = starts_with("q"))
+```
+
+If you want to change the separator character that splits up the new appended names, you can use the `names_sep` argument. As you can see here, the default separator is an underscore.
+
+# Coming up in part 2
+
+The next walkthrough will get into working with nested dfs, custom-vectorizing functions using `purrr::map()`, using dfs to store multiple model objects, and more.
+
+**Next:** [Tidy Walkthrough, Part 2](/tutorials/r-extra/tidyverse-guide/tidyguide-2/)

@@ -1,0 +1,202 @@
+---
+title: "Data Manipulation"
+subtitle: "CU Psych Scientific Computing Workshop"
+tags: ["core", "R"]
+weight: 300
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="goals-of-this-lesson" class="section level1">
+<h1>Goals of This Lesson</h1>
+<ol style="list-style-type: decimal">
+<li>Learn how to group and categorize data in R</li>
+<li>Learn how to generate descriptive statistics in R</li>
+</ol>
+</div>
+<div id="links-to-files" class="section level1">
+<h1>Links to Files</h1>
+<p>The files for all tutorials can be downloaded from <a href="https://github.com/cu-psych-computing/cu-psych-comp-tutorial" target="_blank">the Columbia Psychology Scientific Computing GitHub page</a>. This particular file is located here: <code>/content/tutorials/r-core/3-datamanipulation/index.rmd</code>.</p>
+</div>
+<div id="load-data" class="section level1">
+<h1>Load Data</h1>
+<p>This dataset examines the relationship between multitasking and working memory (<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4733435/pdf/nihms712443.pdf" target="_blank">link to the original paper by Uncapher et al., 2016</a>).</p>
+<pre class="r"><code># use read.csv function to open data into R 
+df &lt;- read_csv(here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;3-datamanipulation&quot;, &quot;uncapher_2016_repeated_measures_dataset.csv&quot;))
+
+# we will continue using tidyverse tools
+# so we have library()-ed tidyverse at the very top of this document</code></pre>
+</div>
+<div id="familiarizing-yourself-with-the-data" class="section level1">
+<h1>Familiarizing Yourself with the Data</h1>
+<p>Quick review from <a href="/tutorials/r-core/2-datacleaning/">data cleaning</a>: take a look at the basic data structure, number of rows and columns.</p>
+<pre class="r"><code># base R functions
+df</code></pre>
+<pre><code>## # A tibble: 136 x 17
+##    subjNum groupStatus numDist conf  hitCount allOldCount rtHit faCount
+##      &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1       6 HMM               0 hi          18          25 0.991       3
+##  2       6 HMM               6 hi          14          25 0.952       3
+##  3      10 HMM               0 hi           5          25 1.08        8
+##  4      10 HMM               6 hi           5          25 1.00        8
+##  5      14 HMM               0 hi           3          25 2.35        4
+##  6      14 HMM               6 hi           7          25 2.03        4
+##  7      15 HMM               0 hi          10          25 1.03        1
+##  8      15 HMM               6 hi           9          25 1.16        1
+##  9      20 HMM               0 hi           1          25 0.710       2
+## 10      20 HMM               6 hi           2          25 0.963       2
+## # … with 126 more rows, and 9 more variables: allNewCount &lt;dbl&gt;, rtFA &lt;dbl&gt;,
+## #   distPresent &lt;chr&gt;, hitRate &lt;dbl&gt;, faRate &lt;dbl&gt;, dprime &lt;dbl&gt;, mmi &lt;dbl&gt;,
+## #   adhd &lt;dbl&gt;, bis &lt;dbl&gt;</code></pre>
+<pre class="r"><code>nrow(df)</code></pre>
+<pre><code>## [1] 136</code></pre>
+<pre class="r"><code>ncol(df)</code></pre>
+<pre><code>## [1] 17</code></pre>
+<pre class="r"><code>names(df)</code></pre>
+<pre><code>##  [1] &quot;subjNum&quot;     &quot;groupStatus&quot; &quot;numDist&quot;     &quot;conf&quot;        &quot;hitCount&quot;   
+##  [6] &quot;allOldCount&quot; &quot;rtHit&quot;       &quot;faCount&quot;     &quot;allNewCount&quot; &quot;rtFA&quot;       
+## [11] &quot;distPresent&quot; &quot;hitRate&quot;     &quot;faRate&quot;      &quot;dprime&quot;      &quot;mmi&quot;        
+## [16] &quot;adhd&quot;        &quot;bis&quot;</code></pre>
+</div>
+<div id="selecting-relevant-variables" class="section level1">
+<h1>Selecting Relevant Variables</h1>
+<p>Sometimes datasets have many variables that are unnecessary for a given analysis. To simplify your life, and your code, we can select only the given variables we’d like to use for now.</p>
+<pre class="r"><code># tidyverse select() function 
+df &lt;- df %&gt;% 
+  select(subjNum, groupStatus, adhd, hitRate, faRate, dprime)</code></pre>
+</div>
+<div id="basic-descriptive-statistics" class="section level1">
+<h1>Basic Descriptive Statistics</h1>
+<div id="summarizing-data" class="section level2">
+<h2>Summarizing data</h2>
+<p>Let’s learn how to make simple tables of summary statistics.
+First, we will calculate summary info across all data using <code>summarize()</code>, a useful function for creating summaries. Like <code>mutate()</code>, it can take mutiple functions as arguments. Note that we’re not creating a new object for this summary (i.e. not using the <code>&lt;-</code> symbol), so this will print but not save.</p>
+<pre class="r"><code>df %&gt;% 
+  summarize(min_HR = min(hitRate, na.rm = T),
+            max_HR = max(hitRate, na.rm = T), 
+            mean_HR = mean(hitRate, na.rm= T), 
+            sd_HR = sd(hitRate, na.rm = T))</code></pre>
+<pre><code>## # A tibble: 1 x 4
+##   min_HR max_HR mean_HR sd_HR
+##    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+## 1 0.0577  0.788   0.351 0.153</code></pre>
+</div>
+</div>
+<div id="grouping-data" class="section level1">
+<h1>Grouping data</h1>
+<p>Next, we will learn how to group data based on certain variables of interest.</p>
+<p>We will use the <code>group_by()</code> function in tidyverse, which will automatically group any subsequent actions called on the data.</p>
+<pre class="r"><code>meanSummary &lt;- df %&gt;% 
+  # split the summary statistics by group 
+  group_by(groupStatus) %&gt;%
+  summarize(meanHitRate = mean(hitRate, na.rm= T), 
+            meanFalseAlarm= mean(faRate, na.rm= T),
+            meanDprime = mean(dprime, na.rm = T))</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<p>We can group data by more than one factor. Let’s say we’re interested in how levels of ADHD interact with <code>groupStatus</code> (multitasking: high or low). We will make a factor for ADHD (mean-split), and add it as a grouping variable.</p>
+<pre class="r"><code> df &lt;- df %&gt;% 
+   # if adhd score is lower than mean, label &quot;low&quot;, else label &quot;high&quot;&quot;
+   mutate(adhdF = if_else(adhd &lt; mean(adhd), &quot;Low&quot;, &quot;High&quot;)) 
+
+table(df$adhdF)</code></pre>
+<pre><code>## 
+## High  Low 
+##   66   70</code></pre>
+<p>Then we’ll check how evenly split these groups are.</p>
+<pre class="r"><code>df %&gt;%
+  # how many data points are in each group (adhdF x groupStatus)? n() will calculate this for us.
+  count(adhdF, groupStatus)</code></pre>
+<pre><code>## # A tibble: 4 x 3
+##   adhdF groupStatus     n
+##   &lt;chr&gt; &lt;chr&gt;       &lt;int&gt;
+## 1 High  HMM            44
+## 2 High  LMM            22
+## 3 Low   HMM            24
+## 4 Low   LMM            46</code></pre>
+<p>Then we’ll calculate some summary info on these groups.</p>
+<pre class="r"><code>df %&gt;%
+    group_by(adhdF, groupStatus) %&gt;%
+    summarize(meanHitRate = mean(hitRate, na.rm= T), 
+            meanFalseAlarm= mean(faRate, na.rm= T),
+            meanDprime = mean(dprime, na.rm = T))</code></pre>
+<pre><code>## `summarise()` regrouping output by &#39;adhdF&#39; (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 4 x 5
+## # Groups:   adhdF [2]
+##   adhdF groupStatus meanHitRate meanFalseAlarm meanDprime
+##   &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt;          &lt;dbl&gt;      &lt;dbl&gt;
+## 1 High  HMM               0.377         0.0900      1.15 
+## 2 High  LMM               0.288         0.0686      1.09 
+## 3 Low   HMM               0.287         0.0850      0.819
+## 4 Low   LMM               0.389         0.0780      1.30</code></pre>
+</div>
+<div id="extra-working-with-a-long-dataset" class="section level1">
+<h1>Extra: Working with a Long Dataset</h1>
+<p>This is a repeated measures (“long”) dataset, with multiple rows per subject. This makes things a bit tricker, but we are going to show you some tools for how to work with “long” datasets.</p>
+<div id="counting-unique-subjects" class="section level2">
+<h2>Counting unique subjects</h2>
+<pre class="r"><code># Get a list of subjects using unique()
+SubList &lt;- unique(df$subjNum)
+
+SubList</code></pre>
+<pre><code>##  [1]   6  10  14  15  20  22  26  37  41  42  43  49  52  56  63  67  69  71  72
+## [20]  85  90  97 108 110 114 115 118 121 125 127 138 139 141 142   2   5   9  11
+## [39]  21  24  29  30  36  39  47  48  53  62  66  74  75  77  78  80  81  88  91
+## [58]  96  99 102 104 105 120 122 124 131 132 136</code></pre>
+<pre class="r"><code># how many subjects are in this dataframe?
+Nsubs &lt;- length(SubList)</code></pre>
+</div>
+<div id="calculating-number-of-trials-per-subject" class="section level2">
+<h2>Calculating number of trials per subject</h2>
+<pre class="r"><code>df %&gt;%
+  count(subjNum)</code></pre>
+<pre><code>## # A tibble: 68 x 2
+##    subjNum     n
+##      &lt;dbl&gt; &lt;int&gt;
+##  1       2     2
+##  2       5     2
+##  3       6     2
+##  4       9     2
+##  5      10     2
+##  6      11     2
+##  7      14     2
+##  8      15     2
+##  9      20     2
+## 10      21     2
+## # … with 58 more rows</code></pre>
+</div>
+<div id="combining-summary-statistics-with-the-full-dataframe" class="section level2">
+<h2>Combining summary statistics with the full dataframe</h2>
+<p>For some analyses, you might want to add a higher level variable (e.g. subject average hitRate) alongside your long data. We can do this by using mutate instead of summarize. Note: you’ll have repeating values for the average column.</p>
+<pre class="r"><code>avgHR &lt;- df %&gt;% 
+  group_by(subjNum) %&gt;% 
+  mutate(avgHR = mean(hitRate, na.rm=T))
+
+# you should now have an avgHR column in df, which will repeat within each subject, but vary across subjects.</code></pre>
+</div>
+</div>
+<div id="saving-your-work" class="section level1">
+<h1>Saving Your Work</h1>
+<div id="saving-tables-into-.csv-files" class="section level2">
+<h2>Saving tables into .csv files</h2>
+<pre class="r"><code>basic_descriptives &lt;-  df %&gt;% 
+   # if adhd score is lower than mean, label &quot;low&quot;, else label &quot;high&quot;&quot;
+   mutate(adhdF = ifelse(adhd &lt; mean(adhd), &quot;Low&quot;, &quot;High&quot;)) %&gt;%
+  # split the summary statistics by group 
+  group_by(adhdF, groupStatus) %&gt;%
+  summarize(meanHitRate = mean(hitRate, na.rm= T), 
+            meanFalseAlarm= mean(faRate, na.rm= T),
+            meanDprime = mean(dprime, na.rm = T))</code></pre>
+<pre><code>## `summarise()` regrouping output by &#39;adhdF&#39; (override with `.groups` argument)</code></pre>
+<pre class="r"><code># use write.csv() or save() to save this out!
+# if you use save, you can combine the full data and descriptives into a tidy package.
+write_csv(basic_descriptives, path = here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;3-datamanipulation&quot;, &quot;myDescriptives.csv&quot;))
+save(basic_descriptives, df, file = here(&quot;content&quot;, &quot;tutorials&quot;,, &quot;r-core&quot;, &quot;3-datamanipulation&quot;, &quot;StudyData.rda&quot;))
+
+# Note: It will automatically save to your working directory unless you specify otherise 
+# remember to check your working directory, use here() 
+# If you don&#39;t want to save into your working directory,
+# add the path manually &quot;/dir/dir/dir/filename.csv&quot;</code></pre>
+<p><strong>Next:</strong> <a href="/tutorials/r-core/4-plotting/">Plotting (Graphing your data using <code>ggplot2</code>)</a></p>
+</div>
+</div>

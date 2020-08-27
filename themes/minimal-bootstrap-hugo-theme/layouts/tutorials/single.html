@@ -7,16 +7,21 @@
       <nav id="toc" data-toggle="toc" class="sticky-top" style="top:100px;"></nav>
     </div>
   <div class="col-sm-9">
+    
+{{ partial "breadcrumb.html" . }}
 
-<h1>{{ .Title | markdownify }}</h1>
+<h1 style="padding-bottom:0">{{ .Title | markdownify }}</h1>
 <p>
-  <small class="text-secondary">
+  {{ if isset .Params "author" }}
+  <b>Created by:</b> {{ .Params.author | markdownify }}  {{ end }}
+  <!--<small class="text-secondary">
   {{ $customDateFormat := "January 2, 2006" }}
   {{ with .Site.Params.customDateFormat }}{{ $customDateFormat = . }}{{ end }}
   {{ .PublishDate.Format $customDateFormat }}{{ if gt .Lastmod .PublishDate }}, updated {{ .Lastmod.Format $customDateFormat }}{{ end }}
-  </small>
+  </small>-->
   {{ partial "tags" . }}
 </p>
+<hr>
 {{ .Content }}
 
 {{- end -}}

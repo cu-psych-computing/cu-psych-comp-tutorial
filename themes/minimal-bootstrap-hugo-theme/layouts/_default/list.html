@@ -1,20 +1,24 @@
 {{- define "main" -}}
 
+{{ partial "breadcrumb.html" . }}
+
 <h1>{{ .Title }}</h1>
 
 {{ $pages := .Pages }}
-{{ range $pages.ByPublishDate.Reverse }}
+{{ range $pages.ByWeight }}
   <p>
-    <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
-    {{ $customDateFormat := "January 2, 2006" }}
-    {{ with .Site.Params.customDateFormat }}{{ $customDateFormat = . }}{{ end }}
-    <br>
-    <small class="text-secondary">{{ .PublishDate.Format $customDateFormat }}</small>
-    {{ partial "tags" . }}
-    {{ if eq .Site.Params.showPostSummary true }}
-    <br>
-    {{ .Summary }}
-    {{ end }}
+    <ul>
+      <li><a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
+      {{ $customDateFormat := "January 2, 2006" }}
+      {{ with .Site.Params.customDateFormat }}{{ $customDateFormat = . }}{{ end }}
+      <br>
+      <!--<small class="text-secondary">{{ .PublishDate.Format $customDateFormat }}</small>-->
+      {{ partial "tags" . }}
+      {{ if eq .Site.Params.showPostSummary true }}
+      <br>
+      {{ .Summary }}
+      {{ end }}</li>
+    </ul>
   </p>
 {{ end }}
 

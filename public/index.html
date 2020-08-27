@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
-  <meta name="generator" content="Hugo 0.74.3" />
+  <meta name="generator" content="Hugo 0.67.1" />
 
   
   <meta name="description" content="CU Psychology Scientific Computing">
@@ -132,6 +132,29 @@ a:focus {
   color: #007bff;
 }
 
+.dropdown-menu {
+  margin-top: 10px;
+  padding: 10px 3%;
+  margin-bottom: 1em;
+  background-color: #f8f9fa;
+  box-shadow: 0 1px 3px rgba(0,0,0,.11);
+  font-size: 14px;
+  border-radius: 0;
+  border-style: none;
+}
+
+.dropdown-toggle::after {
+    content: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .dropdown-menu {
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+}
+
 @media print {
   .navbar {
     display: none;
@@ -211,7 +234,7 @@ blockquote,
   bottom: 0;
 }
 
-@media only screen and (max-width: 991px) {
+@media only screen and (max-width: 768px) {
   .footer {
     position: static;
   }
@@ -229,6 +252,13 @@ div .highlightsec {
   border-left:solid #007bff 3px;
 }
 
+div .breadcrumb {
+  background-color: #fff;
+  margin: 0;
+  padding: 20px 0 0 0;
+  font-size: 12px;
+}
+
 .accordion .card,
 .accordion .card:last-child .card-header {
   border: none;
@@ -242,6 +272,7 @@ div .highlightsec {
 
 .accordion .card-header h2 {
   margin: 0;
+  padding: 0;
 }
 
 .accordion .btn-link,
@@ -298,15 +329,6 @@ nav[data-toggle=toc] .nav-link.active, nav[data-toggle=toc] .nav-link.active:foc
           
               
         <li class="nav-item">
-          <a class="nav-link" href="./">
-            
-              <span>Home</span>
-          </a>
-        </li>
-          
-        
-              
-        <li class="nav-item">
           <a class="nav-link" href="./who/">
             
               <span>Who We Are</span>
@@ -333,13 +355,21 @@ nav[data-toggle=toc] .nav-link.active, nav[data-toggle=toc] .nav-link.active:foc
           
         
               
-        <li class="nav-item">
-          <a class="nav-link" href="./tutorials/">
-            
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="./tutorials/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+              
               <span>Tutorials</span>
-          </a>
+                </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              
+            <a class="dropdown-item" href="./tutorials/r-core/">Introductory R Tutorial</a>
+              
+            <a class="dropdown-item" href="./tutorials/r-extra/">Additional R Tutorials</a>
+              
+          </div>
         </li>
-          
+        
         
               
         <li class="nav-item">
@@ -413,25 +443,25 @@ nav[data-toggle=toc] .nav-link.active, nav[data-toggle=toc] .nav-link.active:foc
 <div id="intro-to-programming-and-data-cleaning-in-r" class="section level3">
 <h3>Intro to Programming and Data Cleaning in R</h3>
 <p>
-<a href="./tutorials/r-core/1-programming/lessonPart0/" target="_blank">Acquainting Yourself with RStudio</a>
+<a href="./tutorials/r-core/1-programming/lessonpart0/" target="_blank">Programming, Part 0 (Finding your way around RStudio)</a>
 </p>
 <p>
-<a href="./tutorials/r-core/1-programming/lessonPart1/" target="_blank">Intro to Programming and Data Cleaning in R, Part 1</a>
+<a href="./tutorials/r-core/1-programming/lessonpart1/" target="_blank">Programming, Part 1 (Variables, data types, vectors)</a>
 </p>
 <p>
-<a href="./tutorials/r-core/1-programming/lessonPart2/" target="_blank">Intro to Programming and Data Cleaning in R, Part 2</a>
+<a href="./tutorials/r-core/1-programming/lessonpart2/" target="_blank">Programming, Part 2 (Coding strategy, relational &amp; logical operators)</a>
 </p>
 </div>
 <div id="data-manipulation-and-plotting-in-r" class="section level3">
 <h3>Data Manipulation and Plotting in R</h3>
 <p>
-<a href="./tutorials/r-core/2-dataCleaning/" target="_blank">Data Cleaning in R</a>
+<a href="./tutorials/r-core/2-datacleaning/" target="_blank">Data Cleaning</a>
 </p>
 <p>
-<a href="./tutorials/r-core/3-descriptives/" target="_blank">Data Manipulation in R</a>
+<a href="./tutorials/r-core/3-datamanipulation/" target="_blank">Data Manipulation</a>
 </p>
 <p>
-<a href="./tutorials/r-core/4-plotting/" target="_blank">Plotting in R with <code>ggplot2</code></a>
+<a href="./tutorials/r-core/4-plotting/" target="_blank">Plotting with <code>ggplot2</code></a>
 </p>
 </div>
 <div id="intro-to-data-cleaning-manipulation-and-plotting-in-python" class="section level3">
@@ -440,13 +470,13 @@ nav[data-toggle=toc] .nav-link.active, nav[data-toggle=toc] .nav-link.active:foc
 <a href="./python/1_r2PythonTranslation/2_introProgramming.html" target="_blank">Intro to Python for R Users</a>
 </p>
 <p>
-<a href="./python/2_dataCleaning/lesson.html" target="_blank">Data Cleaning in Python</a>
+<a href="./python/2_dataCleaning/lesson.html" target="_blank">Data Cleaning</a>
 </p>
 <p>
-<a href="./python/3_descriptives/lesson.html" target="_blank">Data Manipulation in Python</a>
+<a href="./python/3_descriptives/lesson.html" target="_blank">Data Manipulation</a>
 </p>
 <p>
-<a href="./python/4_plotting/lesson.html" target="_blank">Plotting in Python with <code>seaborn</code></a>
+<a href="./python/4_plotting/lesson.html" target="_blank">Plotting with <code>seaborn</code></a>
 </p>
 </div>
 </div>
@@ -457,31 +487,31 @@ nav[data-toggle=toc] .nav-link.active, nav[data-toggle=toc] .nav-link.active:foc
 <div id="accelerated-ggplot2" class="section level3">
 <h3>Accelerated <code>ggplot2</code></h3>
 <p>
-<a href="./R/ggplotExtra/ggplot_summer2018_part1.html" target="_blank">Basic plotting in <code>ggplot2</code></a>
+<a href="./tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part1/" target="_blank">Basic Plotting in <code>ggplot2</code></a>
 </p>
 <p>
-<a href="./R/ggplotExtra/ggplot_summer2018_part2.html" target="_blank">More advanced <code>ggplot2</code>-ing (plotting using model fits + raw data)</a>
+<a href="./tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part2/" target="_blank">More Advanced <code>ggplot2</code> Plotting (Plotting with models)</a>
 </p>
 </div>
 <div id="a-guided-tour-of-the-tidyverse" class="section level3">
 <h3>A Guided Tour of the <code>tidyverse</code></h3>
 <p>
-<a href="./tutorials/r-extra/tidyverse-guide/tidyguide-1/" target="_blank">Data manipulation basics</a>
+<a href="./tutorials/r-extra/tidyverse-guide/tidyguide-1/" target="_blank">Tidy Walkthrough, Part 1 (Data manipulation basics)</a>
 </p>
 <p>
-<a href="./tutorials/r-extra/tidyverse-guide/tidyguide-2/" target="_blank">Nested dfs, <code>map</code>-ing, and more</a>
+<a href="./tutorials/r-extra/tidyverse-guide/tidyguide-2/" target="_blank">Tidy Walkthrough, Part 2 (Nested dfs, <code>map</code>-ing, and more)</a>
 </p>
 </div>
 <div id="additional-tutorials" class="section level3">
 <h3>Additional Tutorials</h3>
 <p>
-<a href="./R/simulation/basicSimulationPower.html" target="_blank">Basic data simulation &amp; power analysis</a>
+<a href="./tutorials/r-extra/data-sim-power/basic-simulation-power/" target="_blank">Basic Data Simulation &amp; Power Analysis</a>
 </p>
 <p>
-<a href="./R/brms/multilevelModelsWithBrms.html" target="_blank">Multilevel modeling with <code>brms</code> (focus on partial pooling)</a>
+<a href="./tutorials/r-extra/brms/multilevel-models-with-brms/" target="_blank">Bayseian Multilevel Modeling with <code>brms</code> (Focus on partial pooling)</a>
 </p>
 <p>
-<a href="./R/Rmarkdown/example-r-markdown.html" target="_blank">Intro to RMarkdown</a>
+<a href="./tutorials/r-extra/rmarkdown/intro-to-rmarkdown/" target="_blank">Intro to RMarkdown</a>
 </p>
 <hr />
 <p style="text-align:center;">
@@ -498,6 +528,10 @@ nav[data-toggle=toc] .nav-link.active, nav[data-toggle=toc] .nav-link.active:foc
 
 <footer class="footer">
   © 2020 Columbia Psychology Scientific Computing
+  <script src="//yihui.org/js/math-code.js"></script>
+  <script async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
 </footer>
 
 </html>
