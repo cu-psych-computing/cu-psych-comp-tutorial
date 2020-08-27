@@ -26,33 +26,39 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 [menu]
   [[menu.main]]
-  name = "Home"
-  url = "/"
-  weight = 1
-  [[menu.main]]
   name = "Who We Are"
   url = "/who/"
-  weight = 2
+  weight = 200
   [[menu.main]]
   name = "Workshop"
   url = "/workshop/"
-  weight = 3
+  weight = 300
   [[menu.main]]
   name = "Meetings"
   url = "/meetings/"
-  weight = 4
+  weight = 400
   [[menu.main]]
   name = "Tutorials"
   url = "/tutorials/"
-  weight = 5
+  weight = 500
+  [[menu.main]]
+  name = "Introductory R Tutorial"
+  url = "/tutorials/r-core/"
+  weight = 501
+  parent = "Tutorials"
+  [[menu.main]]
+  name = "Additional R Tutorials"
+  url = "/tutorials/r-extra/"
+  weight = 502
+  parent = "Tutorials"
   [[menu.main]]
   name = "Resources"
   url = "/resources/"
-  weight = 6
+  weight = 600
   [[menu.main]]
   name = "License"
   url = "/license/"
-  weight = 7
+  weight = 700
 
 [markup]
   defaultMarkdownHandler = "goldmark"

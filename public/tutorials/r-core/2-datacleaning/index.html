@@ -130,6 +130,29 @@ a:focus {
   color: #007bff;
 }
 
+.dropdown-menu {
+  margin-top: 10px;
+  padding: 10px 3%;
+  margin-bottom: 1em;
+  background-color: #f8f9fa;
+  box-shadow: 0 1px 3px rgba(0,0,0,.11);
+  font-size: 14px;
+  border-radius: 0;
+  border-style: none;
+}
+
+.dropdown-toggle::after {
+    content: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .dropdown-menu {
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+}
+
 @media print {
   .navbar {
     display: none;
@@ -209,7 +232,7 @@ blockquote,
   bottom: 0;
 }
 
-@media only screen and (max-width: 991px) {
+@media only screen and (max-width: 768px) {
   .footer {
     position: static;
   }
@@ -304,15 +327,6 @@ nav[data-toggle=toc] .nav-link.active, nav[data-toggle=toc] .nav-link.active:foc
           
               
         <li class="nav-item">
-          <a class="nav-link" href="../../../">
-            
-              <span>Home</span>
-          </a>
-        </li>
-          
-        
-              
-        <li class="nav-item">
           <a class="nav-link" href="../../../who/">
             
               <span>Who We Are</span>
@@ -339,13 +353,21 @@ nav[data-toggle=toc] .nav-link.active, nav[data-toggle=toc] .nav-link.active:foc
           
         
               
-        <li class="nav-item">
-          <a class="nav-link" href="../../../tutorials/">
-            
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="../../../tutorials/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+              
               <span>Tutorials</span>
-          </a>
+                </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              
+            <a class="dropdown-item" href="../../../tutorials/r-core/">Introductory R Tutorial</a>
+              
+            <a class="dropdown-item" href="../../../tutorials/r-extra/">Additional R Tutorials</a>
+              
+          </div>
         </li>
-          
+        
         
               
         <li class="nav-item">
