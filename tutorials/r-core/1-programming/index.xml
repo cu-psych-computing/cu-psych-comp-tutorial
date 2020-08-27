@@ -11,7 +11,7 @@
     
     
     <item>
-      <title>Programming, pt 0</title>
+      <title>Programming, Part 0</title>
       <link>/tutorials/r-core/1-programming/lessonpart0/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -22,24 +22,23 @@ In this first section of our tutorial, we will learn about this info that goes i
     </item>
     
     <item>
-      <title>Programming, pt 1</title>
+      <title>Programming, Part 1</title>
       <link>/tutorials/r-core/1-programming/lessonpart1/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/1-programming/lessonpart1/</guid>
       <description>Welcome (back) to the CU Psychology Scientific Computing Workshop! As a reminder, the documents for the introduction to programming cover the following:
-Finding your way around RStudio Variables, data types, vectors this document! Coding strategy, relational &amp;amp; logical operators  Variables  a variable is how we store information in a way that the computer can operate on it has a value: the info itself and a name: the cue by which we call upon the info to the computer  If you think about how variables like x and y are used in algebra, calculus, etc, that can be a useful way to conceptualize them.</description>
+ Programming, Part 0: Finding your way around RStudio Programming, Part 1: Variables, data types, vectors (this document!) Programming, Part 2: Coding strategy, relational &amp;amp; logical operators  Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/1-programming/lessonpart1.</description>
     </item>
     
     <item>
-      <title>Programming, pt 2</title>
+      <title>Programming, Part 2</title>
       <link>/tutorials/r-core/1-programming/lessonpart2/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/1-programming/lessonpart2/</guid>
       <description>Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder, the documents for the introduction to programming cover the following:
-Finding your way around RStudio Variables, data types, vectors Coding strategy, relational &amp;amp; logical operators this document!  Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things!
-Pseudocode This is so important to do before you write a single line of code.</description>
+ Programming, Part 0: Finding your way around RStudio Programming, Part 1: Variables, data types, vectors Programming, Part 2: Coding strategy, relational &amp;amp; logical operators (this document!)  Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things!</description>
     </item>
     
   </channel>

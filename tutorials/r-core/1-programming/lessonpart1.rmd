@@ -1,0 +1,460 @@
+---
+title: "Programming, Part 1"
+subtitle: "CU Psych Scientific Computing Workshop"
+author: "Monica Thieu"
+tags: ["core", "r"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+Welcome (back) to the CU Psychology Scientific Computing Workshop! As a reminder, the documents for the introduction to programming cover the following:
+
+- **Programming, Part 0:** [Finding your way around RStudio](/tutorials/r-core/1-programming/lessonpart0)
+- **Programming, Part 1:** Variables, data types, vectors (**this document!**)
+- **Programming, Part 2:** [Coding strategy, relational & logical operators](/tutorials/r-core/1-programming/lessonpart2)
+
+# Links to Files
+
+The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial){target="_blank"}. This particular file is located here: `/content/tutorials/r-core/1-programming/lessonpart1.rmd`.
+
+# Variables
+
++ a **variable** is how we store information in a way that the computer can operate on
++ it has a **value:** the info itself
++ and a **name:** the cue by which we call upon the info to the computer
+
+If you think about how variables like x and y are used in algebra, calculus, etc, that can be a useful way to conceptualize them.
+
+Variables can contain numbers. We *assign* a value to a name.
+
+```{r make some vars}
+# We are storing the number 20 under the variable name first.var by using the left-arrow operator. It's like 20 is going "into" the label first.var
+first.var <- 20
+# And again with second.var
+second.var <- 0.5
+
+second.var
+```
+
+They can also contain other stuff (literally almost anything) but we'll talk about this later!
+
+Variables live in the **environment**. The environment is your workbench in R: this is where all data are held, so that you can access and manipulate that data using R commands. It's sort of like R's working memory, where information is held for immediate use. You can see all the objects currently saved in your environment in the Environment pane.
+
+Information doesn't just exist in the environment--it can also be printed to **console.** Remember that the console is the place where you talk to R (type in commands), and R talks back to you (shows you the result of those commands).
+
+The console is a great place to check the contents of variables, and perform quick calculations. However, information printed to console is _not automatically saved to a variable,_ so if you know you will want some data for later you must assign it to a variable in your environment!
+
+Since variables are labels for pieces of information, a variable name can be used to refer to any piece of data where you would otherwise call that data directly. For example:
+
+```{r}
+# This outputs the result to console
+20 + 10
+# Since first.var contains the value 20, this outputs the SAME result to console
+first.var + 10
+```
+
+Variables don't just have to contain pure numbers; you can assign the output of commands to variables.
+
+```{r}
+third.var <- first.var + 10
+```
+
+And as we saw earlier, you can assign whole dataframes into variables. We'll be able to access all the content of a dataframe in a variable so we can do data manipulation, plotting, and stats on it later.
+
+(Quick review question: Am I calling the below file path using an _absolute_ or _relative_ path? How can you tell?)
+
+```{r}
+shakes <- read_csv(here::here("content", "tutorials", "r-core", "1-programming", "shakes.csv"))
+```
+
+You can overwrite the values of variables, simply by assigning some other value to the same name.
+
+```{r}
+# With the values of other variables
+third.var <- second.var + 10
+# OR of the current value of the variable. Note that R will ALWAYS use the PREVIOUS value of a variable in all the calculations BEFORE re-assigning the final result to the variable name.
+third.var <- third.var + 10
+# You can also delete variables from your environment
+rm(third.var)
+```
+
+With regards to variables, you can make the name of a variable almost whatever you want, within reason. A variable name can legally contain:
+
+* letters (upper or lowercase, R is case sensitive!)
+* numbers
+* period (.) and underscore (_)
+
+R (and basically all programming languages) require variable names to START with a LETTER. (Try initializing a variable name starting with a number and see what happens.) Other allowed characters can be anywhere in the variable name except for first.
+
+Beyond this, here are some recommendations we strongly urge you to follow as well when naming variables:
+
+* Name variables informatively, not arbitrarily! The name of a variable should tell you something about what information it contains. `raw.data` is better than `d`.
+* Separate words in multi-word variable names using one of the following conventions (but be consistent!):
+    + underscore_separated_names
+    + period.separated.names
+    + camelCaseNames
+* Name variables succinctly, but informatively. Abbreviations are okay if they are standard throughout your code. `max.val` is okay instead of `maximum.value`.
+* When in doubt, use lowercase letters.
+
+# Data types
+
+So what kind of data can be stored and manipulated in R? There are different "types" of data that programming languages know how to handle. Each is encoded in a slightly different way, and can have different things done to it.
+
+## Numeric data
+
+Numeric data encompasses any (real) number. Positive, negative, integer, decimal, all fine.
+
+```{r}
+first.var <- 280
+second.var <- 41.5
+```
+
+### Arithmetic operators
+
+You can do your usual math on numeric data, like so:
+
+```{r}
+first.var + second.var
+first.var - second.var
+```
+
+The basic arithmetic operators are specified as:
+
+* `+` addition
+* `-` subtraction
+* `*` multiplication
+* `/` division
+* `^` exponent
+* `()` parentheses
+
+R obeys PEMDAS!
+
+```{r modulo could take this out}
+# Bonus arithmetic operator; you may need someday
+10 %% 2 # The modulo %% operator returns the remainder of dividing two numbers. Observe the results for the following modulo operations
+10 %% 3
+10 %% 4
+10 %% 5
+```
+
+## Logical data
+
+Logical data are a special case of numbers, representing `TRUE` and `FALSE`.
+
+Note that this is case-sensitive: R requires `TRUE` and `FALSE` to be written in all caps!
+
+Logical data can be math-ed on as if it were numeric; `TRUE` is 1 and `FALSE` is 0. This is especially useful when multiplying--
+
+```{r}
+TRUE * 10 # Like multiplying by 1. the other number stays the same!
+FALSE * 10 # Like multiplying by 0. the other number becomes 0!
+```
+
+Logical data are used most often as informational flags. To be revisited...
+
+## Character data
+
+This is letter/word-based data. A piece of character data is called a **string.**
+
+R understands that this data is made up of text, and treats it in a special way. You might encounter this if you are storing free-response text data in R, or perhaps if you have a list of word-based stimuli stored in R as part of your task data.
+
+```{r}
+text.var <- "statistics"
+text.var.2 <- "my favorite number is 7" # Disclaimer: Not actually my favorite number
+```
+
+Here are just a couple of the functions that specifically operate on character data.
+
+You can coerce things to upper or lowercase with the right function:
+
+```{r}
+toupper(text.var)
+```
+
+You can also count the number of characters. Note that spaces count as characters!
+
+```{r}
+nchar(text.var.2)
+```
+
+Of note is that you canNOT do arithmetic on strings.
+
+```{r}
+not.a.number <- "7"
+```
+
+The following will return an error if you try to run it:
+
+```{r, eval = FALSE}
+not.a.number + 1
+```
+
+## Dataframe columns have data types too
+
+It's not only single pieces of information that have a defined data type. Whole dataframe columns of values have data types as well. (This is a requirement of dataframe columns: that they are composed of a set of values that are all the same data type.)
+
+R will tell us a bit about the data types in our dataframe columns when we print the dataframe to console. Let's take a look:
+
+```{r}
+shakes
+```
+
+Just below the name of each column, we see some abbreviations: `<chr>` and `<dbl>`. These are the data types of these columns. `<chr>` means that all values in that column are character, or text, data. `<dbl>` stands for "double", which is R-speak for numeric data with decimal-point precision.
+
+Just as you can do arithmetic on single numeric values, and text-manipulation operations on single character strings, you can do these operations on whole dataframe columns as well. We'll see this soon!
+
+Now, we'll talk a little bit more about these data structures, like dataframes, that hold multiple pieces of data.
+
+# Data structures
+
+## Data frames
+
+This is the data structure where it happens! Imagine your usual rectangular Excel spreadsheet that you might have for your study data, where each column of the spreadsheet contains a meaningful category of information (e.g. subject ID, task condition, trial response), and each row contains one observation of information (one subject, or one trial within subject, etc). A dataframe is basically that.
+
+A **dataframe** is a special rectangular data structure in R that is *column-optimized.* A dataframe is essentially a series of vectors *of equal length* stuck together in a meaningful way. Each column contains all the observations of a particular meaningful grouping. Each row is the nth value across columns, containing one complete observation from all the columns. Each observation can be a subject, a trial, a group, whatever--any one meaningful something.
+
+Notice that dataframes can be read in from CSV files. These files can be opened in other programs like Microsoft Excel, where you can see that they look like any garden-variety spreadsheet.
+
+### Working with dataframe columns
+
+Very frequently, when working with dataframes, we will need to create new columns, or modify existing columns. The function we'll use to do this is `mutate()`.
+
+A note before we jump in: `mutate()`, and many of the other R functions we'll be using in the workshop, are not included in default, or base, R. They are part of the **tidyverse,** a group of R packages designed to make data manipulation and exploration smoother. In order to be able to access these functions in a later R session (after you close it and reopen it again), you need to put the following command in the first chunk of your R Markdown document and run the command _first, before any other code is run_:
+
+```{r, eval = FALSE}
+library(tidyverse)
+```
+
+Once you've loaded the tidyverse group of functions, you can now use them in R as usual. Now we're ready to explore these functions!
+
+The first argument that `mutate()` takes, or information it needs to be able to work, is what dataframe we want to operate on. All of the rest of the function works because `mutate()` knows which dataframe we are working inside.
+
+After you specify the dataframe in question, we then specify pieces of information in pairs:
+
+1. The name of the new dataframe column you wish to create
+1. How you want to create that new column
+
+The syntax for creating these new columns is `new_column_name = function(old_column_name)`. For example, if we want to create a new column containing all the values of `n.words` but divided by 1,000:
+
+```{r}
+mutate(shakes,
+       n.words.1k = n.words / 1000)
+```
+
+Notice that the dataframe appears to have a new column, with the name and the contents we specified. Each row of `n.words.1k` contains the value from the `n.words` column, but divided by a thousand. Exactly as intended!
+
+However, remember that **this content is not saved back into the `shakes` variable unless we re-assign it to the `shakes` variable name.**
+
+We would need to use the `<-` operator and re-assign this info into `shakes` to overwrite the OLD dataframe with the NEW one, containing the extra column.
+
+```{r}
+shakes <- mutate(shakes,
+       n.words.1k = n.words / 1000)
+```
+
+We can use the same strategy of overwriting the old content of a variable to modify the content of a dataframe column without creating a new one.
+
+In this case, we re-use the name of an existing column on the left side of the equals sign inside of `mutate()`. Similar to overwriting an existing variable, this will overwrite the existing column with some function applied to the old value of the column.
+
+```{r}
+mutate(shakes,
+       genre = tolower(genre))
+```
+
+In the output above, see that the `genre` column is still where it was, but now all of the genre labels are lowercase instead of having the first letter capitalized.
+
+In the commands above, we have been accessing the columns of our `shakes` dataframe by typing the column names "naked", as if they were variables in the environment. However, when we look in the Environment tab in the top-right, we do not see these column names as their own variables! They live _inside the dataframe._ `mutate()`, and other tidyverse functions that we will use, have the **special ability to allow dataframe column names to be typed on their own, like free-standing variables, inside of these functions.** Other functions will not allow this, so be careful in later explorations of R.
+
+What kind of functions can we use to create/modify columns with `mutate()`? We can use any **vectorized function.** These are functions that take a process and apply it individually to each element in your column, returning an analogous column where the nth element of the output column is the result of performing the operation on the nth element of the input column.
+
+If you want to do the same thing to a bunch of data, this is the way to do it fast! Basically all the arithmetic operations are vectorized, for example:
+
+```{r}
+mutate(shakes,
+       n.words.half = n.words / 2)
+```
+
+Many other functions are vectorized as well. It's always worth trying a function of interest on a dataframe column and checking if you get a column of the same length, with corresponding values from both columns in the same row, as output.
+
+### Summarizing dataframe columns
+
+Other times, when working with dataframes, we will need to summarize over the values of existing columns. The function we'll use to do this is `summarize()`.
+
+Just like `mutate()`, and pretty much every other tidyverse function, the first argument that `summarize()` takes is what dataframe we want to operate on.
+
+After you specify the dataframe in question, we then specify pieces of information in pairs, much the same way as we did with `mutate()`: `new_column_name = function(old_column_name)`. 
+
+The difference here is that instead of creating a whole column as our output, with the same number of rows as the original data, we need to summarize over all rows in the column, producing _one row of output._ For example, calculating the mean or the standard deviation of a column of data will take the entire column as input, returning a single value as output. In general, descriptive statistical operations are typically of this type.
+
+
+```{r}
+summarize(shakes,
+          mean.n.words = mean(n.words))
+```
+
+```{r}
+summarize(shakes,
+          sd.n.words = sd(n.words))
+```
+
+### Indexing into dataframes
+
+Sometimes, however, you may need to access the content of a dataframe column outside of `mutate()`, `summarize()`, or another tidyverse function. Remember that tidyverse functions have the special ability to let you call column names with "naked" variable names, and this ability works because you have to feed in the name of your dataframe as the first argument to the function. That's how the function knows where to look for the column. Other parts of R don't work this way, so sometimes we need to use a different technique.
+
+For example, we know there is a column called `title` inside of the `shakes` dataframe. Inside of `mutate()`, for example, you can call this column just by calling `title`:
+
+```{r}
+mutate(shakes,
+       title.length = nchar(title))
+```
+
+However, if we try to calculate the character lengths of each of Shakespeare's play titles _outside_ of `mutate()`, it doesn't seem to work:
+
+```{r, error = TRUE}
+nchar(title)
+```
+
+Because we are outside of `mutate()`, we do not have the ability to call dataframe columns on their own. We have to use another method to tell R which dataframe a column lives in.
+
+We use a special operator to do this: the dollar sign `$`. `$` tells R when a variable name, in this case a column name, is a sub-variable of a larger variable, in this case a dataframe. In this way, we can tell R that `title` is not floating around on its own, but is a column in the dataframe `shakes`.
+
+```{r}
+shakes$title
+```
+
+You may also notice when typing in RStudio, that if you type `shakes$`, you'll suddenly see a little tab-complete selector pop up, listing out the names of all the columns in `shakes`. You can either type more to narrow down to the column you want, and then hit Tab to auto-complete the column name, or use the arrow keys to scroll up and down through the column names to select the one you want (and hit Tab to auto-complete in this case as well).
+
+Note that when you call the column in this way, the printed output doesn't look like it did when we printed the entire dataframe. When you call a dataframe column on its own using `$`, R temporarily treats it as separate from the dataframe that it came from.
+
+```{r}
+nchar(shakes$title)
+```
+
+A dataframe column on its own like this, separated from the rest of the dataframe, is a _vector._ Vectors can exist totally separate from dataframes, or they can be bound together as dataframe columns. A vector can have any number of values in it, but is always width 1 (which makes sense when you think of them as columns of data). 
+
+PS: Every column of a dataframe is a vector on its own, so you can extract and manipulate individual columns of a dataframe. But you can NOT manipulate individual rows of a dataframe in the same way. We will try this very soon and you'll see that an individual row of a dataframe behaves as a dataframe with only one row in it. Why might this be the case?
+
+## Vectors
+
+A vector is a sequence of pieces of information that are **all the same data type** (for the computer) and meaningfully related (for you). A vector is like one column of data with a particular length (depending on the number of elements in the vector).
+
+```{r}
+num.vector <- c(1, 2, 3, 4, 5)
+length(num.vector)
+```
+
+Fun stuff: notice that a single piece of data is in fact a vector with length 1.
+
+```{r}
+length(first.var)
+```
+
+The individual pieces of data inside one vector are called **elements.**
+
+Vectors, whether or not they're dataframe columns, can be any of the data types we just learned about.
+
+```{r}
+char.vector <- c("apple", "banana", "cantaloupe", "dragonfruit")
+length(char.vector)
+
+logical.vector <- c(TRUE, TRUE, FALSE, TRUE)
+```
+
+As you can see above, the function `c()` is the primary way to construct freestanding vectors. You list out all the pieces of data you want to put into the vector inside of `c()`, separated with commas.
+
+Buuuut R lets you do some special stuff to create certain useful numeric vectors. You can use the colon `:` between any two integers to create a vector of all the integers between the values on either side of the colon (inclusive).
+
+```{r}
+num.vector.2 <- 1:5
+
+num.vector.2
+```
+
+Most of the time, you will not need to work with vectors outside of dataframes. If you do need to work with a vector on its own, you may need to grab individual elements within that vector.
+
+### Indexing into vectors
+
+When you need to access individual pieces of information inside of a vector, you'll do that by calling the vector and adding an additional "address" to specify which piece of data inside the vector you want. This address is called an **index.**
+
+To tell R that you are indexing into a vector, you put the index inside hard brackets [] after the name of your vector variable.
+
+You can index one piece of data, by putting one index number inside the hard brackets, to index the nth value of that vector. R starts indexing at 1; the first element in your vector is at index 1.
+
+You can only index into your vector using VALID indices; that is, indices that actually correspond to elements in the vector. Essentially, you can't index using a number that is larger than the length of your vector.
+
+```{r}
+char.vector[1]
+```
+
+You can also index multiple pieces of data out of a vector. This returns another, shorter, vector! You do this by putting a valid numeric vector inside the brackets.
+Remember the colon `:` operator from above? It's handy to create vectors for indexing a sequence of values:
+
+```{r}
+char.vector[1:3]
+```
+
+But you can also index using any valid numeric vector constructed using `c()`.
+
+```{r}
+char.vector[c(1, 4)]
+```
+
+You can also index to _exclude_ elements from a vector, using negative numbers. This will return a vector _missing_ the values you negative-indexed.
+
+```{r}
+char.vector[-2]
+```
+
+# Data types pt 2
+
+These data types make more sense when presented as vectors/dataframe columns--you'll rarely need to deal with objects of these types that are length 1. Now that you know about vectors & dataframes, we'll take a look at the following data types:
+
+## Factor data
+
+Character data, as described above, is R's all-purpose data type for text-based data. But R knows that sometimes you might have a column composed of text to label your within-subject task conditions, between-subject groups, etc. **Factor data** is a data type built on top of character data that gives you special properties that are useful when a column/vector contains _grouping_ information.
+
+For example, we can consider the `genre` column from the `shakes` dataframe we loaded previously. This column contains categorical information about which of three genres each Shakespeare play belongs to, so this is a natural fit for the factor data type.
+
+```{r}
+# This column wasn't originally factor, so I'm coercing it to factor here.
+# There are a suite of R functions designed for pushing data from one type to another
+as.factor(shakes$genre)
+```
+
+Observe how this vector now has _levels;_ these are the different categories of the variable. Factor levels are ordered alphabetically by default; you can reorder the levels into a more meaningful order if you want.
+
+We won't worry too much more about factor data for now, but here are a couple of factor data's pros and cons relative to regular character data:
+
+* PROS: You get special properties that help when graphing, and when creating models for data
+* CONS: While factor data is composed of text, it doesn't behave like character data in every single case, and so you have to be very careful with factor data because sometimes you don't get the outputs you expect if you were to run the same operation on character data.
+
+## Non-data data
+
+You know what's the worst? Missing data! But it happens to the best of us. When you have a missing data point in an Excel spreadsheet, you might leave that cell blank. But in R, you need to put a placeholder in that spot. There's a special data type, `NA`, used as the missing data placeholder.
+
+```{r}
+na.vector <- c(1, 2, 3, NA, 5)
+```
+
+When you call vectorized (one-to-one) functions on a vector containing `NA`, the element in the output vector corresponding to the `NA` in the input vector will be `NA`.
+
+```{r}
+na.vector + 1
+```
+
+When you call summarizing (many-to-one) functions on a vector containing `NA`, the summary value will be `NA`...
+
+```{r}
+mean(na.vector)
+```
+
+unless you specify in the function that you want the value to be calculated as if the `NA`s aren't there.
+
+```{r}
+mean(na.vector, na.rm = TRUE)
+```
+
+**Next:** [Programming, Part 2 (Coding strategy, relational & logical operators)](/tutorials/r-core/1-programming/lessonpart2)

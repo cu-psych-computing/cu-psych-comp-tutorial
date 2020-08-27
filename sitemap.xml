@@ -7,19 +7,31 @@
   </url>
   
   <url>
+    <loc>/tutorials/r-extra/data-sim-power/basic-simulation-power/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part1/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/r-extra/brms/multilevel-models-with-brms/</loc>
+  </url>
+  
+  <url>
     <loc>/tags/core/</loc>
   </url>
   
   <url>
-    <loc>/tutorials/r-core/3-descriptives/</loc>
+    <loc>/tutorials/r-core/2-datacleaning/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/r-core/3-datamanipulation/</loc>
   </url>
   
   <url>
     <loc>/tags/extra/</loc>
-  </url>
-  
-  <url>
-    <loc>/tutorials/r-core/2-datacleaning/</loc>
   </url>
   
   <url>
@@ -28,6 +40,10 @@
   
   <url>
     <loc>/tutorials/r-core/1-programming/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/r-extra/rmarkdown/intro-to-rmarkdown/</loc>
   </url>
   
   <url>
@@ -43,7 +59,11 @@
   </url>
   
   <url>
-    <loc>/tutorials/r-core/5-models/</loc>
+    <loc>/tutorials/r-core/5-modeling/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part2/</loc>
   </url>
   
   <url>

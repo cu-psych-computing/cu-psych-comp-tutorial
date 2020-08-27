@@ -11,47 +11,45 @@
     
     
     <item>
-      <title>Descriptives</title>
-      <link>/tutorials/r-core/3-descriptives/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorials/r-core/3-descriptives/</guid>
-      <description>Goals for this tutorial: Learn how to group and categorize data in R Learn how to generate descriptive statistics in R   0. Open dataset and load package This dataset examines the relationship between multitasking and working memory. Link here to original paper by Uncapher et al. 2016.
-# use read.csv function to open data into R df &amp;lt;- read_csv(here(&amp;quot;content&amp;quot;, &amp;quot;tutorials&amp;quot;, &amp;quot;r-core&amp;quot;, &amp;quot;3-descriptives&amp;quot;, &amp;quot;uncapher_2016_repeated_measures_dataset.csv&amp;quot;)) # we will continue using tidyverse tools # so we have library()-ed tidyverse at the very top of this document  1.</description>
-    </item>
-    
-    <item>
-      <title>Getting your data ready for analysis</title>
+      <title>Data Cleaning</title>
       <link>/tutorials/r-core/2-datacleaning/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/2-datacleaning/</guid>
-      <description>Goals of this lesson Students will learn:
-How to open various data types in R How to check for missing or problematic data and address issues. How to filter, rearrange and shape data in preparation for analysis.   Install Packages tidyverse is one package with many tools. We will introduce you to this package in this lesson, and continue using tidyverse in the next module.
- Getting your Data into R Entering data directly In some cases, you may want to enter data directly into R.</description>
+      <description>Goals of This Lesson Students will learn:
+How to open various data types in R How to check for missing or problematic data and address issues. How to filter, rearrange and shape data in preparation for analysis.   Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/2-datacleaning/index.rmd.
+ Install Packages tidyverse is one package with many tools.</description>
+    </item>
+    
+    <item>
+      <title>Data Manipulation</title>
+      <link>/tutorials/r-core/3-datamanipulation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-core/3-datamanipulation/</guid>
+      <description>Goals of This Lesson Learn how to group and categorize data in R Learn how to generate descriptive statistics in R   Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/3-datamanipulation/index.rmd.
+ Load Data This dataset examines the relationship between multitasking and working memory (link to the original paper by Uncapher et al.</description>
     </item>
     
     <item>
       <title>Modeling</title>
-      <link>/tutorials/r-core/5-models/</link>
+      <link>/tutorials/r-core/5-modeling/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/tutorials/r-core/5-models/</guid>
-      <description>Welcome to the lesson on modeling in R!
-Goals:
-Learn about functions and syntax for models in R Practice examples of different model types Understand how to obtain model results in R
- Learn how to visualize the results of the models  Let’s get some data.
-We will use the same data we are already familiar with from the Descriptives lesson. We will compute a group for high and low ADHD, so we can use that in our models.</description>
+      <guid>/tutorials/r-core/5-modeling/</guid>
+      <description>Goals of This Lesson Learn about functions and syntax for models in R Practice examples of different model types Understand how to obtain model results in R
+ Learn how to visualize the results of the models   Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/5-modeling/index.rmd.
+ Load Data Let’s get some data.</description>
     </item>
     
     <item>
-      <title>Plotting Tutorial Using ggplot2!</title>
+      <title>Plotting with `ggplot2`</title>
       <link>/tutorials/r-core/4-plotting/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/4-plotting/</guid>
-      <description>0: What is this tutorial? What’s ggplot2? ggplot2 is a package in R that allows for highly customizable and pretty plots! Here, were going to learn a few basics of making plots using ggplot that will hopefully get you well on your way to making informative and beautiful data visualizations!
- 1: First Load Tidyverse, which includes ggplot2! We’ve already done this in the special first chunk up top, so it should run automatically before you run any chunk of code lower in the document.</description>
+      <description>What Is This Tutorial? What’s ggplot2? ggplot2 is a package in R that allows for highly customizable and pretty plots! Here, were going to learn a few basics of making plots using ggplot2 that will hopefully get you well on your way to making informative and beautiful data visualizations!
+ Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/4-plotting/index.</description>
     </item>
     
   </channel>

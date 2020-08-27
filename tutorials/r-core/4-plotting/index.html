@@ -42,7 +42,7 @@
   <script src="https://kit.fontawesome.com/7eb067db85.js" crossorigin="anonymous"></script>
 
   
-  <title>Plotting Tutorial Using ggplot2! | Columbia Psychology Scientific Computing</title>
+  <title>Plotting with `ggplot2` | Columbia Psychology Scientific Computing</title>
   
 
   <style>
@@ -391,7 +391,7 @@ nav[data-toggle=toc] .nav-link.active, nav[data-toggle=toc] .nav-link.active:foc
     </div>
   <div class="col-sm-9">
 
-<h1>Plotting Tutorial Using ggplot2!</h1>
+<h1>Plotting with <code>ggplot2</code></h1>
 <p>
   <small class="text-secondary">
   
@@ -407,19 +407,24 @@ nav[data-toggle=toc] .nav-link.active, nav[data-toggle=toc] .nav-link.active:foc
 
 </p>
 
-<script src="../../../rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
-<div id="what-is-this-tutorial-whats-ggplot2" class="section level2">
-<h2>0: What is this tutorial? What’s ggplot2?</h2>
-<p>ggplot2 is a package in R that allows for highly customizable and pretty plots! Here, were going to learn a few basics of making plots using ggplot that will hopefully get you well on your way to making informative and beautiful data visualizations!</p>
+<div id="what-is-this-tutorial-whats-ggplot2" class="section level1">
+<h1>What Is This Tutorial? What’s <code>ggplot2</code>?</h1>
+<p>ggplot2 is a package in R that allows for highly customizable and pretty plots! Here, were going to learn a few basics of making plots using <code>ggplot2</code> that will hopefully get you well on your way to making informative and beautiful data visualizations!</p>
 </div>
+<div id="links-to-files" class="section level1">
+<h1>Links to Files</h1>
+<p>The files for all tutorials can be downloaded from <a href="https://github.com/cu-psych-computing/cu-psych-comp-tutorial" target="_blank">the Columbia Psychology Scientific Computing GitHub page</a>. This particular file is located here: <code>/content/tutorials/r-core/4-plotting/index.rmd</code>.</p>
+</div>
+<div id="load-packages-and-data" class="section level1">
+<h1>Load Packages and Data</h1>
 <div id="first-load-tidyverse-which-includes-ggplot2" class="section level2">
-<h2>1: First Load Tidyverse, which includes ggplot2!</h2>
+<h2>First load <code>tidyverse</code>, which includes <code>ggplot2</code></h2>
 <p>We’ve already done this in the special first chunk up top, so it should run automatically before you run any chunk of code lower in the document.</p>
 </div>
-<div id="load-in-sample-data-nhanes" class="section level2">
-<h2>2: Load in Sample Data (NHANES)</h2>
+<div id="load-in-sample-data" class="section level2">
+<h2>Load in sample data</h2>
 <p>We’re going to practice here on a dataset from the 1990 NHANES (National Health and Nutrition Examination Survey). The variables are below.</p>
 <p>Region - Geographic region in the USA: Northeast (1), Midwest (2), South (3), and West (4)</p>
 <p>Sex - Biological sex: Male (1), Female (2)</p>
@@ -460,26 +465,32 @@ nhanes</code></pre>
 ## 10 West        2 48.2  Non-Metro Area  182.    61.9  33.5
 ## # … with 27,811 more rows</code></pre>
 </div>
-<div id="scatter-plot-basic-ggplot-syntax" class="section level2">
-<h2>3: Scatter Plot &amp; Basic ggplot Syntax</h2>
+</div>
+<div id="basic-ggplot2-syntax" class="section level1">
+<h1>Basic <code>ggplot2</code> Syntax</h1>
 <p>-<code>ggplot()</code> command usage including saving to a variable with <code>a &lt;- ggplot()</code></p>
 <p>-The general format is <code>ggplot(data, aes(x = [x axis variable], y = [y axis variable])</code>
 - x and y variables are always specified in this <code>aes()</code> subfunction</p>
-<p>Run this line of code</p>
+<p>Run this line of code:</p>
 <pre class="r"><code>ggplot(nhanes, aes(x = Age, y = Weight))</code></pre>
 <p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <ul>
-<li>axes are set up the way we’d expect, and seem to have sensible values</li>
-<li>why is nothing on this graph yet? we haven’t put any graphic actually on the axes yet</li>
+<li>Axes are set up the way we’d expect, and seem to have sensible values</li>
+<li>Why is nothing on this graph yet? we haven’t put any graphic actually on the axes yet</li>
 </ul>
 <p><strong>We need to tell the <code>ggplot()</code> call what kind of graphic to put on the axis</strong></p>
 <ul>
 <li>A lot of the time, the syntax is <code>geom_[something]</code></li>
 </ul>
-<p>So lets do scatter with <code>geom_point()</code> first:</p>
+</div>
+<div id="example-plot-types" class="section level1">
+<h1>Example Plot Types</h1>
+<div id="scatter-plots" class="section level2">
+<h2>Scatter plots</h2>
+<p>Let’s do scatter with <code>geom_point()</code> first.</p>
 <pre class="r"><code>ggplot(nhanes, aes(x = Age, y = Weight)) + geom_point()</code></pre>
 <p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>Wow, lots of data points! Maybe we can make the points smaller to see better</p>
+<p>Wow, lots of data points! Maybe we can make the points smaller to see better.</p>
 <pre class="r"><code>ageWeightPlot &lt;- ggplot(nhanes, aes(x = Age, y = Weight)) + 
   geom_point(size = .1, alpha = .3)
 
@@ -491,28 +502,29 @@ ageWeightPlot</code></pre>
 
 ageWeightPlot</code></pre>
 <p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<div id="a-histograms-with-ggplot" class="section level3">
-<h3>3a: Histograms with ggplot</h3>
+</div>
+<div id="histograms" class="section level2">
+<h2>Histograms</h2>
 <pre class="r"><code>weightHistogram &lt;- ggplot(nhanes) + geom_histogram(aes(x = Weight), bins = 100, fill = &#39;purple&#39;)
 weightHistogram</code></pre>
 <p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
-</div>
-<div id="dot-plot-organized-by-grouping-factor" class="section level2">
-<h2>4: Dot Plot Organized by Grouping Factor</h2>
+<div id="dot-plots-organized-by-grouping-factor" class="section level2">
+<h2>Dot plots organized by grouping factor</h2>
 <p>Question: what if we want to look at distribution of weights by region in the nhanes data?</p>
-<p>With ggplot, if x is a factor (discrete, not continuous) we can plot dots as a function of the factor</p>
+<p>With ggplot, if x is a factor (discrete, not continuous) we can plot dots as a function of the factor.</p>
 <pre class="r"><code>heightByUrban &lt;- ggplot(nhanes, aes(x = Urban, y = Height)) + 
   geom_point()
 
 heightByUrban</code></pre>
 <p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<p>Woah! So much data, hard to see anything, let’s use geom_jitter() with size = .05, width = .1 instead</p>
+<p>Woah! So much data, hard to see anything, let’s use geom_jitter() with size = .05, width = .1 instead.</p>
 <pre class="r"><code>heightByUrban &lt;- ggplot(nhanes, aes(x = Urban, y = Height)) + geom_jitter(size = .05, width = .1, height =0, alpha = .1)
 heightByUrban</code></pre>
 <p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<div id="a-visualizing-distributions-with-violin-plots" class="section level3">
-<h3>4a: Visualizing Distributions with Violin Plots</h3>
+</div>
+<div id="violin-plots-to-visualize-distributions" class="section level2">
+<h2>Violin plots to visualize distributions</h2>
 <p>Still a TON of data! Here’s a great tool I really like for plotting the density of distributions of points like this!</p>
 <pre class="r"><code># We can use &#39;source&#39; to pull bits of code from github, as well as local files
 source(&quot;https://gist.githubusercontent.com/benmarwick/2a1bb0133ff568cbe28d/raw/fb53bd97121f7f9ce947837ef1a4c65a73bffb3f/geom_flat_violin.R&quot;) 
@@ -522,10 +534,9 @@ heightByUrban + geom_flat_violin(
 <p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>Now, we can really begin to se the skewedness of these weight distributions.</p>
 </div>
-</div>
 <div id="summary-plots" class="section level2">
-<h2>5: Summary Plots</h2>
-<p>Plotting data points is all well and good, but what if we want to use our plots to summarize distributions? We’ll do that here:</p>
+<h2>Summary plots</h2>
+<p>Plotting data points is all well and good, but what if we want to use our plots to summarize distributions? We’ll do that here.</p>
 <pre class="r"><code>weightByRegion &lt;- ggplot(nhanes, aes(x = Region, y = Weight)) + 
   stat_summary(fun.y= &quot;mean&quot;, geom = &quot;point&quot;)</code></pre>
 <pre><code>## Warning: `fun.y` is deprecated. Use `fun` instead.</code></pre>
@@ -538,7 +549,7 @@ weightByRegionConf &lt;- ggplot(nhanes, aes(x = Region, y = Weight)) +
 
 weightByRegionConf</code></pre>
 <p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
-<p>It might be useful to look at the summary with the raw data too..just to put any potential region differences in context</p>
+<p>It might be useful to look at the summary with the raw data too…just to put any potential region differences in context.</p>
 <pre class="r"><code>rawPlusSummary &lt;- ggplot(nhanes, aes(x = Region, y = Weight)) + 
   stat_summary(fun.data = &quot;mean_cl_boot&quot;, fun.args=list(conf.int=.95), color = &#39;red&#39;)  +
   geom_jitter(size = .1, alpha = .1, height = 0, width = .1) 
@@ -553,100 +564,12 @@ rawPlusSummary</code></pre>
 
 rawPlusSummary</code></pre>
 <p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
-<p>Now that we can visualize the distributions, we can see that weight is bimodally distributed (probably because of the young children in this dataset)</p>
-</div>
-<div id="fitting-lines-to-the-data" class="section level2">
-<h2>6: Fitting Lines To The Data</h2>
-<p>Let’s say we think there might be a linear relationship between height and weight</p>
-<p>We can use <code>geom_smooth</code> for this and <code>method = 'lm</code> specifically for a linear model
-Also <code>level = .95</code> can specify confidence interval about the estimate at each x value</p>
-<pre class="r"><code>heightByWeight &lt;- ggplot(nhanes, aes(x = Height, y = Weight)) + 
-  geom_point(size = .1, alpha = .1) + 
-  stat_smooth(method = &#39;lm&#39;)
-
-heightByWeight</code></pre>
-<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
-<p>Hmm, this actually looks like it’s giving us some pretty bad predictions. We’re not going to get into the stats of this now, but we can also plot using <code>auto</code> which is a mix of models, and might be a bit smarter</p>
-<pre class="r"><code>heightByWeight &lt;- ggplot(nhanes, aes(x = Height, y = Weight)) + 
-  geom_point() + 
-  stat_smooth(method = &#39;auto&#39;, level = .99, alpha = 1, color = &#39;green&#39;, fill = &#39;red&#39;)
-heightByWeight</code></pre>
-<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
-<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-</div>
-<div id="titles-axis-labels" class="section level2">
-<h2>7: Titles, Axis Labels</h2>
-<p>The <code>labs()</code> command can be added to ggplot with different arguments, lke <code>x</code>, <code>y</code>, or <code>title</code> to make the plots clearer</p>
-<pre class="r"><code>heightByUrban + labs(x = &#39;Neighborhood&#39;, y = &#39;Height in Inches&#39;, title = &#39;Height by Urban Status&#39;)</code></pre>
-<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
-<p>Note, if we want to change labels for FACTORS, not just axes, it’s easier to do that using the tidyverse</p>
-</div>
-<div id="facetting" class="section level2">
-<h2>7: Facetting</h2>
-<p>Its useful to have several plots in a panel sometimes, not just one.</p>
-<p>So for this data set, say we want to plot relationships between height and weight, but by region</p>
-<p>We can do this with <code>facet_wrap('Region')</code></p>
-<pre class="r"><code>facetPlot &lt;- ggplot(nhanes, aes(x = Height, y = Weight)) + 
-  geom_point(alpha = .2, size = .1) + 
-  stat_smooth() + 
-  facet_wrap(&#39;Region&#39;)
-
-facetPlot</code></pre>
-<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
-<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
-<p>We can even do multiple factors</p>
-<pre class="r"><code>multiFacet &lt;- ggplot(nhanes, aes(x = Height, y = Weight)) + 
-  geom_point(alpha = .2, size = .5, aes(color = Urban)) + 
-  stat_smooth() + 
-  facet_grid(Region ~ Urban, scales = &#39;free_y&#39;)
-
-multiFacet</code></pre>
-<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
-<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
-</div>
-<div id="color" class="section level2">
-<h2>8: Color</h2>
-<p>We can color either continuously or discretely, depending on how a variable is represented in r</p>
-<p>We put <code>col = Height</code> into the <code>aes()</code> function because it’s a grouping factor</p>
-<p>Continous Example</p>
-<pre class="r"><code>weightByRegion &lt;- ggplot(nhanes, aes(x = Region, y = Weight, col = Height)) + 
-  geom_jitter(width = .1) + 
-  labs(x = &#39;Region of US&#39;, y = &#39;Weight (lbs)&#39;, title = &#39;Weight by Region&#39;)
-
-weightByRegion</code></pre>
-<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
-<p>Discrete Example</p>
-<pre class="r"><code>discretePlot &lt;- ggplot(nhanes, aes(x = Height, y = Weight, col = Region)) + geom_point() 
-discretePlot</code></pre>
-<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
-<p>It is EASY to choose your own custom colors (as well as using R presets), but we’re not going to get into that right at this moment</p>
-</div>
-<div id="themes" class="section level2">
-<h2>9: Themes</h2>
-<p>We can use themes to make our plots prettier, and also customize the gridlines a lot</p>
-<pre class="r"><code>discretePlot + theme_bw()</code></pre>
-<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
-<pre class="r"><code>discretePlot + theme_minimal()</code></pre>
-<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-20-2.png" width="672" /></p>
-<pre class="r"><code>discretePlot+ theme_void()</code></pre>
-<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-20-3.png" width="672" /></p>
-<pre class="r"><code>discretePlot + theme_classic()</code></pre>
-<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-20-4.png" width="672" /></p>
-<pre class="r"><code>facetPlot + theme_bw() + labs(title = &#39;Weight by Height and Region&#39;)</code></pre>
-<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
-<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-20-5.png" width="672" /></p>
-</div>
-<div id="saving-to-files" class="section level2">
-<h2>10: Saving To Files</h2>
-<p>Arguments for <code>file</code> , <code>plot</code>, <code>dpi</code>, <code>width</code>, and <code>height</code></p>
-<p>We can use a variety of file formats</p>
-<pre class="r"><code>ggsave(&#39;newPlotTest.pdf&#39;, plot = facetPlot, dpi = 300, width = 5, height = 5)</code></pre>
+<p>Now that we can visualize the distributions, we can see that weight is bimodally distributed (probably because of the young children in this dataset).</p>
 </div>
 <div id="heatmaps" class="section level2">
-<h2>11: Heatmaps</h2>
+<h2>Heatmaps</h2>
 <p>Sometimes we might want to make a heatmap to look at the value of variable based on a 2d grid of of two other variables.</p>
-<p>This is kind of a silly example, but say we wanted to map out the number of observations in our dataset as a factor of region and neighborhood type</p>
+<p>This is kind of a silly example, but say we wanted to map out the number of observations in our dataset as a factor of region and neighborhood type.</p>
 <pre class="r"><code># group the data
 nhanesGroup &lt;- nhanes %&gt;%
   group_by(Region, Urban) %&gt;%
@@ -656,12 +579,12 @@ nhanesGroup &lt;- nhanes %&gt;%
   geom_tile(aes(fill = Observations)) +
   scale_fill_gradient(low = &quot;blue&quot;, high = &quot;red&quot;) + 
   theme_bw()</code></pre>
-<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>
-<div id="basic-time-series-plot" class="section level2">
-<h2>12: Basic Time Series Plot</h2>
+<div id="time-series-plots" class="section level2">
+<h2>Time series plots</h2>
 <p><strong>Working with a different dataset here</strong></p>
-<p>Lets make up some very simple data on the prices of two different items from 1978-2017</p>
+<p>Let’s make up some very simple data on the prices of two different items from 1978-2017.</p>
 <pre class="r"><code>years &lt;- 1978:2017
 item1&lt;- rnorm(40,100,5)
 item2 &lt;- 1:40 + rnorm(40,100,5)
@@ -671,12 +594,12 @@ item2 &lt;- 1:40 + rnorm(40,100,5)
 timeFrame &lt;- tibble(years = years, item1 = item1, item2 = item2) %&gt;%
   pivot_longer(cols = starts_with(&#39;item&#39;), names_to = &#39;item&#39;, values_to = &#39;price&#39;) %&gt;%
   mutate(se = runif(n(), 1,5))</code></pre>
-<p>We can plot the time series using <code>geom_point()</code> and connect the times using <code>geom_line()</code>, coloring by item</p>
+<p>We can plot the time series using <code>geom_point()</code> and connect the times using <code>geom_line()</code>, coloring by item.</p>
 <pre class="r"><code>ggplot(timeFrame, aes(x = years, y = price, color = item)) +
   geom_point() +
   geom_line(aes(lty = item)) +
   theme_bw()</code></pre>
-<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>Now, let’s get some representation of our uncertainty into the plot! Notice that there is an included ‘se’ column for the standard error of each observation. Let’s plot error bars of +/- 1 standard error above and below each point.</p>
 <ul>
 <li>We can specificy the range of the errorbars with the <code>ymin</code> and <code>ymax</code> arguments</li>
@@ -688,8 +611,8 @@ timeFrame &lt;- tibble(years = years, item1 = item1, item2 = item2) %&gt;%
   geom_errorbar(aes(ymin = price - se, ymax = price + se), width = 0) +
   theme_bw() +
   labs(x = &#39;Year&#39;, y = &#39;Price&#39;, color = &#39;Item&#39;)</code></pre>
-<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
-<p>Alternatively, we can use shading to express our uncertainty more continuously. This time, lets shade the error within <strong>2 standard errors</strong> of each measured point</p>
+<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>Alternatively, we can use shading to express our uncertainty more continuously. This time, let’s shade the error within <strong>2 standard errors</strong> of each measured point.</p>
 <pre class="r"><code>ggplot(timeFrame, aes(x = years, y = price)) +
   geom_point(aes(color = item)) +
   geom_line(aes(color = item)) +
@@ -699,15 +622,108 @@ timeFrame &lt;- tibble(years = years, item1 = item1, item2 = item2) %&gt;%
   labs(x = &#39;Year&#39;, y = &#39;Price&#39;, color = &#39;Item&#39;) +
   scale_color_brewer(palette = &#39;Dark2&#39;) +
   scale_fill_brewer(palette = &#39;Dark2&#39;)</code></pre>
-<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>Notice we’ve had to reformat a few calls here to adjust the aesthetic mapping…this happens sometimes when we want certain mappings to apply to ONLY certain parts of the plot. When we put the <code>aes()</code> call inside a <code>geom()</code> call, the mapping applies only to that geometrical object.</p>
 <p><em>Remember! It’s very important to always display the predictive uncertainty along with the estimates or mean predicted by your model. Otherwise, we don’t have any idea of how confident the model’s predictions are.</em></p>
 </div>
-<div id="final-points" class="section level2">
-<h2>13: Final Points</h2>
-<p>Ggplot basic will get you a LONG way.</p>
-<p>Also, there is much more ggplot can do for making your plots very pretty, and also plotting lots of complex models</p>
-<p>Unlike excel and spss, which can often be cranky and difficult to bend to your will in customizing plots, ggplot is really easy to work with to make your graph look the way you want</p>
+</div>
+<div id="fitting-lines-to-the-data" class="section level1">
+<h1>Fitting Lines to the Data</h1>
+<p>Let’s say we think there might be a linear relationship between height and weight.</p>
+<p>We can use <code>geom_smooth</code> for this and <code>method = 'lm</code> specifically for a linear model
+Also <code>level = .95</code> can specify confidence interval about the estimate at each x value.</p>
+<pre class="r"><code>heightByWeight &lt;- ggplot(nhanes, aes(x = Height, y = Weight)) + 
+  geom_point(size = .1, alpha = .1) + 
+  stat_smooth(method = &#39;lm&#39;)
+
+heightByWeight</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>Hmm, this actually looks like it’s giving us some pretty bad predictions. We’re not going to get into the stats of this now, but we can also plot using <code>auto</code> which is a mix of models, and might be a bit smarter.</p>
+<pre class="r"><code>heightByWeight &lt;- ggplot(nhanes, aes(x = Height, y = Weight)) + 
+  geom_point() + 
+  stat_smooth(method = &#39;auto&#39;, level = .99, alpha = 1, color = &#39;green&#39;, fill = &#39;red&#39;)
+heightByWeight</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
+<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+<div id="plot-formatting" class="section level1">
+<h1>Plot Formatting</h1>
+<div id="titles-and-axis-labels" class="section level2">
+<h2>Titles and axis labels</h2>
+<p>The <code>labs()</code> command can be added to <code>ggplot2</code> with different arguments, lke <code>x</code>, <code>y</code>, or <code>title</code> to make the plots clearer.</p>
+<pre class="r"><code>heightByUrban + labs(x = &#39;Neighborhood&#39;, y = &#39;Height in Inches&#39;, title = &#39;Height by Urban Status&#39;)</code></pre>
+<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>Note, if we want to change labels for FACTORS, not just axes, it’s easier to do that using <code>tidyverse</code>.</p>
+</div>
+<div id="facetting" class="section level2">
+<h2>Facetting</h2>
+<p>It’s useful to have several plots in a panel sometimes, not just one.</p>
+<p>So for this data set, say we want to plot relationships between height and weight, but by region.</p>
+<p>We can do this with <code>facet_wrap('Region')</code>.</p>
+<pre class="r"><code>facetPlot &lt;- ggplot(nhanes, aes(x = Height, y = Weight)) + 
+  geom_point(alpha = .2, size = .1) + 
+  stat_smooth() + 
+  facet_wrap(&#39;Region&#39;)
+
+facetPlot</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
+<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>We can even do multiple factors.</p>
+<pre class="r"><code>multiFacet &lt;- ggplot(nhanes, aes(x = Height, y = Weight)) + 
+  geom_point(alpha = .2, size = .5, aes(color = Urban)) + 
+  stat_smooth() + 
+  facet_grid(Region ~ Urban, scales = &#39;free_y&#39;)
+
+multiFacet</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
+<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+</div>
+<div id="color" class="section level2">
+<h2>Color</h2>
+<p>We can color either continuously or discretely, depending on how a variable is represented in R.</p>
+<p>We put <code>col = Height</code> into the <code>aes()</code> function because it’s a grouping factor.</p>
+<p><strong>Continous Example:</strong></p>
+<pre class="r"><code>weightByRegion &lt;- ggplot(nhanes, aes(x = Region, y = Weight, col = Height)) + 
+  geom_jitter(width = .1) + 
+  labs(x = &#39;Region of US&#39;, y = &#39;Weight (lbs)&#39;, title = &#39;Weight by Region&#39;)
+
+weightByRegion</code></pre>
+<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p><strong>Discrete Example:</strong></p>
+<pre class="r"><code>discretePlot &lt;- ggplot(nhanes, aes(x = Height, y = Weight, col = Region)) + geom_point() 
+discretePlot</code></pre>
+<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p>It is EASY to choose your own custom colors (as well as using R presets), but we’re not going to get into that right at this moment.</p>
+</div>
+<div id="themes" class="section level2">
+<h2>Themes</h2>
+<p>We can use themes to make our plots prettier, and also customize the gridlines a lot.</p>
+<pre class="r"><code>discretePlot + theme_bw()</code></pre>
+<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<pre class="r"><code>discretePlot + theme_minimal()</code></pre>
+<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-25-2.png" width="672" /></p>
+<pre class="r"><code>discretePlot+ theme_void()</code></pre>
+<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-25-3.png" width="672" /></p>
+<pre class="r"><code>discretePlot + theme_classic()</code></pre>
+<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-25-4.png" width="672" /></p>
+<pre class="r"><code>facetPlot + theme_bw() + labs(title = &#39;Weight by Height and Region&#39;)</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
+<p><img src="../../../tutorials/r-core/4-plotting/index_files/figure-html/unnamed-chunk-25-5.png" width="672" /></p>
+</div>
+</div>
+<div id="saving-to-files" class="section level1">
+<h1>Saving to Files</h1>
+<p><code>ggsave()</code> includes arguments for <code>file</code> , <code>plot</code>, <code>dpi</code>, <code>width</code>, and <code>height</code>.</p>
+<p>We can use a variety of file formats.</p>
+<pre class="r"><code>ggsave(&#39;newPlotTest.pdf&#39;, plot = facetPlot, dpi = 300, width = 5, height = 5)</code></pre>
+</div>
+<div id="final-points" class="section level1">
+<h1>Final Points</h1>
+<p>Basic <code>ggplot2</code> will get you a LONG way.</p>
+<p>Also, there is much more <code>ggplot2</code> can do for making your plots very pretty, and also plotting lots of complex models.</p>
+<p>Unlike Excel and SPSS, which can often be cranky and difficult to bend to your will in customizing plots, <code>ggplot2</code> is really easy to work with to make your graph look the way you want.</p>
+<p><strong>Next:</strong> <a href="../../../tutorials/r-core/5-modeling/">Modeling (Basic modeling in R)</a></p>
 </div>
 
     </article>
@@ -717,6 +733,10 @@ timeFrame &lt;- tibble(years = years, item1 = item1, item2 = item2) %&gt;%
 
 <footer class="footer">
   © 2020 Columbia Psychology Scientific Computing
+  <script src="//yihui.org/js/math-code.js"></script>
+  <script async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
 </footer>
 
 </html>
