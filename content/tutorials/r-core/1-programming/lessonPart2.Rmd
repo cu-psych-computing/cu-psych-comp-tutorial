@@ -1,5 +1,5 @@
 ---
-title: "Programming, pt 2"
+title: "Programming, Part 2"
 subtitle: "CU Psych Scientific Computing Workshop"
 author: "Monica Thieu"
 tags: ["core", "r"]
@@ -13,11 +13,15 @@ library(here)
 
 Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder, the documents for the introduction to programming cover the following:
 
-0. [Finding your way around RStudio](lessonPart0.html)
-1. [Variables, data types, vectors](lessonPart1.html)
-2. Coding strategy, relational & logical operators **this document!**
+- **Programming, Part 0:** [Finding your way around RStudio](/tutorials/r-core/1-programming/lessonpart0)
+- **Programming, Part 1:** [Variables, data types, vectors](/tutorials/r-core/1-programming/lessonpart1)
+- **Programming, Part 2:** Coding strategy, relational & logical operators (**this document!**)
 
 Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things!
+
+# Links to Files
+
+The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial){target="_blank"}. This particular file is located here: `/content/tutorials/r-core/1-programming/lessonpart2.rmd`.
 
 # Pseudocode
 
@@ -28,7 +32,7 @@ Before you try to write any code, you should talk through what you want to do in
 As an example, let's load a dataframe from a study one of the instructors worked as an undergrad. It's saved within the folders for this project as a CSV file.
 
 ```{r, message = FALSE, warning = FALSE}
-data <- read_csv(here("content", "tutorials", "r-core", "3-descriptives", "uncapher_2016_one_condition_dataset.csv"))
+data <- read_csv(here("content", "tutorials", "r-core", "3-datamanipulation", "uncapher_2016_one_condition_dataset.csv"))
 
 # Don't worry about the following command; I'm just shortening the dataframe. You'll understand what this means later! Just run it now.
 data <- data %>%
@@ -426,3 +430,4 @@ When asking someone for help with your R issue, they'll be best equipped to help
     + Copy and paste any solution code you tried if it still isn't working, explaining variable names and including error messages if applicable
 
 Including this info will make it much easier for someone else to identify the cause of the issue you're experiencing and suggest solutions for you. Help them help you!
+
