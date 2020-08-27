@@ -1,3 +1,4 @@
 ---
-title: Additional R tutorials
+title: Additional R Tutorials
+weight: 2
 ---

@@ -1,7 +1,8 @@
 ---
 title: "Modeling"
 subtitle: "CU Psych Scientific Computing Workshop"
-tags: ["core", "r"]
+tags: ["core", "R"]
+weight: 500
 --- 
 
 ```{r setup, include=FALSE}
@@ -29,7 +30,7 @@ Let's get some data.
 We will use the same data we are already familiar with from the Data Manipulation lesson. We will compute a group for high and low ADHD, so we can use that in our models. 
 
 ```{r}
-df <- read_csv(here("content", "tutorials", "r-core", "5-models", "uncapher_2016_repeated_measures_dataset.csv"))
+df <- read_csv(here("content", "tutorials", "r-core", "5-modeling", "uncapher_2016_repeated_measures_dataset.csv"))
 head(df)
 ```
 

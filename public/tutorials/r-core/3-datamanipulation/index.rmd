@@ -1,7 +1,8 @@
 ---
 title: "Data Manipulation"
 subtitle: "CU Psych Scientific Computing Workshop"
-tags: ["core", "r"]
+tags: ["core", "R"]
+weight: 300
 ---
 
 ```{r setup, include=FALSE}

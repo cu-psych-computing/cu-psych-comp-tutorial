@@ -2,7 +2,8 @@
 title: "Data Cleaning"
 author: "Ellen Tedeschi"
 subtitle: "CU Psych Scientific Computing Workshop"
-tags: ["core", "r"]
+tags: ["core", "R"]
+weight: 200
 ---
 
 
@@ -45,11 +46,12 @@ dataframe &lt;- tibble(name = c(&quot;Monica&quot;, &quot;Michelle&quot;, &quot;
 <pre><code>## [1] &quot;/Users/emily/Documents/GitHub/cu-psych-comp-tutorial&quot;</code></pre>
 <p>You can access a list of the files within your working directory using the <code>list.files()</code> function…</p>
 <pre class="r"><code>list.files(here())</code></pre>
-<pre><code>##  [1] &quot;_output.yml&quot;               &quot;config.toml&quot;              
-##  [3] &quot;content&quot;                   &quot;cu-psych-r-tutorial.Rproj&quot;
-##  [5] &quot;index.Rmd&quot;                 &quot;public&quot;                   
-##  [7] &quot;README.md&quot;                 &quot;resources&quot;                
-##  [9] &quot;static&quot;                    &quot;themes&quot;</code></pre>
+<pre><code>##  [1] &quot;_output.yml&quot;               &quot;blogdown&quot;                 
+##  [3] &quot;config.toml&quot;               &quot;content&quot;                  
+##  [5] &quot;cu-psych-r-tutorial.Rproj&quot; &quot;index.Rmd&quot;                
+##  [7] &quot;public&quot;                    &quot;README.md&quot;                
+##  [9] &quot;resources&quot;                 &quot;static&quot;                   
+## [11] &quot;themes&quot;</code></pre>
 <p>…as well as in the “Files” tab in the module at the bottom right corner of your RStudio window.</p>
 </div>
 <div id="what-kind-of-file-do-you-have" class="section level3">

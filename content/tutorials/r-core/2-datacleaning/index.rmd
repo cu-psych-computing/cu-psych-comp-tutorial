@@ -2,7 +2,8 @@
 title: "Data Cleaning"
 author: "Ellen Tedeschi"
 subtitle: "CU Psych Scientific Computing Workshop"
-tags: ["core", "r"]
+tags: ["core", "R"]
+weight: 200
 ---
 
 ```{r setup, include=FALSE}

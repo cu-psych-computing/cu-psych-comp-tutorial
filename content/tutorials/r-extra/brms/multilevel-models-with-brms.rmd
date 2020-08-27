@@ -2,7 +2,8 @@
 title: "Bayesian Multilevel Modeling with `brms`"
 subtitle: 'Focus on Partial Pooling'
 author: "Paul A. Bloom"
-tags: ["extra", "r"]
+tags: ["extra", "R"]
+weight: 900
 ---
 
 ```{r setup, include=FALSE}

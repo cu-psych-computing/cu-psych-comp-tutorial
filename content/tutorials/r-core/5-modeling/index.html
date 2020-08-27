@@ -1,7 +1,8 @@
 ---
 title: "Modeling"
 subtitle: "CU Psych Scientific Computing Workshop"
-tags: ["core", "r"]
+tags: ["core", "R"]
+weight: 500
 --- 
 
 
@@ -24,7 +25,7 @@ tags: ["core", "r"]
 <h1>Load Data</h1>
 <p>Let’s get some data.</p>
 <p>We will use the same data we are already familiar with from the Data Manipulation lesson. We will compute a group for high and low ADHD, so we can use that in our models.</p>
-<pre class="r"><code>df &lt;- read_csv(here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;5-models&quot;, &quot;uncapher_2016_repeated_measures_dataset.csv&quot;))</code></pre>
+<pre class="r"><code>df &lt;- read_csv(here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;5-modeling&quot;, &quot;uncapher_2016_repeated_measures_dataset.csv&quot;))</code></pre>
 <pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -281,14 +282,14 @@ summary(a2)</code></pre>
 <p>Let’s plot the effect of ADHD on dprime from our linear model.</p>
 <pre class="r"><code># This function requires the X variable in quotes, and the saved model object
 plot(effect(&quot;adhd&quot;, lm1))</code></pre>
-<p><img src="/tutorials/r-core/5-models/index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="/tutorials/r-core/5-modeling/index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>There are many more options you can add to customize the plot!</p>
 <pre class="r"><code>plot(effect(&quot;adhd&quot;, lm1), rug = F, colors = &quot;red&quot;, xlab = &quot;ADHD symptoms&quot;, ylab = &quot;D-prime&quot;,
      axes=list(grid=TRUE))</code></pre>
-<p><img src="/tutorials/r-core/5-models/index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="/tutorials/r-core/5-modeling/index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <p>Visualizing continuous x continous interactions:</p>
 <pre class="r"><code>plot(effect(&quot;adhdF:groupStatus&quot;, a2), xlab = &quot;&quot;, colors = c(&quot;Blue&quot;, &quot;Black&quot;))</code></pre>
-<p><img src="/tutorials/r-core/5-models/index_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><img src="/tutorials/r-core/5-modeling/index_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>If you want to really make beautiful graphs and customizations of your models, we encourage you to experiment with <code>ggplot2</code>!</p>
 </div>
 <div id="advanced-models" class="section level2">

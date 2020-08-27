@@ -2,7 +2,8 @@
 title: "Tidy Walkthrough, Part 2"
 subtitle: "Nested dfs, `map`-ing, and more"
 author: "Monica Thieu"
-tags: ["extra", "r"]
+tags: ["extra", "R"]
+weight: 702
 ---
 
 ```{r setup, include=FALSE}

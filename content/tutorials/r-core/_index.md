@@ -1,3 +1,4 @@
 ---
-title: Introductory R tutorial
+title: Introductory R Tutorial
+weight: 1
 ---

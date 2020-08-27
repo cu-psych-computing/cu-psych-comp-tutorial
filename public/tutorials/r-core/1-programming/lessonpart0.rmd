@@ -18,7 +18,8 @@ keypoints:
   - "Setup can encourage better coding practices."
 subtitle: "CU Psych Scientific Computing Workshop"
 author: "Monica Thieu"
-tags: ["core", "r"]
+tags: ["core", "R"]
+weight: 101
 ---
 
 ```{r setup, include=FALSE}

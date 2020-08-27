@@ -2,7 +2,8 @@
 title: "More Advanced `ggplot2` Plotting"
 subtitle: "Plotting With Models"
 author: "Paul A. Bloom"
-tags: ["extra", "r"]
+tags: ["extra", "R"]
+weight: 602
 ---
 
 ```{r setup, include=FALSE}
