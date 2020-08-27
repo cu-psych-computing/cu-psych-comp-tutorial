@@ -1,0 +1,692 @@
+---
+title: "More Advanced `ggplot2` Plotting"
+subtitle: "Plotting With Models"
+author: "Paul A. Bloom"
+tags: ["extra", "r"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(tidyverse)
+require(ggplot2)
+require(lme4)
+require(arm)
+require(rstanarm)
+require(rstantools)
+require(brms)
+require(merTools)
+require(gridExtra)
+```
+
+*God grant me the serenity to accept the uncertainty I cannot control; courage to control the uncertainty that I cannot accept; and wisdom to know the difference.* -Andrew Gelman
+
+*All models are wrong, but some are useful* - George Box
+
+## 1) Overview
+
+Welcome! This tutorial will cover some aspects of plotting modeled data within the context of multilevel (or 'mixed-effects') regression models. Specifically, we'll be using the lme4, brms, and rstanarm packages to model and ggplot to display the model predictions. While lme4 uses maximum-likelihood estimation to estimate models, brms and rstanarm use Markov Chain Monte Carlo methods for full Bayesian model estimation. As we will see in this tutorial, the latter approach has several advantages, including the ability to set priors and ease/interpretability of prediction through drawing random samples from the posterior distribution. 
+
+**Note**: All examples here will be with simulated data, so that as we are making our plots we can be aware of the TRUE data generating processes and assess how well our graphs represent these.  
+
+## Links to Files
+
+The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial){target="_blank"}. This particular file is located here: `/content/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part2.rmd`.
+
+## 2) Simulated multilevel data
+
+Here's the setup:
+
+  * We have 100 subjects who we have data on at 11 timepoints
+  * We asked subjects at the beginning of the study if they were netflix users. Subjects who responded yes were designated as the 'netflix' group for the duration of the study
+  * At each timepoint, we got a happiness measure from each subject, and also asked them if they had bought ice cream that day
+
+We'll use these data to fit two kinds of models and plot them:
+
+  * Predicting subjects' happiness as a function of time and netflix (linear regression)
+  * Predicting whether subjects bought ice cream as a function of their happiness and netflix (logistic regression)
+
+```{r}
+n <- 100
+subject <- seq(1:n)
+time <- 0:10
+netflix <- rbinom(n, 1, .5)
+grid <- data.frame(expand.grid(subject = subject, time= time))
+multi <- data.frame(cbind(subject, netflix)) %>%
+  dplyr::left_join(., grid, by = 'subject')
+
+
+# Simulation params
+groupIntercept <- 50
+sdIntercept <- 10
+grouptimeBeta <- 4
+sdtimeBeta <- 2
+withinSd <- 1
+
+
+# generate an intercept + slope for each subject
+multi_subs <- multi %>% 
+  group_by(subject) %>%
+  summarise(subIntercept = rnorm(1, groupIntercept, sdIntercept), 
+              subSlope = rnorm(1, grouptimeBeta, sdtimeBeta))
+  
+  # join intercepts to main frame
+  multi <- left_join(multi, multi_subs)
+
+  # get values for each subject
+  multi <- dplyr::mutate(multi, 
+                         happy = subIntercept + time*subSlope  + 
+                           rnorm(nrow(multi), 0, withinSd) + rnorm(nrow(multi), netflix*20, 5),
+                         bin = invlogit((happy-rnorm(nrow(multi), 100, 30))/100),
+                         boughtIceCream = ifelse(bin > .5, 1, 0),
+                         netflix = as.factor(netflix))
+
+  
+# Now that we have our 'data', we won't need to pay attention to the 'subintecept' and 'subslope' columns of the dataframe unless we want to specifically see the effects of these values later
+```
+## 3) Plot Raw Data
+
+
+### Raw data with a continuous predictor and continuous outcome
+
+First, it's a good idea to plot our raw data. By using `geom_line(aes(group = subject))` we can have ggplot draw a distinct line for each subject. 
+
+```{r}
+theme_set(theme_bw())
+ggplot(multi, aes(x = time, y = happy, color = netflix)) +
+  geom_point(alpha = .5, size = 1) +
+  geom_line(aes(group = subject)) +
+  labs(x = 'Time', y = 'Happiness', title = 'Does Netflix Predict Happiness Over Time?', color = 'Netflix User') +
+  scale_x_continuous(breaks = 0:10) +
+  theme(panel.grid.minor = element_blank()) +
+  scale_color_brewer(palette = 'Set1')
+
+```
+### Raw data with a binary outcome
+
+
+Visualizing the raw data for buying ice cream as a binary outcome is a bit trickier. For example, the below plot doesn't tell us a whole lot...
+
+It's really easy to get away with not looking at the raw data carefully in this kind of setting (binary outcome) where we'd later use a logistic regression to model probabilities, but it is ALWAYS important to check out raw data in addition to modeling!
+
+```{r}
+ggplot(multi, aes(x = happy, y = boughtIceCream, color = netflix)) +
+  geom_jitter(width = 0, height = .01) +
+  scale_color_brewer(palette = 'Set1')
+
+```
+
+One way we can get around this is to bin happiness, then calculate the proportion buying ice cream in each group for each happiness bin. This is summarizing our data, but we are still working directly with raw data here, not making predictive models yet
+
+  * We can use cut() to brake the continuous variable happy into discrete bins, then some tidyverse tools to calculate the proportion of people who bought ice cream in each happiness bin
+  * In the example below, we've cut up happy scores into bins of 10
+
+
+```{r}
+multiBin <- mutate(multi,
+                happyBin=cut(happy, seq(0,250, 10), labels = seq(5,250, 10))) %>%
+  group_by(happyBin, netflix) %>%
+  summarize(n = n(), propBoughtIceCream = sum(boughtIceCream/n)) %>%
+  mutate(happyNum = as.numeric(levels(happyBin)[happyBin]))
+
+ggplot(multiBin, aes(x = happyNum, y = propBoughtIceCream, color = netflix)) +
+  geom_point()  +
+  geom_line() +
+  labs(y = 'P(Bought Ice Cream)', x = 'Happiness') +
+  scale_color_brewer(palette = 'Set1') +
+  ylim(0,1)
+
+```
+
+Now, let's plot that along with the raw points
+
+
+```{r}
+ggplot(multi, aes(x = happy, y = boughtIceCream, color = netflix)) +
+  geom_jitter(width = 0, height = .01) +
+  geom_line(data = multiBin, aes(x = happyNum, y = propBoughtIceCream, color = netflix)) +
+  geom_point(data = multiBin, aes(x = happyNum, y = propBoughtIceCream, color = netflix)) +
+  scale_color_brewer(palette = 'Set1')
+
+```
+## 3) Plotting Linear Multilevel Models
+
+### Make the models first
+
+We're pretty much making the same model with each of these -- predicting happiness as function of time, netflix, and their interaction, and allowing each subject to have their own intercept and slope for time
+
+```{r, results = 'hide', cache = TRUE}
+mod_lme4 <- lmer(data = multi, happy ~ time*netflix + (time|subject))
+mod_rstanarm <- stan_glmer(data = multi, happy ~ time*netflix + (time|subject), chains =4, cores = 4)
+mod_brms <- brm(data = multi, happy ~ time*netflix + (time|subject), chains = 4, cores = 4)
+```
+
+Quickly check out the model summaries
+
+```{r}
+display(mod_lme4)
+print(mod_rstanarm)
+print(mod_brms)
+save(mod_brms, mod_rstanarm, mod_lme4, file = 'models.rda')
+```
+
+### Plotting Population-Level ('fixed') Effects
+
+It is often very useful to plot the population-level predictions are models are making, and just as importantly, the predictive uncertainty.
+
+Information here is from Jared Knowles and Carl Frederick: https://cran.r-project.org/web/packages/merTools/vignettes/Using_predictInterval.html
+
+In order to generate a proper prediction interval, a prediction must account for three sources of uncertainty in mixed models:
+
+  1. the residual (observation-level) variance,
+  2. the uncertainty in the fixed coefficients, and
+  3. the uncertainty in the variance parameters for the grouping factors.
+
+A fourth, uncertainty about the data, is beyond the scope of any prediction method.
+
+With the Bayesian models, we can work with all three for our intervals, but this is more difficult with the lme4 model. 
+
+*Note -- most model fits that are plotted in the literature tend to be the marginal effects, showing the predictive uncertainty of the fitted fixed-effect regression lines only, not includeing all sources of uncertainty. Still, it's important to be able to plot and consider all sources of predictive uncertainty, especially if we are considering a framework in which we want to derrive predictions from our models!*
+
+
+#### lme4 
+
+With lme4, we can use the effects package to extract model estimates, standard errors, and prediction intervals about the 'fitted' regression line given certain levels of our predictor variables. However, it seems that this method does NOT incorporate the observation-level variance in the predictive uncertainty. 
+
+```{r}
+require(effects)
+effect_time <- as.data.frame(effect('time:netflix', mod_lme4, confint=list(alpha = .95)), xlevels = list(time = 0:10, netflix = c('0','1')))
+
+head(effect_time)
+```
+
+Let's plot these predictions
+```{r}
+fitLmePlot <- ggplot(data = effect_time, aes(x = time, y = fit)) +
+  geom_line(aes(color = netflix), lwd = 2) +
+  geom_ribbon(aes(ymin = lower, ymax = upper, fill = netflix), alpha = .5) +
+  scale_x_continuous(breaks = 0:10) +
+  theme(panel.grid.minor = element_blank()) +
+  scale_color_brewer(palette = 'Set1') +
+  scale_fill_brewer(palette = 'Set1') +
+  labs(x = 'Time', y = 'Happiness', title = 'Fitted Line - Lme4') +
+  ylim(30,130)
+
+
+```
+
+Then we can plot them with the raw data as well
+```{r}
+
+ggplot(data = effect_time, aes(x = time, y = fit, color = netflix)) +
+  geom_point() +
+  geom_line(lwd = 2) +
+  geom_ribbon(aes(ymin = lower, ymax = upper, fill = netflix), alpha = .7, colour = NA) +
+  scale_x_continuous(breaks = 0:10) +
+  theme(panel.grid.minor = element_blank()) +
+  scale_color_brewer(palette = 'Set1') +
+  labs(x = 'Time', y = 'Happiness', title = 'Does Netflix Predict Happiness Over Time?') +
+  geom_point(data = multi, aes(x = time, y = happy), alpha = .5, size = 1) +
+  geom_line(data = multi, aes(x = time, y = happy, group = subject), alpha = .2) 
+
+
+```
+
+One thing we also want to check if if the residuals are correlated with the predicted values...in a linear regression framework it's a sign of a bad model if these are correlated
+
+We can get the predicted estimates with predict()
+  * Note that with lme4, calling predict() on the model object just spits out predicted estimates for each observation
+```{r}
+multi <- mutate(multi,
+                lme4preds = predict(mod_lme4),
+                lme4resids = happy - lme4preds)
+
+
+ggplot(multi, aes(x = lme4preds, y = lme4resids)) +
+  geom_point() +
+  stat_smooth(method = 'lm') +
+  labs(x = 'predicted happiness values', y = 'residuals', title = 'this looks okay') +
+  theme_bw()
+```
+
+#### brms
+
+First, we basically creat a grid of the values for which we want to predict estimates. So, basically, we'll tell the models to make us a prediction for each possible level of time and netflix
+```{r}
+newx <- expand.grid(time = 0:10, netflix = c('0', '1'))
+head(newx)
+
+```
+
+Now, we use the predict() function! With brms, predict actually returns predictive uncertainty in the form of the standard error of the posterior predictive distribution for that set of predictors.
+  * If we use `re_formula = NA` then group-level effects (in our dataset each subject is a 'group') will not be considered in the prediction
+  * If we use `re_formula = NULL` (the default) then all group-level effects will be considered
+
+```{r}
+predict_interval_brms <- predict(mod_brms, newdata = newx, re_formula = NA) %>%
+  cbind(newx,.)
+head(predict_interval_brms)
+```
+
+What's the difference between fitted() and predict() when called on a brms model?
+  * You can think of fitted() as generating the 'regression line'
+  * fitted() does not incorporate the measurment error on the observation level, so the variance about the predictions is smaller -- this is more what we're talking about when we plot the 'regression line' or the uncertainty about the population-level predictive estimate only
+  * Estimated means extracted from both methods should be very similar
+  * More info: https://rdrr.io/cran/brms/man/fitted.brmsfit.html
+  
+
+Let's plot these brms predictions -- as we can see, the 95% CI including predictive uncertainty from the measurement level is considerably larger than that generated by lme4 without
+```{r}
+ggplot(data = predict_interval_brms, aes(x = time, y = Estimate, color = netflix)) +
+  geom_point() +
+  geom_line() +
+  geom_ribbon(aes(ymin = `Q2.5`, ymax = `Q97.5`, fill = netflix), alpha = .1, colour = NA) +
+  scale_x_continuous(breaks = 0:10) +
+  theme(panel.grid.minor = element_blank()) +
+  scale_color_brewer(palette = 'Set1') +
+  labs(x = 'Time', y = 'Happiness', title = 'Does Netflix Predict Happiness Over Time?') 
+  
+
+
+```
+With the raw data...
+
+```{r}
+ggplot(data = predict_interval_brms, aes(x = time, y = Estimate, color = netflix)) +
+  geom_point() +
+  geom_line(lwd = 2) +
+  geom_ribbon(aes(ymin = `Q2.5`, ymax = `Q97.5`, fill = netflix), alpha = .5, colour = NA) +
+  scale_x_continuous(breaks = 0:10) +
+  theme(panel.grid.minor = element_blank()) +
+  scale_color_brewer(palette = 'Set1') +
+  labs(x = 'Time', y = 'Happiness', title = 'Does Netflix Predict Happiness Over Time?') +
+  geom_point(data = multi, aes(x = time, y = happy), alpha = .5, size = 1) +
+  geom_line(data = multi, aes(x = time, y = happy, group = subject), alpha = .2) 
+
+  
+```
+
+Let's compare this to using fitted()
+
+```{r}
+fitted_interval_brms <- fitted(mod_brms, newdata = newx, re_formula = NA) %>%
+  cbind(newx,.)
+
+predictBrmsPlot <- ggplot(data = predict_interval_brms, aes(x = time, y = Estimate, color = netflix)) +
+  geom_point() +
+  geom_line(lwd = 2) +
+  geom_ribbon(aes(ymin = `Q2.5`, ymax = `Q97.5`, fill = netflix), alpha = .5, colour = NA) +
+  scale_x_continuous(breaks = 0:10) +
+  theme(panel.grid.minor = element_blank()) +
+  scale_color_brewer(palette = 'Set1') +
+  scale_fill_brewer(palette = 'Set1') +
+  labs(x = 'Time', y = 'Happiness', title = 'Predict - brms') +
+  ylim(30, 130)
+
+fittedBrmsPlot <- ggplot(data = fitted_interval_brms, aes(x = time, y = Estimate, color = netflix)) +
+  geom_point() +
+  geom_line(lwd = 2) +
+  geom_ribbon(aes(ymin = `Q2.5`, ymax = `Q97.5`, fill = netflix), alpha = .5, colour = NA) +
+  scale_x_continuous(breaks = 0:10) +
+  theme(panel.grid.minor = element_blank()) +
+  scale_color_brewer(palette = 'Set1') +
+  scale_fill_brewer(palette = 'Set1') +
+  labs(x = 'Time', y = 'Happiness', title = 'Fitted - brms') +
+  ylim(30,130)
+  
+grid.arrange(predictBrmsPlot, fittedBrmsPlot, ncol = 2)
+```
+#### rstanarm 
+
+Rstanarm outputs a slightly different type of object from brms (a stanreg object) so the syntax for extracting the estimates is slightly different, but the actual estimates are almost identical
+
+We can use `predictive_interval` on the rstanarm model to get the posterior predictive interval for specific levels of our input variables
+  * re.form works the same way re_formula does with brms
+
+Alternatively, we can use `posterior_predict` to generate samples, and then take quantiles of those to get our predictive interval
+
+```{r}
+interval_rstanarm <- (predictive_interval(mod_rstanarm, newdata = newx, re.form = NA, prob = .95)) %>%
+  cbind(newx, .)
+
+# Generate the posterior samples for the predictor values in newx
+rstan_posterior_predictions <- rstanarm::posterior_predict(mod_rstanarm, newdata = newx, re.form = NA)
+
+# Get the median of the posterior distribution for each of those values
+stan_median <- cbind(apply(rstan_posterior_predictions,2, median))
+
+# Bind back to newx dataframe 
+interval_rstanarm <- cbind(interval_rstanarm,stan_median)
+
+
+```
+
+Plot the rstanarm estimates next to the brms ones. This makes sense they should be the same...since they're doing the same stuff under the hood
+
+
+```{r}
+predictRstanarmPlot <- ggplot(data = interval_rstanarm, aes(x = time, y = stan_median, color = netflix)) +
+  geom_point() +
+  geom_line(lwd = 2) +
+  geom_ribbon(aes(ymin = `2.5%`, ymax = `97.5%`, fill = netflix), alpha = .5, colour = NA) +
+  scale_x_continuous(breaks = 0:10) +
+  theme(panel.grid.minor = element_blank()) +
+  scale_color_brewer(palette = 'Set1') +
+  labs(x = 'Time', y = 'Happiness', title = 'Rstanarm') +
+  ylim(30, 130)
+
+
+grid.arrange(predictRstanarmPlot, predictBrmsPlot, ncol = 2)
+```
+
+
+To get fitted values of the predictors without the extra uncertainty on the observation level, we can call `posterior_linpred` on rstanarm models. 
+
+```{r}
+# Generate the fitted posterior samples for the predictor values in newx
+rstanarm_fitted_predictions <- posterior_linpred(mod_rstanarm, newdata = newx, re.form = NA)
+rstanarm_fitted_predictions <- t(cbind(apply(rstanarm_fitted_predictions,2, quantile, c(.025, .5, .975)))) 
+rstanarm_fitted_predictions <- cbind(newx, rstanarm_fitted_predictions)
+
+fittedRstanarmPlot <- ggplot(data = rstanarm_fitted_predictions, aes(x = time, y = `50%`, color = netflix)) +
+  geom_point() +
+  geom_line(lwd = 2) +
+  geom_ribbon(aes(ymin = `2.5%`, ymax = `97.5%`, fill = netflix), alpha = .5, colour = NA) +
+  scale_x_continuous(breaks = 0:10) +
+  theme(panel.grid.minor = element_blank()) +
+  scale_color_brewer(palette = 'Set1') +
+  scale_fill_brewer(palette = 'Set1') +
+  labs(x = 'Time', y = 'Happiness', title = 'Fitted - Rstanarm') +
+  ylim(30,130)
+```
+
+Now we can see that if we plot the linear predictor + uncertainty for that predictor, across all three packages it comes out very similarly -- assuming we're using only very weak priors with brms and rstanarm
+
+```{r}
+grid.arrange(fittedBrmsPlot, fittedRstanarmPlot, fitLmePlot, ncol = 3)
+
+
+```
+Let's look at them all on one plot to double check
+
+```{r}
+# Get the data wrangled to combine into one frame
+names(fitted_interval_brms)[names(fitted_interval_brms) == 'Estimate'] <- 'fit'
+names(fitted_interval_brms)[names(fitted_interval_brms) == '2.5%ile'] <- 'lower'
+names(fitted_interval_brms)[names(fitted_interval_brms) == '97.5%ile'] <- 'upper'
+fitted_interval_brms$package <- 'brms'
+
+names(rstanarm_fitted_predictions)[names(rstanarm_fitted_predictions) == '50%'] <- 'fit'
+names(rstanarm_fitted_predictions)[names(rstanarm_fitted_predictions) == '2.5%'] <- 'lower'
+names(rstanarm_fitted_predictions)[names(rstanarm_fitted_predictions) == '97.5%'] <- 'upper'
+rstanarm_fitted_predictions$package <- 'rstanarm'
+
+effect_time$package <- 'lme4'
+
+
+fittedAllModels <- plyr::rbind.fill(effect_time, fitted_interval_brms, rstanarm_fitted_predictions) %>%
+  mutate(netflix = case_when(netflix == '1' ~ 'netflix', netflix == '0' ~ 'no netflix'))
+
+
+# I've jittered the height of the points just a bit here to make them distinguishable from each other, but it's pretty clear how similar they are
+ggplot(fittedAllModels, aes(x = time, y = fit, color = package, group = netflix)) +
+  geom_jitter(size =3, alpha = .3, width = 0, height = .5) +
+  geom_line() +
+  geom_line(aes(x = time, y = upper, group = interaction(netflix, package), color = package), lty = 2) +
+  geom_line(aes(x = time, y = lower, group = interaction(netflix, package), color = package), lty = 2) +
+  theme_bw() +
+  labs(x = 'Time', y = 'Fitted Prediciton + Linear Predictor Interval', title = 'Very Similar Predictive Uncertainty Across Packages') +
+  facet_wrap('netflix') +
+  scale_color_brewer(palette = 'Dark2')
+```
+
+
+
+### Spaghetti Plots with subject-level model fits
+
+Often, we want to see what kind of predictions our hierarchical models are making on the level of groups (in our experiments, the 'group' is often the subject). We can check these with 'spaghetti' plots displaying the fit for each of our subjects. 
+
+
+#### Spaghetti plot with lme4
+
+To get the model's predicted outcome for each original datapoint entered into the model in lme4, we can actually just call `predict` right on the model object. Then we can bind it back to the original dataframe
+
+
+```{r}
+predict_subject_lme4 <- cbind(multi, lme_prediction = predict(mod_lme4))
+
+```
+
+Now, we can generate the spaghetti plot in much of the same way that we generated the population-level fitted lines
+
+  * All we have to do is add an additional geom_line() using our subject-level data frame with the argument `group = subject`
+
+```{r}
+spagLmePlot <- ggplot(data = effect_time, aes(x = time, y = fit)) +
+  geom_line(aes(color = netflix), lwd = 2) +
+  geom_ribbon(aes(ymin = lower, ymax = upper, fill = netflix), alpha = .5) +
+  scale_x_continuous(breaks = 0:10) +
+  theme(panel.grid.minor = element_blank()) +
+  labs(x = 'Time', y = 'Happiness', title = 'Fitted Line + Spaghetti with Lme4') +
+  ylim(30,130) +
+  geom_line(data = predict_subject_lme4, aes(x = time, y = lme_prediction, group = subject, color = netflix), alpha = .3) +
+  scale_color_brewer(palette = 'Set1') +
+  scale_fill_brewer(palette = 'Set1') 
+spagLmePlot
+```
+
+This helps us visualize how much between-subject heterogeneity there is. Seems like people are remarkably similar to each other in this dataset!
+
+
+
+#### Brms Spaghetti plots with subjects
+
+This can be done in a very similar manner to lme4, except that calling predict() on a brms object actually gives us predictive uncertainty as well as the fitted estimate. 
+
+```{r}
+predict_subjects_brms <- predict(mod_brms) %>%
+  cbind(multi, .) %>%
+  dplyr::select(subject, netflix, time, happy, Estimate, `Q2.5`, `Q97.5`)
+
+```
+We can see now that we can get a dataframe with exactly the same structure as the original data input into the model. We even get predictive uncertainty about each timepoint for each subject. That could be useful later, but might be too much for our spaghetti plot
+
+
+```{r}
+head(predict_subjects_brms)
+```
+
+Now, plot just like with lme4
+```{r}
+spagBrmsPlot <- ggplot(data = predict_interval_brms, aes(x = time, y = Estimate, color = netflix)) +
+  geom_point() +
+  geom_line(lwd = 2) +
+  geom_ribbon(aes(ymin = `Q2.5`, ymax = `Q97.5`, fill = netflix), alpha = .5, colour = NA) +
+  scale_x_continuous(breaks = 0:10) +
+  theme(panel.grid.minor = element_blank()) +
+  scale_color_brewer(palette = 'Set1') +
+  scale_fill_brewer(palette = 'Set1') +
+  labs(x = 'Time', y = 'Happiness', title = 'Spaghetti + Predictive Uncertainty on all levels - brms') +
+  ylim(30, 130) +
+  geom_line(data = predict_subjects_brms, aes(x = time, y = Estimate, group = subject), alpha = .3) 
+
+spagBrmsPlot
+```
+
+
+#### Spaghetti plot with rstanarm
+
+```{r}
+predict_subject_rstanarm <- rstanarm::posterior_predict(mod_rstanarm)
+predict_subject_rstanarm <- cbind(apply(predict_subject_rstanarm,2, median), multi)
+names(predict_subject_rstanarm)[names(predict_subject_rstanarm)== 'apply(predict_subject_rstanarm, 2, median)'] <- 'fit'
+
+
+subsRstanarmPlot <- ggplot(data = rstanarm_fitted_predictions, aes(x = time, y = fit, color = netflix)) +
+  geom_point() +
+  geom_line(lwd = 2) +
+  geom_ribbon(aes(ymin = lower, ymax = upper, fill = netflix), alpha = .5, colour = NA) +
+  scale_x_continuous(breaks = 0:10) +
+  theme(panel.grid.minor = element_blank()) +
+  scale_color_brewer(palette = 'Set1') +
+  scale_fill_brewer(palette = 'Set1') +
+  labs(x = 'Time', y = 'Happiness', title = 'Fitted rstanarm + spaghetti subjects') +
+  ylim(30,130) +
+  geom_line(data = predict_subject_rstanarm, aes(x = time, y = fit, group = subject))
+
+subsRstanarmPlot
+```
+
+## 4) Linear model comparison -- rstanarm model with weak vs. strong priors
+
+Warning! These priors are just meant to serve as an example and are definitely not meant to represent the kinds of priors we might use often in our work. For more information on priors, check out:
+
+  * https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html
+  * http://mc-stan.org/users/documentation/case-studies/weakly_informative_shapes.html
+  
+
+*These models are also simplified a little bit to have no interaction term between time and netflix, and random intercepts but not random slopes.*
+
+Let's say we have strong prior evidence for some reason that the coefficient for time would be around 5 and netflix would be around 20 (we know the true state of this simulation!)
+
+
+```{r, results = 'hide', cache = TRUE}
+myprior <- normal(location = c(4, 20), scale = c(1,1), autoscale = FALSE)
+mod_rstanarm_priors <- stan_glmer(data = multi, happy ~ time + netflix + (1|subject), chains =4, cores = 4, prior = myprior)
+mod_rstanarm_weak_priors <- stan_glmer(data = multi, happy ~ time + netflix + (1|subject), chains =4, cores = 4)
+```
+
+We can check out the priors here
+```{r}
+prior_summary(mod_rstanarm_priors)
+prior_summary(mod_rstanarm_weak_priors)
+```
+
+And see how they affected the model fits here
+```{r}
+print(mod_rstanarm_priors)
+print(mod_rstanarm_weak_priors)
+```
+
+Now let's plot the fitted predictions of the regression line as before
+
+```{r}
+priors_predictions <- posterior_linpred(mod_rstanarm_priors, newdata = newx, re.form = NA)
+priors_predictions  <- t(cbind(apply(priors_predictions,2, quantile, c(.025, .5, .975)))) 
+priors_predictions <- cbind(newx, priors_predictions) %>%
+  mutate(model = 'Strong Prior')
+
+weak_priors_predictions <- posterior_linpred(mod_rstanarm_weak_priors, newdata = newx, re.form = NA)
+weak_priors_predictions  <- t(cbind(apply(weak_priors_predictions,2, quantile, c(.025, .5, .975)))) 
+weak_priors_predictions <- cbind(newx, weak_priors_predictions) %>%
+  mutate(model = 'Weak Prior')
+
+priorComparison <- rbind(priors_predictions, weak_priors_predictions) %>%
+  mutate(netflix = case_when(netflix == '1' ~ 'netflix', netflix == '0' ~ 'no netflix'))
+
+ggplot(priorComparison, aes(x = time, y = `50%`, color = model)) +
+  geom_line() +
+  facet_wrap('netflix')+
+  geom_line(aes(x = time, y = `2.5%`, color = model), lty = 2) +
+  geom_line(aes(x = time, y = `97.5%`, color = model), lty = 2) +
+  theme_bw() +
+  labs(x = 'Time', y = 'Fitted Prediciton + Linear Predictor Interval', title = 'Strong vs. Weak Priors') +
+  scale_color_brewer(palette = 'Dark2') +
+  scale_x_continuous(breaks = 0:10) +
+  theme(panel.grid.minor = element_blank())
+```
+
+The differences aren't huge (since there is a fair amount of data and the priors match the 'true' distributions), but we can see the predictive uncertainty about the fitted line is less for the stronger priors. 
+
+## 5) Plotting Multilevel Logistic Regression Models
+
+While logistic regression differs in some ways from linear regression, the practice for plotting from the models are quite similar. 
+
+### Logistic Regression Models in Lme4 and Rstanarm
+Here we set up the models to predict probability of buying ice cream from happiness and netflix usership. We add allow intercepts and the effect of happiness to very across individuals. 
+
+  * For brevity's sake I've left brms out here, but the model would be basically identical to the rstanarm and the plotting would be the same as that in the previous sections
+```{r, results = 'hide', cache = TRUE}
+
+multi$happy_z = (multi$happy - mean(multi$happy))/sd(multi$happy)
+
+logistic_lme4 <- glmer(data = multi, boughtIceCream ~ happy_z + netflix + (happy_z|subject), family = binomial(link = 'logit'))
+logistic_rstanarm <- stan_glmer(data = multi, boughtIceCream ~ happy_z + netflix + (happy_z|subject), family = binomial(link = 'logit'), cores = 4, chains = 4)
+```
+
+One disadvantage with lme4 models is that with tougher nonlinear models, they sometimes fail to converge. So, let's go with the rstanarm one in this case
+```{r}
+print(logistic_lme4)
+print(logistic_rstanarm)
+```
+### Plotting the logistic regression model fits in rstanarm
+
+Lets set up a new grid of predictor values for this model
+```{r}
+a <- seq(from = min(multi$happy_z) - .1, to = max (multi$happy_z) + .1, by = .25)
+logit_grid <- expand.grid(happy_z = a, netflix = c('0', '1'))
+
+logistic_predictions <- posterior_linpred(logistic_rstanarm, newdata = logit_grid, re.form = NA)
+logistic_predictions  <- t(cbind(apply(logistic_predictions,2, quantile, c(.025, .5, .975)))) 
+logistic_predictions <- cbind(logit_grid, logistic_predictions)
+
+
+# transform to a 0-1 scale using the invlogit function
+logistic_predictions$prob = invlogit(logistic_predictions$`50%`)
+logistic_predictions$lwr = invlogit(logistic_predictions$`2.5%`)
+logistic_predictions$upr = invlogit(logistic_predictions$`97.5%`)
+
+
+# get happiness back on the normal scale
+logistic_predictions$happy = (logistic_predictions$happy_z*sd(multi$happy)) + mean(multi$happy)
+
+```
+
+```{r}
+logitplot1 <- ggplot(data = logistic_predictions, aes(x = happy, y = prob)) +
+  geom_line(aes(color = netflix)) +
+  geom_ribbon(aes(ymin = lwr, ymax = upr, fill = netflix), alpha = .2) +
+  scale_color_brewer(palette = 'Set1') +
+  scale_fill_brewer(palette = 'Set1') +
+  labs(x = 'Happiness', y = 'P(Bought Ice Cream)', title = 'Ice Cream Purchase Likelihood as a factor of happiness and netflix usership')
+
+logitplot1
+
+```
+
+### Plotting fitted model + binned raw data
+
+This can be a good check to see whether our model is making sensible predictions. It is important to keep in mind, however, that the raw data bins are not adjusting for any other variables, while the model predictions are based on the values of the predictors in the predictor grid that was used to generate them. 
+```{r}
+logitplot1 + 
+  geom_line(data = multiBin, aes(x = happyNum, y = propBoughtIceCream, color = netflix)) +
+  geom_point(data = multiBin, aes(x = happyNum, y = propBoughtIceCream, color = netflix)) 
+  
+```
+
+### Logistic Regression Spaghetti Plot
+
+Now we can use `posterior_linpred()` again with the `transform = TRUE` argument and no new data to get predictions for the original datapoints. 
+  * It seems a bit strange to use posterior_linpred() when we're predicting for subjects, but posterior_predict() in this case will give us predictions of 0s and 1s, not probabilities -- it would be predicting actual outcome values
+
+```{r}
+logistic_subject_preds <- posterior_linpred(logistic_rstanarm,transform = TRUE)
+logistic_subject_preds  <- t(cbind(apply(logistic_subject_preds,2, quantile, c(.025, .5, .975)))) 
+logistic_subject_preds <- cbind(multi, logistic_subject_preds)
+
+
+spag_logit_plot <- logitplot1 +
+  geom_line(data = logistic_subject_preds, aes(x = happy, y = `50%`, group = subject, color = netflix), lwd = .3, alpha = .5) 
+
+spag_logit_plot_check <- logitplot1 +
+  geom_line(data = logistic_subject_preds, aes(x = happy, y = `50%`, group = subject, color = netflix), lwd = .3, alpha = .5) +
+  facet_wrap('netflix') +
+  geom_line(data = multiBin, aes(x = happyNum, y = propBoughtIceCream, color = netflix)) +
+  geom_point(data = multiBin, aes(x = happyNum, y = propBoughtIceCream, color = netflix))
+
+
+spag_logit_plot
+spag_logit_plot_check
+```
+
+
+

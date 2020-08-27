@@ -1,5 +1,5 @@
 ---
-title: "Programming, pt 0"
+title: "Programming, Part 0"
 teaching: 9000
 exercises: 42
 questions:
@@ -21,7 +21,6 @@ author: "Monica Thieu"
 tags: ["core", "r"]
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
 <p>Welcome to the CU Psychology Scientific Computing workshop!</p>
@@ -29,24 +28,28 @@ tags: ["core", "r"]
 <p>In this first section of our tutorial, we will learn about this info that goes in and out, as well as the actions that transform info into what we want.</p>
 <p>There’s a lot to get into if you have no prior experience with programming (don’t be daunted though!), so the programming module will be broken into multiple documents in an effort to make navigating a little easier.</p>
 <p>These documents will cover:</p>
-<ol start="0" style="list-style-type: decimal">
-<li>Finding your way around RStudio <strong>this document!</strong></li>
-<li><a href="lessonPart1.html">Variables, data types, vectors</a></li>
-<li><a href="lessonPart2.html">Coding strategy, relational &amp; logical operators</a></li>
-</ol>
+<ul>
+<li><strong>Programming, Part 0:</strong> Finding your way around RStudio (<strong>this document!</strong>)</li>
+<li><strong>Programming, Part 1:</strong> <a href="/tutorials/r-core/1-programming/lessonpart1">Variables, data types, vectors</a></li>
+<li><strong>Programming, Part 2:</strong> <a href="/tutorials/r-core/1-programming/lessonpart2">Coding strategy, relational &amp; logical operators</a></li>
+</ul>
+<div id="links-to-files" class="section level1">
+<h1>Links to Files</h1>
+<p>The files for all tutorials can be downloaded from <a href="https://github.com/cu-psych-computing/cu-psych-comp-tutorial" target="_blank">the Columbia Psychology Scientific Computing GitHub page</a>. This particular file is located here: <code>/content/tutorials/r-core/1-programming/lessonpart0.rmd</code>.</p>
+</div>
 <div id="working-with-rstudio" class="section level1">
 <h1>Working with RStudio</h1>
 <div id="installing-r-rstudio" class="section level2">
 <h2>Installing R &amp; RStudio</h2>
-<p>To install R, visit the <a href="https://cran.r-project.org/mirrors.html">CRAN website</a> to download the appropriate version of R for your operating system (Linux, Mac, or Windows). Run the installer contained within your downloaded file.</p>
-<p>To install RStudio, visit the <a href="https://www.rstudio.com/products/rstudio/download/#download">RStudio website</a> to download the appropriate version of RStudio for your operating system. Again, run the installer that downloads to your computer.</p>
+<p>To install R, visit the <a href="https://cran.r-project.org/mirrors.html" target="_blank">CRAN website</a> to download the appropriate version of R for your operating system (Linux, Mac, or Windows). Run the installer contained within your downloaded file.</p>
+<p>To install RStudio, visit the <a href="https://www.rstudio.com/products/rstudio/download/#download" target="_blank">RStudio website</a> to download the appropriate version of RStudio for your operating system. Again, run the installer that downloads to your computer.</p>
 <p><strong>When you want to work with R, just open RStudio. You should never need to open R directly.</strong> RStudio requires R to run (which is why you have to download the two programs separately), but gives you a bunch of useful bonus tools that don’t come standard with R, so we will only ever be opening RStudio to use R.</p>
 </div>
 <div id="getting-oriented-to-the-rstudio-window" class="section level2">
 <h2>Getting oriented to the RStudio window</h2>
 <div id="r-project-files" class="section level3">
 <h3>R project files</h3>
-<p>Whenever you are working in RStudio, you’ll likely be working with a particular set of code scripts, raw data, and other files that are all saved in a particular folder. An <a href="https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects"><strong>R project file</strong></a> tells RStudio “this folder is a place where I am doing R stuff related to one complete project” and helps you keep your different data analysis projects organized.</p>
+<p>Whenever you are working in RStudio, you’ll likely be working with a particular set of code scripts, raw data, and other files that are all saved in a particular folder. An <a href="https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects" target="_blank"><strong>R project file</strong></a> tells RStudio “this folder is a place where I am doing R stuff related to one complete project” and helps you keep your different data analysis projects organized.</p>
 <p>You can create an R project file inside of a folder where you plan to do R work, or you can open an existing R project file in a folder you’ve already set up.</p>
 <p><em>Note: Although R projects may not be something you’ll always learn in intro stats classes, etc., we advise using them most of the time for helping organize files/your life! More on this later.</em></p>
 </div>
@@ -92,7 +95,7 @@ install.packages(pkgs = c(&quot;car&quot;,
                           &quot;knitr&quot;))
 
 # You can also do this through the GUI, using the &quot;Packages&quot; tab in the lower-right window of RStudio.</code></pre>
-<p>Then, once they’re installed on your computer, you again have to tell R to <em>load</em> the packages into your active R session. This allows you to quickly and easily call the functions in those packages. While you only have to install packages once, you have to load them in every R session that you want to use them. (Why they don’t load automatically? I don’t know! But if you’d like to configure R to load packages automatically every time you open R, see <a href="https://www.r-bloggers.com/load-packages-automatically-in-rstudio/">these instructions</a>.)</p>
+<p>Then, once they’re installed on your computer, you again have to tell R to <em>load</em> the packages into your active R session. This allows you to quickly and easily call the functions in those packages. While you only have to install packages once, you have to load them in every R session that you want to use them. (Why they don’t load automatically? I don’t know! But if you’d like to configure R to load packages automatically every time you open R, see <a href="https://www.r-bloggers.com/load-packages-automatically-in-rstudio/" target="_blank">these instructions</a>.)</p>
 <pre class="r"><code># Use library() to load a package ONCE IT&#39;S INSTALLED.
 # You can put the package name as a string
 library(&quot;car&quot;)
@@ -108,9 +111,9 @@ library(effects)</code></pre>
 <p>Before we actually get started with messing in R, we need to understand how R interacts with files on your computer. Any data that gets loaded in or saved out is saved on your computer proper, and you can access all of these files through R.</p>
 <div id="the-working-directory" class="section level2">
 <h2>The working directory</h2>
-<p>Every R session has a <em>working directory,</em> or a “home base” folder. Essentially, this is the folder that R is “in”. R is not actually installed in this folder, mind you! The working directory is the first folder where R looks for raw data files to load in. You can find out what folder is your working directory using the <code>getwd()</code> command as below.</p>
-<pre class="r"><code>getwd()</code></pre>
-<pre><code>## [1] &quot;/Users/mthieu/Repos/cu-psych-r-tutorial/content/tutorials/r-core/1-programming&quot;</code></pre>
+<p>Every R session has a <em>working directory,</em> or a “home base” folder. Essentially, this is the folder that R is “in”. R is not actually installed in this folder, mind you! The working directory is the first folder where R looks for raw data files to load in. You can find out what folder is your working directory using the <code>here()</code> command as below.</p>
+<pre class="r"><code>here()</code></pre>
+<pre><code>## [1] &quot;/Users/emily/Documents/GitHub/cu-psych-comp-tutorial&quot;</code></pre>
 <p>If you run this command on your own computer, you’ll get a different folder. And that’s okay! Our folder structures on our computers are all different.</p>
 <p>When you launch R by opening an R project file (our preferred way of opening R), R automatically sets your working directory to be the folder that this R project file is saved in. Thus, if your R project file is in the same folder as your raw data, scripts, etc, this is a neat short-cut to start R in the folder all of your stuff is saved in.</p>
 <p><strong>We do not recommend changing your working directory during an active R session.</strong> R project files automatically set your working directory for you, so you don’t need to physically set your working directory when you open up R if you open up an R project file. Additionally, when you use R project files, you can open multiple R instances in different working directories if you need to work on multiple projects at once, so you shouldn’t need to change your working directory inside one R session.</p>
@@ -163,11 +166,11 @@ library(effects)</code></pre>
 <p>Although you can figure out the file path on your own, even frequent R users can find it confusing to do so. Thankfully, a function called <code>here()</code> (in the <code>here</code> package) can easily generate an absolute file path for you, as long as you know which folders your file is located in.</p>
 <div id="generating-a-file-path-using-here" class="section level3">
 <h3>Generating a file path using here()</h3>
-<p>Let’s say you want to load a CSV file containing data on Shakespeare’s plays in R. This file is called <code>shakes.csv</code>, and it is located in the folder for this R project. In particular, it is saved inside the “1_programming” subfolder, which is located within the “R” subfolder in the main project folder:</p>
-<p><img src="../../assets/images/filepath.png" /></p>
+<p>Let’s say you want to load a CSV file containing data on Shakespeare’s plays in R. This file is called <code>shakes.csv</code>, and it is located in the folder for this R project. In particular, it is saved inside the “1_programming” subfolder, which is located within the “r-core” subfolder, which is in the “tutorials” subfolder, which is ultimately in the “content” subfolder in the main project folder:</p>
+<p><img src="/images/filepath.png" /></p>
 <p>To generate a file path using <code>here()</code>, list the names of each subfolder in quotes, followed by the file name in quotes. Please note that these subfolder names should be listed from highest in the folder structure to lowest (ending with the subfolder where the data file is located).</p>
 <pre class="r"><code>here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;1-programming&quot;, &quot;shakes.csv&quot;)</code></pre>
-<pre><code>## [1] &quot;/Users/mthieu/Repos/cu-psych-r-tutorial/content/tutorials/r-core/1-programming/shakes.csv&quot;</code></pre>
+<pre><code>## [1] &quot;/Users/emily/Documents/GitHub/cu-psych-comp-tutorial/content/tutorials/r-core/1-programming/shakes.csv&quot;</code></pre>
 </div>
 <div id="reading-the-data-into-r" class="section level3">
 <h3>Reading the data into R</h3>
@@ -194,9 +197,7 @@ library(effects)</code></pre>
 <p>To load the file into your R environment, give it a name (e.g., <code>shakes</code>) and use the <code>&lt;-</code> (the <em>assignment operator</em>) to save the data contained in the CSV into an R object with that name.</p>
 <pre class="r"><code>shakes &lt;- read_csv(here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;1-programming&quot;, &quot;shakes.csv&quot;))</code></pre>
 <p>Once you have done so, you will see this object listed in the Environment tab in the upper right section of your RStudio window.</p>
-</div>
-</div>
-</div>
+<p><strong>Next:</strong> <a href="/tutorials/r-core/1-programming/lessonpart1">Programming, Part 1 (Variables, data types, vectors)</a></p>
 </div>
 </div>
 </div>

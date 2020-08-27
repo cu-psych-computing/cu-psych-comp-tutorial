@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.74.3" />
+
+  
+  <meta name="description" content="CU Psychology Scientific Computing">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../favicon-16x16.png">
+
+  
+  <link rel="manifest" href="../../../../site.webmanifest">
+
+  
+  <link rel="mask-icon" href="../../../../safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="../../../../css/bootstrap.min.css" />
+  
+  
+  <link
+    rel="stylesheet"
+    href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"
+  />
+
+  <script src="https://kit.fontawesome.com/7eb067db85.js" crossorigin="anonymous"></script>
+
+  
+  <title>Intro to RMarkdown | Columbia Psychology Scientific Computing</title>
+  
+
+  <style>
+
+.h1, h1 {
+  font-size:42px;
+  font-weight:600;
+  margin-top: -51px;
+  padding-top: 76px;
+  padding-bottom: 25px;
+}
+
+.h2, h2 {
+  font-size:32px;
+  font-weight:600;
+  margin-top: -51px;
+  padding-top: 99px;
+  padding-bottom: 16px;
+}
+
+.h3, h3 {
+  font-size:22px;
+  font-weight:600;
+  margin-top: -51px;
+  padding-top: 81px;
+  padding-bottom: 16px;
+}
+
+.h4, h4 {
+  font-size:15px;
+  font-weight:600;
+  font-style:italic;
+  margin-top: -51px;
+  padding-top: 61px;
+  padding-bottom: 10px;
+}
+
+.h5, h5 {
+  font-size:15px;
+}
+
+.h6, h6 {
+  font-size:15px;
+}
+
+body {
+  min-width: 300px;
+  font-size:15px;
+  color: #212529;
+  margin-top: 51px;
+}
+
+a {
+  color: #007bff;
+}
+
+a:hover,
+a:focus {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.navbar-light {
+  padding: 10px 3%;
+  margin-bottom: 1em;
+  background-color: #f8f9fa;
+  box-shadow: 0 1px 3px rgba(0,0,0,.11);
+  font-size: 14px;
+}
+
+.navbar-brand {
+  font-size: 17px;
+  font-weight: 600;
+  color: #007bff;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  font-size: 14px;
+  color: #212529;
+}
+
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link:focus {
+  text-decoration: none;
+  color: #007bff;
+}
+
+@media print {
+  .navbar {
+    display: none;
+  }
+}
+
+.navbar-light .navbar-toggler {
+  border: none;
+}
+
+article {
+  padding-top: 30px;
+  padding-bottom: 80px;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.container {
+  max-width: 1000px;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+
+.footer {
+  padding:15px 0;
+  text-align:center;
+  background-color:#262626;
+  color:#ffffff;
+  font-size:12px;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+@media only screen and (max-width: 991px) {
+  .footer {
+    position: static;
+  }
+}
+
+@media print {
+  .footer {
+    display: none;
+  }
+}
+
+div .highlightsec {
+  background-color: #eee;
+  padding: 20px 20px 5px 20px;
+  border-left:solid #007bff 3px;
+}
+
+.accordion .card,
+.accordion .card:last-child .card-header {
+  border: none;
+}
+
+.accordion .card-header {
+  padding: 0 0 0 7px;
+  color: #212529;
+  border-bottom-color: #ffffff;
+}
+
+.accordion .card-header h2 {
+  margin: 0;
+}
+
+.accordion .btn-link,
+.accordion .btn-link {
+  text-decoration: none;
+  color: #212529;
+}
+
+.accordion .btn-link:hover {
+  text-decoration: none;
+  color: #0056b3;
+}
+
+.accordion .btn-link:focus {
+  text-decoration: none;
+  color: #212529;
+}
+
+nav[data-toggle=toc] .nav-link.active, nav[data-toggle=toc] .nav-link.active:focus, nav[data-toggle=toc] .nav-link.active:hover, nav[data-toggle=toc] .nav>li>a:hover {
+    color: #007bff;
+    border-left: 2px solid #007bff;
+}
+
+ 
+@media (max-width: 768px) {
+   
+  nav.affix[data-toggle='toc'] {
+    position: static;
+  }
+
+   
+   
+  nav[data-toggle='toc'] .nav .active .nav {
+    display: none;
+  }
+   
+   
+}
+
+</style>
+</head>
+
+<body data-spy="scroll" data-target="#toc">
+  <nav class="navbar navbar-expand-lg navbar-light bg-ligh fixed-top">
+  <div class="container responsive-menu">
+    <a class="navbar-brand" href="../../../../">Columbia Psychology Scientific Computing</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+      aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa fa-bars"></i>
+          </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+          
+      <ul class="navbar-nav ml-auto">
+          
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../../">
+            
+              <span>Home</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../../who/">
+            
+              <span>Who We Are</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../../workshop/">
+            
+              <span>Workshop</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../../meetings/">
+            
+              <span>Meetings</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../../tutorials/">
+            
+              <span>Tutorials</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../../resources/">
+            
+              <span>Resources</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../../license/">
+            
+              <span>License</span>
+          </a>
+        </li>
+          
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<script src="../../../../js/jquery-3.3.1.slim.min.js"></script>
+<script src="../../../../js/bootstrap.bundle.min.js"></script>
+
+    
+  <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+
+  
+  
+  <div class="container">
+    <article>
+      
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3 sticky">
+      <nav id="toc" data-toggle="toc" class="sticky-top" style="top:100px;"></nav>
+    </div>
+  <div class="col-sm-9">
+
+<h1>Intro to RMarkdown</h1>
+<p>
+  <small class="text-secondary">
+  
+  
+  Jan 1, 0001
+  </small>
+  
+
+<small><code><a href="../../../../tags/extra">extra</a></code></small>
+
+
+<small><code><a href="../../../../tags/r">r</a></code></small>
+
+</p>
+
+
+
+<div id="links-to-files" class="section level2">
+<h2>Links to Files</h2>
+<p>The files for all tutorials can be downloaded from <a href="https://github.com/cu-psych-computing/cu-psych-comp-tutorial" target="_blank">the Columbia Psychology Scientific Computing GitHub page</a>. This particular file is located here: <code>/content/tutorials/r-extra/rmarkdown/intro-to-rmarkdown.rmd</code>.</p>
+</div>
+<div id="getting-started" class="section level2">
+<h2>Getting started</h2>
+<p>To work with R Markdown, if necessary:</p>
+<ul>
+<li>Install <a href="http://www.r-project.org/" target="_blank">R</a></li>
+<li>Install the latest version of <a href="http://rstudio.org/download/" target="_blank">RStudio</a></li>
+<li>Install the latest version of the <code>knitr</code> package: <code>install.packages("knitr")</code></li>
+</ul>
+<p>If you’re looking for a quick reference to R Markdown formatting, I strongly suggest you check out <strong><a href="https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf" target="_blank">this helpful cheat sheet</a></strong>!</p>
+</div>
+<div id="r-markdown-formatting" class="section level1">
+<h1>R Markdown formatting</h1>
+<p>In R Markdown, you can type normally as you would in a simple text document. This text can be interspersed with R code in what are called <strong>chunks</strong>. The ability to combine text and R code means that you can develop papers, manuscripts, presentations, and web pages (and more!) within a single document.</p>
+<p>In order to see the code used to generate the formatting you’ll see in the output document, we recommend you open to R Markdown (.Rmd) file as well as the final outputted PDF.</p>
+<div id="text-formatting" class="section level2">
+<h2>Text formatting</h2>
+<p>You can <em>italicize</em> text by placing it inside of a single set of <em>asterisks</em> (<code>*</code>) or <em>underscores</em> (<code>_</code>).</p>
+<p>You can <strong>bold</strong> text by placing it inside of a double set of <strong>asterisks</strong> (<code>**</code>) or <strong>underscores</strong>(<code>__</code>).</p>
+<p>Headers are created by starting a line with a specific number of pound or hash signs (<code>#</code>) that corresponds with the level of your header. For example:</p>
+</div>
+</div>
+<div id="first-level-header" class="section level1">
+<h1>First-level header</h1>
+<div id="second-level-header" class="section level2">
+<h2>Second-level header</h2>
+<div id="third-level-header" class="section level3">
+<h3>Third-level header</h3>
+<div id="fourth-level-header" class="section level4">
+<h4>Fourth-level header</h4>
+<div id="fifth-level-header" class="section level5">
+<h5>Fifth-level header</h5>
+</div>
+</div>
+</div>
+</div>
+<div id="lists" class="section level2">
+<h2>Lists</h2>
+<p>An unordered list (with bullet points) can be created by typing an asterisk and space (<code>*</code>) at the beginning of each line. Second-level sub-bullets can be created by typing tab <em>twice</em> and then typing a hyphen and a space (<code>-</code>) at the beginning of each line. (I think on some computers sub-bullets may work if you type tab once, but it doesn’t on my Mac!)</p>
+<ul>
+<li>Bullet 1
+<ul>
+<li>Sub-bullet 1</li>
+<li>Sub-bullet 2</li>
+</ul></li>
+<li>Bullet 2</li>
+<li>Bullet 3</li>
+</ul>
+<p>Please note: You’ll need to <em>leave a blank line in your .Rmd file before the first bullet</em> or it won’t output properly.</p>
+<p>An ordered list (with numbers) can be created by typing a number, period, and space (e.g., <code>1.</code>) at the beginning of each line. Second-level sub-bullets can be created by typing tab <em>twice</em> and then typing “i”, a right parenthesis, and a space (<code>i)</code>) at the beginning of each line. (With each new line, you’ll increase your “i”s as this is written in lowercase Roman numerals.)</p>
+<ol style="list-style-type: decimal">
+<li>Number 1
+<ol style="list-style-type: lower-roman">
+<li>Sub-bullet 1</li>
+<li>Sub-bullet 2</li>
+</ol></li>
+<li>Number 2</li>
+<li>Number 3</li>
+</ol>
+</div>
+<div id="equations" class="section level2">
+<h2>Equations</h2>
+<p>You can add equations to your R Markdown file by including them either between single dollar signs (for inline equations within your text) or double dollar signs (for a separate equation section below your text–often used to highlight formulas in papers). This is based on something called LaTeX notation.</p>
+<p>Here is an example of an inline equation: <span class="math inline">\(y_i = \alpha + \beta x_i + e_i\)</span>.</p>
+<p>Here is a displayed formula:</p>
+<p><span class="math display">\[\frac{1}{1+\exp(-x)}\]</span></p>
+</div>
+<div id="hyperlinks" class="section level2">
+<h2>Hyperlinks</h2>
+<p>You can add a hyperlink by typing the text you’d like to link in brackets followed by the URL in parentheses <em>with no space between them</em>. <a href="http://psychology.columbia.edu">Here is an example</a>.</p>
+</div>
+<div id="images" class="section level2">
+<h2>Images</h2>
+<p>The code to include an image is similar to that for a hyperlink. You’ll type an exlamation point, followed by the image caption in brackets, followed by the image location (either a URL or a path to the image’s location on your computer) with no spaces between them. The image here is a bit large, so you’ll see that RMarkdown pushed it to the next page in the knitted PDF document.</p>
+<div class="figure">
+<img src="butlerlibrary.jpeg" alt="" />
+<p class="caption">Butler Library</p>
+</div>
+</div>
+<div id="quotes" class="section level2">
+<h2>Quotes</h2>
+<p>Quotes can be included by typing a greater-than sign and space at the beginning of each line (<code>&gt;</code>).</p>
+<blockquote>
+<p>To be, or not to be, that is the question:
+Whether ’tis nobler in the mind to suffer
+The slings and arrows of outrageous fortune…</p>
+</blockquote>
+</div>
+<div id="tables" class="section level2">
+<h2>Tables</h2>
+<p>Basic tables can be included using the following notation:</p>
+<table>
+<thead>
+<tr class="header">
+<th>A</th>
+<th>B</th>
+<th>C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Male</td>
+<td>Blue</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Female</td>
+<td>Pink</td>
+</tr>
+</tbody>
+</table>
+<p>You can also include tables within code chunks, which will be illustrated in the next section.</p>
+</div>
+</div>
+<div id="code" class="section level1">
+<h1>Code</h1>
+<div id="code-chunks" class="section level2">
+<h2>Code chunks</h2>
+<p>Most of the time, you’ll use code chunks within R Markdown to run your code. Here is an example code chunk. (I’ve also created some dummy data here we’ll use to demonstrate functions in subsequent code chunks.)</p>
+<pre><code>```r
+x &lt;- c(1, 2, 4, 4, 5, 5, 5, 7, 9, 9)
+y &lt;- 1:10
+df &lt;- data.frame(x, y)
+x
+```
+
+```
+##  [1] 1 2 4 4 5 5 5 7 9 9
+```</code></pre>
+<p>To insert an R code chunk, you can type it manually or use the shortcut key (<kbd>Ctrl</kbd>-<kbd>Alt</kbd>-<kbd>I</kbd> on PC; <kbd>Cmd</kbd>-<kbd>Option</kbd>-<kbd>I</kbd> on Mac). This will produce the following code chunk:</p>
+</div>
+<div id="inline-code" class="section level2">
+<h2>Inline code</h2>
+<p>Inline code can be included by placing your code in and starting it with <code>r</code> and a space. (If you’re viewing this in the PDF, see the .Rmd file for the code.) Inline code can be a really helpful way to pull out a datapoint and include it in your text. For example, here is the second value in our vector <code>x</code> : 2.</p>
+</div>
+<div id="tables-from-code-chunks" class="section level2">
+<h2>Tables (from code chunks)</h2>
+<p>You can create a table of a dataframe by placing the dataframe name within the <code>kable()</code> function.</p>
+<pre class="r"><code>kable(df)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">x</th>
+<th align="right">y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="right">5</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="right">7</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="right">9</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="right">9</td>
+<td align="right">10</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="plots" class="section level2">
+<h2>Plots</h2>
+<p>Images generated by <code>knitr</code> are saved in a figures folder.</p>
+<div id="simple-plots" class="section level3">
+<h3>Simple plots</h3>
+<p>Here is a basic plot using base-R graphics.</p>
+<pre class="r"><code>hist(x)</code></pre>
+<p><img src="../../../../tutorials/r-extra/rmarkdown/intro-to-rmarkdown_files/figure-html/simpleplot-1.png" width="672" /></p>
+</div>
+<div id="ggplot2-plots" class="section level3">
+<h3><code>ggplot2</code> plots</h3>
+<p><code>ggplot2</code> plots work as well:</p>
+<pre class="r"><code>ggplot(data = df, aes(x = x, y = y)) +
+  geom_point()</code></pre>
+<p><img src="../../../../tutorials/r-extra/rmarkdown/intro-to-rmarkdown_files/figure-html/ggplot2-1.png" width="672" /></p>
+</div>
+</div>
+<div id="code-chunk-options" class="section level2">
+<h2>Code chunk options</h2>
+<p>There are a wide range of code chunk options, which you can find listed in <strong><a href="https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf" target="_blank">this helpful cheat sheet</a></strong>. We highlight some of the most common here.</p>
+<div id="eval-evaluate-the-code-in-the-chunk-or-not" class="section level3">
+<h3><code>eval</code>: Evaluate the code in the chunk (or not)</h3>
+<p>You can tell R not to evaluate (i.e., run) the code in a particular chunk by inserting <code>eval = FALSE</code> at the beginning of your code chunk.</p>
+<pre><code>```r
+# We included the eval = FALSE option at the beginning of this chunk
+y &lt;- 0
+```
+
+
+```r
+# We can check here and see that the change in the previous chunk was not made to y
+# because the code wasn&#39;t evaluated.
+y
+```
+
+```
+##  [1]  1  2  3  4  5  6  7  8  9 10
+```</code></pre>
+</div>
+<div id="cache-save-a-copy-of-your-analysis-or-not" class="section level3">
+<h3><code>cache</code>: Save a copy of your analysis (or not)</h3>
+<p>You can cache the results of your analyses if the analyses take a long time to run. If you insert <code>cache = TRUE</code> at the beginning of your code chunk, the analysis will run in full the first time you knit the file; in future knits, the code will not be re-run.</p>
+<p>If you want to re-run cached code chunks, just <a href="http://stackoverflow.com/a/10629121/180892" target="_blank">delete the contents of the <code>cache</code> folder</a>.</p>
+<pre><code>```r
+for (i in 1:5000) {
+    lm((i+1)~i)
+}
+```</code></pre>
+</div>
+<div id="echo-show-vs.-hide-command-input" class="section level3">
+<h3><code>echo</code>: Show vs. hide command input</h3>
+<p>The <code>echo = FALSE</code> code hides the code within the code chunk within your output file but still runs the code. <code>results = 'asis'</code> here formats the output to match your document format (i.e., <em>not</em> to look like code output in the Courier font).</p>
+<p>Here are some points within our <code>y</code> vector</p>
+<ul>
+<li>The value of y[1] is 1</li>
+<li>The value of y[2] is 2</li>
+<li>The value of y[3] is 3</li>
+</ul>
+</div>
+<div id="fig.width-and-fig.height-adjust-your-figure-size" class="section level3">
+<h3><code>fig.width</code> and <code>fig.height</code>: Adjust your figure size</h3>
+<p>The following is an example of a smaller figure using <code>fig.width</code> and <code>fig.height</code> options.</p>
+<pre><code>```r
+plot(x)
+```
+
+&lt;img src=&quot;intro-to-rmarkdown_files/figure-html/unnamed-chunk-6-1.png&quot; width=&quot;288&quot; /&gt;</code></pre>
+<pre class="r"><code>plot(x)</code></pre>
+<p><img src="../../../../tutorials/r-extra/rmarkdown/intro-to-rmarkdown_files/figure-html/smallplot-1.png" width="288" /></p>
+</div>
+</div>
+</div>
+<div id="r-markdown-file-types" class="section level1">
+<h1>R Markdown file types</h1>
+<p>There are a wide range of files you can create using R Markdown, but the options you’ll probably use most commonly are a PDF, Word document, and HTML file. To change the output file type, change the <code>output:</code> line in your .Rmd header based on your desired file type:</p>
+<ul>
+<li>PDF: <code>pdf_document</code></li>
+<li>Word: <code>word_document</code></li>
+<li>HTML: <code>html_document</code></li>
+</ul>
+</div>
+
+    </article>
+  </div>
+
+</body>
+
+<footer class="footer">
+  © 2020 Columbia Psychology Scientific Computing
+  <script src="//yihui.org/js/math-code.js"></script>
+  <script async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+</footer>
+
+</html>

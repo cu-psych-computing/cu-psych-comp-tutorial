@@ -35,14 +35,14 @@ This is our core introductory scientfic computing syllabus. The materials here a
 
 ### Intro to Programming and Data Cleaning in R
 
-<p><a href="/tutorials/r-core/1-programming/lessonPart0/" target="_blank">Acquainting Yourself with RStudio</a></p>
-<p><a href="/tutorials/r-core/1-programming/lessonPart1/" target="_blank">Intro to Programming and Data Cleaning in R, Part 1</a></p>
-<p><a href="/tutorials/r-core/1-programming/lessonPart2/" target="_blank">Intro to Programming and Data Cleaning in R, Part 2</a></p>
+<p><a href="/tutorials/r-core/1-programming/lessonpart0/" target="_blank">Acquainting Yourself with RStudio</a></p>
+<p><a href="/tutorials/r-core/1-programming/lessonpart1/" target="_blank">Intro to Programming and Data Cleaning in R, Part 1</a></p>
+<p><a href="/tutorials/r-core/1-programming/lessonpart2/" target="_blank">Intro to Programming and Data Cleaning in R, Part 2</a></p>
 
 ### Data Manipulation and Plotting in R
 
-<p><a href="/tutorials/r-core/2-dataCleaning/" target="_blank">Data Cleaning in R</a></p>
-<p><a href="/tutorials/r-core/3-descriptives/" target="_blank">Data Manipulation in R</a></p>
+<p><a href="/tutorials/r-core/2-datacleaning/" target="_blank">Data Cleaning in R</a></p>
+<p><a href="/tutorials/r-core/3-data-manipulation/" target="_blank">Data Manipulation in R</a></p>
 <p><a href="/tutorials/r-core/4-plotting/" target="_blank">Plotting in R with <code>ggplot2</code></a></p>
 
 ### Intro to Data Cleaning, Manipulation, and Plotting in Python
@@ -60,19 +60,19 @@ Many of these materials were originally prepared as presentations for Columbia P
 
 ### Accelerated `ggplot2`
 
-<p><a href="/R/ggplotExtra/ggplot_summer2018_part1.html" target="_blank">Basic plotting in `ggplot2`</a></p>
-<p><a href="/R/ggplotExtra/ggplot_summer2018_part2.html" target="_blank">More advanced `ggplot2`-ing (plotting using model fits + raw data)</a></p>
+<p><a href="/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part1/" target="_blank">Basic Plotting in `ggplot2`</a></p>
+<p><a href="/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part2/" target="_blank">More Advanced `ggplot2` Plotting (Plotting with models)</a></p>
 
 ### A Guided Tour of the `tidyverse`
 
-<p><a href="/tutorials/r-extra/tidyverse-guide/tidyguide-1/" target="_blank">Data manipulation basics</a></p>
-<p><a href="/tutorials/r-extra/tidyverse-guide/tidyguide-2/" target="_blank">Nested dfs, `map`-ing, and more</a></p>
+<p><a href="/tutorials/r-extra/tidyverse-guide/tidyguide-1/" target="_blank">Tidy Walkthrough, Part 1 (Data manipulation basics)</a></p>
+<p><a href="/tutorials/r-extra/tidyverse-guide/tidyguide-2/" target="_blank">Tidy Walkthrough, Part 2 (Nested dfs, `map`-ing, and more)</a></p>
 
 ### Additional Tutorials
 
-<p><a href="/R/simulation/basicSimulationPower.html" target="_blank">Basic data simulation & power analysis</a></p>
-<p><a href="/R/brms/multilevelModelsWithBrms.html" target="_blank">Multilevel modeling with `brms` (focus on partial pooling)</a></p>
-<p><a href="/R/Rmarkdown/example-r-markdown.html" target="_blank">Intro to RMarkdown</a></p>
+<p><a href="/tutorials/r-extra/data-sim-power/basic-simulation-power/" target="_blank">Basic Data Simulation & Power Analysis</a></p>
+<p><a href="/tutorials/r-extra/brms/multilevel-models-with-brms/" target="_blank">Bayseian Multilevel Modeling with `brms` (Focus on partial pooling)</a></p>
+<p><a href="/tutorials/r-extra/rmarkdown/intro-to-rmarkdown/" target="_blank">Intro to RMarkdown</a></p>
 
 ---
 

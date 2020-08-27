@@ -1,22 +1,26 @@
 ---
-title: "Tidy walkthrough, part 2"
+title: "Tidy Walkthrough, Part 2"
+subtitle: "Nested dfs, `map`-ing, and more"
 author: "Monica Thieu"
 tags: ["extra", "r"]
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
 <div id="goals-for-this-vignette" class="section level1">
 <h1>Goals for this vignette</h1>
-<p>Hello (again)! This is a continuation of our tour through base tidyverse. Our goals are the same as before:</p>
+<p>Hello (again)! This is a continuation of our tour through base <code>tidyverse</code> (<a href="/tutorials/r-extra/tidyverse-guide/tidyguide-1/">see Part 1 here</a>). Our goals are the same as before:</p>
 <ul>
 <li>Demonstrate (what I think are) key first-level features of the tidyverse</li>
 <li>Illustrate psychology use cases for tidyverse functions</li>
 <li>Hopefully convince you to join the cult of tidy</li>
 </ul>
 <p>This time, we’ll be moving ahead to some more complex use cases utilizing some more advanced programming tactics. I hope to show you how the tidyverse makes these things a little smoother!</p>
-<p>Again, please remember that for more exhaustive documentation you can visit the online reference pages for your package of interest, and for more in-depth self-teaching, please refer to the <a href="http://r4ds.had.co.nz/">R for Data Science online textbook</a> by Garrett Grolemund and Hadley Wickham.</p>
+<p>Again, please remember that for more exhaustive documentation you can visit the online reference pages for your package of interest, and for more in-depth self-teaching, please refer to the <a href="http://r4ds.had.co.nz/" target="_blank">R for Data Science online textbook</a> by Garrett Grolemund and Hadley Wickham.</p>
+</div>
+<div id="links-to-files" class="section level1">
+<h1>Links to Files</h1>
+<p>The files for all tutorials can be downloaded from <a href="https://github.com/cu-psych-computing/cu-psych-comp-tutorial" target="_blank">the Columbia Psychology Scientific Computing GitHub page</a>. This particular file is located here: <code>/content/tutorials/r-extra/tidyverse-guide/tidyguide-2.rmd</code>.</p>
 </div>
 <div id="quick-cheat-list-of-key-functions-from-various-pkgs" class="section level1">
 <h1>Quick cheat-list of key functions from various pkgs</h1>
@@ -313,7 +317,7 @@ starwars_by_species_home</code></pre>
 <div id="vectorizing-to-the-high-heavens" class="section level1">
 <h1>Vectorizing to the high heavens</h1>
 <p>Next, we’ll review vectorizing: this is a feature of R that you probably use all the time and don’t even know it! We’ll learn a little more about what vectorized functions do and how you can vectorize any function you wish.</p>
-<p>To read more in-depth about vectorized functions in R, check out this handy <a href="http://www.noamross.net/blog/2014/4/16/vectorization-in-r--why.html">blog post</a> from Noam Ross. We won’t be getting deep into the nuts and bolts of how vectorization works in R here. We’ll just be discussing it at a high level that should orient you enough to be able to make quick use of vectorizing helper functions.</p>
+<p>To read more in-depth about vectorized functions in R, check out this handy <a href="http://www.noamross.net/blog/2014/4/16/vectorization-in-r--why.html" target="_blank">blog post</a> from Noam Ross. We won’t be getting deep into the nuts and bolts of how vectorization works in R here. We’ll just be discussing it at a high level that should orient you enough to be able to make quick use of vectorizing helper functions.</p>
 <p><code>purrr::map()</code> goes here? compare to <code>apply</code> family of functions in base R</p>
 <div id="vectorizing-its-like-a-for-loop-but-not" class="section level2">
 <h2>Vectorizing: it’s like a for loop, but not</h2>
@@ -359,18 +363,18 @@ starwars_by_species_home</code></pre>
 <pre class="r"><code>raw %&gt;%
   mutate(rt_msec = 1000 * rt)</code></pre>
 <pre><code>## # A tibble: 1,000 x 11
-##       id   age gender   q_1   q_2   q_3 trial_num is_old response     rt rt_msec
-##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt;  &lt;dbl&gt;   &lt;dbl&gt;
-##  1     1    34 female  34.1  28.4  31.8         1      1        1 -0.459   -459.
-##  2     1    34 female  34.1  28.4  31.8         2      0        1  2.75    2755.
-##  3     1    34 female  34.1  28.4  31.8         3      0        1  5.30    5299.
-##  4     1    34 female  34.1  28.4  31.8         4      0        1  3.52    3518.
-##  5     1    34 female  34.1  28.4  31.8         5      0        0  3.10    3103.
-##  6     1    34 female  34.1  28.4  31.8         6      1        1  2.91    2911.
-##  7     1    34 female  34.1  28.4  31.8         7      1        1  4.51    4507.
-##  8     1    34 female  34.1  28.4  31.8         8      0        0  2.00    2004.
-##  9     1    34 female  34.1  28.4  31.8         9      0        0  0.514    514.
-## 10     1    34 female  34.1  28.4  31.8        10      0        0  0.758    758.
+##       id   age gender   q_1   q_2   q_3 trial_num is_old response    rt rt_msec
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1     1    31 female  49.5  37.0  27.3         1      0        1  4.58   4583.
+##  2     1    31 female  49.5  37.0  27.3         2      0        1  3.79   3793.
+##  3     1    31 female  49.5  37.0  27.3         3      1        0  4.97   4968.
+##  4     1    31 female  49.5  37.0  27.3         4      0        0  3.91   3906.
+##  5     1    31 female  49.5  37.0  27.3         5      0        0  2.51   2507.
+##  6     1    31 female  49.5  37.0  27.3         6      1        1  1.20   1202.
+##  7     1    31 female  49.5  37.0  27.3         7      1        0  3.28   3278.
+##  8     1    31 female  49.5  37.0  27.3         8      1        1  1.62   1624.
+##  9     1    31 female  49.5  37.0  27.3         9      1        1  3.06   3062.
+## 10     1    31 female  49.5  37.0  27.3        10      1        1  4.22   4220.
 ## # … with 990 more rows</code></pre>
 <p>We can write this in one call, without needing to wrap it in a loop, because multiplying by a constant is vectorized, and returns a vector the same length as the input vector. Neat! You can use any vectorized functions “naked” (without any extra looping code) inside of <code>mutate()</code> with no problem.</p>
 <p>But what about functions that aren’t already vectorized? Can we use R magic to make them vectorized, if we so wish? Why yes, we can!</p>
@@ -391,13 +395,13 @@ starwars_by_species_home</code></pre>
 
 map(my_list, ~mean(.))</code></pre>
 <pre><code>## [[1]]
-## [1] 0.08565481
+## [1] 0.2880257
 ## 
 ## [[2]]
-## [1] 0.859748
+## [1] 1.244465
 ## 
 ## [[3]]
-## [1] 1.900023</code></pre>
+## [1] 1.983237</code></pre>
 <p>Aha! We see in the output that the means are higher for the later list elements, which makes sense because they were generated from normal distributions with higher means.</p>
 <p>You can see above that the first argument of <code>map()</code> is the vector to be iterated along. The second argument clearly looks like the code that you want run on each element of that vector, but the syntax is a little different than if you were to just call <code>mean(my_list[[1]])</code> or something. This particular syntax is how <code>tidyverse</code> functions allow you to specify functions inside other functions without confusing R about what code to run where. Let’s unpack this a little bit:</p>
 <p>The code you put in the second argument is preceded with a tilde <code>~</code>, which you may recognize from model formula syntax, or other functions like <code>dplyr::case_when()</code>. The tilde essentially tells R not to try to evaluate that code immediately, because it’s wrapped in a vectorizer. Don’t forget this tilde!</p>
@@ -430,41 +434,41 @@ map(my_list, ~mean(.))</code></pre>
 <pre><code>## # A tibble: 20 x 7
 ##       id   age gender   q_1   q_2   q_3 trials           
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;list&gt;           
-##  1     1    34 female  34.1  28.4  31.8 &lt;tibble [50 × 4]&gt;
-##  2     2    35 male    33.8  28.4  32.8 &lt;tibble [50 × 4]&gt;
-##  3     3    24 male    18.0  33.5  30.6 &lt;tibble [50 × 4]&gt;
-##  4     4    22 female  15.5  37.9  37.8 &lt;tibble [50 × 4]&gt;
-##  5     5    26 male    26.3  35.3  49.9 &lt;tibble [50 × 4]&gt;
-##  6     6    24 male    21.2  23.7  50.2 &lt;tibble [50 × 4]&gt;
-##  7     7    33 female  41.2  34.7  46.9 &lt;tibble [50 × 4]&gt;
-##  8     8    31 male    16.9  35.2  25.4 &lt;tibble [50 × 4]&gt;
-##  9     9    31 male    38.3  42.2  29.5 &lt;tibble [50 × 4]&gt;
-## 10    10    20 male    40.1  54.5  33.4 &lt;tibble [50 × 4]&gt;
-## 11    11    23 male    27.4  27.1  48.1 &lt;tibble [50 × 4]&gt;
-## 12    12    19 female  35.4  33.8  38.1 &lt;tibble [50 × 4]&gt;
-## 13    13    19 female  19.0  41.4  18.9 &lt;tibble [50 × 4]&gt;
-## 14    14    26 female  14.9  31.5  29.9 &lt;tibble [50 × 4]&gt;
-## 15    15    30 male    34.3  21.2  22.6 &lt;tibble [50 × 4]&gt;
-## 16    16    20 male    35.5  31.0  25.9 &lt;tibble [50 × 4]&gt;
-## 17    17    27 male    22.6  21.1  27.4 &lt;tibble [50 × 4]&gt;
-## 18    18    29 male    39.3  48.9  35.9 &lt;tibble [50 × 4]&gt;
-## 19    19    28 male    29.6  40.5  44.0 &lt;tibble [50 × 4]&gt;
-## 20    20    33 male    22.0  34.1  41.8 &lt;tibble [50 × 4]&gt;</code></pre>
+##  1     1    31 female  49.5  37.0  27.3 &lt;tibble [50 × 4]&gt;
+##  2     2    24 male    40.4  31.0  39.4 &lt;tibble [50 × 4]&gt;
+##  3     3    29 female  32.0  28.4  31.3 &lt;tibble [50 × 4]&gt;
+##  4     4    28 male    12.0  32.0  25.0 &lt;tibble [50 × 4]&gt;
+##  5     5    26 male    17.4  29.8  21.2 &lt;tibble [50 × 4]&gt;
+##  6     6    35 female  21.3  24.6  29.6 &lt;tibble [50 × 4]&gt;
+##  7     7    35 female  10.5  43.4  21.5 &lt;tibble [50 × 4]&gt;
+##  8     8    24 female  30.4  11.9  25.4 &lt;tibble [50 × 4]&gt;
+##  9     9    26 female  16.8  26.1  38.8 &lt;tibble [50 × 4]&gt;
+## 10    10    33 male    37.1  48.8  30.8 &lt;tibble [50 × 4]&gt;
+## 11    11    22 female  25.3  32.3  27.1 &lt;tibble [50 × 4]&gt;
+## 12    12    23 male    19.1  31.7  53.7 &lt;tibble [50 × 4]&gt;
+## 13    13    32 female  11.7  41.2  33.2 &lt;tibble [50 × 4]&gt;
+## 14    14    34 female  40.8  30.1  47.1 &lt;tibble [50 × 4]&gt;
+## 15    15    26 male    34.2  32.7  21.8 &lt;tibble [50 × 4]&gt;
+## 16    16    18 male    17.0  20.7  39.2 &lt;tibble [50 × 4]&gt;
+## 17    17    22 male    35.1  22.6  21.3 &lt;tibble [50 × 4]&gt;
+## 18    18    27 female  31.3  39.6  47.5 &lt;tibble [50 × 4]&gt;
+## 19    19    31 male    39.2  50.2  35.9 &lt;tibble [50 × 4]&gt;
+## 20    20    34 female  51.5  12.8  18.9 &lt;tibble [50 × 4]&gt;</code></pre>
 <p>And to verify that the trialwise data for the first subject is safe and sound in the first row of the list-column <code>trials</code>:</p>
 <pre class="r"><code>nested$trials[[1]]</code></pre>
 <pre><code>## # A tibble: 50 x 4
-##    trial_num is_old response     rt
-##        &lt;int&gt;  &lt;int&gt;    &lt;int&gt;  &lt;dbl&gt;
-##  1         1      1        1 -0.459
-##  2         2      0        1  2.75 
-##  3         3      0        1  5.30 
-##  4         4      0        1  3.52 
-##  5         5      0        0  3.10 
-##  6         6      1        1  2.91 
-##  7         7      1        1  4.51 
-##  8         8      0        0  2.00 
-##  9         9      0        0  0.514
-## 10        10      0        0  0.758
+##    trial_num is_old response    rt
+##        &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
+##  1         1      0        1  4.58
+##  2         2      0        1  3.79
+##  3         3      1        0  4.97
+##  4         4      0        0  3.91
+##  5         5      0        0  2.51
+##  6         6      1        1  1.20
+##  7         7      1        0  3.28
+##  8         8      1        1  1.62
+##  9         9      1        1  3.06
+## 10        10      1        1  4.22
 ## # … with 40 more rows</code></pre>
 <p>Now, because our nested df has one row per subject, it’s perfectly set up to contain some additional columns with summary statistics in them. We just need to be able to access the trialwise data inside of the <code>trials</code> column in order to compute these summary stats.</p>
 <p>We can use <code>mutate()</code> to create a new column in our df as per usual. However, this time, we’ll call <code>map()</code> <em>inside of</em> <code>mutate()</code> to create our own vectorized function that can operate on a list-column!</p>
@@ -475,26 +479,26 @@ map(my_list, ~mean(.))</code></pre>
 <pre><code>## # A tibble: 20 x 8
 ##       id   age gender   q_1   q_2   q_3 trials            rt_median
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;list&gt;                &lt;dbl&gt;
-##  1     1    34 female  34.1  28.4  31.8 &lt;tibble [50 × 4]&gt;      3.10
-##  2     2    35 male    33.8  28.4  32.8 &lt;tibble [50 × 4]&gt;      2.96
-##  3     3    24 male    18.0  33.5  30.6 &lt;tibble [50 × 4]&gt;      2.96
-##  4     4    22 female  15.5  37.9  37.8 &lt;tibble [50 × 4]&gt;      3.47
-##  5     5    26 male    26.3  35.3  49.9 &lt;tibble [50 × 4]&gt;      2.63
-##  6     6    24 male    21.2  23.7  50.2 &lt;tibble [50 × 4]&gt;      3.01
-##  7     7    33 female  41.2  34.7  46.9 &lt;tibble [50 × 4]&gt;      2.91
-##  8     8    31 male    16.9  35.2  25.4 &lt;tibble [50 × 4]&gt;      3.20
-##  9     9    31 male    38.3  42.2  29.5 &lt;tibble [50 × 4]&gt;      2.62
-## 10    10    20 male    40.1  54.5  33.4 &lt;tibble [50 × 4]&gt;      3.15
-## 11    11    23 male    27.4  27.1  48.1 &lt;tibble [50 × 4]&gt;      2.79
-## 12    12    19 female  35.4  33.8  38.1 &lt;tibble [50 × 4]&gt;      3.23
-## 13    13    19 female  19.0  41.4  18.9 &lt;tibble [50 × 4]&gt;      3.12
-## 14    14    26 female  14.9  31.5  29.9 &lt;tibble [50 × 4]&gt;      3.13
-## 15    15    30 male    34.3  21.2  22.6 &lt;tibble [50 × 4]&gt;      2.70
-## 16    16    20 male    35.5  31.0  25.9 &lt;tibble [50 × 4]&gt;      2.70
-## 17    17    27 male    22.6  21.1  27.4 &lt;tibble [50 × 4]&gt;      3.67
-## 18    18    29 male    39.3  48.9  35.9 &lt;tibble [50 × 4]&gt;      2.62
-## 19    19    28 male    29.6  40.5  44.0 &lt;tibble [50 × 4]&gt;      2.94
-## 20    20    33 male    22.0  34.1  41.8 &lt;tibble [50 × 4]&gt;      3.50</code></pre>
+##  1     1    31 female  49.5  37.0  27.3 &lt;tibble [50 × 4]&gt;      3.11
+##  2     2    24 male    40.4  31.0  39.4 &lt;tibble [50 × 4]&gt;      3.12
+##  3     3    29 female  32.0  28.4  31.3 &lt;tibble [50 × 4]&gt;      2.90
+##  4     4    28 male    12.0  32.0  25.0 &lt;tibble [50 × 4]&gt;      3.02
+##  5     5    26 male    17.4  29.8  21.2 &lt;tibble [50 × 4]&gt;      3.45
+##  6     6    35 female  21.3  24.6  29.6 &lt;tibble [50 × 4]&gt;      2.82
+##  7     7    35 female  10.5  43.4  21.5 &lt;tibble [50 × 4]&gt;      3.11
+##  8     8    24 female  30.4  11.9  25.4 &lt;tibble [50 × 4]&gt;      3.31
+##  9     9    26 female  16.8  26.1  38.8 &lt;tibble [50 × 4]&gt;      2.30
+## 10    10    33 male    37.1  48.8  30.8 &lt;tibble [50 × 4]&gt;      2.62
+## 11    11    22 female  25.3  32.3  27.1 &lt;tibble [50 × 4]&gt;      3.21
+## 12    12    23 male    19.1  31.7  53.7 &lt;tibble [50 × 4]&gt;      2.55
+## 13    13    32 female  11.7  41.2  33.2 &lt;tibble [50 × 4]&gt;      2.96
+## 14    14    34 female  40.8  30.1  47.1 &lt;tibble [50 × 4]&gt;      3.03
+## 15    15    26 male    34.2  32.7  21.8 &lt;tibble [50 × 4]&gt;      3.16
+## 16    16    18 male    17.0  20.7  39.2 &lt;tibble [50 × 4]&gt;      3.35
+## 17    17    22 male    35.1  22.6  21.3 &lt;tibble [50 × 4]&gt;      3.11
+## 18    18    27 female  31.3  39.6  47.5 &lt;tibble [50 × 4]&gt;      3.25
+## 19    19    31 male    39.2  50.2  35.9 &lt;tibble [50 × 4]&gt;      3.24
+## 20    20    34 female  51.5  12.8  18.9 &lt;tibble [50 × 4]&gt;      2.83</code></pre>
 <p>Now to unpack the pieces of this function call:</p>
 <ul>
 <li>Inside of <code>mutate()</code>, we follow the same usual syntax of <code>new_col = function(old_col)</code>, but this time the function we call is <code>map()</code></li>
@@ -553,33 +557,33 @@ map(my_list, ~mean(.))</code></pre>
 <pre><code>## # A tibble: 1 x 2
 ##   rate_fa rate_hit
 ##     &lt;dbl&gt;    &lt;dbl&gt;
-## 1    0.32      0.8</code></pre>
+## 1     0.4     0.72</code></pre>
 <p>Hey, each of these sub-dfs is only one row long. We could <code>unnest()</code> the <code>summaries</code> column to get these hit and false alarm rate columns to be exposed in our main df, with the other subject-level variables. We’ll still have one row per subject after we unnest, as opposed to repeating rows for repeated observations, because the sub-dfs we’re unnesting only have one row each.</p>
 <pre class="r"><code>nested_summarized %&gt;%
   unnest(summaries)</code></pre>
 <pre><code>## # A tibble: 20 x 9
 ##       id   age gender   q_1   q_2   q_3 trials            rate_fa rate_hit
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;list&gt;              &lt;dbl&gt;    &lt;dbl&gt;
-##  1     1    34 female  34.1  28.4  31.8 &lt;tibble [50 × 4]&gt;    0.32     0.8 
-##  2     2    35 male    33.8  28.4  32.8 &lt;tibble [50 × 4]&gt;    0.2      0.76
-##  3     3    24 male    18.0  33.5  30.6 &lt;tibble [50 × 4]&gt;    0.4      0.6 
-##  4     4    22 female  15.5  37.9  37.8 &lt;tibble [50 × 4]&gt;    0.2      0.76
-##  5     5    26 male    26.3  35.3  49.9 &lt;tibble [50 × 4]&gt;    0.32     0.72
-##  6     6    24 male    21.2  23.7  50.2 &lt;tibble [50 × 4]&gt;    0.32     0.68
-##  7     7    33 female  41.2  34.7  46.9 &lt;tibble [50 × 4]&gt;    0.28     0.64
-##  8     8    31 male    16.9  35.2  25.4 &lt;tibble [50 × 4]&gt;    0.2      0.68
-##  9     9    31 male    38.3  42.2  29.5 &lt;tibble [50 × 4]&gt;    0.2      0.72
-## 10    10    20 male    40.1  54.5  33.4 &lt;tibble [50 × 4]&gt;    0.36     0.6 
-## 11    11    23 male    27.4  27.1  48.1 &lt;tibble [50 × 4]&gt;    0.16     0.84
-## 12    12    19 female  35.4  33.8  38.1 &lt;tibble [50 × 4]&gt;    0.4      0.52
-## 13    13    19 female  19.0  41.4  18.9 &lt;tibble [50 × 4]&gt;    0.36     0.68
-## 14    14    26 female  14.9  31.5  29.9 &lt;tibble [50 × 4]&gt;    0.16     0.6 
-## 15    15    30 male    34.3  21.2  22.6 &lt;tibble [50 × 4]&gt;    0.2      0.68
-## 16    16    20 male    35.5  31.0  25.9 &lt;tibble [50 × 4]&gt;    0.36     0.6 
-## 17    17    27 male    22.6  21.1  27.4 &lt;tibble [50 × 4]&gt;    0.32     0.56
-## 18    18    29 male    39.3  48.9  35.9 &lt;tibble [50 × 4]&gt;    0.32     0.56
-## 19    19    28 male    29.6  40.5  44.0 &lt;tibble [50 × 4]&gt;    0.32     0.64
-## 20    20    33 male    22.0  34.1  41.8 &lt;tibble [50 × 4]&gt;    0.36     0.88</code></pre>
+##  1     1    31 female  49.5  37.0  27.3 &lt;tibble [50 × 4]&gt;    0.4      0.72
+##  2     2    24 male    40.4  31.0  39.4 &lt;tibble [50 × 4]&gt;    0.32     0.64
+##  3     3    29 female  32.0  28.4  31.3 &lt;tibble [50 × 4]&gt;    0.24     0.68
+##  4     4    28 male    12.0  32.0  25.0 &lt;tibble [50 × 4]&gt;    0.36     0.72
+##  5     5    26 male    17.4  29.8  21.2 &lt;tibble [50 × 4]&gt;    0.28     0.68
+##  6     6    35 female  21.3  24.6  29.6 &lt;tibble [50 × 4]&gt;    0.12     0.56
+##  7     7    35 female  10.5  43.4  21.5 &lt;tibble [50 × 4]&gt;    0.4      0.68
+##  8     8    24 female  30.4  11.9  25.4 &lt;tibble [50 × 4]&gt;    0.4      0.56
+##  9     9    26 female  16.8  26.1  38.8 &lt;tibble [50 × 4]&gt;    0.2      0.56
+## 10    10    33 male    37.1  48.8  30.8 &lt;tibble [50 × 4]&gt;    0.24     0.76
+## 11    11    22 female  25.3  32.3  27.1 &lt;tibble [50 × 4]&gt;    0.4      0.88
+## 12    12    23 male    19.1  31.7  53.7 &lt;tibble [50 × 4]&gt;    0.16     0.68
+## 13    13    32 female  11.7  41.2  33.2 &lt;tibble [50 × 4]&gt;    0.36     0.64
+## 14    14    34 female  40.8  30.1  47.1 &lt;tibble [50 × 4]&gt;    0.28     0.64
+## 15    15    26 male    34.2  32.7  21.8 &lt;tibble [50 × 4]&gt;    0.36     0.72
+## 16    16    18 male    17.0  20.7  39.2 &lt;tibble [50 × 4]&gt;    0.2      0.88
+## 17    17    22 male    35.1  22.6  21.3 &lt;tibble [50 × 4]&gt;    0.44     0.52
+## 18    18    27 female  31.3  39.6  47.5 &lt;tibble [50 × 4]&gt;    0.28     0.56
+## 19    19    31 male    39.2  50.2  35.9 &lt;tibble [50 × 4]&gt;    0.24     0.64
+## 20    20    34 female  51.5  12.8  18.9 &lt;tibble [50 × 4]&gt;    0.28     0.8</code></pre>
 <p>There we go! Now, the hit and false alarm rates are in the main df and readily accessible without having to use <code>map()</code>, and we still have our trialwise data in the same df should we want to calculate anything else.</p>
 <p>This will get you to roughly the same place as calculating summary statistics on an unnested df and saving those summary stats into a second df. The reason I like this setup is that I can keep all of my data in one df and avoid proliferation of dfs. Ultimately, it’s a matter of personal taste, but if you find that you like managing your trialwise data/subject-level summary data in this way, then you can use these techniques as you like!</p>
 </div>
@@ -596,7 +600,7 @@ map(my_list, ~mean(.))</code></pre>
 <ul>
 <li>True console-based progress bars with must recursively access the console to create a progress bar that stays on one line from 0% to 100%, so they work best inside for loops</li>
 <li>The good folks at RStudio who maintain <code>purrr</code> are still working on building automatic progress bars for <code>map()</code>, but as of right now (August 2018) they’re not implemented</li>
-<li>Check out the <a href="https://github.com/r-lib/progress"><code>progress</code></a> package, which contains helper functions that work inside for loops to make your own progress bars</li>
+<li>Check out the <a href="https://github.com/r-lib/progress" target="_blank"><code>progress</code></a> package, which contains helper functions that work inside for loops to make your own progress bars</li>
 </ul></li>
 </ul>
 </div>
@@ -615,26 +619,26 @@ nested_with_models</code></pre>
 <pre><code>## # A tibble: 20 x 8
 ##       id   age gender   q_1   q_2   q_3 trials            models
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;list&gt;            &lt;list&gt;
-##  1     1    34 female  34.1  28.4  31.8 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
-##  2     2    35 male    33.8  28.4  32.8 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
-##  3     3    24 male    18.0  33.5  30.6 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
-##  4     4    22 female  15.5  37.9  37.8 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
-##  5     5    26 male    26.3  35.3  49.9 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
-##  6     6    24 male    21.2  23.7  50.2 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
-##  7     7    33 female  41.2  34.7  46.9 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
-##  8     8    31 male    16.9  35.2  25.4 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
-##  9     9    31 male    38.3  42.2  29.5 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
-## 10    10    20 male    40.1  54.5  33.4 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
-## 11    11    23 male    27.4  27.1  48.1 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
-## 12    12    19 female  35.4  33.8  38.1 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
-## 13    13    19 female  19.0  41.4  18.9 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
-## 14    14    26 female  14.9  31.5  29.9 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
-## 15    15    30 male    34.3  21.2  22.6 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
-## 16    16    20 male    35.5  31.0  25.9 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
-## 17    17    27 male    22.6  21.1  27.4 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
-## 18    18    29 male    39.3  48.9  35.9 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
-## 19    19    28 male    29.6  40.5  44.0 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
-## 20    20    33 male    22.0  34.1  41.8 &lt;tibble [50 × 4]&gt; &lt;glm&gt;</code></pre>
+##  1     1    31 female  49.5  37.0  27.3 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+##  2     2    24 male    40.4  31.0  39.4 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+##  3     3    29 female  32.0  28.4  31.3 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+##  4     4    28 male    12.0  32.0  25.0 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+##  5     5    26 male    17.4  29.8  21.2 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+##  6     6    35 female  21.3  24.6  29.6 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+##  7     7    35 female  10.5  43.4  21.5 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+##  8     8    24 female  30.4  11.9  25.4 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+##  9     9    26 female  16.8  26.1  38.8 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 10    10    33 male    37.1  48.8  30.8 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 11    11    22 female  25.3  32.3  27.1 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 12    12    23 male    19.1  31.7  53.7 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 13    13    32 female  11.7  41.2  33.2 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 14    14    34 female  40.8  30.1  47.1 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 15    15    26 male    34.2  32.7  21.8 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 16    16    18 male    17.0  20.7  39.2 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 17    17    22 male    35.1  22.6  21.3 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 18    18    27 female  31.3  39.6  47.5 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 19    19    31 male    39.2  50.2  35.9 &lt;tibble [50 × 4]&gt; &lt;glm&gt; 
+## 20    20    34 female  51.5  12.8  18.9 &lt;tibble [50 × 4]&gt; &lt;glm&gt;</code></pre>
 <p>Here, inside of <code>map()</code>, instead of calling df manipulation operations, we call a model fitting function, in this case <code>glm()</code> because we will need to fit a logistic-type regression. In fact, we’re fitting a probit regression (because d’ is based on the normal distribution), so we include the <code>family = binomial(link = "probit")</code> argument inside of our <code>glm()</code> call as usual. The only difference is what we put in for the last argument, <code>data = .</code>. Our old friend the period <code>.</code> is back–this time, to tell the <code>glm()</code> call inside <code>map()</code> to use the current element from the input vector as the source data to fit the model.</p>
 <pre class="r"><code>summary(nested_with_models$models[[1]])</code></pre>
 <pre><code>## 
@@ -644,20 +648,20 @@ nested_with_models</code></pre>
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -1.7941  -0.8782   0.6681   0.6681   1.5096  
+## -1.5956  -1.0108   0.8106   0.8106   1.3537  
 ## 
 ## Coefficients:
-##             Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)  -0.4677     0.2609  -1.793 0.073014 .  
-## is_old        1.3093     0.3869   3.384 0.000715 ***
+##             Estimate Std. Error z value Pr(&gt;|z|)  
+## (Intercept)  -0.2533     0.2536  -0.999   0.3178  
+## is_old        0.8362     0.3681   2.272   0.0231 *
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
 ##     Null deviance: 68.593  on 49  degrees of freedom
-## Residual deviance: 56.364  on 48  degrees of freedom
-## AIC: 60.364
+## Residual deviance: 63.298  on 48  degrees of freedom
+## AIC: 67.298
 ## 
 ## Number of Fisher Scoring iterations: 4</code></pre>
 <p>Each model object can be inspected with <code>summary()</code> in this way if you so choose.</p>
@@ -675,33 +679,33 @@ nested_with_models</code></pre>
 <pre><code>## # A tibble: 20 x 9
 ##       id   age gender   q_1   q_2   q_3 trials            models coefs          
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;list&gt;            &lt;list&gt; &lt;list&gt;         
-##  1     1    34 female  34.1  28.4  31.8 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
-##  2     2    35 male    33.8  28.4  32.8 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
-##  3     3    24 male    18.0  33.5  30.6 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
-##  4     4    22 female  15.5  37.9  37.8 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
-##  5     5    26 male    26.3  35.3  49.9 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
-##  6     6    24 male    21.2  23.7  50.2 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
-##  7     7    33 female  41.2  34.7  46.9 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
-##  8     8    31 male    16.9  35.2  25.4 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
-##  9     9    31 male    38.3  42.2  29.5 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
-## 10    10    20 male    40.1  54.5  33.4 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
-## 11    11    23 male    27.4  27.1  48.1 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
-## 12    12    19 female  35.4  33.8  38.1 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
-## 13    13    19 female  19.0  41.4  18.9 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
-## 14    14    26 female  14.9  31.5  29.9 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
-## 15    15    30 male    34.3  21.2  22.6 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
-## 16    16    20 male    35.5  31.0  25.9 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
-## 17    17    27 male    22.6  21.1  27.4 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
-## 18    18    29 male    39.3  48.9  35.9 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
-## 19    19    28 male    29.6  40.5  44.0 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
-## 20    20    33 male    22.0  34.1  41.8 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…</code></pre>
+##  1     1    31 female  49.5  37.0  27.3 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
+##  2     2    24 male    40.4  31.0  39.4 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
+##  3     3    29 female  32.0  28.4  31.3 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
+##  4     4    28 male    12.0  32.0  25.0 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
+##  5     5    26 male    17.4  29.8  21.2 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
+##  6     6    35 female  21.3  24.6  29.6 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
+##  7     7    35 female  10.5  43.4  21.5 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
+##  8     8    24 female  30.4  11.9  25.4 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
+##  9     9    26 female  16.8  26.1  38.8 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
+## 10    10    33 male    37.1  48.8  30.8 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
+## 11    11    22 female  25.3  32.3  27.1 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
+## 12    12    23 male    19.1  31.7  53.7 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
+## 13    13    32 female  11.7  41.2  33.2 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
+## 14    14    34 female  40.8  30.1  47.1 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
+## 15    15    26 male    34.2  32.7  21.8 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
+## 16    16    18 male    17.0  20.7  39.2 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
+## 17    17    22 male    35.1  22.6  21.3 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
+## 18    18    27 female  31.3  39.6  47.5 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
+## 19    19    31 male    39.2  50.2  35.9 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…
+## 20    20    34 female  51.5  12.8  18.9 &lt;tibble [50 × 4]&gt; &lt;glm&gt;  &lt;tibble [2 × 5…</code></pre>
 <p>Below, let’s inspect the content of the first element of the <code>coefs</code> list-column, so you can see how the output of <code>tidy()</code> looks.</p>
 <pre class="r"><code>nested_with_models$coefs[[1]]</code></pre>
 <pre><code>## # A tibble: 2 x 5
-##   term        estimate std.error statistic  p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 (Intercept)   -0.468     0.261     -1.79 0.0730  
-## 2 is_old         1.31      0.387      3.38 0.000715</code></pre>
+##   term        estimate std.error statistic p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept)   -0.253     0.254    -0.999  0.318 
+## 2 is_old         0.836     0.368     2.27   0.0231</code></pre>
 <p>As you can see, it’s essentially the matrix of coefficients/standard errors/etc that you see when you call <code>summary()</code> on a model object, but now it’s already been packaged as a df.</p>
 <p>In this particular example, we specifically want to extract the coefficient estimate for <code>is_old</code>–that value is the d’ we’re looking for. How can we get that specific value into its own column in the main df? Since each subject has only one value for d’, and all of them are the same atomic data type, we should be able to create an atomic vector column in the main df for each subject’s d’.</p>
 <p>We can do this in a variety of ways–any way you might usually use to extract one specific value from a cell of a df works, as long as you can put it inside of <code>map()</code> to repeat it over every sub-df in <code>coefs</code>!</p>
@@ -712,26 +716,26 @@ nested_with_models</code></pre>
 <pre><code>## # A tibble: 20 x 10
 ##       id   age gender   q_1   q_2   q_3 trials        models coefs        dprime
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;list&gt;        &lt;list&gt; &lt;list&gt;        &lt;dbl&gt;
-##  1     1    34 female  34.1  28.4  31.8 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  1.31 
-##  2     2    35 male    33.8  28.4  32.8 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  1.55 
-##  3     3    24 male    18.0  33.5  30.6 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  0.507
-##  4     4    22 female  15.5  37.9  37.8 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  1.55 
-##  5     5    26 male    26.3  35.3  49.9 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  1.05 
-##  6     6    24 male    21.2  23.7  50.2 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  0.935
-##  7     7    33 female  41.2  34.7  46.9 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  0.941
-##  8     8    31 male    16.9  35.2  25.4 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  1.31 
-##  9     9    31 male    38.3  42.2  29.5 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  1.42 
-## 10    10    20 male    40.1  54.5  33.4 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  0.612
-## 11    11    23 male    27.4  27.1  48.1 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  1.99 
-## 12    12    19 female  35.4  33.8  38.1 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  0.304
-## 13    13    19 female  19.0  41.4  18.9 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  0.826
-## 14    14    26 female  14.9  31.5  29.9 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  1.25 
-## 15    15    30 male    34.3  21.2  22.6 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  1.31 
-## 16    16    20 male    35.5  31.0  25.9 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  0.612
-## 17    17    27 male    22.6  21.1  27.4 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  0.619
-## 18    18    29 male    39.3  48.9  35.9 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  0.619
-## 19    19    28 male    29.6  40.5  44.0 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  0.826
-## 20    20    33 male    22.0  34.1  41.8 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  1.53</code></pre>
+##  1     1    31 female  49.5  37.0  27.3 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  0.836
+##  2     2    24 male    40.4  31.0  39.4 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  0.826
+##  3     3    29 female  32.0  28.4  31.3 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  1.17 
+##  4     4    28 male    12.0  32.0  25.0 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  0.941
+##  5     5    26 male    17.4  29.8  21.2 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  1.05 
+##  6     6    35 female  21.3  24.6  29.6 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  1.33 
+##  7     7    35 female  10.5  43.4  21.5 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  0.721
+##  8     8    24 female  30.4  11.9  25.4 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  0.404
+##  9     9    26 female  16.8  26.1  38.8 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  0.993
+## 10    10    33 male    37.1  48.8  30.8 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  1.41 
+## 11    11    22 female  25.3  32.3  27.1 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  1.43 
+## 12    12    23 male    19.1  31.7  53.7 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  1.46 
+## 13    13    32 female  11.7  41.2  33.2 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  0.717
+## 14    14    34 female  40.8  30.1  47.1 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  0.941
+## 15    15    26 male    34.2  32.7  21.8 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  0.941
+## 16    16    18 male    17.0  20.7  39.2 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  2.02 
+## 17    17    22 male    35.1  22.6  21.3 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  0.201
+## 18    18    27 female  31.3  39.6  47.5 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  0.734
+## 19    19    31 male    39.2  50.2  35.9 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  1.06 
+## 20    20    34 female  51.5  12.8  18.9 &lt;tibble [50 … &lt;glm&gt;  &lt;tibble [2 …  1.42</code></pre>
 <p>If you wanted to pull more values out of <code>coefs</code>, you could <code>unnest()</code> the column directly and create a long-form df that you could manipulate as usual, like below:</p>
 <pre class="r"><code>nested_with_models %&gt;%
   select(-models) %&gt;% 
@@ -739,16 +743,16 @@ nested_with_models</code></pre>
 <pre><code>## # A tibble: 40 x 12
 ##       id   age gender   q_1   q_2   q_3 trials term  estimate std.error
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;list&gt; &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;
-##  1     1    34 female  34.1  28.4  31.8 &lt;tibb… (Int…   -0.468     0.261
-##  2     1    34 female  34.1  28.4  31.8 &lt;tibb… is_o…    1.31      0.387
-##  3     2    35 male    33.8  28.4  32.8 &lt;tibb… (Int…   -0.842     0.286
-##  4     2    35 male    33.8  28.4  32.8 &lt;tibb… is_o…    1.55      0.396
-##  5     3    24 male    18.0  33.5  30.6 &lt;tibb… (Int…   -0.253     0.254
-##  6     3    24 male    18.0  33.5  30.6 &lt;tibb… is_o…    0.507     0.359
-##  7     4    22 female  15.5  37.9  37.8 &lt;tibb… (Int…   -0.842     0.286
-##  8     4    22 female  15.5  37.9  37.8 &lt;tibb… is_o…    1.55      0.396
-##  9     5    26 male    26.3  35.3  49.9 &lt;tibb… (Int…   -0.468     0.261
-## 10     5    26 male    26.3  35.3  49.9 &lt;tibb… is_o…    1.05      0.373
+##  1     1    31 female  49.5  37.0  27.3 &lt;tibb… (Int…   -0.253     0.254
+##  2     1    31 female  49.5  37.0  27.3 &lt;tibb… is_o…    0.836     0.368
+##  3     2    24 male    40.4  31.0  39.4 &lt;tibb… (Int…   -0.468     0.261
+##  4     2    24 male    40.4  31.0  39.4 &lt;tibb… is_o…    0.826     0.366
+##  5     3    29 female  32.0  28.4  31.3 &lt;tibb… (Int…   -0.706     0.275
+##  6     3    29 female  32.0  28.4  31.3 &lt;tibb… is_o…    1.17      0.379
+##  7     4    28 male    12.0  32.0  25.0 &lt;tibb… (Int…   -0.358     0.257
+##  8     4    28 male    12.0  32.0  25.0 &lt;tibb… is_o…    0.941     0.370
+##  9     5    26 male    17.4  29.8  21.2 &lt;tibb… (Int…   -0.583     0.267
+## 10     5    26 male    17.4  29.8  21.2 &lt;tibb… is_o…    1.05      0.373
 ## # … with 30 more rows, and 2 more variables: statistic &lt;dbl&gt;, p.value &lt;dbl&gt;</code></pre>
 <p>Note that when you unnest, any columns of list type that <em>aren’t</em> explicitly unnested will be <em>repeated</em> in your output. We only want to keep the <code>trials</code> column, so we use <code>select()</code> to drop the <code>models</code> list-column from the data before unnesting.</p>
 <p>In any case, I hope you can see that if you need to fit the same model repeatedly to different datasets, perhaps to data from individual subjects, using <code>map()</code> to vectorize your model-fitting on list-columns in a nested df can do just the trick.</p>

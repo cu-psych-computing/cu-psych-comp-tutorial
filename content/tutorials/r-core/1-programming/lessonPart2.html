@@ -1,5 +1,5 @@
 ---
-title: "Programming, pt 2"
+title: "Programming, Part 2"
 subtitle: "CU Psych Scientific Computing Workshop"
 author: "Monica Thieu"
 tags: ["core", "r"]
@@ -8,18 +8,22 @@ tags: ["core", "r"]
 
 
 <p>Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder, the documents for the introduction to programming cover the following:</p>
-<ol start="0" style="list-style-type: decimal">
-<li><a href="lessonPart0.html">Finding your way around RStudio</a></li>
-<li><a href="lessonPart1.html">Variables, data types, vectors</a></li>
-<li>Coding strategy, relational &amp; logical operators <strong>this document!</strong></li>
-</ol>
+<ul>
+<li><strong>Programming, Part 0:</strong> <a href="/tutorials/r-core/1-programming/lessonpart0">Finding your way around RStudio</a></li>
+<li><strong>Programming, Part 1:</strong> <a href="/tutorials/r-core/1-programming/lessonpart1">Variables, data types, vectors</a></li>
+<li><strong>Programming, Part 2:</strong> Coding strategy, relational &amp; logical operators (<strong>this document!</strong>)</li>
+</ul>
 <p>Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things!</p>
+<div id="links-to-files" class="section level1">
+<h1>Links to Files</h1>
+<p>The files for all tutorials can be downloaded from <a href="https://github.com/cu-psych-computing/cu-psych-comp-tutorial" target="_blank">the Columbia Psychology Scientific Computing GitHub page</a>. This particular file is located here: <code>/content/tutorials/r-core/1-programming/lessonpart2.rmd</code>.</p>
+</div>
 <div id="pseudocode" class="section level1">
 <h1>Pseudocode</h1>
 <p>This is <strong>so important to do before you write a single line of code.</strong></p>
 <p>Before you try to write any code, you should talk through what you want to do in plain English before you actually try to code it. This is how you will actually figure out what you need your code to do, and then what functions you need to do the things you want.</p>
 <p>As an example, let’s load a dataframe from a study one of the instructors worked as an undergrad. It’s saved within the folders for this project as a CSV file.</p>
-<pre class="r"><code>data &lt;- read_csv(here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;3-descriptives&quot;, &quot;uncapher_2016_one_condition_dataset.csv&quot;))
+<pre class="r"><code>data &lt;- read_csv(here(&quot;content&quot;, &quot;tutorials&quot;, &quot;r-core&quot;, &quot;3-datamanipulation&quot;, &quot;uncapher_2016_one_condition_dataset.csv&quot;))
 
 # Don&#39;t worry about the following command; I&#39;m just shortening the dataframe. You&#39;ll understand what this means later! Just run it now.
 data &lt;- data %&gt;%
@@ -376,6 +380,7 @@ mutate(temps,
 </ul></li>
 </ul>
 <p>Including this info will make it much easier for someone else to identify the cause of the issue you’re experiencing and suggest solutions for you. Help them help you!</p>
+<p><strong>Next:</strong> <a href="/tutorials/r-core/2-datacleaning/">Data Cleaning (Getting your data ready for analysis)</a></p>
 </div>
 </div>
 </div>
