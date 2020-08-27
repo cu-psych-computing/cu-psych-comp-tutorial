@@ -11,33 +11,34 @@
     
     
     <item>
-      <title>Basic Data Simulation &amp; Power Analysis</title>
-      <link>/tutorials/r-extra/data-sim-power/basic-simulation-power/</link>
+      <title>Programming, Part 0</title>
+      <link>/tutorials/r-core/1-programming/lessonpart0/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/tutorials/r-extra/data-sim-power/basic-simulation-power/</guid>
-      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-extra/data-sim-power/basic-simulation-power.rmd.
- Why Simulate? Simulation is an extremely useful tool, because we can create ground truth by which to test our models. If we know the true process by which the data are generated, we can check whether our models are doing well at recovering this truth.</description>
+      <guid>/tutorials/r-core/1-programming/lessonpart0/</guid>
+      <description>Welcome to the CU Psychology Scientific Computing workshop!
+Programming is telling a computer to do some action to some input info to get output info that you want. When it comes to working with data in R, programming is how we tell R to load data, process it, plot it, fit models to it, and so on (everything!).
+In this first section of our tutorial, we will learn about this info that goes in and out, as well as the actions that transform info into what we want.</description>
     </item>
     
     <item>
-      <title>Basic Plotting in `ggplot2`</title>
-      <link>/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part1/</link>
+      <title>Programming, Part 1</title>
+      <link>/tutorials/r-core/1-programming/lessonpart1/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part1/</guid>
-      <description>Make ’em Graph Welcome! This tutorial will cover some basics of scatter plots, time series data, and some alternatives to bar graphs (for categorical predictors and continuous outcomes). It will also go over a few handy things along the way, such as making graphs with multiple panels, and aesthetic mapping for clearer plots.
-Note: All examples here will be with simulated data, so that as we are making our plots we can be aware of the TRUE data generating processes and assess how well our graphs represent these.</description>
+      <guid>/tutorials/r-core/1-programming/lessonpart1/</guid>
+      <description>Welcome (back) to the CU Psychology Scientific Computing Workshop! As a reminder, the documents for the introduction to programming cover the following:
+ Programming, Part 0: Finding your way around RStudio Programming, Part 1: Variables, data types, vectors (this document!) Programming, Part 2: Coding strategy, relational &amp;amp; logical operators  Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/1-programming/lessonpart1.</description>
     </item>
     
     <item>
-      <title>Bayesian Multilevel Modeling with `brms`</title>
-      <link>/tutorials/r-extra/brms/multilevel-models-with-brms/</link>
+      <title>Programming, Part 2</title>
+      <link>/tutorials/r-core/1-programming/lessonpart2/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/tutorials/r-extra/brms/multilevel-models-with-brms/</guid>
-      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-extra/brms/multilevel-models-with-brms.rmd.
- 0) Goals for this vignette  Give a quick intro to multilevel modeling and Bayesian inference Show a use case with Brms and some helpful syntax for demonstrating what this model does Hopefully, convince you to use multilevel modeling and Bayesian approaches for your stats   1) Why multilevel modeling?</description>
+      <guid>/tutorials/r-core/1-programming/lessonpart2/</guid>
+      <description>Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder, the documents for the introduction to programming cover the following:
+ Programming, Part 0: Finding your way around RStudio Programming, Part 1: Variables, data types, vectors Programming, Part 2: Coding strategy, relational &amp;amp; logical operators (this document!)  Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things!</description>
     </item>
     
     <item>
@@ -59,6 +60,87 @@ How to open various data types in R How to check for missing or problematic data
       <guid>/tutorials/r-core/3-datamanipulation/</guid>
       <description>Goals of This Lesson Learn how to group and categorize data in R Learn how to generate descriptive statistics in R   Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/3-datamanipulation/index.rmd.
  Load Data This dataset examines the relationship between multitasking and working memory (link to the original paper by Uncapher et al.</description>
+    </item>
+    
+    <item>
+      <title>Plotting with `ggplot2`</title>
+      <link>/tutorials/r-core/4-plotting/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-core/4-plotting/</guid>
+      <description>What Is This Tutorial? What’s ggplot2? ggplot2 is a package in R that allows for highly customizable and pretty plots! Here, were going to learn a few basics of making plots using ggplot2 that will hopefully get you well on your way to making informative and beautiful data visualizations!
+ Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/4-plotting/index.</description>
+    </item>
+    
+    <item>
+      <title>Modeling</title>
+      <link>/tutorials/r-core/5-modeling/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-core/5-modeling/</guid>
+      <description>Goals of This Lesson Learn about functions and syntax for models in R Practice examples of different model types Understand how to obtain model results in R
+ Learn how to visualize the results of the models   Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/5-modeling/index.rmd.
+ Load Data Let’s get some data.</description>
+    </item>
+    
+    <item>
+      <title>Basic Plotting in `ggplot2`</title>
+      <link>/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part1/</guid>
+      <description>Make ’em Graph Welcome! This tutorial will cover some basics of scatter plots, time series data, and some alternatives to bar graphs (for categorical predictors and continuous outcomes). It will also go over a few handy things along the way, such as making graphs with multiple panels, and aesthetic mapping for clearer plots.
+Note: All examples here will be with simulated data, so that as we are making our plots we can be aware of the TRUE data generating processes and assess how well our graphs represent these.</description>
+    </item>
+    
+    <item>
+      <title>More Advanced `ggplot2` Plotting</title>
+      <link>/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part2/</guid>
+      <description>God grant me the serenity to accept the uncertainty I cannot control; courage to control the uncertainty that I cannot accept; and wisdom to know the difference. -Andrew Gelman
+All models are wrong, but some are useful - George Box
+1) Overview Welcome! This tutorial will cover some aspects of plotting modeled data within the context of multilevel (or ‘mixed-effects’) regression models. Specifically, we’ll be using the lme4, brms, and rstanarm packages to model and ggplot to display the model predictions.</description>
+    </item>
+    
+    <item>
+      <title>Tidy Walkthrough, Part 1</title>
+      <link>/tutorials/r-extra/tidyverse-guide/tidyguide-1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-extra/tidyverse-guide/tidyguide-1/</guid>
+      <description>Goals for this vignette  Demonstrate (what I think are) key first-level features of the tidyverse Illustrate psychology use cases for tidyverse functions Hopefully convince you to join the cult of tidy  We shall do this by walking through various use cases you might encounter with your data. I’ll jump in with specific examples of functions when appropriate, to highlight solutions for particular situations you might run into with your own data.</description>
+    </item>
+    
+    <item>
+      <title>Tidy Walkthrough, Part 2</title>
+      <link>/tutorials/r-extra/tidyverse-guide/tidyguide-2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-extra/tidyverse-guide/tidyguide-2/</guid>
+      <description>Goals for this vignette Hello (again)! This is a continuation of our tour through base tidyverse (see Part 1 here). Our goals are the same as before:
+ Demonstrate (what I think are) key first-level features of the tidyverse Illustrate psychology use cases for tidyverse functions Hopefully convince you to join the cult of tidy  This time, we’ll be moving ahead to some more complex use cases utilizing some more advanced programming tactics.</description>
+    </item>
+    
+    <item>
+      <title>Basic Data Simulation &amp; Power Analysis</title>
+      <link>/tutorials/r-extra/data-sim-power/basic-simulation-power/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-extra/data-sim-power/basic-simulation-power/</guid>
+      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-extra/data-sim-power/basic-simulation-power.rmd.
+ Why Simulate? Simulation is an extremely useful tool, because we can create ground truth by which to test our models. If we know the true process by which the data are generated, we can check whether our models are doing well at recovering this truth.</description>
+    </item>
+    
+    <item>
+      <title>Bayesian Multilevel Modeling with `brms`</title>
+      <link>/tutorials/r-extra/brms/multilevel-models-with-brms/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-extra/brms/multilevel-models-with-brms/</guid>
+      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-extra/brms/multilevel-models-with-brms.rmd.
+ 0) Goals for this vignette  Give a quick intro to multilevel modeling and Bayesian inference Show a use case with Brms and some helpful syntax for demonstrating what this model does Hopefully, convince you to use multilevel modeling and Bayesian approaches for your stats   1) Why multilevel modeling?</description>
     </item>
     
     <item>
@@ -96,94 +178,12 @@ Upcoming To be announced.
     </item>
     
     <item>
-      <title>Modeling</title>
-      <link>/tutorials/r-core/5-modeling/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorials/r-core/5-modeling/</guid>
-      <description>Goals of This Lesson Learn about functions and syntax for models in R Practice examples of different model types Understand how to obtain model results in R
- Learn how to visualize the results of the models   Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/5-modeling/index.rmd.
- Load Data Let’s get some data.</description>
-    </item>
-    
-    <item>
-      <title>More Advanced `ggplot2` Plotting</title>
-      <link>/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part2/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part2/</guid>
-      <description>God grant me the serenity to accept the uncertainty I cannot control; courage to control the uncertainty that I cannot accept; and wisdom to know the difference. -Andrew Gelman
-All models are wrong, but some are useful - George Box
-1) Overview Welcome! This tutorial will cover some aspects of plotting modeled data within the context of multilevel (or ‘mixed-effects’) regression models. Specifically, we’ll be using the lme4, brms, and rstanarm packages to model and ggplot to display the model predictions.</description>
-    </item>
-    
-    <item>
-      <title>Plotting with `ggplot2`</title>
-      <link>/tutorials/r-core/4-plotting/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorials/r-core/4-plotting/</guid>
-      <description>What Is This Tutorial? What’s ggplot2? ggplot2 is a package in R that allows for highly customizable and pretty plots! Here, were going to learn a few basics of making plots using ggplot2 that will hopefully get you well on your way to making informative and beautiful data visualizations!
- Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/4-plotting/index.</description>
-    </item>
-    
-    <item>
-      <title>Programming, Part 0</title>
-      <link>/tutorials/r-core/1-programming/lessonpart0/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorials/r-core/1-programming/lessonpart0/</guid>
-      <description>Welcome to the CU Psychology Scientific Computing workshop!
-Programming is telling a computer to do some action to some input info to get output info that you want. When it comes to working with data in R, programming is how we tell R to load data, process it, plot it, fit models to it, and so on (everything!).
-In this first section of our tutorial, we will learn about this info that goes in and out, as well as the actions that transform info into what we want.</description>
-    </item>
-    
-    <item>
-      <title>Programming, Part 1</title>
-      <link>/tutorials/r-core/1-programming/lessonpart1/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorials/r-core/1-programming/lessonpart1/</guid>
-      <description>Welcome (back) to the CU Psychology Scientific Computing Workshop! As a reminder, the documents for the introduction to programming cover the following:
- Programming, Part 0: Finding your way around RStudio Programming, Part 1: Variables, data types, vectors (this document!) Programming, Part 2: Coding strategy, relational &amp;amp; logical operators  Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/1-programming/lessonpart1.</description>
-    </item>
-    
-    <item>
-      <title>Programming, Part 2</title>
-      <link>/tutorials/r-core/1-programming/lessonpart2/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorials/r-core/1-programming/lessonpart2/</guid>
-      <description>Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder, the documents for the introduction to programming cover the following:
- Programming, Part 0: Finding your way around RStudio Programming, Part 1: Variables, data types, vectors Programming, Part 2: Coding strategy, relational &amp;amp; logical operators (this document!)  Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things!</description>
-    </item>
-    
-    <item>
       <title>Resources</title>
       <link>/resources/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/resources/</guid>
       <description>Resources Columbia-Specific Resources  Columbia Psychology scientific computing users Slack group   Full, Freestanding General-Use R Tutorials Mainly base R tutorials  Cookbook for R: Basics of data cleaning, analysis and graphing   Tidyverse tutorials  Hadley Wickham’s R for Data Science online textbook Michael C. Frank’s psychology-specific tidyverse tutorial, adapted from R for Data Science   Syllabi for courses taught in R You can work along with these; course materials should be linked in the syllabi.</description>
-    </item>
-    
-    <item>
-      <title>Tidy Walkthrough, Part 1</title>
-      <link>/tutorials/r-extra/tidyverse-guide/tidyguide-1/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorials/r-extra/tidyverse-guide/tidyguide-1/</guid>
-      <description>Goals for this vignette  Demonstrate (what I think are) key first-level features of the tidyverse Illustrate psychology use cases for tidyverse functions Hopefully convince you to join the cult of tidy  We shall do this by walking through various use cases you might encounter with your data. I’ll jump in with specific examples of functions when appropriate, to highlight solutions for particular situations you might run into with your own data.</description>
-    </item>
-    
-    <item>
-      <title>Tidy Walkthrough, Part 2</title>
-      <link>/tutorials/r-extra/tidyverse-guide/tidyguide-2/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorials/r-extra/tidyverse-guide/tidyguide-2/</guid>
-      <description>Goals for this vignette Hello (again)! This is a continuation of our tour through base tidyverse (see Part 1 here). Our goals are the same as before:
- Demonstrate (what I think are) key first-level features of the tidyverse Illustrate psychology use cases for tidyverse functions Hopefully convince you to join the cult of tidy  This time, we’ll be moving ahead to some more complex use cases utilizing some more advanced programming tactics.</description>
     </item>
     
     <item>

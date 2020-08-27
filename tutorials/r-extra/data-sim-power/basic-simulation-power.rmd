@@ -1,7 +1,8 @@
 ---
 title: "Basic Data Simulation & Power Analysis"
 author: "Paul Bloom"
-tags: ["extra", "r"]
+tags: ["extra", "R"]
+weight: 800
 ---
 
 ```{r setup, include=FALSE}

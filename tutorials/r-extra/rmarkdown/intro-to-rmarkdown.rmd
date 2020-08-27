@@ -2,7 +2,8 @@
 title: "Intro to RMarkdown"
 author: "Emily Nakkawita"
 date: "January 16, 2019"
-tags: ["extra", "r"]
+tags: ["extra", "R"]
+weight: 1000
 ---
 
 ```{r setup, include = FALSE}

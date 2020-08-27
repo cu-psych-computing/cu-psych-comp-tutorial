@@ -3,71 +3,15 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/tutorials/r-extra/</loc>
-  </url>
-  
-  <url>
-    <loc>/tutorials/r-extra/data-sim-power/basic-simulation-power/</loc>
-  </url>
-  
-  <url>
-    <loc>/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part1/</loc>
-  </url>
-  
-  <url>
-    <loc>/tutorials/r-extra/brms/multilevel-models-with-brms/</loc>
-  </url>
-  
-  <url>
-    <loc>/tags/core/</loc>
-  </url>
-  
-  <url>
-    <loc>/tutorials/r-core/2-datacleaning/</loc>
-  </url>
-  
-  <url>
-    <loc>/tutorials/r-core/3-datamanipulation/</loc>
-  </url>
-  
-  <url>
-    <loc>/tags/extra/</loc>
-  </url>
-  
-  <url>
-    <loc>/</loc>
-  </url>
-  
-  <url>
-    <loc>/tutorials/r-core/1-programming/</loc>
-  </url>
-  
-  <url>
-    <loc>/tutorials/r-extra/rmarkdown/intro-to-rmarkdown/</loc>
-  </url>
-  
-  <url>
     <loc>/tutorials/r-core/</loc>
   </url>
   
   <url>
-    <loc>/license/</loc>
+    <loc>/tutorials/r-extra/</loc>
   </url>
   
   <url>
-    <loc>/meetings/</loc>
-  </url>
-  
-  <url>
-    <loc>/tutorials/r-core/5-modeling/</loc>
-  </url>
-  
-  <url>
-    <loc>/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part2/</loc>
-  </url>
-  
-  <url>
-    <loc>/tutorials/r-core/4-plotting/</loc>
+    <loc>/tutorials/r-core/1-programming/</loc>
   </url>
   
   <url>
@@ -83,6 +27,78 @@
   </url>
   
   <url>
+    <loc>/tutorials/r-core/2-datacleaning/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/r-core/3-datamanipulation/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/r-core/4-plotting/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/r-core/5-modeling/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/r-extra/accelerated-ggplot2/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part1/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part2/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/r-extra/tidyverse-guide/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/r-extra/tidyverse-guide/tidyguide-1/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/r-extra/tidyverse-guide/tidyguide-2/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/r-extra/data-sim-power/basic-simulation-power/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/r-extra/brms/multilevel-models-with-brms/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/r-extra/rmarkdown/intro-to-rmarkdown/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/core/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/extra/</loc>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+  </url>
+  
+  <url>
+    <loc>/license/</loc>
+  </url>
+  
+  <url>
+    <loc>/meetings/</loc>
+  </url>
+  
+  <url>
     <loc>/tags/r/</loc>
   </url>
   
@@ -92,14 +108,6 @@
   
   <url>
     <loc>/tags/</loc>
-  </url>
-  
-  <url>
-    <loc>/tutorials/r-extra/tidyverse-guide/tidyguide-1/</loc>
-  </url>
-  
-  <url>
-    <loc>/tutorials/r-extra/tidyverse-guide/tidyguide-2/</loc>
   </url>
   
   <url>

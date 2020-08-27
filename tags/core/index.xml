@@ -11,45 +11,12 @@
     
     
     <item>
-      <title>Data Cleaning</title>
-      <link>/tutorials/r-core/2-datacleaning/</link>
+      <title>Programming in R</title>
+      <link>/tutorials/r-core/1-programming/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/tutorials/r-core/2-datacleaning/</guid>
-      <description>Goals of This Lesson Students will learn:
-How to open various data types in R How to check for missing or problematic data and address issues. How to filter, rearrange and shape data in preparation for analysis.   Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/2-datacleaning/index.rmd.
- Install Packages tidyverse is one package with many tools.</description>
-    </item>
-    
-    <item>
-      <title>Data Manipulation</title>
-      <link>/tutorials/r-core/3-datamanipulation/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorials/r-core/3-datamanipulation/</guid>
-      <description>Goals of This Lesson Learn how to group and categorize data in R Learn how to generate descriptive statistics in R   Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/3-datamanipulation/index.rmd.
- Load Data This dataset examines the relationship between multitasking and working memory (link to the original paper by Uncapher et al.</description>
-    </item>
-    
-    <item>
-      <title>Modeling</title>
-      <link>/tutorials/r-core/5-modeling/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorials/r-core/5-modeling/</guid>
-      <description>Goals of This Lesson Learn about functions and syntax for models in R Practice examples of different model types Understand how to obtain model results in R
- Learn how to visualize the results of the models   Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/5-modeling/index.rmd.
- Load Data Let’s get some data.</description>
-    </item>
-    
-    <item>
-      <title>Plotting with `ggplot2`</title>
-      <link>/tutorials/r-core/4-plotting/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorials/r-core/4-plotting/</guid>
-      <description>What Is This Tutorial? What’s ggplot2? ggplot2 is a package in R that allows for highly customizable and pretty plots! Here, were going to learn a few basics of making plots using ggplot2 that will hopefully get you well on your way to making informative and beautiful data visualizations!
- Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/4-plotting/index.</description>
+      <guid>/tutorials/r-core/1-programming/</guid>
+      <description></description>
     </item>
     
     <item>
@@ -81,6 +48,48 @@ In this first section of our tutorial, we will learn about this info that goes i
       <guid>/tutorials/r-core/1-programming/lessonpart2/</guid>
       <description>Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder, the documents for the introduction to programming cover the following:
  Programming, Part 0: Finding your way around RStudio Programming, Part 1: Variables, data types, vectors Programming, Part 2: Coding strategy, relational &amp;amp; logical operators (this document!)  Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things!</description>
+    </item>
+    
+    <item>
+      <title>Data Cleaning</title>
+      <link>/tutorials/r-core/2-datacleaning/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-core/2-datacleaning/</guid>
+      <description>Goals of This Lesson Students will learn:
+How to open various data types in R How to check for missing or problematic data and address issues. How to filter, rearrange and shape data in preparation for analysis.   Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/2-datacleaning/index.rmd.
+ Install Packages tidyverse is one package with many tools.</description>
+    </item>
+    
+    <item>
+      <title>Data Manipulation</title>
+      <link>/tutorials/r-core/3-datamanipulation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-core/3-datamanipulation/</guid>
+      <description>Goals of This Lesson Learn how to group and categorize data in R Learn how to generate descriptive statistics in R   Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/3-datamanipulation/index.rmd.
+ Load Data This dataset examines the relationship between multitasking and working memory (link to the original paper by Uncapher et al.</description>
+    </item>
+    
+    <item>
+      <title>Plotting with `ggplot2`</title>
+      <link>/tutorials/r-core/4-plotting/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-core/4-plotting/</guid>
+      <description>What Is This Tutorial? What’s ggplot2? ggplot2 is a package in R that allows for highly customizable and pretty plots! Here, were going to learn a few basics of making plots using ggplot2 that will hopefully get you well on your way to making informative and beautiful data visualizations!
+ Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/4-plotting/index.</description>
+    </item>
+    
+    <item>
+      <title>Modeling</title>
+      <link>/tutorials/r-core/5-modeling/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-core/5-modeling/</guid>
+      <description>Goals of This Lesson Learn about functions and syntax for models in R Practice examples of different model types Understand how to obtain model results in R
+ Learn how to visualize the results of the models   Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/5-modeling/index.rmd.
+ Load Data Let’s get some data.</description>
     </item>
     
   </channel>

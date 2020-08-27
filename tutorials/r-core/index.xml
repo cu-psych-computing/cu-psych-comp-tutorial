@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Introductory R tutorial on Columbia Psychology Scientific Computing</title>
+    <title>Introductory R Tutorial on Columbia Psychology Scientific Computing</title>
     <link>/tutorials/r-core/</link>
-    <description>Recent content in Introductory R tutorial on Columbia Psychology Scientific Computing</description>
+    <description>Recent content in Introductory R Tutorial on Columbia Psychology Scientific Computing</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
@@ -32,6 +32,16 @@ How to open various data types in R How to check for missing or problematic data
     </item>
     
     <item>
+      <title>Plotting with `ggplot2`</title>
+      <link>/tutorials/r-core/4-plotting/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-core/4-plotting/</guid>
+      <description>What Is This Tutorial? What’s ggplot2? ggplot2 is a package in R that allows for highly customizable and pretty plots! Here, were going to learn a few basics of making plots using ggplot2 that will hopefully get you well on your way to making informative and beautiful data visualizations!
+ Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/4-plotting/index.</description>
+    </item>
+    
+    <item>
       <title>Modeling</title>
       <link>/tutorials/r-core/5-modeling/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -40,16 +50,6 @@ How to open various data types in R How to check for missing or problematic data
       <description>Goals of This Lesson Learn about functions and syntax for models in R Practice examples of different model types Understand how to obtain model results in R
  Learn how to visualize the results of the models   Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/5-modeling/index.rmd.
  Load Data Let’s get some data.</description>
-    </item>
-    
-    <item>
-      <title>Plotting with `ggplot2`</title>
-      <link>/tutorials/r-core/4-plotting/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorials/r-core/4-plotting/</guid>
-      <description>What Is This Tutorial? What’s ggplot2? ggplot2 is a package in R that allows for highly customizable and pretty plots! Here, were going to learn a few basics of making plots using ggplot2 that will hopefully get you well on your way to making informative and beautiful data visualizations!
- Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/4-plotting/index.</description>
     </item>
     
   </channel>

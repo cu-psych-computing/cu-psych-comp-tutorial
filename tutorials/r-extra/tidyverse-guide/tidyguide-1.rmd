@@ -2,7 +2,8 @@
 title: "Tidy Walkthrough, Part 1"
 subtitle: "Data manipulation basics"
 author: "Monica Thieu"
-tags: ["extra", "r"]
+tags: ["extra", "R"]
+weight: 701
 ---
 
 ```{r setup, include=FALSE}
