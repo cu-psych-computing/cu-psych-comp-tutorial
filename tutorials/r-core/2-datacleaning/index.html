@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
-  <meta name="generator" content="Hugo 0.74.3" />
+  <meta name="generator" content="Hugo 0.67.1" />
 
   
   <meta name="description" content="CU Psychology Scientific Computing">
@@ -461,6 +461,7 @@ nav[data-toggle=toc] .nav-link.active, nav[data-toggle=toc] .nav-link.active:foc
 </p>
 <hr>
 
+<script src="../../../rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
 <div id="goals-of-this-lesson" class="section level1">
@@ -498,15 +499,12 @@ dataframe &lt;- tibble(name = c(&quot;Monica&quot;, &quot;Michelle&quot;, &quot;
 <p>Your working directory is the directory (and subdirectories) where the files you’re working with are stored. Whenever possible, you should open the files you run in R from a .Rproj link; by doing so, the folder in which that file was located will automatically be your working directory.</p>
 <p>You can check your working directory using the <code>here()</code> function.</p>
 <pre class="r"><code>here()</code></pre>
-<pre><code>## [1] &quot;/Users/emily/Documents/GitHub/cu-psych-comp-tutorial&quot;</code></pre>
+<pre><code>## [1] &quot;/Users/mthieu/Repos/cu-psych-r-tutorial&quot;</code></pre>
 <p>You can access a list of the files within your working directory using the <code>list.files()</code> function…</p>
 <pre class="r"><code>list.files(here())</code></pre>
-<pre><code>##  [1] &quot;_output.yml&quot;               &quot;blogdown&quot;                 
-##  [3] &quot;config.toml&quot;               &quot;content&quot;                  
-##  [5] &quot;cu-psych-r-tutorial.Rproj&quot; &quot;index.Rmd&quot;                
-##  [7] &quot;public&quot;                    &quot;README.md&quot;                
-##  [9] &quot;resources&quot;                 &quot;static&quot;                   
-## [11] &quot;themes&quot;</code></pre>
+<pre><code>##  [1] &quot;_output.yml&quot; &quot;blogdown&quot;    &quot;config.toml&quot; &quot;content&quot;     &quot;index.Rmd&quot;  
+##  [6] &quot;pollev_figs&quot; &quot;public&quot;      &quot;README.md&quot;   &quot;renv&quot;        &quot;renv.lock&quot;  
+## [11] &quot;resources&quot;   &quot;static&quot;      &quot;themes&quot;</code></pre>
 <p>…as well as in the “Files” tab in the module at the bottom right corner of your RStudio window.</p>
 </div>
 <div id="what-kind-of-file-do-you-have" class="section level3">
