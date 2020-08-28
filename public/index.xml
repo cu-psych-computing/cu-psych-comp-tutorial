@@ -142,6 +142,17 @@ All models are wrong, but some are useful - George Box
     </item>
     
     <item>
+      <title>Instructions for Accessing Our Tutorial Files</title>
+      <link>/accessing-files/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/accessing-files/</guid>
+      <description>Instructions for Accessing Our Tutorial Files As noted at the top of each of our tutorial pages, the files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. In these notes, we list where the specific RMarkdown file for that tutorial is located (e.g., /content/tutorials/r-core/1-programming/lessonpart0.rmd).
+This page contains instructions for downloading and opening such files.
+ 1. Visit GitHub and Download Zipped Folder First, visit the Columbia Psychology Scientific Computing GitHub page, which is located at https://github.</description>
+    </item>
+    
+    <item>
       <title>License</title>
       <link>/license/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
