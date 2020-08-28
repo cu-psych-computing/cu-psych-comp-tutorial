@@ -6,7 +6,71 @@ tags: ["extra", "R"]
 weight: 701
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<script src="/rmarkdown-libs/accessible-code-block/empty-anchor.js"></script>
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 
 <div id="goals-for-this-vignette" class="section level1">
@@ -70,43 +134,43 @@ weight: 701
 <p>We’ll use a simulated dataset for this vignette, so you don’t need to worry about any dependencies involving datasets you don’t have access to while you’re following along.</p>
 <p>Here, I’ll simulate a recognition memory task, where each fake subject sees a series of objects, some they’ve seen before in a learning phase, and some they haven’t. For each object, which is either old (they saw it before) or new (they did not see it before), subjects must respond “old” if they think they saw it before, or “new” if they think they didn’t see it before. I’ll also simulate some person-level demographic variables (age, gender) and trait variables (questionnaire scores).</p>
 <p>If you have <code>tidyverse</code> loaded, all this code should run if you try to run it in your R console. I’m using functions that I’ll introduce later, so don’t worry if you don’t fully understand this right now! Feel free to skip past this.</p>
-<pre class="r"><code># 20 fake subjects, 50 fake trials per subject
-
-# Will simulate the person-level variables FIRST,
-# then expand to simulate the trial-level variables
-raw &lt;- tibble(id = 1L:20L,
-              age = sample(18L:35L, size = 20, replace = TRUE),
-              # assuming binary gender for the purposes of this simulation
-              gender = sample(c(&quot;male&quot;, &quot;female&quot;), size = 20, replace = TRUE)) %&gt;%
-  # simulating some &quot;questionnaire&quot; scores; person-level
-  mutate(q_1 = rnorm(n = n(), mean = 30, sd = 10),
-              q_2 = rnorm(n = n(), mean = 30, sd = 10),
-              q_3 = rnorm(n = n(), mean = 30, sd = 10)) %&gt;%
-  # slice() subsets rows by position; you can use it to repeat rows by repeating position indices
-  slice(rep(1:n(), each = 50)) %&gt;%
-  # We&#39;ll get to this in a bit--this causes every &quot;group&quot;
-  # aka every set of rows with the same value for &quot;id&quot;, to behave as an independent df
-  group_by(id) %&gt;%
-  # I just want to have a column for &quot;trial order&quot;, I like those in my task data
-  mutate(trial_num = 1:n(),
-         # Each subject sees half OLD and half NEW trials in this recognition memory task
-         is_old = rep(0L:1L, times = n()/2),
-         # I&#39;m shuffling the order of &quot;old&quot; and &quot;new&quot; trials in my fake memory task
-         is_old = sample(is_old),
-         # This will generate binary &quot;old&quot;/&quot;new&quot; responses corresponding roughly to a d&#39; of 1
-         # yep, everyone has the same d&#39; today
-         response = if_else(is_old == 1,
-                            rbinom(n = n(), size = 1, prob = 0.7),
-                            rbinom(n = n(), size = 1, prob = 0.3)),
-         rt = rnorm(n = n(), mean = 3, sd = 1.5)) %&gt;%
-  ungroup()</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># 20 fake subjects, 50 fake trials per subject</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># Will simulate the person-level variables FIRST,</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># then expand to simulate the trial-level variables</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>raw &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">id =</span> 1L<span class="op">:</span>20L,</span>
+<span id="cb1-6"><a href="#cb1-6"></a>              <span class="dt">age =</span> <span class="kw">sample</span>(18L<span class="op">:</span>35L, <span class="dt">size =</span> <span class="dv">20</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb1-7"><a href="#cb1-7"></a>              <span class="co"># assuming binary gender for the purposes of this simulation</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>              <span class="dt">gender =</span> <span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>), <span class="dt">size =</span> <span class="dv">20</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="st">  </span><span class="co"># simulating some &quot;questionnaire&quot; scores; person-level</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">q_1 =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="kw">n</span>(), <span class="dt">mean =</span> <span class="dv">30</span>, <span class="dt">sd =</span> <span class="dv">10</span>),</span>
+<span id="cb1-11"><a href="#cb1-11"></a>              <span class="dt">q_2 =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="kw">n</span>(), <span class="dt">mean =</span> <span class="dv">30</span>, <span class="dt">sd =</span> <span class="dv">10</span>),</span>
+<span id="cb1-12"><a href="#cb1-12"></a>              <span class="dt">q_3 =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="kw">n</span>(), <span class="dt">mean =</span> <span class="dv">30</span>, <span class="dt">sd =</span> <span class="dv">10</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="st">  </span><span class="co"># slice() subsets rows by position; you can use it to repeat rows by repeating position indices</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="st">  </span><span class="kw">slice</span>(<span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">n</span>(), <span class="dt">each =</span> <span class="dv">50</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="st">  </span><span class="co"># We&#39;ll get to this in a bit--this causes every &quot;group&quot;</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="st">  </span><span class="co"># aka every set of rows with the same value for &quot;id&quot;, to behave as an independent df</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="st">  </span><span class="kw">group_by</span>(id) <span class="op">%&gt;%</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="st">  </span><span class="co"># I just want to have a column for &quot;trial order&quot;, I like those in my task data</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">trial_num =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">n</span>(),</span>
+<span id="cb1-20"><a href="#cb1-20"></a>         <span class="co"># Each subject sees half OLD and half NEW trials in this recognition memory task</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a>         <span class="dt">is_old =</span> <span class="kw">rep</span>(0L<span class="op">:</span>1L, <span class="dt">times =</span> <span class="kw">n</span>()<span class="op">/</span><span class="dv">2</span>),</span>
+<span id="cb1-22"><a href="#cb1-22"></a>         <span class="co"># I&#39;m shuffling the order of &quot;old&quot; and &quot;new&quot; trials in my fake memory task</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a>         <span class="dt">is_old =</span> <span class="kw">sample</span>(is_old),</span>
+<span id="cb1-24"><a href="#cb1-24"></a>         <span class="co"># This will generate binary &quot;old&quot;/&quot;new&quot; responses corresponding roughly to a d&#39; of 1</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a>         <span class="co"># yep, everyone has the same d&#39; today</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a>         <span class="dt">response =</span> <span class="kw">if_else</span>(is_old <span class="op">==</span><span class="st"> </span><span class="dv">1</span>,</span>
+<span id="cb1-27"><a href="#cb1-27"></a>                            <span class="kw">rbinom</span>(<span class="dt">n =</span> <span class="kw">n</span>(), <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">prob =</span> <span class="fl">0.7</span>),</span>
+<span id="cb1-28"><a href="#cb1-28"></a>                            <span class="kw">rbinom</span>(<span class="dt">n =</span> <span class="kw">n</span>(), <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">prob =</span> <span class="fl">0.3</span>)),</span>
+<span id="cb1-29"><a href="#cb1-29"></a>         <span class="dt">rt =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="kw">n</span>(), <span class="dt">mean =</span> <span class="dv">3</span>, <span class="dt">sd =</span> <span class="fl">1.5</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb1-30"><a href="#cb1-30"></a><span class="st">  </span><span class="kw">ungroup</span>()</span></code></pre></div>
 </div>
 <div id="loading-data" class="section level1">
 <h1>Loading data</h1>
 <p>In today’s example, we won’t actually be loading any data, because we’re generating simulated data. If you do have real data you’re looking to analyze, though, chances are you have it saved in tabular form (e.g. a CSV) and you need to read it into R. You might be using something like <code>base::read.csv()</code> to do this.</p>
 <p>As it happens, the tidyverse features a package, <code>readr</code>, which provides file reading functions that operate in the same family as <code>base::read.table()</code>, <code>base::read.csv()</code>, etc. I like to use these file reading functions, <code>readr::read_csv()</code> (note that <code>tidyverse</code> functions tend to use underscores instead of periods!) in particular, because they run a little more quickly and predictably than their base R counterparts.</p>
 <p>The command you’d use would look a little something like this, aka very similar to base R:</p>
-<pre class="r"><code>data &lt;- read_csv(&quot;/path/to/data.csv&quot;)</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>data &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;/path/to/data.csv&quot;</span>)</span></code></pre></div>
 <p>Features of <code>readr</code> file reading functions include:</p>
 <ul>
 <li>default args:
@@ -123,20 +187,20 @@ raw &lt;- tibble(id = 1L:20L,
 <div id="visually-inspecting-data" class="section level1">
 <h1>Visually inspecting data</h1>
 <p>The tidyverse introduces the <em>tibble</em> (via the <code>tibble</code> package, which is loaded automatically when you load the whole <code>tidyverse</code>). You can think of a tibble as a dataframe, but a little better. One of the reasons I like to work with tibbles is that visually inspecting them using the console is quite easy:</p>
-<pre class="r"><code>raw</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>raw</span></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 10
 ##       id   age gender   q_1   q_2   q_3 trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1     1    21 female  21.4  26.7  30.7         1      1        1  3.19
-##  2     1    21 female  21.4  26.7  30.7         2      1        1  1.99
-##  3     1    21 female  21.4  26.7  30.7         3      0        0  4.68
-##  4     1    21 female  21.4  26.7  30.7         4      1        1  3.46
-##  5     1    21 female  21.4  26.7  30.7         5      0        0  4.09
-##  6     1    21 female  21.4  26.7  30.7         6      0        0  3.65
-##  7     1    21 female  21.4  26.7  30.7         7      1        1  3.85
-##  8     1    21 female  21.4  26.7  30.7         8      0        0  2.96
-##  9     1    21 female  21.4  26.7  30.7         9      0        1  3.75
-## 10     1    21 female  21.4  26.7  30.7        10      0        0  2.94
+##  1     1    22 male    11.1  32.4  34.6         1      1        0  5.46
+##  2     1    22 male    11.1  32.4  34.6         2      1        1  4.54
+##  3     1    22 male    11.1  32.4  34.6         3      0        0  3.85
+##  4     1    22 male    11.1  32.4  34.6         4      0        1  1.43
+##  5     1    22 male    11.1  32.4  34.6         5      1        1  4.82
+##  6     1    22 male    11.1  32.4  34.6         6      1        1  4.71
+##  7     1    22 male    11.1  32.4  34.6         7      1        1  6.61
+##  8     1    22 male    11.1  32.4  34.6         8      0        0  3.17
+##  9     1    22 male    11.1  32.4  34.6         9      1        1  3.65
+## 10     1    22 male    11.1  32.4  34.6        10      0        0  1.94
 ## # … with 990 more rows</code></pre>
 <p>You can see that the default print output of tibbles is kind of like the output of <code>str()</code> on steroids.</p>
 <p>Compared to a dataframe, a tibble:</p>
@@ -152,7 +216,7 @@ raw &lt;- tibble(id = 1L:20L,
 <p>There are a couple other useful things that tibbles do that dataframes don’t, but the strictness and the print method are the two most useful things that I find. As you’ll see, imposing a bit more strictness on R can have the beneficial side effect of minimizing buggy cases in your own code, since you’re forced to be more explicit.</p>
 <p>By the way, note that packages within the tidyverse work together–raw rectangular data read in using <code>readr</code> is given the tibble class by default.</p>
 <p>A tibble isn’t too far off from a dataframe in its underlying properties, though.</p>
-<pre class="r"><code>class(raw)</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">class</span>(raw)</span></code></pre></div>
 <pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
 <p><code>"tbl_df"</code> is the class name for tibbles. As you can see, <strong>tibbles still have the <code>"data.frame"</code> class, so they can do most anything dataframes do.</strong> (There are the occasional older non-tidyverse functions that get confused when they see tibbles, and that’s okay, you can always call <code>as.data.frame(your_tibble)</code> if you need to in a pinch.)</p>
 <p>Non-tibble dataframes can be coerced to tibble using <code>as_tibble()</code>. This shouldn’t change any of the existing data type of any of the columns.</p>
@@ -165,165 +229,165 @@ raw &lt;- tibble(id = 1L:20L,
 <h2>Subsetting by column</h2>
 <p><code>dplyr::select()</code> is the workhorse function for subsetting a df by column. You simply need to name the columns you would like to select!</p>
 <p>Note that these are <strong>unquoted</strong> variable names and not a character vector. Tidyverse functions allow you to call column names bare as variables inside of them.</p>
-<pre class="r"><code># This auto-indenting biz after the pipe works because the pipe is a left-right operator
-# Remember that raw is getting piped into select() as the first argument
-# so the only enumerated arguments inside select() are the columns of interest,
-# which is kind of nice!
-raw %&gt;%
-  select(id, age, gender, trial_num, is_old, response, rt)</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># This auto-indenting biz after the pipe works because the pipe is a left-right operator</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="co"># Remember that raw is getting piped into select() as the first argument</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co"># so the only enumerated arguments inside select() are the columns of interest,</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co"># which is kind of nice!</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="st">  </span><span class="kw">select</span>(id, age, gender, trial_num, is_old, response, rt)</span></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 7
 ##       id   age gender trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1     1    21 female         1      1        1  3.19
-##  2     1    21 female         2      1        1  1.99
-##  3     1    21 female         3      0        0  4.68
-##  4     1    21 female         4      1        1  3.46
-##  5     1    21 female         5      0        0  4.09
-##  6     1    21 female         6      0        0  3.65
-##  7     1    21 female         7      1        1  3.85
-##  8     1    21 female         8      0        0  2.96
-##  9     1    21 female         9      0        1  3.75
-## 10     1    21 female        10      0        0  2.94
+##  1     1    22 male           1      1        0  5.46
+##  2     1    22 male           2      1        1  4.54
+##  3     1    22 male           3      0        0  3.85
+##  4     1    22 male           4      0        1  1.43
+##  5     1    22 male           5      1        1  4.82
+##  6     1    22 male           6      1        1  4.71
+##  7     1    22 male           7      1        1  6.61
+##  8     1    22 male           8      0        0  3.17
+##  9     1    22 male           9      1        1  3.65
+## 10     1    22 male          10      0        0  1.94
 ## # … with 990 more rows</code></pre>
 <p>Note that you can use <code>select()</code> to <em>rename</em> columns as well; simply put the new name in the argument name spot, and the old name in the argument value spot.</p>
-<pre class="r"><code># Renaming columns is so smooth in the tidyverse!
-raw %&gt;%
-  select(subject_id = id, age, gender, trial_num, is_old, response, rt)</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># Renaming columns is so smooth in the tidyverse!</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="st">  </span><span class="kw">select</span>(<span class="dt">subject_id =</span> id, age, gender, trial_num, is_old, response, rt)</span></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 7
 ##    subject_id   age gender trial_num is_old response    rt
 ##         &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1          1    21 female         1      1        1  3.19
-##  2          1    21 female         2      1        1  1.99
-##  3          1    21 female         3      0        0  4.68
-##  4          1    21 female         4      1        1  3.46
-##  5          1    21 female         5      0        0  4.09
-##  6          1    21 female         6      0        0  3.65
-##  7          1    21 female         7      1        1  3.85
-##  8          1    21 female         8      0        0  2.96
-##  9          1    21 female         9      0        1  3.75
-## 10          1    21 female        10      0        0  2.94
+##  1          1    22 male           1      1        0  5.46
+##  2          1    22 male           2      1        1  4.54
+##  3          1    22 male           3      0        0  3.85
+##  4          1    22 male           4      0        1  1.43
+##  5          1    22 male           5      1        1  4.82
+##  6          1    22 male           6      1        1  4.71
+##  7          1    22 male           7      1        1  6.61
+##  8          1    22 male           8      0        0  3.17
+##  9          1    22 male           9      1        1  3.65
+## 10          1    22 male          10      0        0  1.94
 ## # … with 990 more rows</code></pre>
 <p>There also exists a version of <code>select()</code> called <code>rename()</code> which behaves exactly as <code>select()</code> does, except that <code>rename()</code> never subsets columns, and always gives you all the columns of your original df (renamed or otherwise).</p>
 <p>You can specify columns in <code>select()</code> by naming each individual column you want, or you can select groups of columns in the following ways.</p>
 <p>You can use the colon <code>:</code> to select all columns between the ones named, kind of like when creating integer vectors using the colon:</p>
-<pre class="r"><code>raw %&gt;%
-  select(id:gender)</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="st">  </span><span class="kw">select</span>(id<span class="op">:</span>gender)</span></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 3
 ##       id   age gender
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt; 
-##  1     1    21 female
-##  2     1    21 female
-##  3     1    21 female
-##  4     1    21 female
-##  5     1    21 female
-##  6     1    21 female
-##  7     1    21 female
-##  8     1    21 female
-##  9     1    21 female
-## 10     1    21 female
+##  1     1    22 male  
+##  2     1    22 male  
+##  3     1    22 male  
+##  4     1    22 male  
+##  5     1    22 male  
+##  6     1    22 male  
+##  7     1    22 male  
+##  8     1    22 male  
+##  9     1    22 male  
+## 10     1    22 male  
 ## # … with 990 more rows</code></pre>
 <p>You can also use any one of a series of special helper functions provided by <code>dplyr</code> to select columns in a regex-style way. Like so:</p>
-<pre class="r"><code>raw %&gt;%
-  select(id, starts_with(&quot;q&quot;))</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="st">  </span><span class="kw">select</span>(id, <span class="kw">starts_with</span>(<span class="st">&quot;q&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 4
 ##       id   q_1   q_2   q_3
 ##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1     1  21.4  26.7  30.7
-##  2     1  21.4  26.7  30.7
-##  3     1  21.4  26.7  30.7
-##  4     1  21.4  26.7  30.7
-##  5     1  21.4  26.7  30.7
-##  6     1  21.4  26.7  30.7
-##  7     1  21.4  26.7  30.7
-##  8     1  21.4  26.7  30.7
-##  9     1  21.4  26.7  30.7
-## 10     1  21.4  26.7  30.7
+##  1     1  11.1  32.4  34.6
+##  2     1  11.1  32.4  34.6
+##  3     1  11.1  32.4  34.6
+##  4     1  11.1  32.4  34.6
+##  5     1  11.1  32.4  34.6
+##  6     1  11.1  32.4  34.6
+##  7     1  11.1  32.4  34.6
+##  8     1  11.1  32.4  34.6
+##  9     1  11.1  32.4  34.6
+## 10     1  11.1  32.4  34.6
 ## # … with 990 more rows</code></pre>
 <p>Check the the reference page for <code>tidyselect::select_helpers</code> to see all of these helper functions that are available to you.</p>
 <p>Note that the order in which you specify columns/helper calls determines the ordering of the columns in your output.</p>
-<pre class="r"><code>raw %&gt;%
-  select(gender, age, id)</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="st">  </span><span class="kw">select</span>(gender, age, id)</span></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 3
 ##    gender   age    id
 ##    &lt;chr&gt;  &lt;int&gt; &lt;int&gt;
-##  1 female    21     1
-##  2 female    21     1
-##  3 female    21     1
-##  4 female    21     1
-##  5 female    21     1
-##  6 female    21     1
-##  7 female    21     1
-##  8 female    21     1
-##  9 female    21     1
-## 10 female    21     1
+##  1 male      22     1
+##  2 male      22     1
+##  3 male      22     1
+##  4 male      22     1
+##  5 male      22     1
+##  6 male      22     1
+##  7 male      22     1
+##  8 male      22     1
+##  9 male      22     1
+## 10 male      22     1
 ## # … with 990 more rows</code></pre>
 <p>In this way, you can explicitly use <code>select()</code> to reorder columns without dropping columns. To do this, use the <code>tidyselect</code> helper function <code>everything()</code>:</p>
-<pre class="r"><code>raw %&gt;%
-  select(id, gender, everything())</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="st">  </span><span class="kw">select</span>(id, gender, <span class="kw">everything</span>())</span></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 10
 ##       id gender   age   q_1   q_2   q_3 trial_num is_old response    rt
 ##    &lt;int&gt; &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1     1 female    21  21.4  26.7  30.7         1      1        1  3.19
-##  2     1 female    21  21.4  26.7  30.7         2      1        1  1.99
-##  3     1 female    21  21.4  26.7  30.7         3      0        0  4.68
-##  4     1 female    21  21.4  26.7  30.7         4      1        1  3.46
-##  5     1 female    21  21.4  26.7  30.7         5      0        0  4.09
-##  6     1 female    21  21.4  26.7  30.7         6      0        0  3.65
-##  7     1 female    21  21.4  26.7  30.7         7      1        1  3.85
-##  8     1 female    21  21.4  26.7  30.7         8      0        0  2.96
-##  9     1 female    21  21.4  26.7  30.7         9      0        1  3.75
-## 10     1 female    21  21.4  26.7  30.7        10      0        0  2.94
+##  1     1 male      22  11.1  32.4  34.6         1      1        0  5.46
+##  2     1 male      22  11.1  32.4  34.6         2      1        1  4.54
+##  3     1 male      22  11.1  32.4  34.6         3      0        0  3.85
+##  4     1 male      22  11.1  32.4  34.6         4      0        1  1.43
+##  5     1 male      22  11.1  32.4  34.6         5      1        1  4.82
+##  6     1 male      22  11.1  32.4  34.6         6      1        1  4.71
+##  7     1 male      22  11.1  32.4  34.6         7      1        1  6.61
+##  8     1 male      22  11.1  32.4  34.6         8      0        0  3.17
+##  9     1 male      22  11.1  32.4  34.6         9      1        1  3.65
+## 10     1 male      22  11.1  32.4  34.6        10      0        0  1.94
 ## # … with 990 more rows</code></pre>
 <p><code>everything()</code> essentially returns all the names of the other, not-explicitly-named columns, and keeps them all in their original order <em>minus</em> the columns you explicitly specified. You can use this syntax to pull a selected number of columns to the far left of your df, and then leave all other columns in their previous order.</p>
 <p>You can also use <code>select()</code> to keep all columns <em>except</em> ones you specify. For this, use the <code>-</code> operator like so:</p>
-<pre class="r"><code>raw %&gt;%
-  select(-gender)</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>gender)</span></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 9
 ##       id   age   q_1   q_2   q_3 trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1     1    21  21.4  26.7  30.7         1      1        1  3.19
-##  2     1    21  21.4  26.7  30.7         2      1        1  1.99
-##  3     1    21  21.4  26.7  30.7         3      0        0  4.68
-##  4     1    21  21.4  26.7  30.7         4      1        1  3.46
-##  5     1    21  21.4  26.7  30.7         5      0        0  4.09
-##  6     1    21  21.4  26.7  30.7         6      0        0  3.65
-##  7     1    21  21.4  26.7  30.7         7      1        1  3.85
-##  8     1    21  21.4  26.7  30.7         8      0        0  2.96
-##  9     1    21  21.4  26.7  30.7         9      0        1  3.75
-## 10     1    21  21.4  26.7  30.7        10      0        0  2.94
+##  1     1    22  11.1  32.4  34.6         1      1        0  5.46
+##  2     1    22  11.1  32.4  34.6         2      1        1  4.54
+##  3     1    22  11.1  32.4  34.6         3      0        0  3.85
+##  4     1    22  11.1  32.4  34.6         4      0        1  1.43
+##  5     1    22  11.1  32.4  34.6         5      1        1  4.82
+##  6     1    22  11.1  32.4  34.6         6      1        1  4.71
+##  7     1    22  11.1  32.4  34.6         7      1        1  6.61
+##  8     1    22  11.1  32.4  34.6         8      0        0  3.17
+##  9     1    22  11.1  32.4  34.6         9      1        1  3.65
+## 10     1    22  11.1  32.4  34.6        10      0        0  1.94
 ## # … with 990 more rows</code></pre>
 <p>You can combine the <code>-</code> with the <code>:</code> operator, or with one of the <code>tidyselect</code> helpers we saw before:</p>
-<pre class="r"><code>raw %&gt;%
-  select(-(trial_num:rt))</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>(trial_num<span class="op">:</span>rt))</span></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 6
 ##       id   age gender   q_1   q_2   q_3
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1     1    21 female  21.4  26.7  30.7
-##  2     1    21 female  21.4  26.7  30.7
-##  3     1    21 female  21.4  26.7  30.7
-##  4     1    21 female  21.4  26.7  30.7
-##  5     1    21 female  21.4  26.7  30.7
-##  6     1    21 female  21.4  26.7  30.7
-##  7     1    21 female  21.4  26.7  30.7
-##  8     1    21 female  21.4  26.7  30.7
-##  9     1    21 female  21.4  26.7  30.7
-## 10     1    21 female  21.4  26.7  30.7
+##  1     1    22 male    11.1  32.4  34.6
+##  2     1    22 male    11.1  32.4  34.6
+##  3     1    22 male    11.1  32.4  34.6
+##  4     1    22 male    11.1  32.4  34.6
+##  5     1    22 male    11.1  32.4  34.6
+##  6     1    22 male    11.1  32.4  34.6
+##  7     1    22 male    11.1  32.4  34.6
+##  8     1    22 male    11.1  32.4  34.6
+##  9     1    22 male    11.1  32.4  34.6
+## 10     1    22 male    11.1  32.4  34.6
 ## # … with 990 more rows</code></pre>
-<pre class="r"><code>raw %&gt;%
-  select(-starts_with(&quot;q&quot;))</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">starts_with</span>(<span class="st">&quot;q&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 7
 ##       id   age gender trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1     1    21 female         1      1        1  3.19
-##  2     1    21 female         2      1        1  1.99
-##  3     1    21 female         3      0        0  4.68
-##  4     1    21 female         4      1        1  3.46
-##  5     1    21 female         5      0        0  4.09
-##  6     1    21 female         6      0        0  3.65
-##  7     1    21 female         7      1        1  3.85
-##  8     1    21 female         8      0        0  2.96
-##  9     1    21 female         9      0        1  3.75
-## 10     1    21 female        10      0        0  2.94
+##  1     1    22 male           1      1        0  5.46
+##  2     1    22 male           2      1        1  4.54
+##  3     1    22 male           3      0        0  3.85
+##  4     1    22 male           4      0        1  1.43
+##  5     1    22 male           5      1        1  4.82
+##  6     1    22 male           6      1        1  4.71
+##  7     1    22 male           7      1        1  6.61
+##  8     1    22 male           8      0        0  3.17
+##  9     1    22 male           9      1        1  3.65
+## 10     1    22 male          10      0        0  1.94
 ## # … with 990 more rows</code></pre>
 </div>
 <div id="subsetting-by-row" class="section level2">
@@ -333,174 +397,171 @@ raw %&gt;%
 <h3>Logical subsetting</h3>
 <p><code>filter()</code> will return a df subset for only those rows that return <code>TRUE</code> for the logical statements specified in its arguments.</p>
 <p>Notice that, as with other functions in the tidyverse, you call df columns as bare variable names, without needing <code>$</code> or <code>[]</code> indexing.</p>
-<pre class="r"><code>raw %&gt;%
-  filter(id == 13)</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="st">  </span><span class="kw">filter</span>(id <span class="op">==</span><span class="st"> </span><span class="dv">13</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 50 x 10
-##       id   age gender   q_1   q_2   q_3 trial_num is_old response    rt
-##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1    13    35 female  41.0  29.2  53.0         1      0        1 4.86 
-##  2    13    35 female  41.0  29.2  53.0         2      1        1 4.27 
-##  3    13    35 female  41.0  29.2  53.0         3      1        0 4.68 
-##  4    13    35 female  41.0  29.2  53.0         4      1        1 1.99 
-##  5    13    35 female  41.0  29.2  53.0         5      0        1 5.48 
-##  6    13    35 female  41.0  29.2  53.0         6      1        1 3.24 
-##  7    13    35 female  41.0  29.2  53.0         7      0        0 3.08 
-##  8    13    35 female  41.0  29.2  53.0         8      0        0 2.70 
-##  9    13    35 female  41.0  29.2  53.0         9      0        0 1.86 
-## 10    13    35 female  41.0  29.2  53.0        10      1        1 0.662
+##       id   age gender   q_1   q_2   q_3 trial_num is_old response      rt
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt;   &lt;dbl&gt;
+##  1    13    30 female  47.0  23.1  13.3         1      0        0 -0.0332
+##  2    13    30 female  47.0  23.1  13.3         2      0        1  2.52  
+##  3    13    30 female  47.0  23.1  13.3         3      1        1  1.71  
+##  4    13    30 female  47.0  23.1  13.3         4      0        0  4.09  
+##  5    13    30 female  47.0  23.1  13.3         5      0        0  0.110 
+##  6    13    30 female  47.0  23.1  13.3         6      1        0  4.08  
+##  7    13    30 female  47.0  23.1  13.3         7      1        1  0.494 
+##  8    13    30 female  47.0  23.1  13.3         8      1        1  0.573 
+##  9    13    30 female  47.0  23.1  13.3         9      0        1  2.67  
+## 10    13    30 female  47.0  23.1  13.3        10      1        1  2.67  
 ## # … with 40 more rows</code></pre>
 <p><code>filter()</code> takes logical statements with <code>&amp;</code> and <code>|</code> in them like you might use in bracket indexing.</p>
-<pre class="r"><code># would I ordinarily use a %in% call for this?
-# Yes I would, but this is just to show how the or operator | works here
-raw %&gt;%
-  filter(id == 13 | id == 17)</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># would I ordinarily use a %in% call for this?</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="co"># Yes I would, but this is just to show how the or operator | works here</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb27-4"><a href="#cb27-4"></a><span class="st">  </span><span class="kw">filter</span>(id <span class="op">==</span><span class="st"> </span><span class="dv">13</span> <span class="op">|</span><span class="st"> </span>id <span class="op">==</span><span class="st"> </span><span class="dv">17</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 100 x 10
-##       id   age gender   q_1   q_2   q_3 trial_num is_old response    rt
-##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1    13    35 female  41.0  29.2  53.0         1      0        1 4.86 
-##  2    13    35 female  41.0  29.2  53.0         2      1        1 4.27 
-##  3    13    35 female  41.0  29.2  53.0         3      1        0 4.68 
-##  4    13    35 female  41.0  29.2  53.0         4      1        1 1.99 
-##  5    13    35 female  41.0  29.2  53.0         5      0        1 5.48 
-##  6    13    35 female  41.0  29.2  53.0         6      1        1 3.24 
-##  7    13    35 female  41.0  29.2  53.0         7      0        0 3.08 
-##  8    13    35 female  41.0  29.2  53.0         8      0        0 2.70 
-##  9    13    35 female  41.0  29.2  53.0         9      0        0 1.86 
-## 10    13    35 female  41.0  29.2  53.0        10      1        1 0.662
+##       id   age gender   q_1   q_2   q_3 trial_num is_old response      rt
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt;   &lt;dbl&gt;
+##  1    13    30 female  47.0  23.1  13.3         1      0        0 -0.0332
+##  2    13    30 female  47.0  23.1  13.3         2      0        1  2.52  
+##  3    13    30 female  47.0  23.1  13.3         3      1        1  1.71  
+##  4    13    30 female  47.0  23.1  13.3         4      0        0  4.09  
+##  5    13    30 female  47.0  23.1  13.3         5      0        0  0.110 
+##  6    13    30 female  47.0  23.1  13.3         6      1        0  4.08  
+##  7    13    30 female  47.0  23.1  13.3         7      1        1  0.494 
+##  8    13    30 female  47.0  23.1  13.3         8      1        1  0.573 
+##  9    13    30 female  47.0  23.1  13.3         9      0        1  2.67  
+## 10    13    30 female  47.0  23.1  13.3        10      1        1  2.67  
 ## # … with 90 more rows</code></pre>
 <p><code>filter()</code> also has a nice feature: specifying separate logical statements as separate arguments, separated by commas, implicitly acts like chaining the statements together with <code>&amp;</code>, since the intersection of logical vectors is probably the most common use case for row subsetting.</p>
-<pre class="r"><code>raw %&gt;%
-  select(id, age, gender, trial_num, is_old, response, rt) %&gt;%
-  filter(id == 13, is_old == 1)</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="st">  </span><span class="kw">select</span>(id, age, gender, trial_num, is_old, response, rt) <span class="op">%&gt;%</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a><span class="st">  </span><span class="kw">filter</span>(id <span class="op">==</span><span class="st"> </span><span class="dv">13</span>, is_old <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 25 x 7
-##       id   age gender trial_num is_old response     rt
-##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;    &lt;int&gt;  &lt;dbl&gt;
-##  1    13    35 female         2      1        1  4.27 
-##  2    13    35 female         3      1        0  4.68 
-##  3    13    35 female         4      1        1  1.99 
-##  4    13    35 female         6      1        1  3.24 
-##  5    13    35 female        10      1        1  0.662
-##  6    13    35 female        14      1        1 -0.328
-##  7    13    35 female        17      1        1  2.27 
-##  8    13    35 female        18      1        1  2.75 
-##  9    13    35 female        26      1        1  2.30 
-## 10    13    35 female        27      1        1  1.25 
+##       id   age gender trial_num is_old response    rt
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
+##  1    13    30 female         3      1        1 1.71 
+##  2    13    30 female         6      1        0 4.08 
+##  3    13    30 female         7      1        1 0.494
+##  4    13    30 female         8      1        1 0.573
+##  5    13    30 female        10      1        1 2.67 
+##  6    13    30 female        12      1        1 2.70 
+##  7    13    30 female        13      1        1 5.38 
+##  8    13    30 female        14      1        0 4.17 
+##  9    13    30 female        18      1        1 0.899
+## 10    13    30 female        19      1        1 3.03 
 ## # … with 15 more rows</code></pre>
 </div>
 <div id="subsetting-rows-by-position" class="section level3">
 <h3>Subsetting rows by position</h3>
 <p>Should you find this necessary, you can subset rows by numeric index using <code>dplyr::slice()</code>. It takes any numeric vector of valid indices as input.</p>
-<pre class="r"><code>raw %&gt;%
-  slice(351:360)</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="st">  </span><span class="kw">slice</span>(<span class="dv">351</span><span class="op">:</span><span class="dv">360</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 10 x 10
 ##       id   age gender   q_1   q_2   q_3 trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1     8    34 female  27.2  21.6  33.9         1      1        0 0.519
-##  2     8    34 female  27.2  21.6  33.9         2      0        1 5.78 
-##  3     8    34 female  27.2  21.6  33.9         3      1        1 1.67 
-##  4     8    34 female  27.2  21.6  33.9         4      0        1 2.29 
-##  5     8    34 female  27.2  21.6  33.9         5      1        1 2.24 
-##  6     8    34 female  27.2  21.6  33.9         6      1        1 3.89 
-##  7     8    34 female  27.2  21.6  33.9         7      0        1 5.32 
-##  8     8    34 female  27.2  21.6  33.9         8      1        1 2.33 
-##  9     8    34 female  27.2  21.6  33.9         9      1        0 2.60 
-## 10     8    34 female  27.2  21.6  33.9        10      0        1 2.60</code></pre>
+##  1     8    27 female  17.9  39.8  31.2         1      0        0 2.92 
+##  2     8    27 female  17.9  39.8  31.2         2      1        0 3.10 
+##  3     8    27 female  17.9  39.8  31.2         3      0        0 0.697
+##  4     8    27 female  17.9  39.8  31.2         4      1        0 3.58 
+##  5     8    27 female  17.9  39.8  31.2         5      1        0 1.98 
+##  6     8    27 female  17.9  39.8  31.2         6      1        0 1.33 
+##  7     8    27 female  17.9  39.8  31.2         7      1        1 0.605
+##  8     8    27 female  17.9  39.8  31.2         8      1        0 1.34 
+##  9     8    27 female  17.9  39.8  31.2         9      1        0 2.96 
+## 10     8    27 female  17.9  39.8  31.2        10      1        0 2.99</code></pre>
 </div>
 <div id="getting-only-uniqueun-duplicated-rows" class="section level3">
 <h3>Getting only unique/un-duplicated rows</h3>
 <p>Another function that technically “subsets” data, but not logically: <code>distinct()</code> is the <code>dplyr</code> function for removing rows with duplicate observations.</p>
-<pre class="r"><code>raw %&gt;%
-  # First, I&#39;m removing columns with trialwise observations so that all remaining values are in fact duplicated
-  select(id, gender, age) %&gt;%
-  # the .keep_all argument specifies whether to drop columns that aren&#39;t being distinct-ed by
-  distinct(id, .keep_all = TRUE)</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="st">  </span><span class="co"># First, I&#39;m removing columns with trialwise observations so that all remaining values are in fact duplicated</span></span>
+<span id="cb33-3"><a href="#cb33-3"></a><span class="st">  </span><span class="kw">select</span>(id, gender, age) <span class="op">%&gt;%</span></span>
+<span id="cb33-4"><a href="#cb33-4"></a><span class="st">  </span><span class="co"># the .keep_all argument specifies whether to drop columns that aren&#39;t being distinct-ed by</span></span>
+<span id="cb33-5"><a href="#cb33-5"></a><span class="st">  </span><span class="kw">distinct</span>(id, <span class="dt">.keep_all =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 20 x 3
 ##       id gender   age
 ##    &lt;int&gt; &lt;chr&gt;  &lt;int&gt;
-##  1     1 female    21
-##  2     2 female    27
-##  3     3 male      35
-##  4     4 female    18
-##  5     5 female    26
-##  6     6 female    35
-##  7     7 female    20
-##  8     8 female    34
-##  9     9 female    28
-## 10    10 male      18
-## 11    11 male      21
-## 12    12 male      33
-## 13    13 female    35
-## 14    14 male      26
-## 15    15 female    18
-## 16    16 male      25
-## 17    17 male      30
-## 18    18 female    22
-## 19    19 female    25
-## 20    20 female    20</code></pre>
+##  1     1 male      22
+##  2     2 female    25
+##  3     3 female    30
+##  4     4 female    25
+##  5     5 male      28
+##  6     6 male      26
+##  7     7 male      34
+##  8     8 female    27
+##  9     9 male      28
+## 10    10 male      35
+## 11    11 female    29
+## 12    12 female    23
+## 13    13 female    30
+## 14    14 male      35
+## 15    15 male      22
+## 16    16 female    20
+## 17    17 male      18
+## 18    18 female    31
+## 19    19 female    20
+## 20    20 male      21</code></pre>
 <p>You can, of course, call <code>distinct()</code> on multiple columns, which will retain every unique combination of values in said columns once.</p>
-<pre class="r"><code>raw %&gt;%
-  # note that all other columns are now DROPPED
-  distinct(gender, age)</code></pre>
-<pre><code>## # A tibble: 17 x 2
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a><span class="st">  </span><span class="co"># note that all other columns are now DROPPED</span></span>
+<span id="cb35-3"><a href="#cb35-3"></a><span class="st">  </span><span class="kw">distinct</span>(gender, age)</span></code></pre></div>
+<pre><code>## # A tibble: 14 x 2
 ##      age gender
 ##    &lt;int&gt; &lt;chr&gt; 
-##  1    21 female
-##  2    27 female
-##  3    35 male  
-##  4    18 female
-##  5    26 female
-##  6    35 female
-##  7    20 female
-##  8    34 female
-##  9    28 female
-## 10    18 male  
-## 11    21 male  
-## 12    33 male  
-## 13    26 male  
-## 14    25 male  
-## 15    30 male  
-## 16    22 female
-## 17    25 female</code></pre>
+##  1    22 male  
+##  2    25 female
+##  3    30 female
+##  4    28 male  
+##  5    26 male  
+##  6    34 male  
+##  7    27 female
+##  8    35 male  
+##  9    29 female
+## 10    23 female
+## 11    20 female
+## 12    18 male  
+## 13    31 female
+## 14    21 male</code></pre>
 </div>
 <div id="subsetting-random-rows" class="section level3">
 <h3>Subsetting random rows</h3>
 <p>This is something you might need to do on occasion. For example, sometimes when I want to plot single-subject data for just a few subjects from a dataset, I want to select a random subset of subjects so I’m not always just looking at the subjects who happened to be at the top of the df for whatever reason.</p>
 <p><code>dplyr</code> contains the functions <code>sample_n()</code> and <code>sample_frac()</code>, which wrap <code>base::sample()</code> to let you quickly get a random subset of rows, specified either by number of rows to get or by fraction of total rows to get.</p>
 <p>Note that these work best if your df has one row per subject, because these behave a very particular way on <a href="#grouping">grouped dfs</a> (more on these later).</p>
-<pre class="r"><code>raw %&gt;%
-  # this will create a df with only one row per subject
-  distinct(id, gender, age) %&gt;%
-  sample_n(5)</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a><span class="st">  </span><span class="co"># this will create a df with only one row per subject</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a><span class="st">  </span><span class="kw">distinct</span>(id, gender, age) <span class="op">%&gt;%</span></span>
+<span id="cb37-4"><a href="#cb37-4"></a><span class="st">  </span><span class="kw">sample_n</span>(<span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 5 x 3
 ##      id   age gender
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt; 
-## 1     7    20 female
-## 2     9    28 female
-## 3    19    25 female
-## 4     4    18 female
-## 5     5    26 female</code></pre>
+## 1    13    30 female
+## 2     3    30 female
+## 3    17    18 male  
+## 4     6    26 male  
+## 5    19    20 female</code></pre>
 </div>
 </div>
 <div id="subsetting-by-row-and-column-simultaneously" class="section level2">
 <h2>Subsetting by row and column simultaneously</h2>
 <p>Thanks to the pipe <code>%&gt;%</code>, you can chain a <code>select()</code> call with a <code>filter()</code> (or otherwise) call to subset by row and by column in the same command.</p>
 <p>In this case, order doesn’t super matter, so it’s a matter of personal preference as to which you ought to call first. I would generally recommend putting all renaming calls (if you are renaming any columns) as early as possible to allow the rest of the code to be consistent with itself re: column names.</p>
-<pre class="r"><code>raw %&gt;%
-  select(id, age, gender, trial_num, is_old, response, rt) %&gt;%
-  filter(id == 13)</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a><span class="st">  </span><span class="kw">select</span>(id, age, gender, trial_num, is_old, response, rt) <span class="op">%&gt;%</span></span>
+<span id="cb39-3"><a href="#cb39-3"></a><span class="st">  </span><span class="kw">filter</span>(id <span class="op">==</span><span class="st"> </span><span class="dv">13</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 50 x 7
-##       id   age gender trial_num is_old response    rt
-##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1    13    35 female         1      0        1 4.86 
-##  2    13    35 female         2      1        1 4.27 
-##  3    13    35 female         3      1        0 4.68 
-##  4    13    35 female         4      1        1 1.99 
-##  5    13    35 female         5      0        1 5.48 
-##  6    13    35 female         6      1        1 3.24 
-##  7    13    35 female         7      0        0 3.08 
-##  8    13    35 female         8      0        0 2.70 
-##  9    13    35 female         9      0        0 1.86 
-## 10    13    35 female        10      1        1 0.662
+##       id   age gender trial_num is_old response      rt
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;    &lt;int&gt;   &lt;dbl&gt;
+##  1    13    30 female         1      0        0 -0.0332
+##  2    13    30 female         2      0        1  2.52  
+##  3    13    30 female         3      1        1  1.71  
+##  4    13    30 female         4      0        0  4.09  
+##  5    13    30 female         5      0        0  0.110 
+##  6    13    30 female         6      1        0  4.08  
+##  7    13    30 female         7      1        1  0.494 
+##  8    13    30 female         8      1        1  0.573 
+##  9    13    30 female         9      0        1  2.67  
+## 10    13    30 female        10      1        1  2.67  
 ## # … with 40 more rows</code></pre>
 </div>
 </div>
@@ -511,23 +572,23 @@ raw %&gt;%
 <h2>Creating/modifying columns</h2>
 <p><code>dplyr::mutate()</code> will be your workhorse function for creating new columns or modifying existing ones in a df.</p>
 <p>Inside of every <code>mutate()</code> call, as with previous <code>tidyverse</code> functions, column names are fed in as symbols (like variables, without quotes) without needing to $ index them from the parent df every time.</p>
-<pre class="r"><code>raw %&gt;%
-  # just to make the output narrower
-  select(-starts_with(&quot;q&quot;)) %&gt;%
-  mutate(rt_ms = round(rt * 1000))</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a><span class="st">  </span><span class="co"># just to make the output narrower</span></span>
+<span id="cb41-3"><a href="#cb41-3"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">starts_with</span>(<span class="st">&quot;q&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb41-4"><a href="#cb41-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rt_ms =</span> <span class="kw">round</span>(rt <span class="op">*</span><span class="st"> </span><span class="dv">1000</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 8
 ##       id   age gender trial_num is_old response    rt rt_ms
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1     1    21 female         1      1        1  3.19  3186
-##  2     1    21 female         2      1        1  1.99  1987
-##  3     1    21 female         3      0        0  4.68  4678
-##  4     1    21 female         4      1        1  3.46  3456
-##  5     1    21 female         5      0        0  4.09  4085
-##  6     1    21 female         6      0        0  3.65  3648
-##  7     1    21 female         7      1        1  3.85  3850
-##  8     1    21 female         8      0        0  2.96  2958
-##  9     1    21 female         9      0        1  3.75  3753
-## 10     1    21 female        10      0        0  2.94  2937
+##  1     1    22 male           1      1        0  5.46  5458
+##  2     1    22 male           2      1        1  4.54  4539
+##  3     1    22 male           3      0        0  3.85  3851
+##  4     1    22 male           4      0        1  1.43  1432
+##  5     1    22 male           5      1        1  4.82  4817
+##  6     1    22 male           6      1        1  4.71  4712
+##  7     1    22 male           7      1        1  6.61  6607
+##  8     1    22 male           8      0        0  3.17  3174
+##  9     1    22 male           9      1        1  3.65  3651
+## 10     1    22 male          10      0        0  1.94  1937
 ## # … with 990 more rows</code></pre>
 <p>You can do anything inside a <code>mutate()</code> call that:</p>
 <ul>
@@ -536,39 +597,39 @@ raw %&gt;%
 <li>returns a vector of the same length as the total number of rows</li>
 </ul>
 <p>Like <code>tibble()</code> for creating tibbles, <code>mutate()</code> will <em>not</em> recycle vectors longer than 1 but shorter than the input df. I like this behavior, as it has protected me on many occasions from creating columns that didn’t contain what I meant them to! If you do have a vector that you WANT recycled into a column, I would feed that vector into <code>rep()</code> so that you can explicitly create an output vector of the right length.</p>
-<pre class="r"><code># This won&#39;t run
-raw %&gt;%
-  distinct(id, gender, age) %&gt;%
-  mutate(group = c(&quot;treatment&quot;, &quot;control&quot;))</code></pre>
-<pre class="r"><code># This will run, because I&#39;ve wrapped the offending vector in rep() to force it to be the right length
-# you can use any of the rep() args to control the length of the output vector
-# I&#39;ll explain n() in a little bit also
-raw %&gt;%
-  distinct(id, gender, age) %&gt;%
-  mutate(group = rep(c(&quot;treatment&quot;, &quot;control&quot;), length.out = n()))</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="co"># This won&#39;t run</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb43-3"><a href="#cb43-3"></a><span class="st">  </span><span class="kw">distinct</span>(id, gender, age) <span class="op">%&gt;%</span></span>
+<span id="cb43-4"><a href="#cb43-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">group =</span> <span class="kw">c</span>(<span class="st">&quot;treatment&quot;</span>, <span class="st">&quot;control&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="co"># This will run, because I&#39;ve wrapped the offending vector in rep() to force it to be the right length</span></span>
+<span id="cb44-2"><a href="#cb44-2"></a><span class="co"># you can use any of the rep() args to control the length of the output vector</span></span>
+<span id="cb44-3"><a href="#cb44-3"></a><span class="co"># I&#39;ll explain n() in a little bit also</span></span>
+<span id="cb44-4"><a href="#cb44-4"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb44-5"><a href="#cb44-5"></a><span class="st">  </span><span class="kw">distinct</span>(id, gender, age) <span class="op">%&gt;%</span></span>
+<span id="cb44-6"><a href="#cb44-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">group =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;treatment&quot;</span>, <span class="st">&quot;control&quot;</span>), <span class="dt">length.out =</span> <span class="kw">n</span>()))</span></code></pre></div>
 <pre><code>## # A tibble: 20 x 4
 ##       id   age gender group    
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;    
-##  1     1    21 female treatment
-##  2     2    27 female control  
-##  3     3    35 male   treatment
-##  4     4    18 female control  
-##  5     5    26 female treatment
-##  6     6    35 female control  
-##  7     7    20 female treatment
-##  8     8    34 female control  
-##  9     9    28 female treatment
-## 10    10    18 male   control  
-## 11    11    21 male   treatment
-## 12    12    33 male   control  
-## 13    13    35 female treatment
-## 14    14    26 male   control  
-## 15    15    18 female treatment
-## 16    16    25 male   control  
-## 17    17    30 male   treatment
-## 18    18    22 female control  
-## 19    19    25 female treatment
-## 20    20    20 female control</code></pre>
+##  1     1    22 male   treatment
+##  2     2    25 female control  
+##  3     3    30 female treatment
+##  4     4    25 female control  
+##  5     5    28 male   treatment
+##  6     6    26 male   control  
+##  7     7    34 male   treatment
+##  8     8    27 female control  
+##  9     9    28 male   treatment
+## 10    10    35 male   control  
+## 11    11    29 female treatment
+## 12    12    23 female control  
+## 13    13    30 female treatment
+## 14    14    35 male   control  
+## 15    15    22 male   treatment
+## 16    16    20 female control  
+## 17    17    18 male   treatment
+## 18    18    31 female control  
+## 19    19    20 female treatment
+## 20    20    21 male   control</code></pre>
 <div id="nice-helpers" class="section level3">
 <h3>Nice helpers</h3>
 <p>This section features a bunch of handy functions you can use inside <code>mutate()</code> (but not exclusively! they work on any old vector too) to do all sorts of magical things. Again, this is not an exhaustive walkthrough of all the tidy functions you might find useful–this is a limited subset of functions/cases that I find myself running into regularly.</p>
@@ -576,23 +637,23 @@ raw %&gt;%
 <h4>n()</h4>
 <p><code>n()</code> is a shortcut (only usable inside other tidyverse functions, alas) that returns the number of rows in the current df. I find it a lot safer than using <code>length(my_df)</code> inside of calls operating on <code>my_df</code> (for example).</p>
 <p>You can call it inside of other functions inside of <code>mutate()</code> as well.</p>
-<pre class="r"><code>raw %&gt;%
-  # again, to make the print output narrower
-  select(-starts_with(&quot;q&quot;)) %&gt;%
-  mutate(nrows = n())</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb46-2"><a href="#cb46-2"></a><span class="st">  </span><span class="co"># again, to make the print output narrower</span></span>
+<span id="cb46-3"><a href="#cb46-3"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">starts_with</span>(<span class="st">&quot;q&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb46-4"><a href="#cb46-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">nrows =</span> <span class="kw">n</span>())</span></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 8
 ##       id   age gender trial_num is_old response    rt nrows
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
-##  1     1    21 female         1      1        1  3.19  1000
-##  2     1    21 female         2      1        1  1.99  1000
-##  3     1    21 female         3      0        0  4.68  1000
-##  4     1    21 female         4      1        1  3.46  1000
-##  5     1    21 female         5      0        0  4.09  1000
-##  6     1    21 female         6      0        0  3.65  1000
-##  7     1    21 female         7      1        1  3.85  1000
-##  8     1    21 female         8      0        0  2.96  1000
-##  9     1    21 female         9      0        1  3.75  1000
-## 10     1    21 female        10      0        0  2.94  1000
+##  1     1    22 male           1      1        0  5.46  1000
+##  2     1    22 male           2      1        1  4.54  1000
+##  3     1    22 male           3      0        0  3.85  1000
+##  4     1    22 male           4      0        1  1.43  1000
+##  5     1    22 male           5      1        1  4.82  1000
+##  6     1    22 male           6      1        1  4.71  1000
+##  7     1    22 male           7      1        1  6.61  1000
+##  8     1    22 male           8      0        0  3.17  1000
+##  9     1    22 male           9      1        1  3.65  1000
+## 10     1    22 male          10      0        0  1.94  1000
 ## # … with 990 more rows</code></pre>
 <p>Observe that the value of the column <code>nrows</code> is equal to the number of rows reported in the tibble output. You can use this number for all sorts of stuff–I frequently find myself creating a helper column in my dfs with the row index, by doing something like <code>my_df %&gt;% mutate(index = 1:n())</code>.</p>
 </div>
@@ -602,341 +663,341 @@ raw %&gt;%
 <p>It has a particular syntax: the <em>old</em> values must be <em>argument names</em> (on the left of the <code>=</code>) and formatted as bare variable names, and the <em>new</em> values can be specified as strings or numbers respectively.</p>
 <p>As with other functions in the tidyverse, <code>recode()</code> won’t let you try to put substitute values of different data types inside of it–all new values must be the same type.</p>
 <p>You also don’t have to replace every existing value (you can leave values the way they are by just not listing them in the <code>recode()</code> call), but again, all values in the output vector must be the same data type.</p>
-<pre class="r"><code>raw %&gt;%
-  mutate(gender = recode(gender,
-                         male = &quot;M&quot;,
-                         female = &quot;F&quot;))</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb48-2"><a href="#cb48-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">gender =</span> <span class="kw">recode</span>(gender,</span>
+<span id="cb48-3"><a href="#cb48-3"></a>                         <span class="dt">male =</span> <span class="st">&quot;M&quot;</span>,</span>
+<span id="cb48-4"><a href="#cb48-4"></a>                         <span class="dt">female =</span> <span class="st">&quot;F&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 10
 ##       id   age gender   q_1   q_2   q_3 trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1     1    21 F       21.4  26.7  30.7         1      1        1  3.19
-##  2     1    21 F       21.4  26.7  30.7         2      1        1  1.99
-##  3     1    21 F       21.4  26.7  30.7         3      0        0  4.68
-##  4     1    21 F       21.4  26.7  30.7         4      1        1  3.46
-##  5     1    21 F       21.4  26.7  30.7         5      0        0  4.09
-##  6     1    21 F       21.4  26.7  30.7         6      0        0  3.65
-##  7     1    21 F       21.4  26.7  30.7         7      1        1  3.85
-##  8     1    21 F       21.4  26.7  30.7         8      0        0  2.96
-##  9     1    21 F       21.4  26.7  30.7         9      0        1  3.75
-## 10     1    21 F       21.4  26.7  30.7        10      0        0  2.94
+##  1     1    22 M       11.1  32.4  34.6         1      1        0  5.46
+##  2     1    22 M       11.1  32.4  34.6         2      1        1  4.54
+##  3     1    22 M       11.1  32.4  34.6         3      0        0  3.85
+##  4     1    22 M       11.1  32.4  34.6         4      0        1  1.43
+##  5     1    22 M       11.1  32.4  34.6         5      1        1  4.82
+##  6     1    22 M       11.1  32.4  34.6         6      1        1  4.71
+##  7     1    22 M       11.1  32.4  34.6         7      1        1  6.61
+##  8     1    22 M       11.1  32.4  34.6         8      0        0  3.17
+##  9     1    22 M       11.1  32.4  34.6         9      1        1  3.65
+## 10     1    22 M       11.1  32.4  34.6        10      0        0  1.94
 ## # … with 990 more rows</code></pre>
 <p>Note that to call <code>recode()</code> on a numeric, or otherwise not variable-name-safe, input vector, you have to use backtick `` quotes to force the non-variable-able values to render as variables.</p>
-<pre class="r"><code>raw %&gt;%
-  mutate(is_old = recode(is_old,
-                         `1` = &quot;old&quot;,
-                         `0` = &quot;new&quot;))</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb50-2"><a href="#cb50-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">is_old =</span> <span class="kw">recode</span>(is_old,</span>
+<span id="cb50-3"><a href="#cb50-3"></a>                         <span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> &quot;old&quot;</span>,</span>
+<span id="cb50-4"><a href="#cb50-4"></a>                         <span class="st">`</span><span class="dt">0</span><span class="st">`</span> =<span class="st"> &quot;new&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 10
 ##       id   age gender   q_1   q_2   q_3 trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;dbl&gt;
-##  1     1    21 female  21.4  26.7  30.7         1 old           1  3.19
-##  2     1    21 female  21.4  26.7  30.7         2 old           1  1.99
-##  3     1    21 female  21.4  26.7  30.7         3 new           0  4.68
-##  4     1    21 female  21.4  26.7  30.7         4 old           1  3.46
-##  5     1    21 female  21.4  26.7  30.7         5 new           0  4.09
-##  6     1    21 female  21.4  26.7  30.7         6 new           0  3.65
-##  7     1    21 female  21.4  26.7  30.7         7 old           1  3.85
-##  8     1    21 female  21.4  26.7  30.7         8 new           0  2.96
-##  9     1    21 female  21.4  26.7  30.7         9 new           1  3.75
-## 10     1    21 female  21.4  26.7  30.7        10 new           0  2.94
+##  1     1    22 male    11.1  32.4  34.6         1 old           0  5.46
+##  2     1    22 male    11.1  32.4  34.6         2 old           1  4.54
+##  3     1    22 male    11.1  32.4  34.6         3 new           0  3.85
+##  4     1    22 male    11.1  32.4  34.6         4 new           1  1.43
+##  5     1    22 male    11.1  32.4  34.6         5 old           1  4.82
+##  6     1    22 male    11.1  32.4  34.6         6 old           1  4.71
+##  7     1    22 male    11.1  32.4  34.6         7 old           1  6.61
+##  8     1    22 male    11.1  32.4  34.6         8 new           0  3.17
+##  9     1    22 male    11.1  32.4  34.6         9 old           1  3.65
+## 10     1    22 male    11.1  32.4  34.6        10 new           0  1.94
 ## # … with 990 more rows</code></pre>
 </div>
 <div id="if_else-and-case_when" class="section level4">
 <h4>if_else() and case_when()</h4>
 <p><code>dplyr::if_else()</code> (again, observe the underscore in the function name) is a stricter &amp; faster version of <code>base::ifelse()</code>, your workhorse conditional vector modifying function. In line with the tidy way, <code>if_else()</code> will yell at you if your values for <code>true</code> and <code>false</code> aren’t the same data type, to try to protect you from accidental data typing disaster.</p>
-<pre class="r"><code>raw %&gt;%
-  distinct(id, age, gender) %&gt;%
-  # I know being over 30 isn&#39;t OLD. Just for illustration!
-  mutate(age_bin = if_else(age &gt;= 30,
-                           &quot;old&quot;,
-                           &quot;young&quot;))</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb52-2"><a href="#cb52-2"></a><span class="st">  </span><span class="kw">distinct</span>(id, age, gender) <span class="op">%&gt;%</span></span>
+<span id="cb52-3"><a href="#cb52-3"></a><span class="st">  </span><span class="co"># I know being over 30 isn&#39;t OLD. Just for illustration!</span></span>
+<span id="cb52-4"><a href="#cb52-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age_bin =</span> <span class="kw">if_else</span>(age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">30</span>,</span>
+<span id="cb52-5"><a href="#cb52-5"></a>                           <span class="st">&quot;old&quot;</span>,</span>
+<span id="cb52-6"><a href="#cb52-6"></a>                           <span class="st">&quot;young&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 20 x 4
 ##       id   age gender age_bin
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;  
-##  1     1    21 female young  
-##  2     2    27 female young  
-##  3     3    35 male   old    
-##  4     4    18 female young  
-##  5     5    26 female young  
-##  6     6    35 female old    
-##  7     7    20 female young  
-##  8     8    34 female old    
-##  9     9    28 female young  
-## 10    10    18 male   young  
-## 11    11    21 male   young  
-## 12    12    33 male   old    
-## 13    13    35 female old    
-## 14    14    26 male   young  
-## 15    15    18 female young  
-## 16    16    25 male   young  
-## 17    17    30 male   old    
-## 18    18    22 female young  
-## 19    19    25 female young  
-## 20    20    20 female young</code></pre>
+##  1     1    22 male   young  
+##  2     2    25 female young  
+##  3     3    30 female old    
+##  4     4    25 female young  
+##  5     5    28 male   young  
+##  6     6    26 male   young  
+##  7     7    34 male   old    
+##  8     8    27 female young  
+##  9     9    28 male   young  
+## 10    10    35 male   old    
+## 11    11    29 female young  
+## 12    12    23 female young  
+## 13    13    30 female old    
+## 14    14    35 male   old    
+## 15    15    22 male   young  
+## 16    16    20 female young  
+## 17    17    18 male   young  
+## 18    18    31 female old    
+## 19    19    20 female young  
+## 20    20    21 male   young</code></pre>
 <p><code>dplyr::case_when()</code> is a function that lets you create a vector based on a switch statement. A switch statement is essentially a neater if-else if-else if-… statement, that lets you specify a series of conditions, one of which you’d expect to be true for each piece of data going in.</p>
 <p>Notice the particular syntax that <code>case_when()</code> expects to let it do its job: the logical statement is specified on the left, then a tilde <code>~</code>, then the desired output value on the right. The last logical statement, <code>TRUE ~ ...</code>, functions as a final “else” statement in this large if-else chain, which assigns a default output to any values that aren’t <code>TRUE</code> for any other conditions in the statement. I like to have the final case either be <code>NA</code>, or the existing value of the old vector (if overwriting an existing vector).</p>
 <p>Below is one of my common use cases for <code>case_when()</code>–to bin numeric values. (I prefer using this to <code>base::cut()</code> because I find that this reads much more cleanly to my eyes.)</p>
-<pre class="r"><code>raw %&gt;%
-  distinct(id, age, gender) %&gt;%
-  mutate(age_bin = case_when(age &gt;= 30 ~ &quot;old&quot;,
-                             age &gt; 22 &amp; age &lt; 30 ~ &quot;medium&quot;,
-                             age &lt;= 22 ~ &quot;young&quot;,
-                             TRUE ~ NA_character_))</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb54-2"><a href="#cb54-2"></a><span class="st">  </span><span class="kw">distinct</span>(id, age, gender) <span class="op">%&gt;%</span></span>
+<span id="cb54-3"><a href="#cb54-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age_bin =</span> <span class="kw">case_when</span>(age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">30</span> <span class="op">~</span><span class="st"> &quot;old&quot;</span>,</span>
+<span id="cb54-4"><a href="#cb54-4"></a>                             age <span class="op">&gt;</span><span class="st"> </span><span class="dv">22</span> <span class="op">&amp;</span><span class="st"> </span>age <span class="op">&lt;</span><span class="st"> </span><span class="dv">30</span> <span class="op">~</span><span class="st"> &quot;medium&quot;</span>,</span>
+<span id="cb54-5"><a href="#cb54-5"></a>                             age <span class="op">&lt;=</span><span class="st"> </span><span class="dv">22</span> <span class="op">~</span><span class="st"> &quot;young&quot;</span>,</span>
+<span id="cb54-6"><a href="#cb54-6"></a>                             <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="ot">NA_character_</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 20 x 4
 ##       id   age gender age_bin
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;  
-##  1     1    21 female young  
-##  2     2    27 female medium 
-##  3     3    35 male   old    
-##  4     4    18 female young  
-##  5     5    26 female medium 
-##  6     6    35 female old    
-##  7     7    20 female young  
-##  8     8    34 female old    
-##  9     9    28 female medium 
-## 10    10    18 male   young  
-## 11    11    21 male   young  
-## 12    12    33 male   old    
-## 13    13    35 female old    
-## 14    14    26 male   medium 
-## 15    15    18 female young  
-## 16    16    25 male   medium 
-## 17    17    30 male   old    
-## 18    18    22 female young  
-## 19    19    25 female medium 
-## 20    20    20 female young</code></pre>
+##  1     1    22 male   young  
+##  2     2    25 female medium 
+##  3     3    30 female old    
+##  4     4    25 female medium 
+##  5     5    28 male   medium 
+##  6     6    26 male   medium 
+##  7     7    34 male   old    
+##  8     8    27 female medium 
+##  9     9    28 male   medium 
+## 10    10    35 male   old    
+## 11    11    29 female medium 
+## 12    12    23 female medium 
+## 13    13    30 female old    
+## 14    14    35 male   old    
+## 15    15    22 male   young  
+## 16    16    20 female young  
+## 17    17    18 male   young  
+## 18    18    31 female old    
+## 19    19    20 female young  
+## 20    20    21 male   young</code></pre>
 <p><code>case_when()</code> lets you specify all manner of logical statements, so you can let your heart go wild!</p>
-<pre class="r"><code># You will probably never need this specific coding
-# This is just to show how you can have slightly more complex logical statements
-raw %&gt;%
-  distinct(id, age, gender) %&gt;%
-  mutate(age_gender = case_when(age &gt;= 30 &amp; gender == &quot;male&quot; ~ &quot;old male&quot;,
-                                age &gt;= 30 &amp; gender == &quot;female&quot; ~ &quot;old female&quot;,
-                                gender == &quot;female&quot; ~ &quot;female&quot;,
-                                TRUE ~ NA_character_))</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="co"># You will probably never need this specific coding</span></span>
+<span id="cb56-2"><a href="#cb56-2"></a><span class="co"># This is just to show how you can have slightly more complex logical statements</span></span>
+<span id="cb56-3"><a href="#cb56-3"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb56-4"><a href="#cb56-4"></a><span class="st">  </span><span class="kw">distinct</span>(id, age, gender) <span class="op">%&gt;%</span></span>
+<span id="cb56-5"><a href="#cb56-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age_gender =</span> <span class="kw">case_when</span>(age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">30</span> <span class="op">&amp;</span><span class="st"> </span>gender <span class="op">==</span><span class="st"> &quot;male&quot;</span> <span class="op">~</span><span class="st"> &quot;old male&quot;</span>,</span>
+<span id="cb56-6"><a href="#cb56-6"></a>                                age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">30</span> <span class="op">&amp;</span><span class="st"> </span>gender <span class="op">==</span><span class="st"> &quot;female&quot;</span> <span class="op">~</span><span class="st"> &quot;old female&quot;</span>,</span>
+<span id="cb56-7"><a href="#cb56-7"></a>                                gender <span class="op">==</span><span class="st"> &quot;female&quot;</span> <span class="op">~</span><span class="st"> &quot;female&quot;</span>,</span>
+<span id="cb56-8"><a href="#cb56-8"></a>                                <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="ot">NA_character_</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 20 x 4
 ##       id   age gender age_gender
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;     
-##  1     1    21 female female    
-##  2     2    27 female female    
-##  3     3    35 male   old male  
-##  4     4    18 female female    
-##  5     5    26 female female    
-##  6     6    35 female old female
-##  7     7    20 female female    
-##  8     8    34 female old female
-##  9     9    28 female female    
-## 10    10    18 male   &lt;NA&gt;      
-## 11    11    21 male   &lt;NA&gt;      
-## 12    12    33 male   old male  
-## 13    13    35 female old female
-## 14    14    26 male   &lt;NA&gt;      
-## 15    15    18 female female    
-## 16    16    25 male   &lt;NA&gt;      
-## 17    17    30 male   old male  
-## 18    18    22 female female    
-## 19    19    25 female female    
-## 20    20    20 female female</code></pre>
+##  1     1    22 male   &lt;NA&gt;      
+##  2     2    25 female female    
+##  3     3    30 female old female
+##  4     4    25 female female    
+##  5     5    28 male   &lt;NA&gt;      
+##  6     6    26 male   &lt;NA&gt;      
+##  7     7    34 male   old male  
+##  8     8    27 female female    
+##  9     9    28 male   &lt;NA&gt;      
+## 10    10    35 male   old male  
+## 11    11    29 female female    
+## 12    12    23 female female    
+## 13    13    30 female old female
+## 14    14    35 male   old male  
+## 15    15    22 male   &lt;NA&gt;      
+## 16    16    20 female female    
+## 17    17    18 male   &lt;NA&gt;      
+## 18    18    31 female old female
+## 19    19    20 female female    
+## 20    20    21 male   &lt;NA&gt;</code></pre>
 <p><strong>Important:</strong> <code>case_when()</code> evaluates its logical statements <em>in the order you specify them</em>, just like an if-else if statement. <strong>If you have some values for which multiple of your conditions are true, the values will be assigned to the first true condition listed in your statement.</strong> Observe the behavior of the following call, versus the one immediately above:</p>
-<pre class="r"><code># Now, ALL the values of age_gender where gender == &quot;female&quot; will be &quot;female&quot;,
-# because that condition was satisfied BEFORE the case_when() statement could check
-# the age &gt;= 30 &amp; gender == &quot;female&quot; statement
-raw %&gt;%
-  distinct(id, age, gender) %&gt;%
-  mutate(age_gender = case_when(gender == &quot;female&quot; ~ &quot;female&quot;,
-                                age &gt;= 30 &amp; gender == &quot;male&quot; ~ &quot;old male&quot;,
-                                age &gt;= 30 &amp; gender == &quot;female&quot; ~ &quot;old female&quot;,
-                                TRUE ~ NA_character_))</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="co"># Now, ALL the values of age_gender where gender == &quot;female&quot; will be &quot;female&quot;,</span></span>
+<span id="cb58-2"><a href="#cb58-2"></a><span class="co"># because that condition was satisfied BEFORE the case_when() statement could check</span></span>
+<span id="cb58-3"><a href="#cb58-3"></a><span class="co"># the age &gt;= 30 &amp; gender == &quot;female&quot; statement</span></span>
+<span id="cb58-4"><a href="#cb58-4"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb58-5"><a href="#cb58-5"></a><span class="st">  </span><span class="kw">distinct</span>(id, age, gender) <span class="op">%&gt;%</span></span>
+<span id="cb58-6"><a href="#cb58-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age_gender =</span> <span class="kw">case_when</span>(gender <span class="op">==</span><span class="st"> &quot;female&quot;</span> <span class="op">~</span><span class="st"> &quot;female&quot;</span>,</span>
+<span id="cb58-7"><a href="#cb58-7"></a>                                age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">30</span> <span class="op">&amp;</span><span class="st"> </span>gender <span class="op">==</span><span class="st"> &quot;male&quot;</span> <span class="op">~</span><span class="st"> &quot;old male&quot;</span>,</span>
+<span id="cb58-8"><a href="#cb58-8"></a>                                age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">30</span> <span class="op">&amp;</span><span class="st"> </span>gender <span class="op">==</span><span class="st"> &quot;female&quot;</span> <span class="op">~</span><span class="st"> &quot;old female&quot;</span>,</span>
+<span id="cb58-9"><a href="#cb58-9"></a>                                <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="ot">NA_character_</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 20 x 4
 ##       id   age gender age_gender
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;     
-##  1     1    21 female female    
-##  2     2    27 female female    
-##  3     3    35 male   old male  
-##  4     4    18 female female    
-##  5     5    26 female female    
-##  6     6    35 female female    
-##  7     7    20 female female    
-##  8     8    34 female female    
-##  9     9    28 female female    
-## 10    10    18 male   &lt;NA&gt;      
-## 11    11    21 male   &lt;NA&gt;      
-## 12    12    33 male   old male  
-## 13    13    35 female female    
-## 14    14    26 male   &lt;NA&gt;      
-## 15    15    18 female female    
-## 16    16    25 male   &lt;NA&gt;      
-## 17    17    30 male   old male  
-## 18    18    22 female female    
-## 19    19    25 female female    
-## 20    20    20 female female</code></pre>
+##  1     1    22 male   &lt;NA&gt;      
+##  2     2    25 female female    
+##  3     3    30 female female    
+##  4     4    25 female female    
+##  5     5    28 male   &lt;NA&gt;      
+##  6     6    26 male   &lt;NA&gt;      
+##  7     7    34 male   old male  
+##  8     8    27 female female    
+##  9     9    28 male   &lt;NA&gt;      
+## 10    10    35 male   old male  
+## 11    11    29 female female    
+## 12    12    23 female female    
+## 13    13    30 female female    
+## 14    14    35 male   old male  
+## 15    15    22 male   &lt;NA&gt;      
+## 16    16    20 female female    
+## 17    17    18 male   &lt;NA&gt;      
+## 18    18    31 female female    
+## 19    19    20 female female    
+## 20    20    21 male   &lt;NA&gt;</code></pre>
 <p>As long as you remember that <code>case_when()</code> statements check conditions sequentially, and you’re deliberate when you specify conditions that might simultaneously be true, you should be okay.</p>
 <p>By the way, notice that a <code>case_when()</code> statement for the case where every logical condition is testing for equality with <code>==</code> is equivalent to calling <code>recode()</code> to do the same thing.</p>
-<pre class="r"><code>raw %&gt;%
-  distinct(id, age, gender) %&gt;%
-  mutate(gender = case_when(gender == &quot;male&quot; ~ &quot;M&quot;,
-                            gender == &quot;female&quot; ~ &quot;F&quot;,
-                            TRUE ~ gender))</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb60-2"><a href="#cb60-2"></a><span class="st">  </span><span class="kw">distinct</span>(id, age, gender) <span class="op">%&gt;%</span></span>
+<span id="cb60-3"><a href="#cb60-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">gender =</span> <span class="kw">case_when</span>(gender <span class="op">==</span><span class="st"> &quot;male&quot;</span> <span class="op">~</span><span class="st"> &quot;M&quot;</span>,</span>
+<span id="cb60-4"><a href="#cb60-4"></a>                            gender <span class="op">==</span><span class="st"> &quot;female&quot;</span> <span class="op">~</span><span class="st"> &quot;F&quot;</span>,</span>
+<span id="cb60-5"><a href="#cb60-5"></a>                            <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span>gender))</span></code></pre></div>
 <pre><code>## # A tibble: 20 x 3
 ##       id   age gender
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt; 
-##  1     1    21 F     
-##  2     2    27 F     
-##  3     3    35 M     
-##  4     4    18 F     
-##  5     5    26 F     
-##  6     6    35 F     
-##  7     7    20 F     
-##  8     8    34 F     
-##  9     9    28 F     
-## 10    10    18 M     
-## 11    11    21 M     
-## 12    12    33 M     
-## 13    13    35 F     
-## 14    14    26 M     
-## 15    15    18 F     
-## 16    16    25 M     
-## 17    17    30 M     
-## 18    18    22 F     
-## 19    19    25 F     
-## 20    20    20 F</code></pre>
+##  1     1    22 M     
+##  2     2    25 F     
+##  3     3    30 F     
+##  4     4    25 F     
+##  5     5    28 M     
+##  6     6    26 M     
+##  7     7    34 M     
+##  8     8    27 F     
+##  9     9    28 M     
+## 10    10    35 M     
+## 11    11    29 F     
+## 12    12    23 F     
+## 13    13    30 F     
+## 14    14    35 M     
+## 15    15    22 M     
+## 16    16    20 F     
+## 17    17    18 M     
+## 18    18    31 F     
+## 19    19    20 F     
+## 20    20    21 M</code></pre>
 <p>The above <code>case_when()</code> call is equivalent to the following <code>recode()</code> call:</p>
-<pre class="r"><code>raw %&gt;%
-  distinct(id, age, gender) %&gt;%
-  mutate(gender = recode(gender,
-                         male = &quot;M&quot;,
-                         female = &quot;F&quot;))</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb62-2"><a href="#cb62-2"></a><span class="st">  </span><span class="kw">distinct</span>(id, age, gender) <span class="op">%&gt;%</span></span>
+<span id="cb62-3"><a href="#cb62-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">gender =</span> <span class="kw">recode</span>(gender,</span>
+<span id="cb62-4"><a href="#cb62-4"></a>                         <span class="dt">male =</span> <span class="st">&quot;M&quot;</span>,</span>
+<span id="cb62-5"><a href="#cb62-5"></a>                         <span class="dt">female =</span> <span class="st">&quot;F&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 20 x 3
 ##       id   age gender
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt; 
-##  1     1    21 F     
-##  2     2    27 F     
-##  3     3    35 M     
-##  4     4    18 F     
-##  5     5    26 F     
-##  6     6    35 F     
-##  7     7    20 F     
-##  8     8    34 F     
-##  9     9    28 F     
-## 10    10    18 M     
-## 11    11    21 M     
-## 12    12    33 M     
-## 13    13    35 F     
-## 14    14    26 M     
-## 15    15    18 F     
-## 16    16    25 M     
-## 17    17    30 M     
-## 18    18    22 F     
-## 19    19    25 F     
-## 20    20    20 F</code></pre>
+##  1     1    22 M     
+##  2     2    25 F     
+##  3     3    30 F     
+##  4     4    25 F     
+##  5     5    28 M     
+##  6     6    26 M     
+##  7     7    34 M     
+##  8     8    27 F     
+##  9     9    28 M     
+## 10    10    35 M     
+## 11    11    29 F     
+## 12    12    23 F     
+## 13    13    30 F     
+## 14    14    35 M     
+## 15    15    22 M     
+## 16    16    20 F     
+## 17    17    18 M     
+## 18    18    31 F     
+## 19    19    20 F     
+## 20    20    21 M</code></pre>
 <p>The <code>recode()</code> call is a lot less verbose. In the case where you can use <code>recode()</code> in place of <code>case_when()</code>, I recommend that. In situations where you need the full flexibility that <code>case_when()</code> affords you, then continue on your merry way!</p>
 </div>
 <div id="coalesce-and-na_if" class="section level4">
 <h4>coalesce() and na_if()</h4>
 <p>One thing you might find yourself doing a lot with <code>if_else()</code> calls is replacing values in a column with <code>NA</code>, or replacing <code>NA</code> values in a column with something else. <code>dplyr</code> helper functions are here to help you save a few keystrokes!</p>
 <p>To replace a particular value in a column with <code>NA</code>, use the aptly named <code>na_if()</code>.</p>
-<pre class="r"><code>raw %&gt;%
-  distinct(id, gender) %&gt;%
-  # In this example, I&#39;m saving the result into a new column,
-  # but you could easily overwrite the contents of an old column
-  mutate(female = na_if(gender, &quot;male&quot;))</code></pre>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb64-2"><a href="#cb64-2"></a><span class="st">  </span><span class="kw">distinct</span>(id, gender) <span class="op">%&gt;%</span></span>
+<span id="cb64-3"><a href="#cb64-3"></a><span class="st">  </span><span class="co"># In this example, I&#39;m saving the result into a new column,</span></span>
+<span id="cb64-4"><a href="#cb64-4"></a><span class="st">  </span><span class="co"># but you could easily overwrite the contents of an old column</span></span>
+<span id="cb64-5"><a href="#cb64-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">female =</span> <span class="kw">na_if</span>(gender, <span class="st">&quot;male&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 20 x 3
 ##       id gender female
 ##    &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; 
-##  1     1 female female
+##  1     1 male   &lt;NA&gt;  
 ##  2     2 female female
-##  3     3 male   &lt;NA&gt;  
+##  3     3 female female
 ##  4     4 female female
-##  5     5 female female
-##  6     6 female female
-##  7     7 female female
+##  5     5 male   &lt;NA&gt;  
+##  6     6 male   &lt;NA&gt;  
+##  7     7 male   &lt;NA&gt;  
 ##  8     8 female female
-##  9     9 female female
+##  9     9 male   &lt;NA&gt;  
 ## 10    10 male   &lt;NA&gt;  
-## 11    11 male   &lt;NA&gt;  
-## 12    12 male   &lt;NA&gt;  
+## 11    11 female female
+## 12    12 female female
 ## 13    13 female female
 ## 14    14 male   &lt;NA&gt;  
-## 15    15 female female
-## 16    16 male   &lt;NA&gt;  
+## 15    15 male   &lt;NA&gt;  
+## 16    16 female female
 ## 17    17 male   &lt;NA&gt;  
 ## 18    18 female female
 ## 19    19 female female
-## 20    20 female female</code></pre>
+## 20    20 male   &lt;NA&gt;</code></pre>
 <p>Bear in mind that <code>na_if()</code> is a specialized case of <code>if_else(column == value_to_remove, NA, column)</code>, and so you should use <code>if_else()</code> if you want to replace things using any comparison other than direct equality.</p>
 <p>To replace missing values in a column with non-missing values, use <code>coalesce()</code>. You can use this a few ways.</p>
 <p>First off, you can replace all missing values with the same new value.</p>
-<pre class="r"><code>raw %&gt;%
-  distinct(id, gender) %&gt;%
-  mutate(female = na_if(gender, &quot;male&quot;),
-         # See that I&#39;m calling coalesce() on the column with NAs I just created
-         gender2 = coalesce(female, &quot;male&quot;))</code></pre>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb66-2"><a href="#cb66-2"></a><span class="st">  </span><span class="kw">distinct</span>(id, gender) <span class="op">%&gt;%</span></span>
+<span id="cb66-3"><a href="#cb66-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">female =</span> <span class="kw">na_if</span>(gender, <span class="st">&quot;male&quot;</span>),</span>
+<span id="cb66-4"><a href="#cb66-4"></a>         <span class="co"># See that I&#39;m calling coalesce() on the column with NAs I just created</span></span>
+<span id="cb66-5"><a href="#cb66-5"></a>         <span class="dt">gender2 =</span> <span class="kw">coalesce</span>(female, <span class="st">&quot;male&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 20 x 4
 ##       id gender female gender2
 ##    &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  
-##  1     1 female female female 
+##  1     1 male   &lt;NA&gt;   male   
 ##  2     2 female female female 
-##  3     3 male   &lt;NA&gt;   male   
+##  3     3 female female female 
 ##  4     4 female female female 
-##  5     5 female female female 
-##  6     6 female female female 
-##  7     7 female female female 
+##  5     5 male   &lt;NA&gt;   male   
+##  6     6 male   &lt;NA&gt;   male   
+##  7     7 male   &lt;NA&gt;   male   
 ##  8     8 female female female 
-##  9     9 female female female 
+##  9     9 male   &lt;NA&gt;   male   
 ## 10    10 male   &lt;NA&gt;   male   
-## 11    11 male   &lt;NA&gt;   male   
-## 12    12 male   &lt;NA&gt;   male   
+## 11    11 female female female 
+## 12    12 female female female 
 ## 13    13 female female female 
 ## 14    14 male   &lt;NA&gt;   male   
-## 15    15 female female female 
-## 16    16 male   &lt;NA&gt;   male   
+## 15    15 male   &lt;NA&gt;   male   
+## 16    16 female female female 
 ## 17    17 male   &lt;NA&gt;   male   
 ## 18    18 female female female 
 ## 19    19 female female female 
-## 20    20 female female female</code></pre>
+## 20    20 male   &lt;NA&gt;   male</code></pre>
 <p>You can also use <code>coalesce()</code> to zip together a series of vectors, where every time one has a missing value the other one has a non-missing value.</p>
-<pre class="r"><code>raw %&gt;%
-  distinct(id, gender) %&gt;%
-  mutate(female = na_if(gender, &quot;male&quot;),
-         male = na_if(gender, &quot;female&quot;),
-         # notice that coalesce is being called on two columns,
-         # specified as bare variables
-         gender2 = coalesce(female, male))</code></pre>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb68-2"><a href="#cb68-2"></a><span class="st">  </span><span class="kw">distinct</span>(id, gender) <span class="op">%&gt;%</span></span>
+<span id="cb68-3"><a href="#cb68-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">female =</span> <span class="kw">na_if</span>(gender, <span class="st">&quot;male&quot;</span>),</span>
+<span id="cb68-4"><a href="#cb68-4"></a>         <span class="dt">male =</span> <span class="kw">na_if</span>(gender, <span class="st">&quot;female&quot;</span>),</span>
+<span id="cb68-5"><a href="#cb68-5"></a>         <span class="co"># notice that coalesce is being called on two columns,</span></span>
+<span id="cb68-6"><a href="#cb68-6"></a>         <span class="co"># specified as bare variables</span></span>
+<span id="cb68-7"><a href="#cb68-7"></a>         <span class="dt">gender2 =</span> <span class="kw">coalesce</span>(female, male))</span></code></pre></div>
 <pre><code>## # A tibble: 20 x 5
 ##       id gender female male  gender2
 ##    &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;  
-##  1     1 female female &lt;NA&gt;  female 
+##  1     1 male   &lt;NA&gt;   male  male   
 ##  2     2 female female &lt;NA&gt;  female 
-##  3     3 male   &lt;NA&gt;   male  male   
+##  3     3 female female &lt;NA&gt;  female 
 ##  4     4 female female &lt;NA&gt;  female 
-##  5     5 female female &lt;NA&gt;  female 
-##  6     6 female female &lt;NA&gt;  female 
-##  7     7 female female &lt;NA&gt;  female 
+##  5     5 male   &lt;NA&gt;   male  male   
+##  6     6 male   &lt;NA&gt;   male  male   
+##  7     7 male   &lt;NA&gt;   male  male   
 ##  8     8 female female &lt;NA&gt;  female 
-##  9     9 female female &lt;NA&gt;  female 
+##  9     9 male   &lt;NA&gt;   male  male   
 ## 10    10 male   &lt;NA&gt;   male  male   
-## 11    11 male   &lt;NA&gt;   male  male   
-## 12    12 male   &lt;NA&gt;   male  male   
+## 11    11 female female &lt;NA&gt;  female 
+## 12    12 female female &lt;NA&gt;  female 
 ## 13    13 female female &lt;NA&gt;  female 
 ## 14    14 male   &lt;NA&gt;   male  male   
-## 15    15 female female &lt;NA&gt;  female 
-## 16    16 male   &lt;NA&gt;   male  male   
+## 15    15 male   &lt;NA&gt;   male  male   
+## 16    16 female female &lt;NA&gt;  female 
 ## 17    17 male   &lt;NA&gt;   male  male   
 ## 18    18 female female &lt;NA&gt;  female 
 ## 19    19 female female &lt;NA&gt;  female 
-## 20    20 female female &lt;NA&gt;  female</code></pre>
+## 20    20 male   &lt;NA&gt;   male  male</code></pre>
 <p>Here’s a more explicit example of using <code>coalesce()</code> to zip together more than two vectors:</p>
-<pre class="r"><code>coalesce(c(1, NA, NA, NA, NA),
-         c(NA, NA, NA, NA, 5),
-         c(NA, NA, NA, 4, NA),
-         c(NA, NA, 3, NA, NA),
-         c(NA, 2, NA, NA, NA))</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a><span class="kw">coalesce</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>),</span>
+<span id="cb70-2"><a href="#cb70-2"></a>         <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">5</span>),</span>
+<span id="cb70-3"><a href="#cb70-3"></a>         <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">4</span>, <span class="ot">NA</span>),</span>
+<span id="cb70-4"><a href="#cb70-4"></a>         <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">3</span>, <span class="ot">NA</span>, <span class="ot">NA</span>),</span>
+<span id="cb70-5"><a href="#cb70-5"></a>         <span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">2</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>))</span></code></pre></div>
 <pre><code>## [1] 1 2 3 4 5</code></pre>
 <p>As with many other tidy functions, <code>coalesce()</code> obeys order, so if there are cases where more than one of your input vectors have a non-missing value, your output vector will take the value of the <em>first</em> vector with an non-missing value.</p>
-<pre class="r"><code>coalesce(c(1, NA, NA, NA, NA),
-         c(NA, 3, NA, NA, 5),
-         c(NA, NA, NA, 4, NA),
-         c(NA, NA, 3, NA, NA),
-         c(NA, 2, NA, NA, NA))</code></pre>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a><span class="kw">coalesce</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>),</span>
+<span id="cb72-2"><a href="#cb72-2"></a>         <span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">3</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">5</span>),</span>
+<span id="cb72-3"><a href="#cb72-3"></a>         <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">4</span>, <span class="ot">NA</span>),</span>
+<span id="cb72-4"><a href="#cb72-4"></a>         <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">3</span>, <span class="ot">NA</span>, <span class="ot">NA</span>),</span>
+<span id="cb72-5"><a href="#cb72-5"></a>         <span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">2</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>))</span></code></pre></div>
 <pre><code>## [1] 1 3 3 4 5</code></pre>
 </div>
 <div id="stringr" class="section level4">
@@ -952,28 +1013,28 @@ raw %&gt;%
 <p>What can you use to generate a summary statistic? In this case, <em>any function that operates on a vector (or multiple vectors) and returns a single value (length 1) as output.</em> Gotta be length 1!</p>
 <p>In <code>summarize()</code>, as in <code>mutate()</code>, the argument name will be the name of the new column generated by the code provided in the argument value.</p>
 <p>(If you DON’T specify the column name (by leaving the argument name empty), the code you provided to calculate the column will automatically be substituted in as the name for the column. Don’t do this…)</p>
-<pre class="r"><code># Just trying not to overload any function names
-summaries &lt;- raw %&gt;%
-  summarize(rt_mean = mean(rt),
-            rt_median = median(rt))
-
-summaries</code></pre>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a><span class="co"># Just trying not to overload any function names</span></span>
+<span id="cb74-2"><a href="#cb74-2"></a>summaries &lt;-<span class="st"> </span>raw <span class="op">%&gt;%</span></span>
+<span id="cb74-3"><a href="#cb74-3"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">rt_mean =</span> <span class="kw">mean</span>(rt),</span>
+<span id="cb74-4"><a href="#cb74-4"></a>            <span class="dt">rt_median =</span> <span class="kw">median</span>(rt))</span>
+<span id="cb74-5"><a href="#cb74-5"></a></span>
+<span id="cb74-6"><a href="#cb74-6"></a>summaries</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
 ##   rt_mean rt_median
 ##     &lt;dbl&gt;     &lt;dbl&gt;
-## 1    2.96      3.01</code></pre>
+## 1    2.99      2.99</code></pre>
 <div id="special-versions-of-summarize" class="section level3">
 <h3>Special versions of summarize()</h3>
 <p><code>summarize()</code> lets you custom-specify every summary statistic you want to calculate, which is very nice indeed. Sometimes, however, you may have cases where you would like to calculate the same statistic(s) on very many variables, and you wouldn’t like to type each of those out. We can handle this!</p>
 <p>The two functions I use most often for this purpose are <code>summarize_if()</code> and <code>summarize_at()</code>.</p>
 <p><code>summarize_if()</code> lets you specify summary functions, and then applies those functions to <em>every column in your starting df that meets some logical criteria.</em> For example, let’s say you want to calculate the mean and median of every column in a df that contains numeric data.</p>
-<pre class="r"><code># Creating one character column and three numeric columns so you can see that the character column shan&#39;t appear in the output of summarize_if()
-tibble(chars = letters[1:10],
-       nums1 = rnorm(10, mean = 0, sd = 1)) %&gt;%
-  mutate(nums2 = rnorm(n(), mean = 100, sd = 20),
-         nums3 = rnorm(n(), mean = 0, sd = 20)) %&gt;%
-  summarize_if(is.numeric, funs(avg = mean(.),
-                                median = median(.)))</code></pre>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a><span class="co"># Creating one character column and three numeric columns so you can see that the character column shan&#39;t appear in the output of summarize_if()</span></span>
+<span id="cb76-2"><a href="#cb76-2"></a><span class="kw">tibble</span>(<span class="dt">chars =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>],</span>
+<span id="cb76-3"><a href="#cb76-3"></a>       <span class="dt">nums1 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb76-4"><a href="#cb76-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">nums2 =</span> <span class="kw">rnorm</span>(<span class="kw">n</span>(), <span class="dt">mean =</span> <span class="dv">100</span>, <span class="dt">sd =</span> <span class="dv">20</span>),</span>
+<span id="cb76-5"><a href="#cb76-5"></a>         <span class="dt">nums3 =</span> <span class="kw">rnorm</span>(<span class="kw">n</span>(), <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">20</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb76-6"><a href="#cb76-6"></a><span class="st">  </span><span class="kw">summarize_if</span>(is.numeric, <span class="kw">funs</span>(<span class="dt">avg =</span> <span class="kw">mean</span>(.),</span>
+<span id="cb76-7"><a href="#cb76-7"></a>                                <span class="dt">median =</span> <span class="kw">median</span>(.)))</span></code></pre></div>
 <pre><code>## Warning: `funs()` is deprecated as of dplyr 0.8.0.
 ## Please use a list of either functions or lambdas: 
 ## 
@@ -990,35 +1051,35 @@ tibble(chars = letters[1:10],
 <pre><code>## # A tibble: 1 x 6
 ##   nums1_avg nums2_avg nums3_avg nums1_median nums2_median nums3_median
 ##       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
-## 1    -0.132      94.1      7.82      -0.0960         97.5         10.0</code></pre>
+## 1    0.0701      116.     0.967        0.173         121.         2.09</code></pre>
 <p>The first true argument of <code>summarize_if()</code> is <code>.predicate</code>, where you specify the tester function that should return <code>TRUE</code> or <code>FALSE</code> for every <strong>column</strong> in your starter df.</p>
 <p>The next argument is <code>.funs</code>, where you specify the summary function(s) you would like done to all of the columns for which <code>.predicate</code> returns <code>TRUE</code>. <code>dplyr</code> provides the helper function <code>funs()</code> to generate a list of function calls in the right format to be fed into <code>summarize_if()</code>. All you need is to specify the input function calls, each separated by a comma. The period <strong>.</strong> in the function calls represents “this df in which we are working”. This allows you to tell <code>tidyverse</code> functions which argument in your summary functions will receive the data from the starter df that’s being summarized. This is useful in cases where you have a summary function where the data isn’t the first argument; this way you can make sure the data to be summarized doesn’t get sent into the wrong argument and gum up the works.</p>
 <p>You can see that <code>funs()</code> allows you to name the function calls you enter inside it, and that <code>summarize_if()</code> automatically appends the provided names of functions to the output cols.</p>
 <p>The other specialty summarizing function, <code>summarize_at()</code>, does not use a logical predicate function to choose columns to summarize, but instead allows you to specify by name all the columns to summarize.</p>
 <p>Instead of specifying a function in <code>.predicate</code>, that argument is replaced with <code>.vars</code>, where you specify the variables you want. You can do this a couple of ways:</p>
 <p>With a character vector explicitly naming each column you want as a string:</p>
-<pre class="r"><code>tibble(chars = letters[1:10],
-       nums1 = rnorm(10, mean = 0, sd = 1)) %&gt;%
-  mutate(nums2 = rnorm(n(), mean = 100, sd = 20),
-         nums3 = rnorm(n(), mean = 0, sd = 20)) %&gt;%
-  summarize_at(c(&quot;nums1&quot;, &quot;nums2&quot;), funs(avg = mean(.),
-                                         median = median(.)))</code></pre>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1"></a><span class="kw">tibble</span>(<span class="dt">chars =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>],</span>
+<span id="cb79-2"><a href="#cb79-2"></a>       <span class="dt">nums1 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb79-3"><a href="#cb79-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">nums2 =</span> <span class="kw">rnorm</span>(<span class="kw">n</span>(), <span class="dt">mean =</span> <span class="dv">100</span>, <span class="dt">sd =</span> <span class="dv">20</span>),</span>
+<span id="cb79-4"><a href="#cb79-4"></a>         <span class="dt">nums3 =</span> <span class="kw">rnorm</span>(<span class="kw">n</span>(), <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">20</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb79-5"><a href="#cb79-5"></a><span class="st">  </span><span class="kw">summarize_at</span>(<span class="kw">c</span>(<span class="st">&quot;nums1&quot;</span>, <span class="st">&quot;nums2&quot;</span>), <span class="kw">funs</span>(<span class="dt">avg =</span> <span class="kw">mean</span>(.),</span>
+<span id="cb79-6"><a href="#cb79-6"></a>                                         <span class="dt">median =</span> <span class="kw">median</span>(.)))</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 4
 ##   nums1_avg nums2_avg nums1_median nums2_median
 ##       &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
-## 1    -0.265      96.8       -0.322         97.8</code></pre>
+## 1     0.291      89.3        0.336         81.9</code></pre>
 <p>With <code>tidyselect</code> helpers:</p>
-<pre class="r"><code>tibble(chars = letters[1:10],
-       nums1 = rnorm(10, mean = 0, sd = 1)) %&gt;%
-  mutate(nums2 = rnorm(n(), mean = 100, sd = 20),
-         # This one doesn&#39;t start with &quot;nums&quot; like the other two do, notice!
-         numbers3 = rnorm(n(), mean = 0, sd = 20)) %&gt;%
-  summarize_at(vars(starts_with(&quot;nums&quot;)), funs(avg = mean(.),
-                                               median = median(.)))</code></pre>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1"></a><span class="kw">tibble</span>(<span class="dt">chars =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>],</span>
+<span id="cb81-2"><a href="#cb81-2"></a>       <span class="dt">nums1 =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb81-3"><a href="#cb81-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">nums2 =</span> <span class="kw">rnorm</span>(<span class="kw">n</span>(), <span class="dt">mean =</span> <span class="dv">100</span>, <span class="dt">sd =</span> <span class="dv">20</span>),</span>
+<span id="cb81-4"><a href="#cb81-4"></a>         <span class="co"># This one doesn&#39;t start with &quot;nums&quot; like the other two do, notice!</span></span>
+<span id="cb81-5"><a href="#cb81-5"></a>         <span class="dt">numbers3 =</span> <span class="kw">rnorm</span>(<span class="kw">n</span>(), <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">20</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb81-6"><a href="#cb81-6"></a><span class="st">  </span><span class="kw">summarize_at</span>(<span class="kw">vars</span>(<span class="kw">starts_with</span>(<span class="st">&quot;nums&quot;</span>)), <span class="kw">funs</span>(<span class="dt">avg =</span> <span class="kw">mean</span>(.),</span>
+<span id="cb81-7"><a href="#cb81-7"></a>                                               <span class="dt">median =</span> <span class="kw">median</span>(.)))</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 4
 ##   nums1_avg nums2_avg nums1_median nums2_median
 ##       &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
-## 1    -0.292      96.9       -0.232         96.6</code></pre>
+## 1    -0.352      105.       -0.719         106.</code></pre>
 <p>Note that here, you have to wrap your <code>tidyselect</code> call (in this case <code>starts_with()</code>) inside a <code>vars()</code> call. <code>dplyr::vars()</code> is a helper function that lets you use <code>tidyselect</code> helper functions inside other <code>tidyverse</code> functions that aren’t <code>select()</code>.</p>
 </div>
 </div>
@@ -1026,60 +1087,60 @@ tibble(chars = letters[1:10],
 <h2>Grouping</h2>
 <p><code>dplyr</code> supports <em>grouping</em> within dfs/tibbles. This means that, if groups are defined in your df, all operations that in some way operate along the nrows of your df now operate <em>independently for each group.</em> Your df still looks the same, but this grouping metadata will affect the behavior of some other <code>dplyr</code> functions called on your data.</p>
 <p>To group your data, call <code>dplyr::group_by()</code>, listing the variable(s) you want to group by.</p>
-<pre class="r"><code># grouping by one variable
-raw %&gt;%
-  group_by(id)</code></pre>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1"></a><span class="co"># grouping by one variable</span></span>
+<span id="cb83-2"><a href="#cb83-2"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb83-3"><a href="#cb83-3"></a><span class="st">  </span><span class="kw">group_by</span>(id)</span></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 10
 ## # Groups:   id [20]
 ##       id   age gender   q_1   q_2   q_3 trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1     1    21 female  21.4  26.7  30.7         1      1        1  3.19
-##  2     1    21 female  21.4  26.7  30.7         2      1        1  1.99
-##  3     1    21 female  21.4  26.7  30.7         3      0        0  4.68
-##  4     1    21 female  21.4  26.7  30.7         4      1        1  3.46
-##  5     1    21 female  21.4  26.7  30.7         5      0        0  4.09
-##  6     1    21 female  21.4  26.7  30.7         6      0        0  3.65
-##  7     1    21 female  21.4  26.7  30.7         7      1        1  3.85
-##  8     1    21 female  21.4  26.7  30.7         8      0        0  2.96
-##  9     1    21 female  21.4  26.7  30.7         9      0        1  3.75
-## 10     1    21 female  21.4  26.7  30.7        10      0        0  2.94
+##  1     1    22 male    11.1  32.4  34.6         1      1        0  5.46
+##  2     1    22 male    11.1  32.4  34.6         2      1        1  4.54
+##  3     1    22 male    11.1  32.4  34.6         3      0        0  3.85
+##  4     1    22 male    11.1  32.4  34.6         4      0        1  1.43
+##  5     1    22 male    11.1  32.4  34.6         5      1        1  4.82
+##  6     1    22 male    11.1  32.4  34.6         6      1        1  4.71
+##  7     1    22 male    11.1  32.4  34.6         7      1        1  6.61
+##  8     1    22 male    11.1  32.4  34.6         8      0        0  3.17
+##  9     1    22 male    11.1  32.4  34.6         9      1        1  3.65
+## 10     1    22 male    11.1  32.4  34.6        10      0        0  1.94
 ## # … with 990 more rows</code></pre>
 <p>You can group by as many variables as you would like. Each group will be composed of the observations belonging to one of the unique combinations of grouping variable levels present in your data.</p>
-<pre class="r"><code>raw %&gt;%
-  group_by(id, is_old)</code></pre>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb85-2"><a href="#cb85-2"></a><span class="st">  </span><span class="kw">group_by</span>(id, is_old)</span></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 10
 ## # Groups:   id, is_old [40]
 ##       id   age gender   q_1   q_2   q_3 trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1     1    21 female  21.4  26.7  30.7         1      1        1  3.19
-##  2     1    21 female  21.4  26.7  30.7         2      1        1  1.99
-##  3     1    21 female  21.4  26.7  30.7         3      0        0  4.68
-##  4     1    21 female  21.4  26.7  30.7         4      1        1  3.46
-##  5     1    21 female  21.4  26.7  30.7         5      0        0  4.09
-##  6     1    21 female  21.4  26.7  30.7         6      0        0  3.65
-##  7     1    21 female  21.4  26.7  30.7         7      1        1  3.85
-##  8     1    21 female  21.4  26.7  30.7         8      0        0  2.96
-##  9     1    21 female  21.4  26.7  30.7         9      0        1  3.75
-## 10     1    21 female  21.4  26.7  30.7        10      0        0  2.94
+##  1     1    22 male    11.1  32.4  34.6         1      1        0  5.46
+##  2     1    22 male    11.1  32.4  34.6         2      1        1  4.54
+##  3     1    22 male    11.1  32.4  34.6         3      0        0  3.85
+##  4     1    22 male    11.1  32.4  34.6         4      0        1  1.43
+##  5     1    22 male    11.1  32.4  34.6         5      1        1  4.82
+##  6     1    22 male    11.1  32.4  34.6         6      1        1  4.71
+##  7     1    22 male    11.1  32.4  34.6         7      1        1  6.61
+##  8     1    22 male    11.1  32.4  34.6         8      0        0  3.17
+##  9     1    22 male    11.1  32.4  34.6         9      1        1  3.65
+## 10     1    22 male    11.1  32.4  34.6        10      0        0  1.94
 ## # … with 990 more rows</code></pre>
 <p>To remove grouping from your df, use <code>ungroup()</code>. No arguments needed!</p>
-<pre class="r"><code># Notice that the tibble output no longer tells you that groups are present in this df
-raw %&gt;%
-  group_by(id, is_old) %&gt;%
-  ungroup()</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1"></a><span class="co"># Notice that the tibble output no longer tells you that groups are present in this df</span></span>
+<span id="cb87-2"><a href="#cb87-2"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb87-3"><a href="#cb87-3"></a><span class="st">  </span><span class="kw">group_by</span>(id, is_old) <span class="op">%&gt;%</span></span>
+<span id="cb87-4"><a href="#cb87-4"></a><span class="st">  </span><span class="kw">ungroup</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 10
 ##       id   age gender   q_1   q_2   q_3 trial_num is_old response    rt
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
-##  1     1    21 female  21.4  26.7  30.7         1      1        1  3.19
-##  2     1    21 female  21.4  26.7  30.7         2      1        1  1.99
-##  3     1    21 female  21.4  26.7  30.7         3      0        0  4.68
-##  4     1    21 female  21.4  26.7  30.7         4      1        1  3.46
-##  5     1    21 female  21.4  26.7  30.7         5      0        0  4.09
-##  6     1    21 female  21.4  26.7  30.7         6      0        0  3.65
-##  7     1    21 female  21.4  26.7  30.7         7      1        1  3.85
-##  8     1    21 female  21.4  26.7  30.7         8      0        0  2.96
-##  9     1    21 female  21.4  26.7  30.7         9      0        1  3.75
-## 10     1    21 female  21.4  26.7  30.7        10      0        0  2.94
+##  1     1    22 male    11.1  32.4  34.6         1      1        0  5.46
+##  2     1    22 male    11.1  32.4  34.6         2      1        1  4.54
+##  3     1    22 male    11.1  32.4  34.6         3      0        0  3.85
+##  4     1    22 male    11.1  32.4  34.6         4      0        1  1.43
+##  5     1    22 male    11.1  32.4  34.6         5      1        1  4.82
+##  6     1    22 male    11.1  32.4  34.6         6      1        1  4.71
+##  7     1    22 male    11.1  32.4  34.6         7      1        1  6.61
+##  8     1    22 male    11.1  32.4  34.6         8      0        0  3.17
+##  9     1    22 male    11.1  32.4  34.6         9      1        1  3.65
+## 10     1    22 male    11.1  32.4  34.6        10      0        0  1.94
 ## # … with 990 more rows</code></pre>
 <div id="mutating-grouped-data" class="section level3">
 <h3>Mutating grouped data</h3>
@@ -1097,26 +1158,26 @@ raw %&gt;%
 </ul></li>
 </ul>
 <p>For all operations that use all values in the column, grouping causes these operations <em>to see each group as if it were its own independent df.</em></p>
-<pre class="r"><code>raw %&gt;%
-  # Just to make the df narrower for printing
-  select(-starts_with(&quot;q&quot;)) %&gt;%
-  mutate(rt_z_across = scale(rt)) %&gt;%
-  group_by(id) %&gt;%
-  mutate(rt_z_within = scale(rt))</code></pre>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb89-2"><a href="#cb89-2"></a><span class="st">  </span><span class="co"># Just to make the df narrower for printing</span></span>
+<span id="cb89-3"><a href="#cb89-3"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">starts_with</span>(<span class="st">&quot;q&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb89-4"><a href="#cb89-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rt_z_across =</span> <span class="kw">scale</span>(rt)) <span class="op">%&gt;%</span></span>
+<span id="cb89-5"><a href="#cb89-5"></a><span class="st">  </span><span class="kw">group_by</span>(id) <span class="op">%&gt;%</span></span>
+<span id="cb89-6"><a href="#cb89-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rt_z_within =</span> <span class="kw">scale</span>(rt))</span></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 9
 ## # Groups:   id [20]
 ##       id   age gender trial_num is_old response    rt rt_z_across[,1]
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;           &lt;dbl&gt;
-##  1     1    21 female         1      1        1  3.19        0.149   
-##  2     1    21 female         2      1        1  1.99       -0.639   
-##  3     1    21 female         3      0        0  4.68        1.13    
-##  4     1    21 female         4      1        1  3.46        0.326   
-##  5     1    21 female         5      0        0  4.09        0.740   
-##  6     1    21 female         6      0        0  3.65        0.452   
-##  7     1    21 female         7      1        1  3.85        0.585   
-##  8     1    21 female         8      0        0  2.96       -0.000738
-##  9     1    21 female         9      0        1  3.75        0.522   
-## 10     1    21 female        10      0        0  2.94       -0.0148  
+##  1     1    22 male           1      1        0  5.46           1.66 
+##  2     1    22 male           2      1        1  4.54           1.04 
+##  3     1    22 male           3      0        0  3.85           0.577
+##  4     1    22 male           4      0        1  1.43          -1.05 
+##  5     1    22 male           5      1        1  4.82           1.23 
+##  6     1    22 male           6      1        1  4.71           1.16 
+##  7     1    22 male           7      1        1  6.61           2.43 
+##  8     1    22 male           8      0        0  3.17           0.122
+##  9     1    22 male           9      1        1  3.65           0.443
+## 10     1    22 male          10      0        0  1.94          -0.710
 ## # … with 990 more rows, and 1 more variable: rt_z_within[,1] &lt;dbl&gt;</code></pre>
 <p>Here, <code>scale()</code> (a base R function to mean-center or z-score vectors) demonstrates different behavior when called on an ungrouped df (the first call) vs on a grouped df (the second call). In this case, the first call z-scores across <em>all observations in the vector, across subject,</em> while the second, grouped, call z-scores <em>independently within each subject.</em></p>
 <p>Sometimes, you’ll want to <code>mutate()</code> considering every observation in the df, and sometimes you’ll want to <code>mutate()</code> independently for each group in your df. You can do both! Just be mindful of the grouping status of your df at all times.</p>
@@ -1124,54 +1185,54 @@ raw %&gt;%
 <div id="summarizing-grouped-data" class="section level3">
 <h3>Summarizing grouped data</h3>
 <p>Grouping is incredibly useful in conjunction with the <code>summarize()</code> functions, because it allows a smooth, modular way to specify when you want summary statistics calculated separately for every level of some grouping variable.</p>
-<pre class="r"><code>raw %&gt;%
-  group_by(id) %&gt;%
-  summarize(rt_median = median(rt))</code></pre>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb91-2"><a href="#cb91-2"></a><span class="st">  </span><span class="kw">group_by</span>(id) <span class="op">%&gt;%</span></span>
+<span id="cb91-3"><a href="#cb91-3"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">rt_median =</span> <span class="kw">median</span>(rt))</span></code></pre></div>
 <pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <pre><code>## # A tibble: 20 x 2
 ##       id rt_median
 ##    &lt;int&gt;     &lt;dbl&gt;
-##  1     1      3.16
-##  2     2      3.26
-##  3     3      3.21
-##  4     4      3.13
-##  5     5      2.63
-##  6     6      2.82
-##  7     7      2.81
-##  8     8      2.85
-##  9     9      2.81
-## 10    10      3.31
-## 11    11      2.97
-## 12    12      3.03
-## 13    13      3.07
-## 14    14      3.20
-## 15    15      2.97
-## 16    16      3.24
-## 17    17      2.60
-## 18    18      2.55
-## 19    19      3.14
-## 20    20      3.28</code></pre>
+##  1     1      3.31
+##  2     2      3.14
+##  3     3      2.81
+##  4     4      2.80
+##  5     5      3.08
+##  6     6      3.55
+##  7     7      2.95
+##  8     8      2.98
+##  9     9      2.52
+## 10    10      2.83
+## 11    11      3.04
+## 12    12      2.83
+## 13    13      2.72
+## 14    14      2.88
+## 15    15      3.66
+## 16    16      2.95
+## 17    17      2.86
+## 18    18      3.33
+## 19    19      2.93
+## 20    20      2.98</code></pre>
 <p>Observe that the grouping variable is output by <code>summarize()</code> as well as the calculated summary statistic, because the values of the grouping variable are necessary to mark out which summary statistic belongs to which grouping levels.</p>
 <p>We shouldn’t be surprised about the output of <code>summarize()</code> when we feed in data that has been grouped by multiple variables.</p>
-<pre class="r"><code># for example, if you wanted to tabulate summary statistics for multiple conditions within subject
-raw %&gt;%
-  group_by(id, is_old) %&gt;%
-  summarize(rt_median = median(rt))</code></pre>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1"></a><span class="co"># for example, if you wanted to tabulate summary statistics for multiple conditions within subject</span></span>
+<span id="cb94-2"><a href="#cb94-2"></a>raw <span class="op">%&gt;%</span></span>
+<span id="cb94-3"><a href="#cb94-3"></a><span class="st">  </span><span class="kw">group_by</span>(id, is_old) <span class="op">%&gt;%</span></span>
+<span id="cb94-4"><a href="#cb94-4"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">rt_median =</span> <span class="kw">median</span>(rt))</span></code></pre></div>
 <pre><code>## `summarise()` regrouping output by &#39;id&#39; (override with `.groups` argument)</code></pre>
 <pre><code>## # A tibble: 40 x 3
 ## # Groups:   id [20]
 ##       id is_old rt_median
 ##    &lt;int&gt;  &lt;int&gt;     &lt;dbl&gt;
-##  1     1      0      3.16
-##  2     1      1      3.16
-##  3     2      0      3.13
-##  4     2      1      3.40
-##  5     3      0      3.22
-##  6     3      1      3.19
-##  7     4      0      2.68
-##  8     4      1      3.29
-##  9     5      0      2.60
-## 10     5      1      2.65
+##  1     1      0      2.88
+##  2     1      1      4.30
+##  3     2      0      3.24
+##  4     2      1      2.94
+##  5     3      0      2.67
+##  6     3      1      3.16
+##  7     4      0      2.77
+##  8     4      1      3.20
+##  9     5      0      3.06
+## 10     5      1      3.24
 ## # … with 30 more rows</code></pre>
 <p>The special summarizing functions, like <code>summarize_if()</code> and <code>summarize_at()</code>, will also obey grouping.</p>
 </div>
@@ -1193,8 +1254,8 @@ raw %&gt;%
 <h3>Repeating existing rows</h3>
 <p>This strategy is inspired by a Stack Overflow post that I can’t seem to find now, but I find this useful when I am generating simulated datasets with multilevel structure. Essentially, because <code>dplyr::slice()</code> and other numeric indexing methods (base R bracket indexing included) allow you to index the same position multiple times to get repeats in your output, you can repeat rows in your df by using <code>slice()</code> to index the same row multiple times.</p>
 <p>If you want to repeat every row in your df, you can use the below syntax to <code>rep()</code> every index in your df (<code>1:n()</code>) <code>each</code> number of times. Specifying <code>each</code> instead of <code>times</code> ensures that all repeats of the same row stay next to each other, which is useful if you use this strategy to expand simulated person-level data to accommodate multiple observations per person.</p>
-<pre class="r"><code>tibble(x = letters[1:5]) %&gt;%
-  slice(rep(1:n(), each = 3))</code></pre>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1"></a><span class="kw">tibble</span>(<span class="dt">x =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]) <span class="op">%&gt;%</span></span>
+<span id="cb97-2"><a href="#cb97-2"></a><span class="st">  </span><span class="kw">slice</span>(<span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">n</span>(), <span class="dt">each =</span> <span class="dv">3</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 15 x 1
 ##    x    
 ##    &lt;chr&gt;
@@ -1218,29 +1279,29 @@ raw %&gt;%
 <h3>Completing combinations of grouping variables</h3>
 <p>There might be situations (particularly, those that are about to be fed into a <code>summarize()</code> call) where you want to complete combinations of grouping variables that might not exist in your data. For example, you might be working with a task where each trial can have a correct or incorrect response, and you’d like to use <code>summarize()</code> to count up the total number of correct and incorrect responses per person. If you have some star subject who gets all their trials correct, there will be no instances of that subject and the “incorrect” response value, so instead of showing a count of 0 rows, the summary will just be missing that row.</p>
 <p>After you’ve called <code>summarize()</code>, you can use <code>tidyr::complete()</code> to create all the grouping variable combos you might have been missing (because they had no instances to count).</p>
-<pre class="r"><code>tibble(x = letters[1:5]) %&gt;%
-  slice(rep(1:n(), each = 3)) %&gt;%
-  mutate(y = rbinom(n(), 1, 0.5)) %&gt;%
-  count(x, y) %&gt;%
-  # complete() must be called on ungrouped data, otherwise it attempts to complete the groups independently, which means it doesn&#39;t recognize when one group has levels of a variable that another group doesn&#39;t have
-  ungroup() %&gt;%
-  complete(x, y, fill = list(n = 0L))</code></pre>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1"></a><span class="kw">tibble</span>(<span class="dt">x =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]) <span class="op">%&gt;%</span></span>
+<span id="cb99-2"><a href="#cb99-2"></a><span class="st">  </span><span class="kw">slice</span>(<span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">n</span>(), <span class="dt">each =</span> <span class="dv">3</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb99-3"><a href="#cb99-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">y =</span> <span class="kw">rbinom</span>(<span class="kw">n</span>(), <span class="dv">1</span>, <span class="fl">0.5</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb99-4"><a href="#cb99-4"></a><span class="st">  </span><span class="kw">count</span>(x, y) <span class="op">%&gt;%</span></span>
+<span id="cb99-5"><a href="#cb99-5"></a><span class="st">  </span><span class="co"># complete() must be called on ungrouped data, otherwise it attempts to complete the groups independently, which means it doesn&#39;t recognize when one group has levels of a variable that another group doesn&#39;t have</span></span>
+<span id="cb99-6"><a href="#cb99-6"></a><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
+<span id="cb99-7"><a href="#cb99-7"></a><span class="st">  </span><span class="kw">complete</span>(x, y, <span class="dt">fill =</span> <span class="kw">list</span>(<span class="dt">n =</span> 0L))</span></code></pre></div>
 <pre><code>## # A tibble: 10 x 3
 ##    x         y     n
 ##    &lt;chr&gt; &lt;int&gt; &lt;int&gt;
-##  1 a         0     3
-##  2 a         1     0
+##  1 a         0     2
+##  2 a         1     1
 ##  3 b         0     2
 ##  4 b         1     1
-##  5 c         0     1
-##  6 c         1     2
-##  7 d         0     2
-##  8 d         1     1
+##  5 c         0     0
+##  6 c         1     3
+##  7 d         0     1
+##  8 d         1     2
 ##  9 e         0     0
 ## 10 e         1     3</code></pre>
 <p>More broadly, you can use <code>tidyr</code> functions to do what you might do using <code>base::expand.grid()</code>, but with a bit more control. <code>tidyr::crossing()</code> is directly analogous to <code>base::expand.grid()</code>, in that it will create every possible combination of each of the provided variable levels.</p>
-<pre class="r"><code># in crossing(), vectors listed first will repeat slowest
-crossing(x = letters[1:2], y = letters[3:4], z = 1:2)</code></pre>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1"></a><span class="co"># in crossing(), vectors listed first will repeat slowest</span></span>
+<span id="cb101-2"><a href="#cb101-2"></a><span class="kw">crossing</span>(<span class="dt">x =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="dt">y =</span> letters[<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">z =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 8 x 3
 ##   x     y         z
 ##   &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
@@ -1263,21 +1324,21 @@ crossing(x = letters[1:2], y = letters[3:4], z = 1:2)</code></pre>
 <p><code>tidyr::pivot_longer()</code> is how we’ll be taking data from wide form to long form. We’ll take wide data that has different conditions of an observed/calculated variable in different columns, and make it long, so that all those values of the same variable are in one column, with another column indicating what condition that value comes form.</p>
 <p>(If you want a deeper review on tidy data structure, and what wide form and long form mean, read <a href="https://tidyr.tidyverse.org/articles/tidy-data.html" target="_blank">this vignette</a>.)</p>
 <p>In this example, I’m first going to calculate some related summary statistics on reaction time to create wide data, because our original trialwise data is in long form.</p>
-<pre class="r"><code>summaries &lt;- raw %&gt;%
-  group_by(id) %&gt;%
-  summarize(rt_min = min(rt),
-            rt_median = median(rt),
-            rt_max = max(rt)) %&gt;%
-  # Note that I&#39;m using sample_n() here to just make the output df shorter by selecting some subjs
-  sample_n(3)</code></pre>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1"></a>summaries &lt;-<span class="st"> </span>raw <span class="op">%&gt;%</span></span>
+<span id="cb103-2"><a href="#cb103-2"></a><span class="st">  </span><span class="kw">group_by</span>(id) <span class="op">%&gt;%</span></span>
+<span id="cb103-3"><a href="#cb103-3"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">rt_min =</span> <span class="kw">min</span>(rt),</span>
+<span id="cb103-4"><a href="#cb103-4"></a>            <span class="dt">rt_median =</span> <span class="kw">median</span>(rt),</span>
+<span id="cb103-5"><a href="#cb103-5"></a>            <span class="dt">rt_max =</span> <span class="kw">max</span>(rt)) <span class="op">%&gt;%</span></span>
+<span id="cb103-6"><a href="#cb103-6"></a><span class="st">  </span><span class="co"># Note that I&#39;m using sample_n() here to just make the output df shorter by selecting some subjs</span></span>
+<span id="cb103-7"><a href="#cb103-7"></a><span class="st">  </span><span class="kw">sample_n</span>(<span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<pre class="r"><code>summaries</code></pre>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1"></a>summaries</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 4
 ##      id rt_min rt_median rt_max
 ##   &lt;int&gt;  &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;
-## 1    18 -1.09       2.55   7.78
-## 2    13 -0.650      3.07   7.75
-## 3    10 -1.30       3.31   6.57</code></pre>
+## 1    11 -0.436      3.04   5.97
+## 2     2 -0.910      3.14   8.16
+## 3     6 -1.07       3.55   6.27</code></pre>
 <p>You can see this df is wide, because different observations of summary RT (minimum, median, and maximum) are each in their own column. (This data does have the utility of having one row per subject. Wide data is not necessarily always bad!)</p>
 <p>When we <code>gather()</code> this wide df and thus make it long, we expect to have one column for RT, and another column indicating whether that RT is a minimum, median, or maximum.</p>
 <p><code>gather()</code> takes three main arguments (peep the other ones in the docs if you want to futz around):</p>
@@ -1286,89 +1347,89 @@ crossing(x = letters[1:2], y = letters[3:4], z = 1:2)</code></pre>
 <li><code>value</code>: you specify the name of the column that contains values of the variable themselves</li>
 <li><code>...</code>: you specify all of the columns that actually contain values to be <code>gather()</code>-ed. Note that here, you can specify columns just as you would in <code>select()</code>, including using <code>tidyselect()</code> helpers.</li>
 </ul>
-<pre class="r"><code>summaries_long &lt;- summaries %&gt;%
-  # if I wanted to use tidyselect helpers, I could use starts_with(&quot;rt&quot;) here
-  pivot_longer(cols = c(rt_min, rt_median, rt_max), names_to = &quot;statistic&quot;, values_to = &quot;rt&quot;)
-
-summaries_long</code></pre>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1"></a>summaries_long &lt;-<span class="st"> </span>summaries <span class="op">%&gt;%</span></span>
+<span id="cb107-2"><a href="#cb107-2"></a><span class="st">  </span><span class="co"># if I wanted to use tidyselect helpers, I could use starts_with(&quot;rt&quot;) here</span></span>
+<span id="cb107-3"><a href="#cb107-3"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">c</span>(rt_min, rt_median, rt_max), <span class="dt">names_to =</span> <span class="st">&quot;statistic&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;rt&quot;</span>)</span>
+<span id="cb107-4"><a href="#cb107-4"></a></span>
+<span id="cb107-5"><a href="#cb107-5"></a>summaries_long</span></code></pre></div>
 <pre><code>## # A tibble: 9 x 3
 ##      id statistic     rt
 ##   &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;
-## 1    18 rt_min    -1.09 
-## 2    18 rt_median  2.55 
-## 3    18 rt_max     7.78 
-## 4    13 rt_min    -0.650
-## 5    13 rt_median  3.07 
-## 6    13 rt_max     7.75 
-## 7    10 rt_min    -1.30 
-## 8    10 rt_median  3.31 
-## 9    10 rt_max     6.57</code></pre>
+## 1    11 rt_min    -0.436
+## 2    11 rt_median  3.04 
+## 3    11 rt_max     5.97 
+## 4     2 rt_min    -0.910
+## 5     2 rt_median  3.14 
+## 6     2 rt_max     8.16 
+## 7     6 rt_min    -1.07 
+## 8     6 rt_median  3.55 
+## 9     6 rt_max     6.27</code></pre>
 <p>To trim off prefixes of key/indicator variable, you can use the <code>names_prefix</code> argument to tell R to drop a particular string from the beginning of each column name before pivoting.</p>
-<pre class="r"><code>summaries_long &lt;- summaries %&gt;%
-  pivot_longer(cols = starts_with(&quot;rt&quot;), names_to = &quot;statistic&quot;, values_to = &quot;rt&quot;, names_prefix = &quot;rt_&quot;)
-
-summaries_long</code></pre>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1"></a>summaries_long &lt;-<span class="st"> </span>summaries <span class="op">%&gt;%</span></span>
+<span id="cb109-2"><a href="#cb109-2"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">starts_with</span>(<span class="st">&quot;rt&quot;</span>), <span class="dt">names_to =</span> <span class="st">&quot;statistic&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;rt&quot;</span>, <span class="dt">names_prefix =</span> <span class="st">&quot;rt_&quot;</span>)</span>
+<span id="cb109-3"><a href="#cb109-3"></a></span>
+<span id="cb109-4"><a href="#cb109-4"></a>summaries_long</span></code></pre></div>
 <pre><code>## # A tibble: 9 x 3
 ##      id statistic     rt
 ##   &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;
-## 1    18 min       -1.09 
-## 2    18 median     2.55 
-## 3    18 max        7.78 
-## 4    13 min       -0.650
-## 5    13 median     3.07 
-## 6    13 max        7.75 
-## 7    10 min       -1.30 
-## 8    10 median     3.31 
-## 9    10 max        6.57</code></pre>
+## 1    11 min       -0.436
+## 2    11 median     3.04 
+## 3    11 max        5.97 
+## 4     2 min       -0.910
+## 5     2 median     3.14 
+## 6     2 max        8.16 
+## 7     6 min       -1.07 
+## 8     6 median     3.55 
+## 9     6 max        6.27</code></pre>
 <div id="pivot-longering-multiple-distinct-variables-at-once" class="section level3">
 <h3>Pivot-longering multiple distinct variables at once</h3>
 <p>You can also use <code>pivot_longer()</code> to pivot <em>multiple value variables at once.</em> If you have multiple unique variables in a wide df that are all bound by the same indicator conditions, you can modify the arguments of <code>pivot_longer()</code> and get the job done.</p>
 <p>Below, I’m first going to create a summary df where we have observations of multiple variables (in this case, the three “questionnaire” scores), and each has multiple observation conditions (the minimum and maximum score on that questionnaire within each gender).</p>
-<pre class="r"><code>summaries_qs &lt;- raw %&gt;%
-  select(id, gender, starts_with(&quot;q&quot;)) %&gt;%
-  distinct(id, .keep_all = TRUE) %&gt;%
-  group_by(gender) %&gt;%
-  summarize_at(vars(starts_with(&quot;q&quot;)), funs(min = min(.),
-                                            max = max(.)))
-
-summaries_qs</code></pre>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1"></a>summaries_qs &lt;-<span class="st"> </span>raw <span class="op">%&gt;%</span></span>
+<span id="cb111-2"><a href="#cb111-2"></a><span class="st">  </span><span class="kw">select</span>(id, gender, <span class="kw">starts_with</span>(<span class="st">&quot;q&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb111-3"><a href="#cb111-3"></a><span class="st">  </span><span class="kw">distinct</span>(id, <span class="dt">.keep_all =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
+<span id="cb111-4"><a href="#cb111-4"></a><span class="st">  </span><span class="kw">group_by</span>(gender) <span class="op">%&gt;%</span></span>
+<span id="cb111-5"><a href="#cb111-5"></a><span class="st">  </span><span class="kw">summarize_at</span>(<span class="kw">vars</span>(<span class="kw">starts_with</span>(<span class="st">&quot;q&quot;</span>)), <span class="kw">funs</span>(<span class="dt">min =</span> <span class="kw">min</span>(.),</span>
+<span id="cb111-6"><a href="#cb111-6"></a>                                            <span class="dt">max =</span> <span class="kw">max</span>(.)))</span>
+<span id="cb111-7"><a href="#cb111-7"></a></span>
+<span id="cb111-8"><a href="#cb111-8"></a>summaries_qs</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 7
 ##   gender q_1_min q_2_min q_3_min q_1_max q_2_max q_3_max
 ##   &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-## 1 female    15.2    9.59    11.5    52.7    47.4    53.1
-## 2 male      10.4   14.6     17.7    46.1    45.5    33.8</code></pre>
+## 1 female    17.9    20.7    13.3    47.0    50.0    50.3
+## 2 male      11.1    12.5    18.8    42.7    35.4    43.6</code></pre>
 <p>Say I want to get this into a long df where each questionnaire has its own column, and there’s one indicator column for whether the score is a minimum or maximum score, and that indicator corresponds across all three questionnaire columns.</p>
 <p><code>pivot_longer()</code> in its usual won’t get me all the way there:</p>
-<pre class="r"><code>summaries_qs %&gt;%
-  pivot_longer(cols = starts_with(&quot;q&quot;), names_to = &quot;extreme&quot;, values_to = &quot;q_score&quot;)</code></pre>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1"></a>summaries_qs <span class="op">%&gt;%</span></span>
+<span id="cb113-2"><a href="#cb113-2"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">starts_with</span>(<span class="st">&quot;q&quot;</span>), <span class="dt">names_to =</span> <span class="st">&quot;extreme&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;q_score&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 12 x 3
 ##    gender extreme q_score
 ##    &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt;
-##  1 female q_1_min   15.2 
-##  2 female q_2_min    9.59
-##  3 female q_3_min   11.5 
-##  4 female q_1_max   52.7 
-##  5 female q_2_max   47.4 
-##  6 female q_3_max   53.1 
-##  7 male   q_1_min   10.4 
-##  8 male   q_2_min   14.6 
-##  9 male   q_3_min   17.7 
-## 10 male   q_1_max   46.1 
-## 11 male   q_2_max   45.5 
-## 12 male   q_3_max   33.8</code></pre>
+##  1 female q_1_min    17.9
+##  2 female q_2_min    20.7
+##  3 female q_3_min    13.3
+##  4 female q_1_max    47.0
+##  5 female q_2_max    50.0
+##  6 female q_3_max    50.3
+##  7 male   q_1_min    11.1
+##  8 male   q_2_min    12.5
+##  9 male   q_3_min    18.8
+## 10 male   q_1_max    42.7
+## 11 male   q_2_max    35.4
+## 12 male   q_3_max    43.6</code></pre>
 <p>You can see that the key/indicator column, <code>extreme</code>, actually contains information for two distinct variables: which questionnaire the score is from, AND which extreme the score is for. <code>pivot_longer()</code> can handle this, but we need to tell it where to get the names for all the new columns from, since there’s more than one value column now.</p>
 <p>Here, we feed a vector into the <code>names_to</code> argument, telling it which part of the old column names should go into the names column (here <code>extreme</code>) and which should be split out into value columns (with the special phrase <code>".value"</code>). Then we use <code>names_pattern</code> to specify capture groups to tell R how to break up the column names.</p>
-<pre class="r"><code>summaries_qs %&gt;%
-  pivot_longer(cols = starts_with(&quot;q&quot;),
-               names_to = c(&quot;.value&quot;, &quot;extreme&quot;),
-               names_pattern = &quot;(._.*)_(.*)&quot;)</code></pre>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1"></a>summaries_qs <span class="op">%&gt;%</span></span>
+<span id="cb115-2"><a href="#cb115-2"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">starts_with</span>(<span class="st">&quot;q&quot;</span>),</span>
+<span id="cb115-3"><a href="#cb115-3"></a>               <span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;extreme&quot;</span>),</span>
+<span id="cb115-4"><a href="#cb115-4"></a>               <span class="dt">names_pattern =</span> <span class="st">&quot;(._.*)_(.*)&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 5
 ##   gender extreme   q_1   q_2   q_3
 ##   &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 female min      15.2  9.59  11.5
-## 2 female max      52.7 47.4   53.1
-## 3 male   min      10.4 14.6   17.7
-## 4 male   max      46.1 45.5   33.8</code></pre>
+## 1 female min      17.9  20.7  13.3
+## 2 female max      47.0  50.0  50.3
+## 3 male   min      11.1  12.5  18.8
+## 4 male   max      42.7  35.4  43.6</code></pre>
 </div>
 </div>
 <div id="from-long-to-wide" class="section level2">
@@ -1379,45 +1440,45 @@ summaries_qs</code></pre>
 <li><code>names_from</code>: the name of the <em>existing</em> column that is the key/indicator column. You must specify this as a bare variable name, because you’re referring to an existing column.</li>
 <li><code>values_from</code>: the name of the <em>existing</em> value column. Again, specify as a bare variable name.</li>
 </ul>
-<pre class="r"><code>summaries_long &lt;- summaries %&gt;%
-  pivot_longer(cols = starts_with(&quot;rt&quot;), names_to = &quot;statistic&quot;, values_to = &quot;rt&quot;)
-
-summaries_long %&gt;%
-  pivot_wider(names_from = statistic, values_from = rt)</code></pre>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1"></a>summaries_long &lt;-<span class="st"> </span>summaries <span class="op">%&gt;%</span></span>
+<span id="cb117-2"><a href="#cb117-2"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">starts_with</span>(<span class="st">&quot;rt&quot;</span>), <span class="dt">names_to =</span> <span class="st">&quot;statistic&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;rt&quot;</span>)</span>
+<span id="cb117-3"><a href="#cb117-3"></a></span>
+<span id="cb117-4"><a href="#cb117-4"></a>summaries_long <span class="op">%&gt;%</span></span>
+<span id="cb117-5"><a href="#cb117-5"></a><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> statistic, <span class="dt">values_from =</span> rt)</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 4
 ##      id rt_min rt_median rt_max
 ##   &lt;int&gt;  &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;
-## 1    18 -1.09       2.55   7.78
-## 2    13 -0.650      3.07   7.75
-## 3    10 -1.30       3.31   6.57</code></pre>
+## 1    11 -0.436      3.04   5.97
+## 2     2 -0.910      3.14   8.16
+## 3     6 -1.07       3.55   6.27</code></pre>
 <p><code>pivot_wider()</code> automatically sets the column names of the new wide-split columns to whatever the indicator values were in the key column. Keep this in mind if you’re modifying the indicator values to be cleaner–you may want to modify them again if you plan to spread your data, to put the name of the value back into the indicator conditions.</p>
 <p>For example, the below is nice in long form but a little less clear in wide form, because we now don’t necessarily know what the min/median/max are calculated on:</p>
-<pre class="r"><code>summaries %&gt;%
-  pivot_longer(cols = starts_with(&quot;rt&quot;), names_to = &quot;statistic&quot;, values_to = &quot;rt&quot;, names_prefix = &quot;rt_&quot;) %&gt;%
-  pivot_wider(names_from = statistic, values_from = rt)</code></pre>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1"></a>summaries <span class="op">%&gt;%</span></span>
+<span id="cb119-2"><a href="#cb119-2"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">starts_with</span>(<span class="st">&quot;rt&quot;</span>), <span class="dt">names_to =</span> <span class="st">&quot;statistic&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;rt&quot;</span>, <span class="dt">names_prefix =</span> <span class="st">&quot;rt_&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb119-3"><a href="#cb119-3"></a><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> statistic, <span class="dt">values_from =</span> rt)</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 4
 ##      id    min median   max
 ##   &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-## 1    18 -1.09    2.55  7.78
-## 2    13 -0.650   3.07  7.75
-## 3    10 -1.30    3.31  6.57</code></pre>
+## 1    11 -0.436   3.04  5.97
+## 2     2 -0.910   3.14  8.16
+## 3     6 -1.07    3.55  6.27</code></pre>
 <div id="pivot-widering-multiple-distinct-variables-at-once" class="section level3">
 <h3>Pivot-widering multiple distinct variables at once</h3>
 <p>Similarly to <code>pivot_longer()</code>, <code>pivot_wider()</code>’s default behavior is to only let you pivot one value column at a time. Again, if you want to widen multiple unique variables that have repeated measures over the same conditions, you can modify the arguments of <code>pivot_wider()</code> to achieve this.</p>
 <p>With <code>pivot_wider()</code>, the main thing you change is to pass either a vector of column names or a <code>tidyselect</code> call to <code>values_from</code>, instead of just one column. With multiple columns going in as the argument, usually <code>pivot_wider()</code> knows how to pivot those columns and make their new names.</p>
-<pre class="r"><code>summaries_qs_long &lt;- summaries_qs %&gt;%
-  pivot_longer(cols = starts_with(&quot;q&quot;),
-               names_to = c(&quot;.value&quot;, &quot;extreme&quot;),
-               names_pattern = &quot;(._.*)_(.*)&quot;)
-
-summaries_qs_long %&gt;%
-  pivot_wider(names_from = extreme,
-              values_from = starts_with(&quot;q&quot;))</code></pre>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1"></a>summaries_qs_long &lt;-<span class="st"> </span>summaries_qs <span class="op">%&gt;%</span></span>
+<span id="cb121-2"><a href="#cb121-2"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">starts_with</span>(<span class="st">&quot;q&quot;</span>),</span>
+<span id="cb121-3"><a href="#cb121-3"></a>               <span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;extreme&quot;</span>),</span>
+<span id="cb121-4"><a href="#cb121-4"></a>               <span class="dt">names_pattern =</span> <span class="st">&quot;(._.*)_(.*)&quot;</span>)</span>
+<span id="cb121-5"><a href="#cb121-5"></a></span>
+<span id="cb121-6"><a href="#cb121-6"></a>summaries_qs_long <span class="op">%&gt;%</span></span>
+<span id="cb121-7"><a href="#cb121-7"></a><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> extreme,</span>
+<span id="cb121-8"><a href="#cb121-8"></a>              <span class="dt">values_from =</span> <span class="kw">starts_with</span>(<span class="st">&quot;q&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 7
 ##   gender q_1_min q_1_max q_2_min q_2_max q_3_min q_3_max
 ##   &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-## 1 female    15.2    52.7    9.59    47.4    11.5    53.1
-## 2 male      10.4    46.1   14.6     45.5    17.7    33.8</code></pre>
+## 1 female    17.9    47.0    20.7    50.0    13.3    50.3
+## 2 male      11.1    42.7    12.5    35.4    18.8    43.6</code></pre>
 <p>If you want to change the separator character that splits up the new appended names, you can use the <code>names_sep</code> argument. As you can see here, the default separator is an underscore.</p>
 </div>
 </div>

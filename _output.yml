@@ -1,4 +1,5 @@
-blogdown::html_page
+blogdown::html_page:
+  highlight: tango
   #toc: true
   # https://github.com/ukgovdatascience/govdown/commit/c294943bdae3428ec6f82a0210cefb0ad7c55778
   # pandoc_args: ["--lua-filter=highlight.lua", "--no-highlight"]
