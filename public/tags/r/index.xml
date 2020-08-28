@@ -25,9 +25,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/1-programming/lessonpart0/</guid>
-      <description>Welcome to the CU Psychology Scientific Computing workshop!
-Programming is telling a computer to do some action to some input info to get output info that you want. When it comes to working with data in R, programming is how we tell R to load data, process it, plot it, fit models to it, and so on (everything!).
-In this first section of our tutorial, we will learn about this info that goes in and out, as well as the actions that transform info into what we want.</description>
+      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
     </item>
     
     <item>
@@ -36,8 +34,7 @@ In this first section of our tutorial, we will learn about this info that goes i
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/1-programming/lessonpart1/</guid>
-      <description>Welcome (back) to the CU Psychology Scientific Computing Workshop! As a reminder, the documents for the introduction to programming cover the following:
- Programming, Part 0: Finding your way around RStudio Programming, Part 1: Variables, data types, vectors (this document!) Programming, Part 2: Coding strategy, relational &amp;amp; logical operators  Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page.</description>
+      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
     </item>
     
     <item>
@@ -46,8 +43,7 @@ In this first section of our tutorial, we will learn about this info that goes i
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/1-programming/lessonpart2/</guid>
-      <description>Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder, the documents for the introduction to programming cover the following:
- Programming, Part 0: Finding your way around RStudio Programming, Part 1: Variables, data types, vectors Programming, Part 2: Coding strategy, relational &amp;amp; logical operators (this document!)  Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things!</description>
+      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
     </item>
     
     <item>
@@ -56,9 +52,7 @@ In this first section of our tutorial, we will learn about this info that goes i
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/2-datacleaning/</guid>
-      <description>Goals of This Lesson Students will learn:
-How to open various data types in R How to check for missing or problematic data and address issues. How to filter, rearrange and shape data in preparation for analysis.   Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/2-datacleaning/index.rmd.
- Install Packages tidyverse is one package with many tools.</description>
+      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
     </item>
     
     <item>
@@ -67,8 +61,7 @@ How to open various data types in R How to check for missing or problematic data
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/3-datamanipulation/</guid>
-      <description>Goals of This Lesson Learn how to group and categorize data in R Learn how to generate descriptive statistics in R   Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/3-datamanipulation/index.rmd.
- Load Data This dataset examines the relationship between multitasking and working memory (link to the original paper by Uncapher et al.</description>
+      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
     </item>
     
     <item>
@@ -77,8 +70,7 @@ How to open various data types in R How to check for missing or problematic data
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/4-plotting/</guid>
-      <description>What Is This Tutorial? What’s ggplot2? ggplot2 is a package in R that allows for highly customizable and pretty plots! Here, were going to learn a few basics of making plots using ggplot2 that will hopefully get you well on your way to making informative and beautiful data visualizations!
- Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page.</description>
+      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
     </item>
     
     <item>
@@ -87,9 +79,7 @@ How to open various data types in R How to check for missing or problematic data
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/5-modeling/</guid>
-      <description>Goals of This Lesson Learn about functions and syntax for models in R Practice examples of different model types Understand how to obtain model results in R
- Learn how to visualize the results of the models   Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-core/5-modeling/index.rmd.
- Load Data Let’s get some data.</description>
+      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
     </item>
     
     <item>
@@ -137,7 +127,7 @@ All models are wrong, but some are useful - George Box
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/tidyverse-guide/tidyguide-1/</guid>
-      <description>Goals for this vignette  Demonstrate (what I think are) key first-level features of the tidyverse Illustrate psychology use cases for tidyverse functions Hopefully convince you to join the cult of tidy  We shall do this by walking through various use cases you might encounter with your data. I’ll jump in with specific examples of functions when appropriate, to highlight solutions for particular situations you might run into with your own data.</description>
+      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
     </item>
     
     <item>
@@ -146,8 +136,7 @@ All models are wrong, but some are useful - George Box
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/tidyverse-guide/tidyguide-2/</guid>
-      <description>Goals for this vignette Hello (again)! This is a continuation of our tour through base tidyverse (see Part 1 here). Our goals are the same as before:
- Demonstrate (what I think are) key first-level features of the tidyverse Illustrate psychology use cases for tidyverse functions Hopefully convince you to join the cult of tidy  This time, we’ll be moving ahead to some more complex use cases utilizing some more advanced programming tactics.</description>
+      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
     </item>
     
     <item>
@@ -176,9 +165,7 @@ All models are wrong, but some are useful - George Box
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/rmarkdown/intro-to-rmarkdown/</guid>
-      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-extra/rmarkdown/intro-to-rmarkdown.rmd.
- Getting started To work with R Markdown, if necessary:
- Install R Install the latest version of RStudio Install the latest version of the knitr package: install.packages(&#34;knitr&#34;)  If you’re looking for a quick reference to R Markdown formatting, I strongly suggest you check out this helpful cheat sheet!</description>
+      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
     </item>
     
   </channel>

@@ -85,7 +85,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     lineNos = false
     lineNumbersInTable = true
     noClasses = true
-    style = "friendly"
+    style = "monokai"
     tabWidth = 4
   [markup.tableOfContents]
     endLevel = 6
