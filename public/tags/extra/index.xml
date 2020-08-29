@@ -73,7 +73,7 @@ All models are wrong, but some are useful - George Box
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/data-sim-power/basic-simulation-power/</guid>
-      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-extra/data-sim-power/basic-simulation-power.rmd.
+      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/r-extra/data-sim-power/basic-simulation-power.rmd.
  Why Simulate? Simulation is an extremely useful tool, because we can create ground truth by which to test our models. If we know the true process by which the data are generated, we can check whether our models are doing well at recovering this truth.</description>
     </item>
     
@@ -83,7 +83,7 @@ All models are wrong, but some are useful - George Box
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/brms/multilevel-models-with-brms/</guid>
-      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-extra/brms/multilevel-models-with-brms.rmd.
+      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/r-extra/brms/multilevel-models-with-brms.rmd.
  0) Goals for this vignette  Give a quick intro to multilevel modeling and Bayesian inference Show a use case with Brms and some helpful syntax for demonstrating what this model does Hopefully, convince you to use multilevel modeling and Bayesian approaches for your stats   1) Why multilevel modeling?</description>
     </item>
     

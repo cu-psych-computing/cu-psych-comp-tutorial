@@ -10,7 +10,7 @@ weight: 900
 
 <div id="links-to-files" class="section level1">
 <h1>Links to Files</h1>
-<p>The files for all tutorials can be downloaded from <a href="https://github.com/cu-psych-computing/cu-psych-comp-tutorial" target="_blank">the Columbia Psychology Scientific Computing GitHub page</a>. This particular file is located here: <code>/content/tutorials/r-extra/brms/multilevel-models-with-brms.rmd</code>.</p>
+<p>The files for all tutorials can be downloaded from <a href="https://github.com/cu-psych-computing/cu-psych-comp-tutorial" target="_blank">the Columbia Psychology Scientific Computing GitHub page</a> using <a href="/accessing-files/" target="_blank">these instructions</a>. This particular file is located here: <code>/content/tutorials/r-extra/brms/multilevel-models-with-brms.rmd</code>.</p>
 </div>
 <div id="goals-for-this-vignette" class="section level1">
 <h1>0) Goals for this vignette</h1>
@@ -130,7 +130,6 @@ raw = mutate(raw,
   facet_wrap(&#39;id&#39;) +
   stat_summary(fun.data = &#39;mean_cl_boot&#39;, color = &#39;red&#39;, alpha = .5) +
   labs(x = &#39;Stimulus Seen (1) vs. New (0)&#39;, y = &#39;Response Time (s)&#39;, title = &#39;Raw Data By Subject&#39;)</code></pre>
-<pre><code>## Warning: Removed 1 rows containing missing values (geom_segment).</code></pre>
 <p><img src="/tutorials/r-extra/brms/multilevel-models-with-brms_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
 <div id="fancy-tidveryse-stuff-to-make-a-model-for-each-participant." class="section level2">

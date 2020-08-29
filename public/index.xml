@@ -20,15 +20,6 @@
     </item>
     
     <item>
-      <title>Programming, Part 1</title>
-      <link>/tutorials/r-core/1-programming/lessonpart1/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorials/r-core/1-programming/lessonpart1/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
-    </item>
-    
-    <item>
       <title>Programming, Part 2</title>
       <link>/tutorials/r-core/1-programming/lessonpart2/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -118,7 +109,7 @@ All models are wrong, but some are useful - George Box
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/data-sim-power/basic-simulation-power/</guid>
-      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-extra/data-sim-power/basic-simulation-power.rmd.
+      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/r-extra/data-sim-power/basic-simulation-power.rmd.
  Why Simulate? Simulation is an extremely useful tool, because we can create ground truth by which to test our models. If we know the true process by which the data are generated, we can check whether our models are doing well at recovering this truth.</description>
     </item>
     
@@ -128,7 +119,7 @@ All models are wrong, but some are useful - George Box
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/brms/multilevel-models-with-brms/</guid>
-      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-extra/brms/multilevel-models-with-brms.rmd.
+      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/r-extra/brms/multilevel-models-with-brms.rmd.
  0) Goals for this vignette  Give a quick intro to multilevel modeling and Bayesian inference Show a use case with Brms and some helpful syntax for demonstrating what this model does Hopefully, convince you to use multilevel modeling and Bayesian approaches for your stats   1) Why multilevel modeling?</description>
     </item>
     
@@ -142,14 +133,90 @@ All models are wrong, but some are useful - George Box
     </item>
     
     <item>
-      <title>Instructions for Accessing Our Tutorial Files</title>
+      <title>Programming, Part 1</title>
+      <link>/tutorials/r-core/1-programming/lessonpart1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-core/1-programming/lessonpart1/</guid>
+      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
+    </item>
+    
+    <item>
+      <title>Choosing Between R and Python</title>
+      <link>/tutorials/python/1-r2python-translation/0-python-r/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/python/1-r2python-translation/0-python-r/</guid>
+      <description>A few quick points:  Among scientific computing languages the best language for you is the one that you find best fits your projects We really encourage the use of either R and Python for research computing for several reasons  R and Python are open source! We believe in making scientific computing as accessible to as many people as possible R and Python both have TONS of tools for research computing, lots of documentation, and huge support communities around the world    Neither language is &amp;lsquo;better&amp;rsquo; than the other Depending on your application, one might be better suited R Strengths  Statistical Programming Language Visualization(ggplot) Web apps (shiny) Statistical Model Interpretation  Python Strengths  All purpose programming language Neuroimaging Task design (psychopy, pygame) Machine learning (sklearn, tensorflow, keras) Many programs/web tools have great python APIs Web scraping  For research, helpful to know some of both!</description>
+    </item>
+    
+    <item>
+      <title>Getting Started with Jupyter Notebooks</title>
+      <link>/tutorials/python/1-r2python-translation/1-getting-started/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/python/1-r2python-translation/1-getting-started/</guid>
+      <description>Goals:  Students will feel comfortable navigating the jupyter notebook layout Students will be able to access their computer&amp;rsquo;s file structure through jupyter notebook  Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/1-r2python-translation/1-getting-started.ipynb.
+What is a jupyter notebook anyway?  Jupyter notebooks are a tool for working in python (and other languages).</description>
+    </item>
+    
+    <item>
+      <title>Intro to Programming in Python</title>
+      <link>/tutorials/python/1-r2python-translation/2-intro-programming/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/python/1-r2python-translation/2-intro-programming/</guid>
+      <description>Disclaimer!  This intro programming tutorial in python is NOT nearly as comprehensive as the intro programming tutorial in R. If you have never programmed in any language before, this tutorial may skip key pieces of information Instead, the goal of this tutorial is to provide some key pieces of &amp;lsquo;translation&amp;rsquo; information for people with some programming experience who would like to use python  Goals of this lesson Students will:  Understand and be comfortable working with the basic data types in python Be able to use arithmetic, relational operators, and lists in python For those coming from R, be aware of differences across languages, especially in indexing  Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions.</description>
+    </item>
+    
+    <item>
+      <title>Control Flow in Python</title>
+      <link>/tutorials/python/1-r2python-translation/3-control-flow/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/python/1-r2python-translation/3-control-flow/</guid>
+      <description>Goals of this lesson Students will learn:  How to use if/else and for loops in python How to indent code correctly in python  Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/1-r2python-translation/3-control-flow.ipynb.
+Indenting in python  Python, unlike R, is strict about indentation! Indentations in python often have bearing on the order in which they are executed, and switching indentation can change how code runs (or break it) Coming from R, indentation might seem annoying at first, but eventually this can help with code readability Ultimately, python is trying to help us stay organized  If statements  If statements in python are the equivalent of the following English: &amp;ldquo;If condition X is met, then do action Y&amp;rdquo; If statements in python consist of the following syntax  if (condition X): actions.</description>
+    </item>
+    
+    <item>
+      <title>Data Cleaning in Python</title>
+      <link>/tutorials/python/2-datacleaning/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/python/2-datacleaning/</guid>
+      <description>Goals of this lesson Students will learn:  How to open various data types in Python How to check for missing or problematic data and address issues. How to filter, rearrange and shape data in preparation for analysis.  Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/2-datacleaning/index.ipynb.
+ A quick introduction to Python scientific computing modules As a programming languge, Python can do quite a lot.</description>
+    </item>
+    
+    <item>
+      <title>Data Manipulation in Python</title>
+      <link>/tutorials/python/3-datamanipulation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/python/3-datamanipulation/</guid>
+      <description>Goals of this lesson Students will learn:  How to group and categorize data in Python How to generative descriptive statistics in Python  Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/3-datamanipulation/index.ipynb.
+ # load packages we will be using for this lesson import pandas as pd  0. Open dataset and load package This dataset examines the relationship between multitasking and working memory.</description>
+    </item>
+    
+    <item>
+      <title>Plotting in Python Using `matplotlib` and `seaborn`</title>
+      <link>/tutorials/python/4-plotting/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/python/4-plotting/</guid>
+      <description>Goals of this lesson Students will learn:  How to generate beautiful statistical visualizations in Python using the seaborn package  Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/4-plotting/index.ipynb.
+# load packages we will be using for this lesson import pandas as pd import seaborn as sns import warnings warnings.</description>
+    </item>
+    
+    <item>
+      <title>Instructions for Accessing Tutorial Files</title>
       <link>/accessing-files/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/accessing-files/</guid>
-      <description>Instructions for Accessing Our Tutorial Files As noted at the top of each of our tutorial pages, the files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. In these notes, we list where the specific RMarkdown file for that tutorial is located (e.g., /content/tutorials/r-core/1-programming/lessonpart0.rmd).
-This page contains instructions for downloading and opening such files.
- 1. Visit GitHub and Download Zipped Folder First, visit the Columbia Psychology Scientific Computing GitHub page, which is located at https://github.</description>
+      <description>Instructions for Accessing Tutorial Files As noted at the top of each of our tutorials, all files can be downloaded from the Columbia Psychology Scientific Computing GitHub page. In these notes, we list where the specific RMarkdown file for that tutorial is located (e.g., /content/tutorials/r-core/1-programming/lessonpart0.rmd).
+This page contains instructions for downloading and opening such files. If you experience any issues in completing these steps, feel free to drop us a note at psych-methods-support@columbia.</description>
     </item>
     
     <item>

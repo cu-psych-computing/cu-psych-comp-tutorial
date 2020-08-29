@@ -1,0 +1,1195 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.74.3" />
+
+  
+  <meta name="description" content="CU Psychology Scientific Computing">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../favicon-16x16.png">
+
+  
+  <link rel="manifest" href="../../../site.webmanifest">
+
+  
+  <link rel="mask-icon" href="../../../safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="../../../css/bootstrap.min.css" />
+  
+  
+  <link
+    rel="stylesheet"
+    href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"
+  />
+
+  <script src="https://kit.fontawesome.com/7eb067db85.js" crossorigin="anonymous"></script>
+
+  
+  <title>Data Manipulation in Python | Columbia Psychology Scientific Computing</title>
+  
+
+  <style>
+
+.h1, h1 {
+  font-size:42px;
+  font-weight:600;
+  margin-top: -51px;
+  padding-top: 76px;
+  padding-bottom: 25px;
+}
+
+.h2, h2 {
+  font-size:32px;
+  font-weight:600;
+  margin-top: -51px;
+  padding-top: 99px;
+  padding-bottom: 16px;
+}
+
+.h3, h3 {
+  font-size:22px;
+  font-weight:600;
+  margin-top: -51px;
+  padding-top: 81px;
+  padding-bottom: 16px;
+}
+
+.h4, h4 {
+  font-size:15px;
+  font-weight:600;
+  font-style:italic;
+  margin-top: -51px;
+  padding-top: 61px;
+  padding-bottom: 10px;
+}
+
+.h5, h5 {
+  font-size:15px;
+}
+
+.h6, h6 {
+  font-size:15px;
+}
+
+body {
+  min-width: 300px;
+  font-size:15px;
+  color: #212529;
+  margin-top: 51px;
+}
+
+a {
+  color: #007bff;
+}
+
+a:hover,
+a:focus {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.navbar-light {
+  padding: 10px 3%;
+  margin-bottom: 1em;
+  background-color: #f8f9fa;
+  box-shadow: 0 1px 3px rgba(0,0,0,.11);
+  font-size: 14px;
+}
+
+.navbar-brand {
+  font-size: 17px;
+  font-weight: 600;
+  color: #007bff;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  font-size: 14px;
+  color: #212529;
+}
+
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link:focus {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.dropdown-menu {
+  margin-top: 10px;
+  padding: 10px 3%;
+  margin-bottom: 1em;
+  background-color: #f8f9fa;
+  box-shadow: 0 1px 3px rgba(0,0,0,.11);
+  font-size: 14px;
+  border-radius: 0;
+  border-style: none;
+}
+
+.dropdown-toggle::after {
+    content: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .dropdown-menu {
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+}
+
+@media print {
+  .navbar {
+    display: none;
+  }
+}
+
+.navbar-light .navbar-toggler {
+  border: none;
+}
+
+article {
+  padding-top: 30px;
+  padding-bottom: 80px;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.container {
+  max-width: 1000px;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+
+.footer {
+  padding:15px 0;
+  text-align:center;
+  background-color:#262626;
+  color:#ffffff;
+  font-size:12px;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+@media only screen and (max-width: 768px) {
+  .footer {
+    position: static;
+  }
+}
+
+@media print {
+  .footer {
+    display: none;
+  }
+}
+
+div .highlightsec {
+  background-color: #eee;
+  padding: 20px 20px 5px 20px;
+  border-left:solid #007bff 3px;
+}
+
+div .breadcrumb {
+  background-color: #fff;
+  margin: 0;
+  padding: 20px 0 0 0;
+  font-size: 12px;
+}
+
+.accordion .card,
+.accordion .card:last-child .card-header {
+  border: none;
+}
+
+.accordion .card-header {
+  padding: 0 0 0 7px;
+  color: #212529;
+  border-bottom-color: #ffffff;
+}
+
+.accordion .card-header h2 {
+  margin: 0;
+  padding: 0;
+}
+
+.accordion .btn-link,
+.accordion .btn-link {
+  text-decoration: none;
+  color: #212529;
+}
+
+.accordion .btn-link:hover {
+  text-decoration: none;
+  color: #0056b3;
+}
+
+.accordion .btn-link:focus {
+  text-decoration: none;
+  color: #212529;
+}
+
+nav[data-toggle=toc] .nav-link.active, nav[data-toggle=toc] .nav-link.active:focus, nav[data-toggle=toc] .nav-link.active:hover, nav[data-toggle=toc] .nav>li>a:hover {
+    color: #007bff;
+    border-left: 2px solid #007bff;
+}
+
+ 
+@media (max-width: 768px) {
+   
+  nav.affix[data-toggle='toc'] {
+    position: static;
+  }
+
+   
+   
+  nav[data-toggle='toc'] .nav .active .nav {
+    display: none;
+  }
+   
+   
+}
+
+pre {
+  border: 0px;
+}
+
+div.sourceCode {
+    background-color: #f5f5f5!important;
+    border: 1px solid #ccc;
+}
+
+</style>
+</head>
+
+<body data-spy="scroll" data-target="#toc">
+  <nav class="navbar navbar-expand-lg navbar-light bg-ligh fixed-top">
+  <div class="container responsive-menu">
+    <a class="navbar-brand" href="../../../">Columbia Psychology Scientific Computing</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+      aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa fa-bars"></i>
+          </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+          
+      <ul class="navbar-nav ml-auto">
+          
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../who/">
+            
+              <span>Who We Are</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../workshop/">
+            
+              <span>Workshop</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../meetings/">
+            
+              <span>Meetings</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="../../../tutorials/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+              
+              <span>Tutorials</span>
+                </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              
+            <a class="dropdown-item" href="../../../tutorials/r-core/">Introductory R Tutorial</a>
+              
+            <a class="dropdown-item" href="../../../tutorials/r-extra/">Additional R Tutorials</a>
+              
+            <a class="dropdown-item" href="../../../tutorials/python/">Introductory Python Tutorial</a>
+              
+            <a class="dropdown-item" href="../../../accessing-files/">Instructions for Accessing Files</a>
+              
+          </div>
+        </li>
+        
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../resources/">
+            
+              <span>Resources</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../license/">
+            
+              <span>License</span>
+          </a>
+        </li>
+          
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<script src="../../../js/jquery-3.3.1.slim.min.js"></script>
+<script src="../../../js/bootstrap.bundle.min.js"></script>
+
+    
+  <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+
+  
+  
+  <div class="container">
+    <article>
+      
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3 sticky">
+      <nav id="toc" data-toggle="toc" class="sticky-top" style="top:100px;"></nav>
+    </div>
+  <div class="col-sm-9">
+    
+
+
+  <div class="breadcrumb">
+    
+  
+    
+  
+    
+  
+    
+  
+
+    <a href="../../../">Home</a>&nbsp;>&nbsp; 
+  
+
+    <a href="../../../tutorials/">Tutorials</a>&nbsp;>&nbsp; 
+  
+
+    <a href="../../../tutorials/python/">Introductory Python Tutorial</a>&nbsp;>&nbsp; 
+  
+
+    Data Manipulation in Python
+  </div>
+
+
+<h1 style="padding-bottom:0">Data Manipulation in Python</h1>
+<p>
+  
+  
+  
+
+<small><code><a href="../../../tags/core">core</a></code></small>
+
+
+<small><code><a href="../../../tags/python">python</a></code></small>
+
+</p>
+<hr>
+<h2 id="goals-of-this-lesson">Goals of this lesson</h2>
+<h3 id="students-will-learn">Students will learn:</h3>
+<ol>
+<li>How to group and categorize data in Python</li>
+<li>How to generative descriptive statistics in Python</li>
+</ol>
+<h2 id="links-to-files">Links to Files</h2>
+<p>The files for all tutorials can be downloaded from <a href="https://github.com/cu-psych-computing/cu-psych-comp-tutorial">the Columbia Psychology Scientific Computing GitHub page</a>. This particular file is located here: <code>/content/tutorials/python/3-data-manipulation/index.ipynb</code>.</p>
+<hr>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># load packages we will be using for this lesson</span>
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+</code></pre></div><hr>
+<h2 id="0-open-dataset-and-load-package">0. Open dataset and load package</h2>
+<p>This dataset examines the relationship between multitasking and working memory. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4733435/pdf/nihms712443.pdf">Link here to original paper by Uncapher et al. 2016.</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># use pd.read_csv to open data into python</span>
+df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;uncapher_2016_repeated_measures_dataset.csv&#34;</span>)
+</code></pre></div><hr>
+<h2 id="1-familiarize-yourself-with-the-data">1. Familiarize yourself with the data</h2>
+<p>Quick review from <a href="dataCleaning/DataCleaning_Code.ipynb">data cleaning</a>: take a look at the basic data structure, number of rows and columns.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df<span style="color:#f92672">.</span>head()
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>subjNum</th>
+      <th>groupStatus</th>
+      <th>numDist</th>
+      <th>conf</th>
+      <th>hitCount</th>
+      <th>allOldCount</th>
+      <th>rtHit</th>
+      <th>faCount</th>
+      <th>allNewCount</th>
+      <th>rtFA</th>
+      <th>distPresent</th>
+      <th>hitRate</th>
+      <th>faRate</th>
+      <th>dprime</th>
+      <th>mmi</th>
+      <th>adhd</th>
+      <th>bis</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>6</td>
+      <td>HMM</td>
+      <td>0</td>
+      <td>hi</td>
+      <td>18</td>
+      <td>25</td>
+      <td>0.990657</td>
+      <td>3</td>
+      <td>50</td>
+      <td>1.062458</td>
+      <td>nodist</td>
+      <td>0.711538</td>
+      <td>0.068627</td>
+      <td>2.043976</td>
+      <td>5.77</td>
+      <td>4</td>
+      <td>74</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>6</td>
+      <td>HMM</td>
+      <td>6</td>
+      <td>hi</td>
+      <td>14</td>
+      <td>25</td>
+      <td>0.951638</td>
+      <td>3</td>
+      <td>50</td>
+      <td>1.062458</td>
+      <td>dist</td>
+      <td>0.557692</td>
+      <td>0.068627</td>
+      <td>1.631213</td>
+      <td>5.77</td>
+      <td>4</td>
+      <td>74</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>10</td>
+      <td>HMM</td>
+      <td>0</td>
+      <td>hi</td>
+      <td>5</td>
+      <td>25</td>
+      <td>1.081535</td>
+      <td>8</td>
+      <td>50</td>
+      <td>1.036764</td>
+      <td>nodist</td>
+      <td>0.211538</td>
+      <td>0.166667</td>
+      <td>0.166327</td>
+      <td>6.21</td>
+      <td>4</td>
+      <td>51</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>10</td>
+      <td>HMM</td>
+      <td>6</td>
+      <td>hi</td>
+      <td>5</td>
+      <td>25</td>
+      <td>0.999527</td>
+      <td>8</td>
+      <td>50</td>
+      <td>1.036764</td>
+      <td>dist</td>
+      <td>0.211538</td>
+      <td>0.166667</td>
+      <td>0.166327</td>
+      <td>6.21</td>
+      <td>4</td>
+      <td>51</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>14</td>
+      <td>HMM</td>
+      <td>0</td>
+      <td>hi</td>
+      <td>3</td>
+      <td>25</td>
+      <td>2.346210</td>
+      <td>4</td>
+      <td>50</td>
+      <td>2.075087</td>
+      <td>nodist</td>
+      <td>0.134615</td>
+      <td>0.088235</td>
+      <td>0.246866</td>
+      <td>8.60</td>
+      <td>5</td>
+      <td>62</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df<span style="color:#f92672">.</span>shape
+</code></pre></div><pre><code>(136, 17)
+</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df<span style="color:#f92672">.</span>columns
+</code></pre></div><pre><code>Index(['subjNum', 'groupStatus', 'numDist', 'conf', 'hitCount', 'allOldCount',
+       'rtHit', 'faCount', 'allNewCount', 'rtFA', 'distPresent', 'hitRate',
+       'faRate', 'dprime', 'mmi', 'adhd', 'bis'],
+      dtype='object')
+</code></pre>
+<hr>
+<h2 id="2-selecting-relevant-variables">2. Selecting relevant variables</h2>
+<p>Sometimes datasets have many variables that are unnecessary for a given analysis. To simplify your life, and your code, we can select only the given variables we&rsquo;d like to use for now.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> df[[<span style="color:#e6db74">&#34;subjNum&#34;</span>, <span style="color:#e6db74">&#34;groupStatus&#34;</span>, <span style="color:#e6db74">&#34;adhd&#34;</span>, <span style="color:#e6db74">&#34;hitRate&#34;</span>, <span style="color:#e6db74">&#34;faRate&#34;</span>, <span style="color:#e6db74">&#34;dprime&#34;</span>]]
+df<span style="color:#f92672">.</span>head()
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>subjNum</th>
+      <th>groupStatus</th>
+      <th>adhd</th>
+      <th>hitRate</th>
+      <th>faRate</th>
+      <th>dprime</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>6</td>
+      <td>HMM</td>
+      <td>4</td>
+      <td>0.711538</td>
+      <td>0.068627</td>
+      <td>2.043976</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>6</td>
+      <td>HMM</td>
+      <td>4</td>
+      <td>0.557692</td>
+      <td>0.068627</td>
+      <td>1.631213</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>10</td>
+      <td>HMM</td>
+      <td>4</td>
+      <td>0.211538</td>
+      <td>0.166667</td>
+      <td>0.166327</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>10</td>
+      <td>HMM</td>
+      <td>4</td>
+      <td>0.211538</td>
+      <td>0.166667</td>
+      <td>0.166327</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>14</td>
+      <td>HMM</td>
+      <td>5</td>
+      <td>0.134615</td>
+      <td>0.088235</td>
+      <td>0.246866</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<hr>
+<h2 id="3-basic-descriptives">3. Basic Descriptives</h2>
+<h3 id="summarizing-data">Summarizing data</h3>
+<p>Let&rsquo;s learn how to make simple tables of summary statistics.
+First, we will calculate summary info across all data using <code>describe()</code>, a useful function for creating summaries. Note that we&rsquo;re not creating a new object for this summary (i.e. not using the <code>=</code> symbol), so this will print but not save.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df<span style="color:#f92672">.</span>describe()
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>subjNum</th>
+      <th>adhd</th>
+      <th>hitRate</th>
+      <th>faRate</th>
+      <th>dprime</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>136.000000</td>
+      <td>136.000000</td>
+      <td>136.000000</td>
+      <td>136.000000</td>
+      <td>136.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>72.676471</td>
+      <td>2.382353</td>
+      <td>0.350679</td>
+      <td>0.081603</td>
+      <td>1.133846</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>41.664779</td>
+      <td>1.651302</td>
+      <td>0.153422</td>
+      <td>0.073607</td>
+      <td>0.566277</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>2.000000</td>
+      <td>0.000000</td>
+      <td>0.057692</td>
+      <td>0.009804</td>
+      <td>0.047920</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>38.500000</td>
+      <td>1.000000</td>
+      <td>0.250000</td>
+      <td>0.029412</td>
+      <td>0.712359</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>73.000000</td>
+      <td>2.000000</td>
+      <td>0.326923</td>
+      <td>0.058824</td>
+      <td>1.094755</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>108.500000</td>
+      <td>4.000000</td>
+      <td>0.442308</td>
+      <td>0.107843</td>
+      <td>1.545407</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>142.000000</td>
+      <td>5.000000</td>
+      <td>0.788462</td>
+      <td>0.362745</td>
+      <td>2.478890</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<hr>
+<h2 id="3-grouping-data">3. Grouping data</h2>
+<p>Next, we will learn how to group data based on certain variables of interest.</p>
+<p>We will use the <code>groupby()</code> function in pandas, which will automatically group any subsequent actions called on the data.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df<span style="color:#f92672">.</span>groupby([<span style="color:#e6db74">&#34;groupStatus&#34;</span>])<span style="color:#f92672">.</span>mean()
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>subjNum</th>
+      <th>adhd</th>
+      <th>hitRate</th>
+      <th>faRate</th>
+      <th>dprime</th>
+    </tr>
+    <tr>
+      <th>groupStatus</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>HMM</th>
+      <td>74.852941</td>
+      <td>2.941176</td>
+      <td>0.345023</td>
+      <td>0.088235</td>
+      <td>1.032845</td>
+    </tr>
+    <tr>
+      <th>LMM</th>
+      <td>70.500000</td>
+      <td>1.823529</td>
+      <td>0.356335</td>
+      <td>0.074971</td>
+      <td>1.234847</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p>We can group data by more than one factor. Let&rsquo;s say we&rsquo;re interested in how levels of ADHD interact with <code>groupStatus</code> (multitasking: high or low).</p>
+<p>We will first make a factor for ADHD (median-split), and add it as a grouping variable using the <code>cut()</code> function in pandas:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df[<span style="color:#e6db74">&#34;adhdF&#34;</span>] <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>cut(df[<span style="color:#e6db74">&#34;adhd&#34;</span>],bins<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>,labels<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;Low&#34;</span>,<span style="color:#e6db74">&#34;High&#34;</span>])
+</code></pre></div><p>Then we&rsquo;ll check how evenly split these groups are by using <code>groupby()</code> the <code>size()</code> functions:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df<span style="color:#f92672">.</span>groupby([<span style="color:#e6db74">&#34;groupStatus&#34;</span>,<span style="color:#e6db74">&#34;adhdF&#34;</span>])<span style="color:#f92672">.</span>size()
+</code></pre></div><pre><code>groupStatus  adhdF
+HMM          Low      24
+             High     44
+LMM          Low      46
+             High     22
+dtype: int64
+</code></pre>
+<p>Then we&rsquo;ll calculate some summary info about these groups:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df<span style="color:#f92672">.</span>groupby([<span style="color:#e6db74">&#34;groupStatus&#34;</span>,<span style="color:#e6db74">&#34;adhdF&#34;</span>])<span style="color:#f92672">.</span>mean()
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>subjNum</th>
+      <th>adhd</th>
+      <th>hitRate</th>
+      <th>faRate</th>
+      <th>dprime</th>
+    </tr>
+    <tr>
+      <th>groupStatus</th>
+      <th>adhdF</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="2" valign="top">HMM</th>
+      <th>Low</th>
+      <td>82.500000</td>
+      <td>1.083333</td>
+      <td>0.286859</td>
+      <td>0.084967</td>
+      <td>0.818802</td>
+    </tr>
+    <tr>
+      <th>High</th>
+      <td>70.681818</td>
+      <td>3.954545</td>
+      <td>0.376748</td>
+      <td>0.090018</td>
+      <td>1.149595</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">LMM</th>
+      <th>Low</th>
+      <td>72.478261</td>
+      <td>0.913043</td>
+      <td>0.388796</td>
+      <td>0.078005</td>
+      <td>1.302366</td>
+    </tr>
+    <tr>
+      <th>High</th>
+      <td>66.363636</td>
+      <td>3.727273</td>
+      <td>0.288462</td>
+      <td>0.068627</td>
+      <td>1.093670</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<h3 id="a-note-on-piping--stringing-commands-together">A note on piping / stringing commands together</h3>
+<p>In R, we often use the pipe <code>%&gt;%</code> to string a series of steps together. We can do the same in python with many functions in a row</p>
+<p>This is how we&rsquo;re able to take the output of <code>df.groupby([&quot;groupStatus&quot;,&quot;adhdF&quot;])</code> and then <em>send that output</em> into the <code>mean()</code> function</p>
+<hr>
+<h2 id="5-extra-working-with-a-long-dataset">5. Extra: Working with a long dataset</h2>
+<p>This is a repeated measures (&ldquo;long&rdquo;) dataset, with multiple rows per subject. This makes things a bit tricker, but we are going to show you some tools for how to work with &ldquo;long&rdquo; datasets.</p>
+<h3 id="how-many-unique-subjects-are-in-the-data">How many unique subjects are in the data?</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">subList <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#34;subjNum&#34;</span>]<span style="color:#f92672">.</span>unique()
+nSubs <span style="color:#f92672">=</span> len(subList)
+nSubs
+</code></pre></div><pre><code>68
+</code></pre>
+<h3 id="how-many-trials-were-there-per-subject">How many trials were there per subject?</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">nTrialsPerSubj <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>groupby([<span style="color:#e6db74">&#34;subjNum&#34;</span>])<span style="color:#f92672">.</span>size()<span style="color:#f92672">.</span>reset_index(name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;nTrials&#34;</span>)
+nTrialsPerSubj<span style="color:#f92672">.</span>head()
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>subjNum</th>
+      <th>nTrials</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>6</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>9</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<h3 id="combine-summary-statistics-with-the-full-data-frame">Combine summary statistics with the full data frame</h3>
+<p>For some analyses, you might want to add a higher level variable (e.g. subject average hitRate) alongside your long data. We can do this by summarizing the data in a new data frame and then merging it with the full data.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">avgHR <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>groupby([<span style="color:#e6db74">&#34;subjNum&#34;</span>])[<span style="color:#e6db74">&#34;hitRate&#34;</span>]<span style="color:#f92672">.</span>mean()<span style="color:#f92672">.</span>reset_index(name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;avgHR&#34;</span>)
+avgHR<span style="color:#f92672">.</span>head()
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>subjNum</th>
+      <th>avgHR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+      <td>0.326923</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5</td>
+      <td>0.403846</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>6</td>
+      <td>0.634615</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>9</td>
+      <td>0.173077</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10</td>
+      <td>0.211538</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>merge(avgHR,on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;subjNum&#34;</span>)
+df<span style="color:#f92672">.</span>head()
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>subjNum</th>
+      <th>groupStatus</th>
+      <th>adhd</th>
+      <th>hitRate</th>
+      <th>faRate</th>
+      <th>dprime</th>
+      <th>adhdF</th>
+      <th>avgHR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>6</td>
+      <td>HMM</td>
+      <td>4</td>
+      <td>0.711538</td>
+      <td>0.068627</td>
+      <td>2.043976</td>
+      <td>High</td>
+      <td>0.634615</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>6</td>
+      <td>HMM</td>
+      <td>4</td>
+      <td>0.557692</td>
+      <td>0.068627</td>
+      <td>1.631213</td>
+      <td>High</td>
+      <td>0.634615</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>10</td>
+      <td>HMM</td>
+      <td>4</td>
+      <td>0.211538</td>
+      <td>0.166667</td>
+      <td>0.166327</td>
+      <td>High</td>
+      <td>0.211538</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>10</td>
+      <td>HMM</td>
+      <td>4</td>
+      <td>0.211538</td>
+      <td>0.166667</td>
+      <td>0.166327</td>
+      <td>High</td>
+      <td>0.211538</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>14</td>
+      <td>HMM</td>
+      <td>5</td>
+      <td>0.134615</td>
+      <td>0.088235</td>
+      <td>0.246866</td>
+      <td>High</td>
+      <td>0.211538</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p>You should now have an avgHR column in df, which will repeat within each subject, but vary across subjects.</p>
+<p><strong>Next:</strong> <a href="../../../tutorials/python/4-plotting/">Plotting in Python</a></p>
+
+    </article>
+  </div>
+
+</body>
+
+<footer class="footer">
+  © 2020 Columbia Psychology Scientific Computing
+  <script src="//yihui.org/js/math-code.js"></script>
+  <script async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+</footer>
+
+</html>

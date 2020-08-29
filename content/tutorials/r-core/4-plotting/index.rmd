@@ -17,7 +17,7 @@ ggplot2 is a package in R that allows for highly customizable and pretty plots! 
 
 # Links to Files
 
-The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial){target="_blank"}. This particular file is located here: `/content/tutorials/r-core/4-plotting/index.rmd`.
+The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial){target="_blank"} using [these instructions](/accessing-files/){target="_blank"}. This particular file is located here: `/content/tutorials/r-core/4-plotting/index.rmd`.
 
 # Load Packages and Data
 

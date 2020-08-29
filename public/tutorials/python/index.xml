@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Introductory Python Tutorial on Columbia Psychology Scientific Computing</title>
+    <link>/tutorials/python/</link>
+    <description>Recent content in Introductory Python Tutorial on Columbia Psychology Scientific Computing</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="/tutorials/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Data Cleaning in Python</title>
+      <link>/tutorials/python/2-datacleaning/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/python/2-datacleaning/</guid>
+      <description>Goals of this lesson Students will learn:  How to open various data types in Python How to check for missing or problematic data and address issues. How to filter, rearrange and shape data in preparation for analysis.  Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/2-datacleaning/index.ipynb.
+ A quick introduction to Python scientific computing modules As a programming languge, Python can do quite a lot.</description>
+    </item>
+    
+    <item>
+      <title>Data Manipulation in Python</title>
+      <link>/tutorials/python/3-datamanipulation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/python/3-datamanipulation/</guid>
+      <description>Goals of this lesson Students will learn:  How to group and categorize data in Python How to generative descriptive statistics in Python  Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/3-datamanipulation/index.ipynb.
+ # load packages we will be using for this lesson import pandas as pd  0. Open dataset and load package This dataset examines the relationship between multitasking and working memory.</description>
+    </item>
+    
+    <item>
+      <title>Plotting in Python Using `matplotlib` and `seaborn`</title>
+      <link>/tutorials/python/4-plotting/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/python/4-plotting/</guid>
+      <description>Goals of this lesson Students will learn:  How to generate beautiful statistical visualizations in Python using the seaborn package  Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/4-plotting/index.ipynb.
+# load packages we will be using for this lesson import pandas as pd import seaborn as sns import warnings warnings.</description>
+    </item>
+    
+  </channel>
+</rss>

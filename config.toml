@@ -52,6 +52,16 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   weight = 502
   parent = "Tutorials"
   [[menu.main]]
+  name = "Introductory Python Tutorial"
+  url = "/tutorials/python/"
+  weight = 503
+  parent = "Tutorials"
+  [[menu.main]]
+  name = "Instructions for Accessing Files"
+  url = "/accessing-files/"
+  weight = 504
+  parent = "Tutorials"
+  [[menu.main]]
   name = "Resources"
   url = "/resources/"
   weight = 600

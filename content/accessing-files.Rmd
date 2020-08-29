@@ -1,5 +1,5 @@
 ---
-title: "Instructions for Accessing Our Tutorial Files"
+title: "Instructions for Accessing Tutorial Files"
 author: "Psych Methods Support"
 output:
   blogdown::html_page:
@@ -10,13 +10,13 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Instructions for Accessing Our Tutorial Files
+## Instructions for Accessing Tutorial Files
 
 ---
 
-As noted at the top of each of our tutorial pages, the files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial){target="_blank"}. In these notes, we list where the specific RMarkdown file for that tutorial is located (e.g., `/content/tutorials/r-core/1-programming/lessonpart0.rmd`).
+As noted at the top of each of our [tutorials](/tutorials/), all files can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial){target="_blank"}. In these notes, we list where the specific RMarkdown file for that tutorial is located (e.g., `/content/tutorials/r-core/1-programming/lessonpart0.rmd`).
 
-This page contains instructions for downloading and opening such files.
+This page contains instructions for downloading and opening such files. If you experience any issues in completing these steps, feel free to drop us a note at [psych-methods-support@columbia.edu](mailto:psych-methods-support@columbia.edu){target="_blank"}.
 
 ## 1. Visit GitHub and Download Zipped Folder
 
@@ -67,5 +67,3 @@ For example, to access the example file (`/content/tutorials/r-core/1-programmin
 Once you have clicked on this file, it will open in RStudio.
 
 ![](/images/file.png)
-
-If you experience any issues in accessing our tutorial files using these instructions, feel free to drop us a note at [psych-methods-support@columbia.edu](mailto:psych-methods-support@columbia.edu){target="_blank"}.

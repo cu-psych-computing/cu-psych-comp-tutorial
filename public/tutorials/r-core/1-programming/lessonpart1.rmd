@@ -3,7 +3,7 @@ title: "Programming, Part 1"
 subtitle: "CU Psych Scientific Computing Workshop"
 author: "Monica Thieu"
 tags: ["core", "R"]
-weight: 102
+weight: 1100
 ---
 
 ```{r setup, include=FALSE}
@@ -19,7 +19,7 @@ Welcome (back) to the CU Psychology Scientific Computing Workshop! As a reminder
 
 # Links to Files
 
-The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial){target="_blank"}. This particular file is located here: `/content/tutorials/r-core/1-programming/lessonpart1.rmd`.
+The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial){target="_blank"} using [these instructions](/accessing-files/){target="_blank"}. This particular file is located here: `/content/tutorials/r-core/1-programming/lessonpart1.rmd`.
 
 # Variables
 
