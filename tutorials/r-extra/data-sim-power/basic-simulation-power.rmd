@@ -14,7 +14,7 @@ library(arm)
 
 ## Links to Files
 
-The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial){target="_blank"}. This particular file is located here: `/content/tutorials/r-extra/data-sim-power/basic-simulation-power.rmd`.
+The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial){target="_blank"} using [these instructions](/accessing-files/){target="_blank"}. This particular file is located here: `/content/tutorials/r-extra/data-sim-power/basic-simulation-power.rmd`.
 
 ## Why Simulate?
 

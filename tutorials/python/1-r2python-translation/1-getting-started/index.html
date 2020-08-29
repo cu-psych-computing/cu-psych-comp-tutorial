@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.74.3" />
+
+  
+  <meta name="description" content="CU Psychology Scientific Computing">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../favicon-16x16.png">
+
+  
+  <link rel="manifest" href="../../../../site.webmanifest">
+
+  
+  <link rel="mask-icon" href="../../../../safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="../../../../css/bootstrap.min.css" />
+  
+  
+  <link
+    rel="stylesheet"
+    href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"
+  />
+
+  <script src="https://kit.fontawesome.com/7eb067db85.js" crossorigin="anonymous"></script>
+
+  
+  <title>Getting Started with Jupyter Notebooks | Columbia Psychology Scientific Computing</title>
+  
+
+  <style>
+
+.h1, h1 {
+  font-size:42px;
+  font-weight:600;
+  margin-top: -51px;
+  padding-top: 76px;
+  padding-bottom: 25px;
+}
+
+.h2, h2 {
+  font-size:32px;
+  font-weight:600;
+  margin-top: -51px;
+  padding-top: 99px;
+  padding-bottom: 16px;
+}
+
+.h3, h3 {
+  font-size:22px;
+  font-weight:600;
+  margin-top: -51px;
+  padding-top: 81px;
+  padding-bottom: 16px;
+}
+
+.h4, h4 {
+  font-size:15px;
+  font-weight:600;
+  font-style:italic;
+  margin-top: -51px;
+  padding-top: 61px;
+  padding-bottom: 10px;
+}
+
+.h5, h5 {
+  font-size:15px;
+}
+
+.h6, h6 {
+  font-size:15px;
+}
+
+body {
+  min-width: 300px;
+  font-size:15px;
+  color: #212529;
+  margin-top: 51px;
+}
+
+a {
+  color: #007bff;
+}
+
+a:hover,
+a:focus {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.navbar-light {
+  padding: 10px 3%;
+  margin-bottom: 1em;
+  background-color: #f8f9fa;
+  box-shadow: 0 1px 3px rgba(0,0,0,.11);
+  font-size: 14px;
+}
+
+.navbar-brand {
+  font-size: 17px;
+  font-weight: 600;
+  color: #007bff;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  font-size: 14px;
+  color: #212529;
+}
+
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link:focus {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.dropdown-menu {
+  margin-top: 10px;
+  padding: 10px 3%;
+  margin-bottom: 1em;
+  background-color: #f8f9fa;
+  box-shadow: 0 1px 3px rgba(0,0,0,.11);
+  font-size: 14px;
+  border-radius: 0;
+  border-style: none;
+}
+
+.dropdown-toggle::after {
+    content: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .dropdown-menu {
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+}
+
+@media print {
+  .navbar {
+    display: none;
+  }
+}
+
+.navbar-light .navbar-toggler {
+  border: none;
+}
+
+article {
+  padding-top: 30px;
+  padding-bottom: 80px;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.container {
+  max-width: 1000px;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+
+.footer {
+  padding:15px 0;
+  text-align:center;
+  background-color:#262626;
+  color:#ffffff;
+  font-size:12px;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+@media only screen and (max-width: 768px) {
+  .footer {
+    position: static;
+  }
+}
+
+@media print {
+  .footer {
+    display: none;
+  }
+}
+
+div .highlightsec {
+  background-color: #eee;
+  padding: 20px 20px 5px 20px;
+  border-left:solid #007bff 3px;
+}
+
+div .breadcrumb {
+  background-color: #fff;
+  margin: 0;
+  padding: 20px 0 0 0;
+  font-size: 12px;
+}
+
+.accordion .card,
+.accordion .card:last-child .card-header {
+  border: none;
+}
+
+.accordion .card-header {
+  padding: 0 0 0 7px;
+  color: #212529;
+  border-bottom-color: #ffffff;
+}
+
+.accordion .card-header h2 {
+  margin: 0;
+  padding: 0;
+}
+
+.accordion .btn-link,
+.accordion .btn-link {
+  text-decoration: none;
+  color: #212529;
+}
+
+.accordion .btn-link:hover {
+  text-decoration: none;
+  color: #0056b3;
+}
+
+.accordion .btn-link:focus {
+  text-decoration: none;
+  color: #212529;
+}
+
+nav[data-toggle=toc] .nav-link.active, nav[data-toggle=toc] .nav-link.active:focus, nav[data-toggle=toc] .nav-link.active:hover, nav[data-toggle=toc] .nav>li>a:hover {
+    color: #007bff;
+    border-left: 2px solid #007bff;
+}
+
+ 
+@media (max-width: 768px) {
+   
+  nav.affix[data-toggle='toc'] {
+    position: static;
+  }
+
+   
+   
+  nav[data-toggle='toc'] .nav .active .nav {
+    display: none;
+  }
+   
+   
+}
+
+pre {
+  border: 0px;
+}
+
+div.sourceCode {
+    background-color: #f5f5f5!important;
+    border: 1px solid #ccc;
+}
+
+</style>
+</head>
+
+<body data-spy="scroll" data-target="#toc">
+  <nav class="navbar navbar-expand-lg navbar-light bg-ligh fixed-top">
+  <div class="container responsive-menu">
+    <a class="navbar-brand" href="../../../../">Columbia Psychology Scientific Computing</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+      aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa fa-bars"></i>
+          </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+          
+      <ul class="navbar-nav ml-auto">
+          
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../../who/">
+            
+              <span>Who We Are</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../../workshop/">
+            
+              <span>Workshop</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../../meetings/">
+            
+              <span>Meetings</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="../../../../tutorials/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+              
+              <span>Tutorials</span>
+                </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              
+            <a class="dropdown-item" href="../../../../tutorials/r-core/">Introductory R Tutorial</a>
+              
+            <a class="dropdown-item" href="../../../../tutorials/r-extra/">Additional R Tutorials</a>
+              
+            <a class="dropdown-item" href="../../../../tutorials/python/">Introductory Python Tutorial</a>
+              
+            <a class="dropdown-item" href="../../../../accessing-files/">Instructions for Accessing Files</a>
+              
+          </div>
+        </li>
+        
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../../resources/">
+            
+              <span>Resources</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../../license/">
+            
+              <span>License</span>
+          </a>
+        </li>
+          
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<script src="../../../../js/jquery-3.3.1.slim.min.js"></script>
+<script src="../../../../js/bootstrap.bundle.min.js"></script>
+
+    
+  <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+
+  
+  
+  <div class="container">
+    <article>
+      
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3 sticky">
+      <nav id="toc" data-toggle="toc" class="sticky-top" style="top:100px;"></nav>
+    </div>
+  <div class="col-sm-9">
+    
+
+
+  <div class="breadcrumb">
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+    <a href="../../../../">Home</a>&nbsp;>&nbsp; 
+  
+
+    <a href="../../../../tutorials/">Tutorials</a>&nbsp;>&nbsp; 
+  
+
+    <a href="../../../../tutorials/python/">Introductory Python Tutorial</a>&nbsp;>&nbsp; 
+  
+
+    <a href="../../../../tutorials/python/1-r2python-translation/">R to Python Translation</a>&nbsp;>&nbsp; 
+  
+
+    Getting Started with Jupyter Notebooks
+  </div>
+
+
+<h1 style="padding-bottom:0">Getting Started with Jupyter Notebooks</h1>
+<p>
+  
+  
+  
+
+<small><code><a href="../../../../tags/core">core</a></code></small>
+
+
+<small><code><a href="../../../../tags/python">python</a></code></small>
+
+</p>
+<hr>
+<h2 id="goals">Goals:</h2>
+<ul>
+<li>Students will feel comfortable navigating the jupyter notebook layout</li>
+<li>Students will be able to access their computer&rsquo;s file structure through jupyter notebook</li>
+</ul>
+<h2 id="links-to-files">Links to Files</h2>
+<p>The files for all tutorials can be downloaded from <a href="https://github.com/cu-psych-computing/cu-psych-comp-tutorial">the Columbia Psychology Scientific Computing GitHub page</a> using <a href="../../../../accessing-files/">these instructions</a>. This particular file is located here: <code>/content/tutorials/python/1-r2python-translation/1-getting-started.ipynb</code>.</p>
+<h2 id="what-is-a-jupyter-notebook-anyway">What is a jupyter notebook anyway?</h2>
+<ul>
+<li>Jupyter notebooks are a tool for working in python (and other languages).</li>
+<li>They allow you to create and run individual chunks of code along with markdown and plain text (so they can kinda be like a regular notebook too!)</li>
+<li>You can see outputs immeadiately, right in the notebook</li>
+<li>Conceptually pretty similar to R Markdown</li>
+</ul>
+<h2 id="why-use-jupyter-notebooks">Why use jupyter notebooks?</h2>
+<ul>
+<li>Code + markdown allows for records of lots of things in one place</li>
+<li>Great for trying lots of things/visualizing output</li>
+<li>Great for communicating/group projects!</li>
+</ul>
+<p>Here&rsquo;s a <a href="https://medium.com/ibm-data-science-experience/markdown-for-jupyter-notebooks-cheatsheet-386c05aeebed">cheat sheet</a> for formatting in Jupyter Notebooks:</p>
+<h2 id="how-can-i-run-code-in-a-jupyter-notebook">How can I run code in a jupyter notebook?</h2>
+<ul>
+<li>To run all code in a single cell, press shift + enter in that cell</li>
+<li>In the &lsquo;Cell&rsquo; menu, there are also options for running all cells, or all cells below/above the current one</li>
+<li>Cells can also have comments where the line starts with <code>#</code> &ndash; these are not run</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>
+<span style="color:#75715e"># Here&#39;s a comment</span>
+</code></pre></div><pre><code>4
+</code></pre>
+<h2 id="you-can-also-add-images">You can also add images</h2>
+<p><img src="https://echanclarityinsights.github.io/images/2018-12-26/cat-meme.jpg" alt="Jupyter Meme"></p>
+<h1 id="loading-modules">Loading modules</h1>
+<p>Regular python can do a lot, but one of the main reasons why it is used so much is that there are many <strong>modules</strong>, or build-on sets of functions, that are extremely helpful. Similarly to how in R we load packages, we can load these modules for use using the <code>import</code> command.</p>
+<p>For the purposes of these tutorials, we&rsquo;ll use these modules a lot. Although not strictly necessary, there are standard abbreviations for importing some of these modules</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> seaborn <span style="color:#f92672">as</span> sns
+</code></pre></div><p>We will discuss some of these modules in more detail as we get to later sections</p>
+<h1 id="navigating-files-using-jupyter-notebooks">Navigating files using jupyter notebooks</h1>
+<p>There are a few ways you start jupyter notebooks running:</p>
+<ul>
+<li>You can type <code>jupyter notebook</code> from your command line</li>
+<li>If you use Anaconda, you can click the jupyter notebook icon from the Anaconda menu</li>
+<li>jupyter notebooks by default save themselves every few seconds, but you can always check the top (next to the file name) to see when the notebook was last saved</li>
+</ul>
+<h2 id="the-working-directory">The working directory</h2>
+<p>Every python session has a <em>working directory,</em> or a &ldquo;home base&rdquo; folder. Essentially, this is the folder that python is &ldquo;in&rdquo;. By default, the working directory of a jupyter notebook will be wherever that notebook file (ending in .ipynb) is saved</p>
+<h2 id="file-paths">File paths</h2>
+<p>Every single file and folder on your computer has an address. You can navigate these paths in your computer&rsquo;s built in file browser, but in order for python to be able to access these files, you have to tell python the address.</p>
+<ul>
+<li>Mac/Linux: <code>&quot;Folder name/Sub-folder name/File&quot;</code> (note the forward slashes!)</li>
+<li>Windows: <code>&quot;Folder name\Sub-folder name\File&quot;</code> (note the backward slashes this time!)</li>
+</ul>
+<h3 id="absolute-file-paths">Absolute file paths</h3>
+<p>An <strong>absolute file path</strong> is a file&rsquo;s full address on your computer.  The way you specify that a file path starts from the root folder (the front entrance to your computer) differs operating systems:</p>
+<ul>
+<li>Mac/Linux: Start your file path with <em>a single forward slash,</em> e.g. <code>&quot;/Users/me/Documents/etc&quot;</code></li>
+<li>Windows: Start your file path with <em>the name of your drive,</em> e.g. <code>&quot;C:\Users\me\My Documents\etc&quot;</code></li>
+</ul>
+<h3 id="relative-file-paths">Relative file paths</h3>
+<p>Relative file paths are directions that assume you&rsquo;re starting in the current working directory .</p>
+<p>Relative file paths are shorter to type (because you don&rsquo;t need to specify all the directions to get from the root folder to the current working directory), but they do depend on what the current working directory is.</p>
+<p>To specify a relative path, you only need to start your path with file or folder name that exists in your current working directory. Any path that does <em>not</em> start with a forward-slash or drive name is assumed to be a relative path, so your computer will start looking in your current working directory.</p>
+<h3 id="how-to-go-up-a-level">How to go &lsquo;up&rsquo; a level</h3>
+<p><code>../</code> (on mac/linux) or <code>..\</code> on windows take you &lsquo;up&rsquo; and out of the folder you are currently in.</p>
+<ul>
+<li>You can chain these together to go up several levels if you want (<code>'../../otherFolder/myFile/csv'</code>)</li>
+</ul>
+<h4 id="the-os-module">The <code>os</code> module</h4>
+<p>In order to get information about files that are available to us to read into Python, we will be working with the <code>os</code> module. This module provides a way to interface with the operating system we are running Python on (Windows, Mac, or Linux). Let&rsquo;s start by first loading this module:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> os
+</code></pre></div><h4 id="whats-your-working-directory-and-where-is-the-file-you-want">What&rsquo;s your working directory and where is the file you want?</h4>
+<p>Your working directory is the directory (and subdirectories) where the files you&rsquo;re working with are stored. You can check your working directory using <code>os.getcwd()</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">os<span style="color:#f92672">.</span>getcwd()
+</code></pre></div><pre><code>'/Users/emily/Documents/GitHub/cu-psych-comp-tutorial/content/tutorials/python/1-r2python-translation'
+</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">os<span style="color:#f92672">.</span>listdir()
+</code></pre></div><pre><code>['1-getting-started.md',
+ '.DS_Store',
+ '0-python-r.ipynb',
+ '2-intro-programming.ipynb',
+ '2-intro-programming.md',
+ '0-python-r.md',
+ '3-control-flow.md',
+ '.ipynb_checkpoints',
+ '3-control-flow.ipynb',
+ '1-getting-started.ipynb',
+ '_index.md']
+</code></pre>
+<p>You can access a list of everything (all files and directories) within your working directory using the <code>os.listdir()</code> function&hellip;</p>
+<p><strong>Next:</strong> <a href="../../../../tutorials/python/1-r2python-translation/2-intro-programming/">Intro to Programming in Python</a></p>
+
+    </article>
+  </div>
+
+</body>
+
+<footer class="footer">
+  © 2020 Columbia Psychology Scientific Computing
+  <script src="//yihui.org/js/math-code.js"></script>
+  <script async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+</footer>
+
+</html>

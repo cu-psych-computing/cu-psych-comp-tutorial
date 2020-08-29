@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R to Python Translation on Columbia Psychology Scientific Computing</title>
+    <link>/tutorials/python/1_r2pythontranslation/</link>
+    <description>Recent content in R to Python Translation on Columbia Psychology Scientific Computing</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="/tutorials/python/1_r2pythontranslation/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Intro to Programming in Python!</title>
+      <link>/tutorials/python/1_r2pythontranslation/2_introprogramming/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/python/1_r2pythontranslation/2_introprogramming/</guid>
+      <description>Disclaimer!  This intro programming tutorial in python is NOT nearly as comprehensive as the intro programming tutorial in R. If you have never programmed in any language before, this tutorial may skip key pieces of information Instead, the goal of this tutorial is to provide some key pieces of &amp;lsquo;translation&amp;rsquo; information for people with some programming experience who would like to use python  Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page{target=&amp;rdquo;_blank&amp;rdquo;}.</description>
+    </item>
+    
+  </channel>
+</rss>

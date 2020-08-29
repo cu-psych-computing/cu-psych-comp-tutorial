@@ -1,0 +1,2633 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.74.3" />
+
+  
+  <meta name="description" content="CU Psychology Scientific Computing">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../favicon-16x16.png">
+
+  
+  <link rel="manifest" href="../../../site.webmanifest">
+
+  
+  <link rel="mask-icon" href="../../../safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="../../../css/bootstrap.min.css" />
+  
+  
+  <link
+    rel="stylesheet"
+    href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"
+  />
+
+  <script src="https://kit.fontawesome.com/7eb067db85.js" crossorigin="anonymous"></script>
+
+  
+  <title>Data Cleaning in Python | Columbia Psychology Scientific Computing</title>
+  
+
+  <style>
+
+.h1, h1 {
+  font-size:42px;
+  font-weight:600;
+  margin-top: -51px;
+  padding-top: 76px;
+  padding-bottom: 25px;
+}
+
+.h2, h2 {
+  font-size:32px;
+  font-weight:600;
+  margin-top: -51px;
+  padding-top: 99px;
+  padding-bottom: 16px;
+}
+
+.h3, h3 {
+  font-size:22px;
+  font-weight:600;
+  margin-top: -51px;
+  padding-top: 81px;
+  padding-bottom: 16px;
+}
+
+.h4, h4 {
+  font-size:15px;
+  font-weight:600;
+  font-style:italic;
+  margin-top: -51px;
+  padding-top: 61px;
+  padding-bottom: 10px;
+}
+
+.h5, h5 {
+  font-size:15px;
+}
+
+.h6, h6 {
+  font-size:15px;
+}
+
+body {
+  min-width: 300px;
+  font-size:15px;
+  color: #212529;
+  margin-top: 51px;
+}
+
+a {
+  color: #007bff;
+}
+
+a:hover,
+a:focus {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.navbar-light {
+  padding: 10px 3%;
+  margin-bottom: 1em;
+  background-color: #f8f9fa;
+  box-shadow: 0 1px 3px rgba(0,0,0,.11);
+  font-size: 14px;
+}
+
+.navbar-brand {
+  font-size: 17px;
+  font-weight: 600;
+  color: #007bff;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  font-size: 14px;
+  color: #212529;
+}
+
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link:focus {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.dropdown-menu {
+  margin-top: 10px;
+  padding: 10px 3%;
+  margin-bottom: 1em;
+  background-color: #f8f9fa;
+  box-shadow: 0 1px 3px rgba(0,0,0,.11);
+  font-size: 14px;
+  border-radius: 0;
+  border-style: none;
+}
+
+.dropdown-toggle::after {
+    content: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .dropdown-menu {
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+}
+
+@media print {
+  .navbar {
+    display: none;
+  }
+}
+
+.navbar-light .navbar-toggler {
+  border: none;
+}
+
+article {
+  padding-top: 30px;
+  padding-bottom: 80px;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.container {
+  max-width: 1000px;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+
+.footer {
+  padding:15px 0;
+  text-align:center;
+  background-color:#262626;
+  color:#ffffff;
+  font-size:12px;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+@media only screen and (max-width: 768px) {
+  .footer {
+    position: static;
+  }
+}
+
+@media print {
+  .footer {
+    display: none;
+  }
+}
+
+div .highlightsec {
+  background-color: #eee;
+  padding: 20px 20px 5px 20px;
+  border-left:solid #007bff 3px;
+}
+
+div .breadcrumb {
+  background-color: #fff;
+  margin: 0;
+  padding: 20px 0 0 0;
+  font-size: 12px;
+}
+
+.accordion .card,
+.accordion .card:last-child .card-header {
+  border: none;
+}
+
+.accordion .card-header {
+  padding: 0 0 0 7px;
+  color: #212529;
+  border-bottom-color: #ffffff;
+}
+
+.accordion .card-header h2 {
+  margin: 0;
+  padding: 0;
+}
+
+.accordion .btn-link,
+.accordion .btn-link {
+  text-decoration: none;
+  color: #212529;
+}
+
+.accordion .btn-link:hover {
+  text-decoration: none;
+  color: #0056b3;
+}
+
+.accordion .btn-link:focus {
+  text-decoration: none;
+  color: #212529;
+}
+
+nav[data-toggle=toc] .nav-link.active, nav[data-toggle=toc] .nav-link.active:focus, nav[data-toggle=toc] .nav-link.active:hover, nav[data-toggle=toc] .nav>li>a:hover {
+    color: #007bff;
+    border-left: 2px solid #007bff;
+}
+
+ 
+@media (max-width: 768px) {
+   
+  nav.affix[data-toggle='toc'] {
+    position: static;
+  }
+
+   
+   
+  nav[data-toggle='toc'] .nav .active .nav {
+    display: none;
+  }
+   
+   
+}
+
+pre {
+  border: 0px;
+}
+
+div.sourceCode {
+    background-color: #f5f5f5!important;
+    border: 1px solid #ccc;
+}
+
+</style>
+</head>
+
+<body data-spy="scroll" data-target="#toc">
+  <nav class="navbar navbar-expand-lg navbar-light bg-ligh fixed-top">
+  <div class="container responsive-menu">
+    <a class="navbar-brand" href="../../../">Columbia Psychology Scientific Computing</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+      aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa fa-bars"></i>
+          </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+          
+      <ul class="navbar-nav ml-auto">
+          
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../who/">
+            
+              <span>Who We Are</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../workshop/">
+            
+              <span>Workshop</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../meetings/">
+            
+              <span>Meetings</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="../../../tutorials/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+              
+              <span>Tutorials</span>
+                </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              
+            <a class="dropdown-item" href="../../../tutorials/r-core/">Introductory R Tutorial</a>
+              
+            <a class="dropdown-item" href="../../../tutorials/r-extra/">Additional R Tutorials</a>
+              
+            <a class="dropdown-item" href="../../../tutorials/python/">Introductory Python Tutorial</a>
+              
+            <a class="dropdown-item" href="../../../accessing-files/">Instructions for Accessing Files</a>
+              
+          </div>
+        </li>
+        
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../resources/">
+            
+              <span>Resources</span>
+          </a>
+        </li>
+          
+        
+              
+        <li class="nav-item">
+          <a class="nav-link" href="../../../license/">
+            
+              <span>License</span>
+          </a>
+        </li>
+          
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<script src="../../../js/jquery-3.3.1.slim.min.js"></script>
+<script src="../../../js/bootstrap.bundle.min.js"></script>
+
+    
+  <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+
+  
+  
+  <div class="container">
+    <article>
+      
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3 sticky">
+      <nav id="toc" data-toggle="toc" class="sticky-top" style="top:100px;"></nav>
+    </div>
+  <div class="col-sm-9">
+    
+
+
+  <div class="breadcrumb">
+    
+  
+    
+  
+    
+  
+    
+  
+
+    <a href="../../../">Home</a>&nbsp;>&nbsp; 
+  
+
+    <a href="../../../tutorials/">Tutorials</a>&nbsp;>&nbsp; 
+  
+
+    <a href="../../../tutorials/python/">Introductory Python Tutorial</a>&nbsp;>&nbsp; 
+  
+
+    Data Cleaning in Python
+  </div>
+
+
+<h1 style="padding-bottom:0">Data Cleaning in Python</h1>
+<p>
+  
+  
+  
+
+<small><code><a href="../../../tags/core">core</a></code></small>
+
+
+<small><code><a href="../../../tags/python">python</a></code></small>
+
+</p>
+<hr>
+<h2 id="goals-of-this-lesson">Goals of this lesson</h2>
+<h3 id="students-will-learn">Students will learn:</h3>
+<ol>
+<li>How to open various data types in Python</li>
+<li>How to check for missing or problematic data and address issues.</li>
+<li>How to filter, rearrange and shape data in preparation for analysis.</li>
+</ol>
+<h2 id="links-to-files">Links to Files</h2>
+<p>The files for all tutorials can be downloaded from <a href="https://github.com/cu-psych-computing/cu-psych-comp-tutorial">the Columbia Psychology Scientific Computing GitHub page</a> using <a href="../../../accessing-files/">these instructions</a>. This particular file is located here: <code>/content/tutorials/python/2-datacleaning/index.ipynb</code>.</p>
+<hr>
+<h2 id="a-quick-introduction-to-python-scientific-computing-modules">A quick introduction to Python scientific computing modules</h2>
+<p>As a programming languge, Python can do quite a lot. For example, it is an extremely popular choice for GUI and web-based application development (Reddit, Google, Facebook), databases (Spotify, Netflix), and scientific computing (NASA, for example, but also us!).</p>
+<p>One reason that Python is so widely used is due to its extensive library of third-party modules. Let&rsquo;s start by briefly covering the most important modules for scientific computing, some (but not all) of which we&rsquo;ll be using today.</p>
+<h4 id="data-analysis">Data Analysis</h4>
+<ul>
+<li>NumPy: The fundamental package for scientific computing in Python. Numpy provides Python with most of the functionality of MATLAB.</li>
+<li>SciPy: Provides many user-friendly and efficient numerical routines such as routines for numerical integration, interpolation, optimization, linear algebra and statistics.</li>
+<li>Pandas: Provides high-performance, easy-to-use data structures and data analysis tools. Pandas provides Python with most of the functionality of R.</li>
+</ul>
+<h4 id="data-visualization">Data Visualization</h4>
+<ul>
+<li>Matplotlib: Python 2D plotting library which produces publication quality figures. The pyplot module provides a MATLAB-like interface and is what most people use.</li>
+<li>Seaborn: A Python data visualization library based on matplotlib. It provides a high-level interface for drawing attractive and informative statistical graphics.</li>
+</ul>
+<p>We&rsquo;ll now import a few of these modules using their standard abbreviations</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> seaborn <span style="color:#f92672">as</span> sns
+
+sns<span style="color:#f92672">.</span>set_context(<span style="color:#e6db74">&#34;poster&#34;</span>)
+sns<span style="color:#f92672">.</span>set(style<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ticks&#34;</span>,font<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Arial&#34;</span>,font_scale<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
+</code></pre></div><p>In order to call one of the functions belonging to a particular module, you can use the <code>.</code> syntax. For example, numpy has a <code>mean()</code> function which will compute the arithmetic mean across an axis. If we wanted to call that function, we would simply write:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">np<span style="color:#f92672">.</span>mean([<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">6</span>])
+</code></pre></div><pre><code>4.0
+</code></pre>
+<p>For those coming from R, this is the equivalent of something like <code>dplyr::filter()</code>. Python is stricter than R about making sure you specify from which library the function you are using comes from.</p>
+<p>Now that you&rsquo;re familiar with the basics of modules in Python, let&rsquo;s go ahead and move on to some data cleaning.</p>
+<hr>
+<h2 id="python-data-structures">Python data structures</h2>
+<p>There are a few ways that data can be stored and manipulated in Python, some of which you&rsquo;ve already covered.</p>
+<p>To review, the first and most basic is a list:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mylist <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>]
+mylist
+</code></pre></div><pre><code>[1, 2, 3]
+</code></pre>
+<p>Lists can be arbitrarily long and can store hold multiple types of data, although this isn&rsquo;t usually a good idea:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mylist2 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>,<span style="color:#e6db74">&#34;2&#34;</span>,<span style="color:#ae81ff">3.0</span>, [<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>]]
+mylist2
+</code></pre></div><pre><code>[1, '2', 3.0, [4, 5]]
+</code></pre>
+<p>Similar to lists, the numpy module provides the ability to work with n-dimensional arrays for <strong>numerical</strong> data only. We can initialize an array full of zeros using the <code>np.zeros</code> function:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">myarray <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">10</span>))
+myarray
+</code></pre></div><pre><code>array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.])
+</code></pre>
+<p>If we want to work with numerical data that has two dimensions, we can create a matrix in a very similar way:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mymatrix <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">2</span>))
+mymatrix
+</code></pre></div><pre><code>array([[0., 0.],
+       [0., 0.],
+       [0., 0.],
+       [0., 0.],
+       [0., 0.],
+       [0., 0.],
+       [0., 0.],
+       [0., 0.],
+       [0., 0.],
+       [0., 0.]])
+</code></pre>
+<p>We won&rsquo;t be working much with numpy arrays directly today, but you should know that they are often a better option than lists when you are working with numerical data.</p>
+<p>Today, we will primarily be working with <code>pandas</code> dataframes. This object provides functionality that is very similar to dataframes in R. Let&rsquo;s start by converting our empty matrix into a dataframe. We can also give each of our columns more informative names:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydataframe <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(mymatrix,columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;Height&#34;</span>,<span style="color:#e6db74">&#34;Weight&#34;</span>])
+mydataframe
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Height</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p>Another way we can create a dataframe is by first creating a <strong>dictionary</strong> and then converting this to a dataframe. A dictionary is another type of data structure used by python. Dictionaries consist of an unordered collection of key-value pairs. Keys are used to index the dictionary in order to access the values associated with that key. Let&rsquo;s start by making a simple dictionary with one key and one value:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">data <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;name&#39;</span>:[<span style="color:#e6db74">&#34;Monica&#34;</span>,<span style="color:#e6db74">&#34;Michelle&#34;</span>,<span style="color:#e6db74">&#34;Paul&#34;</span>,<span style="color:#e6db74">&#34;Ellen&#34;</span>]}
+data
+</code></pre></div><pre><code>{'name': ['Monica', 'Michelle', 'Paul', 'Ellen']}
+</code></pre>
+<p>If we index this dictionary using the <code>name</code> key, it will return the its value, which is a list of names:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">data[<span style="color:#e6db74">&#39;name&#39;</span>]
+</code></pre></div><pre><code>['Monica', 'Michelle', 'Paul', 'Ellen']
+</code></pre>
+<p>We can also add new key-value pairs to this dictionary:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">data[<span style="color:#e6db74">&#39;score&#39;</span>] <span style="color:#f92672">=</span> [<span style="color:#ae81ff">16</span>,<span style="color:#ae81ff">20</span>,<span style="color:#ae81ff">19</span>,<span style="color:#ae81ff">35</span>]
+data[<span style="color:#e6db74">&#39;year&#39;</span>] <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>]
+data
+</code></pre></div><pre><code>{'name': ['Monica', 'Michelle', 'Paul', 'Ellen'],
+ 'score': [16, 20, 19, 35],
+ 'year': [2, 5, 2, 1]}
+</code></pre>
+<p>Similar to how we made a dataframe from our numpy array above, we can easily make a dataframe from this dictionary:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dataframe <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(data)
+dataframe
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>score</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Monica</td>
+      <td>16</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Michelle</td>
+      <td>20</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Paul</td>
+      <td>19</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Ellen</td>
+      <td>35</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<h2 id="reading-data-into-python">Reading data into Python</h2>
+<hr>
+<p>It&rsquo;s easy to introduce errors if you are entering data manually like above, and with a lot of data it would get tedious. Most of the time, you&rsquo;ll be reading data from an external file (.txt or .csv), or opening up an existing dataset in Python. Once you find the location of your files, what you do next will depend on the file format.</p>
+<h4 id="reminder-about-the-os-module">Reminder about the <code>os</code> module</h4>
+<p>This module provides a way to interface with the operating system we are running Python on (Windows, Mac, or Linux). Let&rsquo;s start by first loading this module:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> os
+</code></pre></div><h4 id="its-always-important-to-check-where-our-working-directory-is-when-trying-to-read-data-into-python">It&rsquo;s always important to check where our working directory is when trying to read data into python</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">os<span style="color:#f92672">.</span>getcwd()
+</code></pre></div><pre><code>'/Users/emily/Documents/GitHub/cu-psych-comp-tutorial/content/tutorials/python/2-datacleaning'
+</code></pre>
+<p>You can access a list of everything (all files and directories) within your working directory using the <code>os.listdir()</code> function&hellip;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">os<span style="color:#f92672">.</span>listdir()
+</code></pre></div><pre><code>['.DS_Store',
+ 'Study1_Followup.csv',
+ 'index.md',
+ 'Study2_Subjects.csv',
+ 'Study1_clean.csv',
+ '.ipynb_checkpoints',
+ 'Study1.csv',
+ 'challenge',
+ 'README_Study2.txt',
+ 'Study2_Trials.csv',
+ 'index.ipynb']
+</code></pre>
+<p>&hellip;as well as in the &ldquo;Files&rdquo; tab on the lefthand side of the jupyter lab window.</p>
+<h4 id="what-kind-of-file-do-you-have">What kind of file do you have?</h4>
+<p>For .txt, .csv, or any kind of delimited (such as tab-delimited) file, you can use the pandas function <code>read_table()</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#help(pd.read_table)</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_table(<span style="color:#e6db74">&#34;Study1.csv&#34;</span>, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;,&#34;</span>)
+</code></pre></div><p>If you know you have a csv file, another common option is <code>read_csv</code>, which has a default comma seperator.</p>
+<p>Remember, all of these commands can have arguments that will help Python make sense of your data. To find out what arguments are possible, you can use the <code>help()</code> function like we did above to look at what <code>read_table()</code> does.</p>
+<p>To do this, just put whatever command you would like to learn about inside of <code>help()</code> (e.g. <code>help(pd.read_table)</code>). Remember that for functions associated with a particular module you will need to tell python which module they come from using the <code>.</code> syntax.</p>
+<p>You can always also Google a function to quickly find this information.</p>
+<h3 id="inspecting-your-data">Inspecting your data</h3>
+<p>Now you have data, time to get some results! But wait! Are you sure this data is ok? Doing some basic steps to inspect your data now can save you lots of headaches later, and Python makes it really easy.</p>
+<p>Start by checking that you have the expected number of rows and columns in your data frame. You can do this by by asking Python:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># get the number of rows and columns</span>
+mydata<span style="color:#f92672">.</span>shape
+</code></pre></div><pre><code>(50, 9)
+</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># get the names of columns</span>
+mydata<span style="color:#f92672">.</span>columns
+</code></pre></div><pre><code>Index(['ID', 'Age', 'Sex', 'Condition', 'Personality', 'T1', 'T2', 'T3', 'T4'], dtype='object')
+</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># take a peak at the first few rows</span>
+mydata<span style="color:#f92672">.</span>head()
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Age</th>
+      <th>Sex</th>
+      <th>Condition</th>
+      <th>Personality</th>
+      <th>T1</th>
+      <th>T2</th>
+      <th>T3</th>
+      <th>T4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>21.0</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>67</td>
+      <td>5</td>
+      <td>2</td>
+      <td>3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>22.0</td>
+      <td>Female</td>
+      <td>1</td>
+      <td>63</td>
+      <td>4</td>
+      <td>1</td>
+      <td>5</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>24.0</td>
+      <td>Male</td>
+      <td>1</td>
+      <td>58</td>
+      <td>6</td>
+      <td>2</td>
+      <td>6</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>22.0</td>
+      <td>Female</td>
+      <td>1</td>
+      <td>51</td>
+      <td>2</td>
+      <td>3</td>
+      <td>6</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>19.0</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>49</td>
+      <td>7</td>
+      <td>6</td>
+      <td>5</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<h3 id="rename-a-variable">Rename a variable</h3>
+<p>Now that we&rsquo;ve loaded our data into Python and have made sure it makes sense, we can now start manipulating and cleaning it.</p>
+<p>Look back at your data frame. What is the fifth variable? What does that even mean? Luckily, this is your study and you know that it&rsquo;s a personality questionnaire measuring neuroticism. Let&rsquo;s fix that name and make it more intuitive:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata <span style="color:#f92672">=</span> mydata<span style="color:#f92672">.</span>rename({<span style="color:#e6db74">&#39;Personality&#39;</span>:<span style="color:#e6db74">&#39;Neuroticism&#39;</span>}, axis<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;columns&#34;</span>)
+mydata<span style="color:#f92672">.</span>head()
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Age</th>
+      <th>Sex</th>
+      <th>Condition</th>
+      <th>Neuroticism</th>
+      <th>T1</th>
+      <th>T2</th>
+      <th>T3</th>
+      <th>T4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>21.0</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>67</td>
+      <td>5</td>
+      <td>2</td>
+      <td>3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>22.0</td>
+      <td>Female</td>
+      <td>1</td>
+      <td>63</td>
+      <td>4</td>
+      <td>1</td>
+      <td>5</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>24.0</td>
+      <td>Male</td>
+      <td>1</td>
+      <td>58</td>
+      <td>6</td>
+      <td>2</td>
+      <td>6</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>22.0</td>
+      <td>Female</td>
+      <td>1</td>
+      <td>51</td>
+      <td>2</td>
+      <td>3</td>
+      <td>6</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>19.0</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>49</td>
+      <td>7</td>
+      <td>6</td>
+      <td>5</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p>We can also rename multiple variables at once:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata <span style="color:#f92672">=</span> mydata<span style="color:#f92672">.</span>rename({<span style="color:#e6db74">&#39;T1&#39;</span>:<span style="color:#e6db74">&#39;Day1&#39;</span>,
+                        <span style="color:#e6db74">&#39;T2&#39;</span>:<span style="color:#e6db74">&#39;Day2&#39;</span>,
+                        <span style="color:#e6db74">&#39;T3&#39;</span>:<span style="color:#e6db74">&#39;Day3&#39;</span>,
+                        <span style="color:#e6db74">&#39;T4&#39;</span>:<span style="color:#e6db74">&#39;Day4&#39;</span>}, axis<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;columns&#34;</span>)
+mydata<span style="color:#f92672">.</span>head()
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Age</th>
+      <th>Sex</th>
+      <th>Condition</th>
+      <th>Neuroticism</th>
+      <th>Day1</th>
+      <th>Day2</th>
+      <th>Day3</th>
+      <th>Day4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>21.0</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>67</td>
+      <td>5</td>
+      <td>2</td>
+      <td>3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>22.0</td>
+      <td>Female</td>
+      <td>1</td>
+      <td>63</td>
+      <td>4</td>
+      <td>1</td>
+      <td>5</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>24.0</td>
+      <td>Male</td>
+      <td>1</td>
+      <td>58</td>
+      <td>6</td>
+      <td>2</td>
+      <td>6</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>22.0</td>
+      <td>Female</td>
+      <td>1</td>
+      <td>51</td>
+      <td>2</td>
+      <td>3</td>
+      <td>6</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>19.0</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>49</td>
+      <td>7</td>
+      <td>6</td>
+      <td>5</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<h3 id="adding-a-new-column">Adding a new column</h3>
+<p>Often we&rsquo;ll want to add some new data into a dataframe</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># here we add a column where are the values are the same string</span>
+mydata[<span style="color:#e6db74">&#39;studyName&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;study1&#39;</span>
+
+<span style="color:#75715e"># here we add a column &#39;random&#39; of 50 unique random numbers</span>
+mydata[<span style="color:#e6db74">&#39;random&#39;</span>] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>random(<span style="color:#ae81ff">50</span>)
+
+mydata<span style="color:#f92672">.</span>head()
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Age</th>
+      <th>Sex</th>
+      <th>Condition</th>
+      <th>Neuroticism</th>
+      <th>Day1</th>
+      <th>Day2</th>
+      <th>Day3</th>
+      <th>Day4</th>
+      <th>studyName</th>
+      <th>random</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>21.0</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>67</td>
+      <td>5</td>
+      <td>2</td>
+      <td>3</td>
+      <td>1</td>
+      <td>study1</td>
+      <td>0.726704</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>22.0</td>
+      <td>Female</td>
+      <td>1</td>
+      <td>63</td>
+      <td>4</td>
+      <td>1</td>
+      <td>5</td>
+      <td>2</td>
+      <td>study1</td>
+      <td>0.118629</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>24.0</td>
+      <td>Male</td>
+      <td>1</td>
+      <td>58</td>
+      <td>6</td>
+      <td>2</td>
+      <td>6</td>
+      <td>2</td>
+      <td>study1</td>
+      <td>0.925191</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>22.0</td>
+      <td>Female</td>
+      <td>1</td>
+      <td>51</td>
+      <td>2</td>
+      <td>3</td>
+      <td>6</td>
+      <td>5</td>
+      <td>study1</td>
+      <td>0.639571</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>19.0</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>49</td>
+      <td>7</td>
+      <td>6</td>
+      <td>5</td>
+      <td>2</td>
+      <td>study1</td>
+      <td>0.579511</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p>For those coming from R, the python syntax for referencing columns as <code>df[&quot;columnName&quot;]</code> is roughly equivalent to using the $ operator</p>
+<h3 id="removing-columns">Removing Columns</h3>
+<p>We can remove columns with the <code>.drop</code> function</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata <span style="color:#f92672">=</span> mydata<span style="color:#f92672">.</span>drop([<span style="color:#e6db74">&#39;random&#39;</span>, <span style="color:#e6db74">&#39;studyName&#39;</span>], axis <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>)
+</code></pre></div><h2 id="indexing-a-dataframe">Indexing a dataframe</h2>
+<p>Sometimes you might want to look at only a subset of the columns in a dataframe (for example, when there are many variables). Doing this with a pandas dataframe is relatively straightforward:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># indexing a single column</span>
+ids <span style="color:#f92672">=</span> mydata[[<span style="color:#e6db74">&#39;ID&#39;</span>]]
+ids<span style="color:#f92672">.</span>head()
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># indexing multiple columns</span>
+mydata_subset <span style="color:#f92672">=</span> mydata[[<span style="color:#e6db74">&#39;ID&#39;</span>,<span style="color:#e6db74">&#39;Age&#39;</span>,<span style="color:#e6db74">&#39;Neuroticism&#39;</span>]]
+mydata_subset<span style="color:#f92672">.</span>head()
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Age</th>
+      <th>Neuroticism</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>21.0</td>
+      <td>67</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>22.0</td>
+      <td>63</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>24.0</td>
+      <td>58</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>22.0</td>
+      <td>51</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>19.0</td>
+      <td>49</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<h3 id="using-loc-and-iloc-to-index-dataframes">Using .loc and .iloc to index DataFrames</h3>
+<ul>
+<li>If we want to pull out or manipulate specific pieces of DataFrames, we can use the .loc and .iloc functions</li>
+<li>With both functions, the data referenced is always formatted as [selection of rows, selection of columns]</li>
+</ul>
+<h4 id="loc-takes-selections-of-rows-from-named-columns">.loc takes selections of rows from named columns</h4>
+<p>So, here we&rsquo;re asking for elements 0:2 from the &lsquo;Age&rsquo; column</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata<span style="color:#f92672">.</span>loc[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">2</span>, [<span style="color:#e6db74">&#39;Age&#39;</span>]]
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>21.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>22.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>24.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p>We can also use conditional logic to select rows. Here, we ask for all elements in the &lsquo;Age&rsquo; column that are above 24</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata<span style="color:#f92672">.</span>loc[mydata[<span style="color:#e6db74">&#39;Age&#39;</span>] <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">24</span>, [<span style="color:#e6db74">&#39;Age&#39;</span>]]
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5</th>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>25.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<h4 id="iloc-takes-selections-of-rows-and-columns-using-numeric-indices">.iloc takes selections of rows and columns using numeric indices</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata<span style="color:#f92672">.</span>iloc[<span style="color:#ae81ff">3</span>:<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">4</span>]
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+      <th>Sex</th>
+      <th>Condition</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3</th>
+      <td>22.0</td>
+      <td>Female</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>19.0</td>
+      <td>Female</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>25.0</td>
+      <td>Female</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>24.0</td>
+      <td>Female</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<h3 id="check-for-missing-data">Check for missing data</h3>
+<p>One problem you may have is missing data. Sometimes this is something you already know about, but you should check your data frame anyway to make sure nothing got missed in a data entry error. For small datasets, you can do this visually, but for larger ones you can ask Python.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata<span style="color:#f92672">.</span>isnull()
+<span style="color:#75715e">#mydata.isnull().values.any()</span>
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Age</th>
+      <th>Sex</th>
+      <th>Condition</th>
+      <th>Neuroticism</th>
+      <th>Day1</th>
+      <th>Day2</th>
+      <th>Day3</th>
+      <th>Day4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p>In this case, the missing value is the Age value in row 38. You know you have this info somewhere on a paper form, so you go dig it up and want to replace it.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Verify that this row contains the missing data</span>
+mydata<span style="color:#f92672">.</span>loc[mydata[<span style="color:#e6db74">&#34;ID&#34;</span>]<span style="color:#f92672">==</span><span style="color:#ae81ff">39</span>]
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Age</th>
+      <th>Sex</th>
+      <th>Condition</th>
+      <th>Neuroticism</th>
+      <th>Day1</th>
+      <th>Day2</th>
+      <th>Day3</th>
+      <th>Day4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>38</th>
+      <td>39</td>
+      <td>NaN</td>
+      <td>Female</td>
+      <td>1</td>
+      <td>53</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Replace row, column with the value 30</span>
+mydata<span style="color:#f92672">.</span>loc[mydata[<span style="color:#e6db74">&#34;ID&#34;</span>]<span style="color:#f92672">==</span><span style="color:#ae81ff">39</span>, <span style="color:#e6db74">&#34;Age&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">30</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Verify that the replacement worked</span>
+mydata<span style="color:#f92672">.</span>loc[mydata[<span style="color:#e6db74">&#34;ID&#34;</span>]<span style="color:#f92672">==</span><span style="color:#ae81ff">39</span>]
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Age</th>
+      <th>Sex</th>
+      <th>Condition</th>
+      <th>Neuroticism</th>
+      <th>Day1</th>
+      <th>Day2</th>
+      <th>Day3</th>
+      <th>Day4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>38</th>
+      <td>39</td>
+      <td>30.0</td>
+      <td>Female</td>
+      <td>1</td>
+      <td>53</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<h3 id="check-for-correct-values">Check for correct values</h3>
+<p>Let&rsquo;s take a look at the <code>Sex</code> variable:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata[<span style="color:#e6db74">&#39;Sex&#39;</span>]<span style="color:#f92672">.</span>head()
+</code></pre></div><pre><code>0    Female
+1    Female
+2      Male
+3    Female
+4    Female
+Name: Sex, dtype: object
+</code></pre>
+<p>It looks like there are two categories here, but let&rsquo;s double check. We can use the <code>unique()</code> function to list all of the unique values in a column:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata[<span style="color:#e6db74">&#34;Sex&#34;</span>]<span style="color:#f92672">.</span>unique()
+</code></pre></div><pre><code>array(['Female', 'Male', 'Femle'], dtype=object)
+</code></pre>
+<p>Here we see another data entry problem. At least one of the rows has a third category label that should really be another case of &ldquo;Female&rdquo;. Let&rsquo;s replace this label using the <code>replace()</code> function:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata[<span style="color:#e6db74">&#34;Sex&#34;</span>] <span style="color:#f92672">=</span> mydata[<span style="color:#e6db74">&#34;Sex&#34;</span>]<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#39;Femle&#39;</span>, <span style="color:#e6db74">&#39;Female&#39;</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Verify that the replacement worked</span>
+mydata[<span style="color:#e6db74">&#34;Sex&#34;</span>]<span style="color:#f92672">.</span>unique()
+</code></pre></div><pre><code>array(['Female', 'Male'], dtype=object)
+</code></pre>
+<p>Now let&rsquo;s look at some of the continuous variables. You can also look at these by indexing them individually, but sometimes it&rsquo;s easier to visualize. The <code>hist()</code> function, which creates histograms, is good here.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata[<span style="color:#e6db74">&#34;Age&#34;</span>]<span style="color:#f92672">.</span>hist();
+</code></pre></div><p><img src="../../../tutorials/python/2-datacleaning/output_75_0.png" alt="png"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata[<span style="color:#e6db74">&#34;Neuroticism&#34;</span>]<span style="color:#f92672">.</span>hist();
+</code></pre></div><p><img src="../../../tutorials/python/2-datacleaning/output_76_0.png" alt="png"></p>
+<p>Looks like we have a potential outlier on the neuroticism score. This could be an entry error, but it could also be a real value that just happens to be really low. This is why data inspection is so important for later analysis &ndash; now you know that value is there, it&rsquo;s up to you to decide how to deal with it.</p>
+<h3 id="filtering-data">Filtering data</h3>
+<p>Let&rsquo;s say we have decided a prori to exclude outliers 3SD above or below the mean. We will first define these boundaries:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">upper <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>mean(mydata[<span style="color:#e6db74">&#34;Neuroticism&#34;</span>]) <span style="color:#f92672">+</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>np<span style="color:#f92672">.</span>std(mydata[<span style="color:#e6db74">&#34;Neuroticism&#34;</span>])
+lower <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>mean(mydata[<span style="color:#e6db74">&#34;Neuroticism&#34;</span>]) <span style="color:#f92672">-</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>np<span style="color:#f92672">.</span>std(mydata[<span style="color:#e6db74">&#34;Neuroticism&#34;</span>])
+</code></pre></div><p>We can now use conditional indexing to exclude all rows with a Neuroticism score above or below these values:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata <span style="color:#f92672">=</span> mydata[(mydata[<span style="color:#e6db74">&#34;Neuroticism&#34;</span>] <span style="color:#f92672">&gt;</span> lower) <span style="color:#f92672">&amp;</span> (mydata[<span style="color:#e6db74">&#34;Neuroticism&#34;</span>] <span style="color:#f92672">&lt;</span> upper)]
+</code></pre></div><p>This line says: return only the Neuroticism values greater than the <code>lower</code> boundary and less than the <code>upper</code> boundary and then save it in the <code>mydata</code> variable</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Verify that we excluded 1 outlier</span>
+mydata<span style="color:#f92672">.</span>shape
+</code></pre></div><pre><code>(49, 9)
+</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata[<span style="color:#e6db74">&#34;Neuroticism&#34;</span>]<span style="color:#f92672">.</span>hist();
+</code></pre></div><p><img src="../../../tutorials/python/2-datacleaning/output_84_0.png" alt="png"></p>
+<hr>
+<h2 id="getting-ready-for-analysis">Getting ready for analysis</h2>
+<p>Now that we&rsquo;ve gone through and cleaned up the problems, you can think ahead to how you&rsquo;ll want to use this data.</p>
+<h3 id="recoding-variables">Recoding variables</h3>
+<p>Sometimes we want to treat categorical variables as factors, but sometimes we want to pretend they&rsquo;re numeric (as in a regression, when binary variables can be coded as 0 and 1). Right now, Condition is coded as a binary numeric variable, but that&rsquo;s not very informative, so you&rsquo;d rather have the values be descriptive. Here, the function <code>replace()</code> is again useful:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata[<span style="color:#e6db74">&#39;ConditionF&#39;</span>] <span style="color:#f92672">=</span> mydata[<span style="color:#e6db74">&#39;Condition&#39;</span>]<span style="color:#f92672">.</span>replace([<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>], [<span style="color:#e6db74">&#39;Control&#39;</span>,<span style="color:#e6db74">&#39;Treatment&#39;</span>])
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Verify that your variable is now recoded as you&#39;d like</span>
+mydata[[<span style="color:#e6db74">&#39;Condition&#39;</span>,<span style="color:#e6db74">&#39;ConditionF&#39;</span>]]<span style="color:#f92672">.</span>head()
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Condition</th>
+      <th>ConditionF</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>Control</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>Treatment</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>Treatment</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>Treatment</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>Control</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<h3 id="calculating-new-variables">Calculating new variables</h3>
+<p>You may also want to recalculate or rescale some variables. For example, we can turn Neuroticism into a Z score, or calculate an average response across the four time points.</p>
+<p>To compute a Z score, we can use the <code>zscore</code> function from the <code>scipy.stats</code> module:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> scipy.stats <span style="color:#f92672">import</span> zscore
+
+mydata[<span style="color:#e6db74">&#39;NeuroticismZ&#39;</span>] <span style="color:#f92672">=</span> zscore(mydata[<span style="color:#e6db74">&#39;Neuroticism&#39;</span>])
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata[<span style="color:#e6db74">&#39;NeuroticismZ&#39;</span>]<span style="color:#f92672">.</span>hist();
+</code></pre></div><p><img src="../../../tutorials/python/2-datacleaning/output_90_0.png" alt="png"></p>
+<p>To calculate the means across each day, we can use the <code>mean</code> function from pandas on a dataframe that has been indexed to include only data from the four days:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata[<span style="color:#e6db74">&#39;DayMean&#39;</span>] <span style="color:#f92672">=</span> mydata[[<span style="color:#e6db74">&#39;Day1&#39;</span>,<span style="color:#e6db74">&#39;Day2&#39;</span>,<span style="color:#e6db74">&#39;Day3&#39;</span>,<span style="color:#e6db74">&#39;Day4&#39;</span>]]<span style="color:#f92672">.</span>mean(axis<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;columns&#34;</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata[<span style="color:#e6db74">&#39;DayMean&#39;</span>]<span style="color:#f92672">.</span>hist();
+</code></pre></div><p><img src="../../../tutorials/python/2-datacleaning/output_93_0.png" alt="png"></p>
+<h3 id="combining-data-from-multiple-sources">Combining data from multiple sources</h3>
+<p>Sometimes, data might be spread across multiple files, and you&rsquo;ll want to combine those for your analysis. For example, maybe this study had a follow-up survey on Day 30. Scores from that survey were entered into another spreadsheet, which only has the subject ID and that score. We want to include that score into our data.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># first load the followup dataset</span>
+mydata2 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;Study1_Followup.csv&#34;</span>)
+</code></pre></div><p>We can use the function <code>merge()</code> to combine the two dataframes. To make sure the data matches up, we use the <code>on</code> argument to specify that IDs should match. That way even if the data is in a different order you will get scores matched together correctly.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata <span style="color:#f92672">=</span> mydata<span style="color:#f92672">.</span>merge(mydata2,on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ID&#34;</span>)
+mydata<span style="color:#f92672">.</span>head()
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Age</th>
+      <th>Sex</th>
+      <th>Condition</th>
+      <th>Neuroticism</th>
+      <th>Day1</th>
+      <th>Day2</th>
+      <th>Day3</th>
+      <th>Day4</th>
+      <th>ConditionF</th>
+      <th>NeuroticismZ</th>
+      <th>DayMean</th>
+      <th>Day30</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>21.0</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>67</td>
+      <td>5</td>
+      <td>2</td>
+      <td>3</td>
+      <td>1</td>
+      <td>Control</td>
+      <td>0.754583</td>
+      <td>2.75</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>22.0</td>
+      <td>Female</td>
+      <td>1</td>
+      <td>63</td>
+      <td>4</td>
+      <td>1</td>
+      <td>5</td>
+      <td>2</td>
+      <td>Treatment</td>
+      <td>0.418450</td>
+      <td>3.00</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>24.0</td>
+      <td>Male</td>
+      <td>1</td>
+      <td>58</td>
+      <td>6</td>
+      <td>2</td>
+      <td>6</td>
+      <td>2</td>
+      <td>Treatment</td>
+      <td>-0.001715</td>
+      <td>4.00</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>22.0</td>
+      <td>Female</td>
+      <td>1</td>
+      <td>51</td>
+      <td>2</td>
+      <td>3</td>
+      <td>6</td>
+      <td>5</td>
+      <td>Treatment</td>
+      <td>-0.589946</td>
+      <td>4.00</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>19.0</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>49</td>
+      <td>7</td>
+      <td>6</td>
+      <td>5</td>
+      <td>2</td>
+      <td>Control</td>
+      <td>-0.758013</td>
+      <td>5.00</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<h3 id="shaping-data">Shaping data</h3>
+<p>Finally, you may want to change the layout of your data. Right now, our data frame is in &ldquo;wide&rdquo; format, which means that each row is a subject, and each observation gets its own column. For some analyses, you&rsquo;ll need to use &ldquo;long&rdquo; format, where each row is an observation, and columns specify things like time and ID to differentiate the observations. For this, we can use the <code>melt()</code> function in pandas:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">value_cols <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;Day1&#34;</span>,<span style="color:#e6db74">&#34;Day2&#34;</span>,<span style="color:#e6db74">&#34;Day3&#34;</span>,<span style="color:#e6db74">&#34;Day4&#34;</span>] <span style="color:#75715e"># columns we would like to convert to a single &#34;long&#34; column</span>
+id_cols <span style="color:#f92672">=</span> list(mydata<span style="color:#f92672">.</span>columns) <span style="color:#75715e"># columns we would like to stay in the same &#34;wide&#34; format</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> value_cols:
+    id_cols<span style="color:#f92672">.</span>remove(i)
+</code></pre></div><h4 id="wide----long">Wide &ndash;&gt; Long</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata_Long <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>melt(mydata,id_vars<span style="color:#f92672">=</span>id_cols,var_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Time&#34;</span>,value_vars<span style="color:#f92672">=</span>value_cols,value_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Score&#34;</span>)
+mydata_Long<span style="color:#f92672">.</span>head()
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Age</th>
+      <th>Sex</th>
+      <th>Condition</th>
+      <th>Neuroticism</th>
+      <th>ConditionF</th>
+      <th>NeuroticismZ</th>
+      <th>DayMean</th>
+      <th>Day30</th>
+      <th>Time</th>
+      <th>Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>21.0</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>67</td>
+      <td>Control</td>
+      <td>0.754583</td>
+      <td>2.75</td>
+      <td>6</td>
+      <td>Day1</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>22.0</td>
+      <td>Female</td>
+      <td>1</td>
+      <td>63</td>
+      <td>Treatment</td>
+      <td>0.418450</td>
+      <td>3.00</td>
+      <td>6</td>
+      <td>Day1</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>24.0</td>
+      <td>Male</td>
+      <td>1</td>
+      <td>58</td>
+      <td>Treatment</td>
+      <td>-0.001715</td>
+      <td>4.00</td>
+      <td>6</td>
+      <td>Day1</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>22.0</td>
+      <td>Female</td>
+      <td>1</td>
+      <td>51</td>
+      <td>Treatment</td>
+      <td>-0.589946</td>
+      <td>4.00</td>
+      <td>3</td>
+      <td>Day1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>19.0</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>49</td>
+      <td>Control</td>
+      <td>-0.758013</td>
+      <td>5.00</td>
+      <td>6</td>
+      <td>Day1</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<h4 id="long----wide">Long &ndash;&gt; Wide</h4>
+<p>We can go back in the other direction by using the <code>pivot_table()</code> function in pandas:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mydata_Wide <span style="color:#f92672">=</span> mydata_Long<span style="color:#f92672">.</span>pivot_table(values<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Score&#34;</span>, index<span style="color:#f92672">=</span>id_cols, columns<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Time&#39;</span>)<span style="color:#f92672">.</span>reset_index()
+mydata_Wide<span style="color:#f92672">.</span>columns<span style="color:#f92672">.</span>name <span style="color:#f92672">=</span> None
+mydata_Wide<span style="color:#f92672">.</span>head()
+</code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Age</th>
+      <th>Sex</th>
+      <th>Condition</th>
+      <th>Neuroticism</th>
+      <th>ConditionF</th>
+      <th>NeuroticismZ</th>
+      <th>DayMean</th>
+      <th>Day30</th>
+      <th>Day1</th>
+      <th>Day2</th>
+      <th>Day3</th>
+      <th>Day4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>21.0</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>67</td>
+      <td>Control</td>
+      <td>0.754583</td>
+      <td>2.75</td>
+      <td>6</td>
+      <td>5</td>
+      <td>2</td>
+      <td>3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>22.0</td>
+      <td>Female</td>
+      <td>1</td>
+      <td>63</td>
+      <td>Treatment</td>
+      <td>0.418450</td>
+      <td>3.00</td>
+      <td>6</td>
+      <td>4</td>
+      <td>1</td>
+      <td>5</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>24.0</td>
+      <td>Male</td>
+      <td>1</td>
+      <td>58</td>
+      <td>Treatment</td>
+      <td>-0.001715</td>
+      <td>4.00</td>
+      <td>6</td>
+      <td>6</td>
+      <td>2</td>
+      <td>6</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>22.0</td>
+      <td>Female</td>
+      <td>1</td>
+      <td>51</td>
+      <td>Treatment</td>
+      <td>-0.589946</td>
+      <td>4.00</td>
+      <td>3</td>
+      <td>2</td>
+      <td>3</td>
+      <td>6</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>19.0</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>49</td>
+      <td>Control</td>
+      <td>-0.758013</td>
+      <td>5.00</td>
+      <td>6</td>
+      <td>7</td>
+      <td>6</td>
+      <td>5</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<hr>
+<h2 id="saving-your-work">Saving your work</h2>
+<p>Once you&rsquo;ve created a data cleaning script like this one, you&rsquo;ll have a record of all the edits you&rsquo;ve made on the raw data, and you can recreate your cleaned data just by running the script again. However, it&rsquo;s often easier to save your cleaned data as its own file <strong>(never overwrite the raw data)</strong>, so when you come back to do analysis you don&rsquo;t have to bother with all the cleaning steps.</p>
+<p>You can always save data frames as a .csv for easy sharing and viewing outside of Python.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># write data to a .csv</span>
+mydata<span style="color:#f92672">.</span>to_csv(<span style="color:#e6db74">&#34;Study1_clean.csv&#34;</span>,index <span style="color:#f92672">=</span> False)
+</code></pre></div><hr>
+<h2 id="future-directions">Future Directions</h2>
+<p>Congratulations! You&rsquo;ve now cleaned some data in Python and you&rsquo;re ready to start working with your data. This tutorial only went over some basic cleaning steps. As you work with your own data, you may find yourself needing other tools.</p>
+<p><strong>Next:</strong> <a href="../../../tutorials/python/3-datamanipulation/">Data Manipulation in Python</a></p>
+
+    </article>
+  </div>
+
+</body>
+
+<footer class="footer">
+  © 2020 Columbia Psychology Scientific Computing
+  <script src="//yihui.org/js/math-code.js"></script>
+  <script async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+</footer>
+
+</html>
