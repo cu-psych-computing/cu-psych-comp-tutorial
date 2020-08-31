@@ -9,7 +9,6 @@ weight: 602
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 require(tidyverse)
-require(ggplot2)
 require(lme4)
 require(arm)
 require(rstanarm)
