@@ -22,21 +22,21 @@ tags: ["core", "R"]
 weight: 101
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 <script src="/rmarkdown-libs/accessible-code-block/empty-anchor.js"></script>
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -56,7 +56,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {  background-color: #f8f8f8; }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -176,7 +176,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <h2>The working directory</h2>
 <p>Every R session has a <em>working directory,</em> or a “home base” folder. Essentially, this is the folder that R is “in”. R is not actually installed in this folder, mind you! The working directory is the first folder where R looks for raw data files to load in. You can find out what folder is your working directory using the <code>here()</code> command as below.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">here</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;/Users/mthieu/Repos/cu-psych-r-tutorial&quot;</code></pre>
+<pre><code>## [1] &quot;/Users/emily/Documents/GitHub/cu-psych-comp-tutorial&quot;</code></pre>
 <p>If you run this command on your own computer, you’ll get a different folder. And that’s okay! Our folder structures on our computers are all different.</p>
 <p>When you launch R by opening an R project file (our preferred way of opening R), R automatically sets your working directory to be the folder that this R project file is saved in. Thus, if your R project file is in the same folder as your raw data, scripts, etc, this is a neat short-cut to start R in the folder all of your stuff is saved in.</p>
 <p><strong>We do not recommend changing your working directory during an active R session.</strong> R project files automatically set your working directory for you, so you don’t need to physically set your working directory when you open up R if you open up an R project file. Additionally, when you use R project files, you can open multiple R instances in different working directories if you need to work on multiple projects at once, so you shouldn’t need to change your working directory inside one R session.</p>
@@ -233,7 +233,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="/images/filepath.png" /></p>
 <p>To generate a file path using <code>here()</code>, list the names of each subfolder in quotes, followed by the file name in quotes. Please note that these subfolder names should be listed from highest in the folder structure to lowest (ending with the subfolder where the data file is located).</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">here</span>(<span class="st">&quot;content&quot;</span>, <span class="st">&quot;tutorials&quot;</span>, <span class="st">&quot;r-core&quot;</span>, <span class="st">&quot;1-programming&quot;</span>, <span class="st">&quot;shakes.csv&quot;</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;/Users/mthieu/Repos/cu-psych-r-tutorial/content/tutorials/r-core/1-programming/shakes.csv&quot;</code></pre>
+<pre><code>## [1] &quot;/Users/emily/Documents/GitHub/cu-psych-comp-tutorial/content/tutorials/r-core/1-programming/shakes.csv&quot;</code></pre>
 </div>
 <div id="reading-the-data-into-r" class="section level3">
 <h3>Reading the data into R</h3>
