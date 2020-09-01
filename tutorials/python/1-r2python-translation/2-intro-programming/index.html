@@ -497,13 +497,13 @@ div.sourceCode {
 <li>Variables in python work much in the same way they do in R.</li>
 <li>In python, a single equals sign <code>=</code> is used for saving variables</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">myVar <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
-myVar
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">myVar</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2</span>
+<span style="color:#000">myVar</span>
 </code></pre></div><pre><code>2
 </code></pre>
 <p>Just as in R, you can reassign a variable as much as you want</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">myVar <span style="color:#f92672">=</span> myVar <span style="color:#f92672">*</span><span style="color:#ae81ff">10</span>
-myVar
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">myVar</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">myVar</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#0000cf;font-weight:bold">10</span>
+<span style="color:#000">myVar</span>
 </code></pre></div><pre><code>20
 </code></pre>
 <h1 id="data-types">Data Types</h1>
@@ -515,20 +515,20 @@ myVar
 <li>boolean variables</li>
 </ul>
 <p>You can use the function <code>type()</code> to find out what kind of data type something is</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">var1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
-type(var1)
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">var1</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2</span>
+<span style="color:#204a87">type</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">var1</span><span style="color:#000;font-weight:bold">)</span>
 </code></pre></div><pre><code>int
 </code></pre>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">var2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">2.0</span>
-type(var2)
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">var2</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2.0</span>
+<span style="color:#204a87">type</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">var2</span><span style="color:#000;font-weight:bold">)</span>
 </code></pre></div><pre><code>float
 </code></pre>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">var3 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;I like to boogie&#39;</span>
-type(var3)
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">var3</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#39;I like to boogie&#39;</span>
+<span style="color:#204a87">type</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">var3</span><span style="color:#000;font-weight:bold">)</span>
 </code></pre></div><pre><code>str
 </code></pre>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">var4 <span style="color:#f92672">=</span> True
-type(var4)
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">var4</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#3465a4">True</span>
+<span style="color:#204a87">type</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">var4</span><span style="color:#000;font-weight:bold">)</span>
 </code></pre></div><pre><code>bool
 </code></pre>
 <h1 id="arithmetic">Arithmetic</h1>
@@ -541,18 +541,18 @@ type(var4)
 <li><code>**</code> exponent</li>
 <li><code>()</code> parentheses</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">3</span><span style="color:#f92672">*</span><span style="color:#ae81ff">5</span><span style="color:#f92672">**</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#0000cf;font-weight:bold">3</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#0000cf;font-weight:bold">5</span><span style="color:#ce5c00;font-weight:bold">**</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#ce5c00;font-weight:bold">+</span><span style="color:#0000cf;font-weight:bold">1</span>
 </code></pre></div><pre><code>76
 </code></pre>
 <p>Just as in R, boolean variables are treated as numbers for math, such that True = 1 and False = 0</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">True <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#3465a4">True</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#0000cf;font-weight:bold">1</span>
 </code></pre></div><pre><code>2
 </code></pre>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">False <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#3465a4">False</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#0000cf;font-weight:bold">1</span>
 </code></pre></div><pre><code>1
 </code></pre>
 <p>Just like in R, you can&rsquo;t do arithmetic on strings</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#e6db74">&#39;hi&#39;</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#4e9a06">&#39;hi&#39;</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#0000cf;font-weight:bold">1</span>
 </code></pre></div><pre><code>---------------------------------------------------------------------------
 
 TypeError                                 Traceback (most recent call last)
@@ -564,80 +564,80 @@ TypeError                                 Traceback (most recent call last)
 TypeError: can only concatenate str (not &quot;int&quot;) to str
 </code></pre>
 <p>With strings, it is often also useful to see how long they are:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">stringVar <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;myString&#39;</span>
-len(stringVar)
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">stringVar</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#39;myString&#39;</span>
+<span style="color:#204a87">len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">stringVar</span><span style="color:#000;font-weight:bold">)</span>
 </code></pre></div><h1 id="printing-outputs">Printing Outputs</h1>
 <p>By default, jupyter notebooks only print the last command in a chunk as output. However, we can get around this by using the <code>print()</code> function</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">var3
-var4
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(var3)
-<span style="color:#66d9ef">print</span>(var4)
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">var3</span>
+<span style="color:#000">var4</span>
+</code></pre></div><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#204a87;font-weight:bold">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">var3</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#204a87;font-weight:bold">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">var4</span><span style="color:#000;font-weight:bold">)</span>
 </code></pre></div><h1 id="lists">Lists</h1>
 <p>Lists in python are a rough equivalent of vectors in R. They are ordered sequences of data, and are defined by square brackets []</p>
 <p>If our basic datatypes are &lsquo;1-dimensional&rsquo;, then lists containing numeric/boolean/string data are usually thought of as &lsquo;2-dimensional&rsquo;.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">numList <span style="color:#f92672">=</span> [<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">6</span>,<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">8</span>]
-numList
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">stringList <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;avocado&#39;</span>, <span style="color:#e6db74">&#39;mango&#39;</span>, <span style="color:#e6db74">&#39;papaya&#39;</span>]
-stringList
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">numList</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">6</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">7</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">8</span><span style="color:#000;font-weight:bold">]</span>
+<span style="color:#000">numList</span>
+</code></pre></div><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">stringList</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#39;avocado&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;mango&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;papaya&#39;</span><span style="color:#000;font-weight:bold">]</span>
+<span style="color:#000">stringList</span>
 </code></pre></div><p>Caution! While in R, all items in a vector have to be the same data type, in python, lists can mix data types. Usually, we don&rsquo;t really want to do this, so it is good to be careful</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mixList <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#39;2&#39;</span>]
-mixList
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">mixList</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;2&#39;</span><span style="color:#000;font-weight:bold">]</span>
+<span style="color:#000">mixList</span>
 </code></pre></div><p>To find the length of a list we can use the <code>len()</code> funtion</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">len(numList)
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#204a87">len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">numList</span><span style="color:#000;font-weight:bold">)</span>
 </code></pre></div><p>We can also add items onto the ends of lists with the <code>append()</code> function</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">numList<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">2</span>)
-numList
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">numList</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">append</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">numList</span>
 </code></pre></div><h1 id="list-indexing">List Indexing</h1>
 <ul>
 <li>One <strong>VERY IMPORTANT</strong> difference between R and python is that list indexing in python begins at 0</li>
 <li>So, item 0 is always the first item in the list</li>
 <li>List indexing in python is also done with square brackets <input disabled="" type="checkbox"> </li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">numList[<span style="color:#ae81ff">0</span>]
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">numList</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">]</span>
 </code></pre></div><p>Using a negative number n will return the item n spots from the end</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">stringList[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">stringList</span><span style="color:#000;font-weight:bold">[</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]</span>
 </code></pre></div><p>We can index a range of items too by using the :</p>
 <ul>
 <li>This will return the items including the first number, up until (but not including) the second</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">stringList[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">2</span>]
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">stringList</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">]</span>
 </code></pre></div><p>What happens if we go off the end of the list?</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">numList[<span style="color:#ae81ff">4</span>]
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">numList</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">4</span><span style="color:#000;font-weight:bold">]</span>
 </code></pre></div><p>We don&rsquo;t just use list indexing to print out specific parts of lists though. We can use this to replace values (overwrite them) in existing lists</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">stringList[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;guacamole&#39;</span>
-stringList
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">stringList</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#39;guacamole&#39;</span>
+<span style="color:#000">stringList</span>
 </code></pre></div><p>And, we can remove items from lists entirely with del()</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">del</span>(stringList[<span style="color:#ae81ff">0</span>])
-stringList
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#204a87;font-weight:bold">del</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">stringList</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">])</span>
+<span style="color:#000">stringList</span>
 </code></pre></div><p>In python, we also want to make sure we&rsquo;re careful what it is we&rsquo;re indexing. Strings can also be indexed in the same manner as lists, and will return the <em>characters</em> inside them at the respective indices</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(var3)
-var3[<span style="color:#ae81ff">2</span>:<span style="color:#ae81ff">8</span>]
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#204a87;font-weight:bold">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">var3</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">var3</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">8</span><span style="color:#000;font-weight:bold">]</span>
 </code></pre></div><h1 id="relational-operators">Relational Operators</h1>
 <p>Most of the time, when you want to do things in python, you want to do them in some conditions but not others.</p>
 <p>Relational operators are the first key to making this happen. These are essentially inequality operators like the ones you would encounter in algebra, and return either <code>True</code> or <code>False</code></p>
 <p>Relational operators work largely the same way in python as in R</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">2</span><span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">2</span><span style="color:#f92672">&lt;</span><span style="color:#ae81ff">1</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">2</span><span style="color:#f92672">&gt;=</span><span style="color:#ae81ff">1</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">2</span><span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">1</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#e6db74">&#39;hi&#39;</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;hi&#39;</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;2&#39;</span>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#0000cf;font-weight:bold">1</span>
+</code></pre></div><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#0000cf;font-weight:bold">1</span>
+</code></pre></div><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#ce5c00;font-weight:bold">&gt;=</span><span style="color:#0000cf;font-weight:bold">1</span>
+</code></pre></div><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#ce5c00;font-weight:bold">&lt;=</span><span style="color:#0000cf;font-weight:bold">1</span>
+</code></pre></div><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#0000cf;font-weight:bold">2</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">2</span>
+</code></pre></div><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#4e9a06">&#39;hi&#39;</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#39;hi&#39;</span>
+</code></pre></div><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#0000cf;font-weight:bold">2</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#39;2&#39;</span>
 </code></pre></div><p>Just as in R, the exclamation point is used to indicate &lsquo;not&rsquo;</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">2</span> <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#0000cf;font-weight:bold">2</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#0000cf;font-weight:bold">3</span>
 </code></pre></div><p>We can use relational operators with variables as well</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
-b <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
-a <span style="color:#f92672">&gt;</span> b
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">a</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2</span>
+<span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">3</span>
+<span style="color:#000">a</span> <span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#000">b</span>
 </code></pre></div><p>A useful relational operator is to see whether a variable is <em>in</em> an object containing multiple pieces of data. We can use &lsquo;in&rsquo; for this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">2</span> <span style="color:#f92672">in</span> [<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>]
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#e6db74">&#39;banana&#39;</span> <span style="color:#f92672">in</span> [<span style="color:#e6db74">&#39;fruit&#39;</span>, <span style="color:#e6db74">&#39;banana&#39;</span>, <span style="color:#e6db74">&#39;antelope&#39;</span>]
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#0000cf;font-weight:bold">2</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">4</span><span style="color:#000;font-weight:bold">]</span>
+</code></pre></div><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#4e9a06">&#39;banana&#39;</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#39;fruit&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;banana&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;antelope&#39;</span><span style="color:#000;font-weight:bold">]</span>
 </code></pre></div><h1 id="logical-operators">Logical Operators</h1>
 <p>In python we can use and, or, and not to define conditions based on multiple relations</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">(<span style="color:#ae81ff">1</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">&amp;</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">(<span style="color:#ae81ff">1</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">and</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">(<span style="color:#ae81ff">1</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">or</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">(<span style="color:#ae81ff">1</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">and</span> <span style="color:#f92672">not</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>)
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">2</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">and</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">2</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">or</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">2</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">and</span> <span style="color:#204a87;font-weight:bold">not</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">2</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000;font-weight:bold">)</span>
 </code></pre></div><p><strong>Next:</strong> <a href="../../../../tutorials/python/1-r2python-translation/3-control-flow/">Control Flow</a></p>
 
     </article>
