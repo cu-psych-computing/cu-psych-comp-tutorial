@@ -1,0 +1,69 @@
+---
+title: "Instructions for Accessing Tutorial Files"
+author: "Psych Methods Support"
+output:
+  blogdown::html_page:
+    toc: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Instructions for Accessing Tutorial Files
+
+---
+
+As noted at the top of each of our [tutorials](/tutorials/), all files can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial){target="_blank"}. In these notes, we list where the specific RMarkdown file for that tutorial is located (e.g., `/content/tutorials/r-core/1-programming/lessonpart0.rmd`).
+
+This page contains instructions for downloading and opening such files. If you experience any issues in completing these steps, feel free to drop us a note at [psych-methods-support@columbia.edu](mailto:psych-methods-support@columbia.edu){target="_blank"}.
+
+## 1. Visit GitHub and Download Zipped Folder
+
+---
+
+First, visit the Columbia Psychology Scientific Computing GitHub page, which is located at [https://github.com/cu-psych-computing/cu-psych-comp-tutorial](https://github.com/cu-psych-computing/cu-psych-comp-tutorial){target="_blank"}.
+
+On this page, click on the green **Code** button...
+
+![](/images/github.png)
+
+...and then click **Download ZIP**.
+
+<p style="text-align:center;"><img src="/images/download-zip.png" alt="R is fun" width = "35%" height = "35%"></p>
+
+Once downloaded, this zipped (AKA "compressed") folder should be somewhere easily accessible to you (likely your Desktop or Downloads folder, unless you specified otherwise).
+
+<p style="text-align:center;"><img src="/images/zip.png" alt="R is fun" width = "20%" height = "20%"></p>
+
+Unzip the zipped folder. On a Mac, you can do this by double-clicking on the zipped folder. On a PC, right-click and select "Extract All". You should now see the unzipped folder on your computer.
+
+<p style="text-align:center;"><img src="/images/unzip.png" alt="R is fun" width = "20%" height = "20%"></p>
+
+## 2. Open RStudio Using RProject File
+
+---
+
+Next, open the folder that you just unzipped. Inside this folder, you will see a range of folders and files, including a file named `cu-psych-comp-tutorial.Rproj`. The `.Rproj` extension indicates that this is an RProject file. We recommend that you always open RStudio by using an RProject file like this one.
+
+![](/images/rproject-file.png)
+
+Double-click on the `cu-psych-comp-tutorial.Rproj` file, and RStudio will open. You will know that the .Rproj opened correctly in RStudio as an RProject by checking that the file is listed at the upper right corner of your RStudio screen.
+
+![](/images/rproject.png)
+
+(If you didn't use an RProject file to open RStudio, instead of a project name, this upper right corner will simply say "(None)".)
+
+## 3. Open Tutorial File
+
+---
+
+Finally, you can open the file of interest. As a friendly reminder, the location of this file is specified at the top of each tutorial. To open this file, although you can navigate using the unzipped folder from GitHub (i.e., in the window where you opened the RProject file), you can also use the **Files** tab at the bottom right corner of your RStudio window.
+
+For example, to access the example file (`/content/tutorials/r-core/1-programming/lessonpart0.rmd`), you would click on the `content` folder, then the `tutorials` folder, then the `r-core` folder, then the `1-programming` folder, and finally on the `lessonpart0.rmd` file.
+
+<p style="text-align:center;"><img src="/images/files.png" alt="R is fun" width = "40%" height = "40%"></p>
+
+Once you have clicked on this file, it will open in RStudio.
+
+![](/images/file.png)

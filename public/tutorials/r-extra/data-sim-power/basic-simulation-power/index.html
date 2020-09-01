@@ -374,6 +374,10 @@ div.sourceCode {
               
             <a class="dropdown-item" href="../../../../tutorials/r-extra/">Additional R Tutorials</a>
               
+            <a class="dropdown-item" href="../../../../tutorials/python/">Introductory Python Tutorial</a>
+              
+            <a class="dropdown-item" href="../../../../accessing-files/">Instructions for Accessing Files</a>
+              
           </div>
         </li>
         
@@ -470,11 +474,12 @@ div.sourceCode {
 </p>
 <hr>
 
+<script src="../../../../rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
 <div id="links-to-files" class="section level2">
 <h2>Links to Files</h2>
-<p>The files for all tutorials can be downloaded from <a href="https://github.com/cu-psych-computing/cu-psych-comp-tutorial" target="_blank">the Columbia Psychology Scientific Computing GitHub page</a>. This particular file is located here: <code>/content/tutorials/r-extra/data-sim-power/basic-simulation-power.rmd</code>.</p>
+<p>The files for all tutorials can be downloaded from <a href="https://github.com/cu-psych-computing/cu-psych-comp-tutorial" target="_blank">the Columbia Psychology Scientific Computing GitHub page</a> using <a href="../../../../accessing-files/" target="_blank">these instructions</a>. This particular file is located here: <code>/content/tutorials/r-extra/data-sim-power/basic-simulation-power.rmd</code>.</p>
 </div>
 <div id="why-simulate" class="section level2">
 <h2>Why Simulate?</h2>
@@ -556,11 +561,11 @@ Now let’s model this with a linear regression</p>
 arm::display(mod)</code></pre>
 <pre><code>## lm(formula = extroversion ~ heightMeanCentered, data = df)
 ##                    coef.est coef.se
-## (Intercept)        98.73     2.46  
-## heightMeanCentered  2.79     0.47  
+## (Intercept)        99.24     2.26  
+## heightMeanCentered  1.99     0.49  
 ## ---
 ## n = 100, k = 2
-## residual sd = 24.60, R-Squared = 0.26</code></pre>
+## residual sd = 22.62, R-Squared = 0.15</code></pre>
 <p>So, did our model recover the parameters? Let’s say for the time being that if the <em>ground truth</em> value is contained within the 95% confidence interval (or approximately estimate +/- 2se) of the model, we’ve recovered the parameter. Looks like that is the case here!</p>
 <p>However, this is just one random sampling of a dataset from our <em>ground truth</em>. To really see how well our model would fit, we will want to simulate many datasets and fit the model to them.</p>
 </div>
@@ -623,7 +628,7 @@ simOutLong &lt;- simOutputs %&gt;%
 
 recoveryRate &lt;- nrow(dplyr::filter(heightParameters, 
                            beta &lt; upr &amp; beta &gt; lwr &amp; lwr &gt; 0))/nrow(heightParameters)</code></pre>
-<p>So, in this case, our ‘power’, or rate of sucessful parameter recovery, is 0.942.</p>
+<p>So, in this case, our ‘power’, or rate of sucessful parameter recovery, is 0.944.</p>
 <p>It is also important to check for the rate of ‘type S’ errors, or errors where we have estimated the parameter to have the opposite sign from the true generating param. Anything more than a very low type S rate could be a serious issue.</p>
 <pre class="r"><code>typeSRate &lt;- nrow(dplyr::filter(heightParameters, 
                            estimate &lt; 0))/nrow(heightParameters)</code></pre>

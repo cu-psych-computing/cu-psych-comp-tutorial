@@ -47,10 +47,10 @@ This is our core introductory scientfic computing syllabus. The materials here a
 
 ### Intro to Data Cleaning, Manipulation, and Plotting in Python
 
-<p><a href="/python/1_r2PythonTranslation/2_introProgramming.html" target="_blank">Intro to Python for R Users</a></p>
-<p><a href="/python/2_dataCleaning/lesson.html" target="_blank">Data Cleaning</a></p>
-<p><a href="/python/3_descriptives/lesson.html" target="_blank">Data Manipulation</a></p>
-<p><a href="/python/4_plotting/lesson.html" target="_blank">Plotting with <code>seaborn</code></a></p>
+<p><a href="/tutorials/python/1-r2python-translation/2-intro-programming/" target="_blank">Intro to Python for R Users</a></p>
+<p><a href="/tutorials/python/2-datacleaning/" target="_blank">Data Cleaning</a></p>
+<p><a href="/tutorials/python/3-datamanipulation/" target="_blank">Data Manipulation</a></p>
+<p><a href="/tutorials/python/4-plotting/" target="_blank">Plotting with <code>seaborn</code></a></p>
 
 ## Additional Instructional Materials
 

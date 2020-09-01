@@ -25,16 +25,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/1-programming/lessonpart0/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
-    </item>
-    
-    <item>
-      <title>Programming, Part 1</title>
-      <link>/tutorials/r-core/1-programming/lessonpart1/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorials/r-core/1-programming/lessonpart1/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
+      <description>pre  code.sourceCode { white-space: pre; position: relative; } pre  code.sourceCode  span { display: inline-block; line-height: 1.25; } pre  code.sourceCode  span:empty { height: 1.2em; } code.sourceCode  span { color: inherit; text-decoration: inherit; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { pre  code.sourceCode { white-space: pre-wrap; } pre  code.</description>
     </item>
     
     <item>
@@ -43,7 +34,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/1-programming/lessonpart2/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
+      <description>pre  code.sourceCode { white-space: pre; position: relative; } pre  code.sourceCode  span { display: inline-block; line-height: 1.25; } pre  code.sourceCode  span:empty { height: 1.2em; } code.sourceCode  span { color: inherit; text-decoration: inherit; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { pre  code.sourceCode { white-space: pre-wrap; } pre  code.</description>
     </item>
     
     <item>
@@ -52,7 +43,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/2-datacleaning/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
+      <description>pre  code.sourceCode { white-space: pre; position: relative; } pre  code.sourceCode  span { display: inline-block; line-height: 1.25; } pre  code.sourceCode  span:empty { height: 1.2em; } code.sourceCode  span { color: inherit; text-decoration: inherit; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { pre  code.sourceCode { white-space: pre-wrap; } pre  code.</description>
     </item>
     
     <item>
@@ -61,7 +52,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/3-datamanipulation/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
+      <description>pre  code.sourceCode { white-space: pre; position: relative; } pre  code.sourceCode  span { display: inline-block; line-height: 1.25; } pre  code.sourceCode  span:empty { height: 1.2em; } code.sourceCode  span { color: inherit; text-decoration: inherit; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { pre  code.sourceCode { white-space: pre-wrap; } pre  code.</description>
     </item>
     
     <item>
@@ -70,7 +61,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/4-plotting/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
+      <description>pre  code.sourceCode { white-space: pre; position: relative; } pre  code.sourceCode  span { display: inline-block; line-height: 1.25; } pre  code.sourceCode  span:empty { height: 1.2em; } code.sourceCode  span { color: inherit; text-decoration: inherit; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { pre  code.sourceCode { white-space: pre-wrap; } pre  code.</description>
     </item>
     
     <item>
@@ -79,7 +70,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/5-modeling/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
+      <description>pre  code.sourceCode { white-space: pre; position: relative; } pre  code.sourceCode  span { display: inline-block; line-height: 1.25; } pre  code.sourceCode  span:empty { height: 1.2em; } code.sourceCode  span { color: inherit; text-decoration: inherit; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { pre  code.sourceCode { white-space: pre-wrap; } pre  code.</description>
     </item>
     
     <item>
@@ -127,7 +118,7 @@ All models are wrong, but some are useful - George Box
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/tidyverse-guide/tidyguide-1/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
+      <description>pre  code.sourceCode { white-space: pre; position: relative; } pre  code.sourceCode  span { display: inline-block; line-height: 1.25; } pre  code.sourceCode  span:empty { height: 1.2em; } code.sourceCode  span { color: inherit; text-decoration: inherit; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { pre  code.sourceCode { white-space: pre-wrap; } pre  code.</description>
     </item>
     
     <item>
@@ -136,7 +127,7 @@ All models are wrong, but some are useful - George Box
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/tidyverse-guide/tidyguide-2/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
+      <description>pre  code.sourceCode { white-space: pre; position: relative; } pre  code.sourceCode  span { display: inline-block; line-height: 1.25; } pre  code.sourceCode  span:empty { height: 1.2em; } code.sourceCode  span { color: inherit; text-decoration: inherit; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { pre  code.sourceCode { white-space: pre-wrap; } pre  code.</description>
     </item>
     
     <item>
@@ -145,7 +136,7 @@ All models are wrong, but some are useful - George Box
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/data-sim-power/basic-simulation-power/</guid>
-      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-extra/data-sim-power/basic-simulation-power.rmd.
+      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/r-extra/data-sim-power/basic-simulation-power.rmd.
  Why Simulate? Simulation is an extremely useful tool, because we can create ground truth by which to test our models. If we know the true process by which the data are generated, we can check whether our models are doing well at recovering this truth.</description>
     </item>
     
@@ -155,7 +146,7 @@ All models are wrong, but some are useful - George Box
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/brms/multilevel-models-with-brms/</guid>
-      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page. This particular file is located here: /content/tutorials/r-extra/brms/multilevel-models-with-brms.rmd.
+      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/r-extra/brms/multilevel-models-with-brms.rmd.
  0) Goals for this vignette  Give a quick intro to multilevel modeling and Bayesian inference Show a use case with Brms and some helpful syntax for demonstrating what this model does Hopefully, convince you to use multilevel modeling and Bayesian approaches for your stats   1) Why multilevel modeling?</description>
     </item>
     
@@ -165,7 +156,34 @@ All models are wrong, but some are useful - George Box
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/rmarkdown/intro-to-rmarkdown/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
+      <description>pre  code.sourceCode { white-space: pre; position: relative; } pre  code.sourceCode  span { display: inline-block; line-height: 1.25; } pre  code.sourceCode  span:empty { height: 1.2em; } code.sourceCode  span { color: inherit; text-decoration: inherit; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { pre  code.sourceCode { white-space: pre-wrap; } pre  code.</description>
+    </item>
+    
+    <item>
+      <title>Programming, Part 1</title>
+      <link>/tutorials/r-core/1-programming/lessonpart1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-core/1-programming/lessonpart1/</guid>
+      <description>pre  code.sourceCode { white-space: pre; position: relative; } pre  code.sourceCode  span { display: inline-block; line-height: 1.25; } pre  code.sourceCode  span:empty { height: 1.2em; } code.sourceCode  span { color: inherit; text-decoration: inherit; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { pre  code.sourceCode { white-space: pre-wrap; } pre  code.</description>
+    </item>
+    
+    <item>
+      <title>R to Python Translation</title>
+      <link>/tutorials/python/1-r2python-translation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/python/1-r2python-translation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Choosing Between R and Python</title>
+      <link>/tutorials/python/1-r2python-translation/0-python-r/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/python/1-r2python-translation/0-python-r/</guid>
+      <description>A few quick points:  Among scientific computing languages the best language for you is the one that you find best fits your projects We really encourage the use of either R and Python for research computing for several reasons  R and Python are open source! We believe in making scientific computing as accessible to as many people as possible R and Python both have TONS of tools for research computing, lots of documentation, and huge support communities around the world    Neither language is &amp;lsquo;better&amp;rsquo; than the other Depending on your application, one might be better suited R Strengths  Statistical Programming Language Visualization(ggplot) Web apps (shiny) Statistical Model Interpretation  Python Strengths  All purpose programming language Neuroimaging Task design (psychopy, pygame) Machine learning (sklearn, tensorflow, keras) Many programs/web tools have great python APIs Web scraping  For research, helpful to know some of both!</description>
     </item>
     
   </channel>

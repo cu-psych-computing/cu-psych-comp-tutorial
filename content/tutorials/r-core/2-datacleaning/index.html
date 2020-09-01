@@ -6,21 +6,21 @@ tags: ["core", "R"]
 weight: 200
 ---
 
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 <script src="/rmarkdown-libs/accessible-code-block/empty-anchor.js"></script>
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -40,7 +40,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {  background-color: #f8f8f8; }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -84,7 +84,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="links-to-files" class="section level1">
 <h1>Links to Files</h1>
-<p>The files for all tutorials can be downloaded from <a href="https://github.com/cu-psych-computing/cu-psych-comp-tutorial" target="_blank">the Columbia Psychology Scientific Computing GitHub page</a>. This particular file is located here: <code>/content/tutorials/r-core/2-datacleaning/index.rmd</code>.</p>
+<p>The files for all tutorials can be downloaded from <a href="https://github.com/cu-psych-computing/cu-psych-comp-tutorial" target="_blank">the Columbia Psychology Scientific Computing GitHub page</a> using <a href="/accessing-files/" target="_blank">these instructions</a>. This particular file is located here: <code>/content/tutorials/r-core/2-datacleaning/index.rmd</code>.</p>
 </div>
 <div id="install-packages" class="section level1">
 <h1>Install Packages</h1>
@@ -108,15 +108,16 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <p>Your working directory is the directory (and subdirectories) where the files you’re working with are stored. Whenever possible, you should open the files you run in R from a .Rproj link; by doing so, the folder in which that file was located will automatically be your working directory.</p>
 <p>You can check your working directory using the <code>here()</code> function.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">here</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;/Users/emily/Documents/GitHub/cu-psych-comp-tutorial&quot;</code></pre>
+<pre><code>## [1] &quot;/Users/mthieu/Repos/cu-psych-r-tutorial&quot;</code></pre>
 <p>You can access a list of the files within your working directory using the <code>list.files()</code> function…</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">list.files</span>(<span class="kw">here</span>())</span></code></pre></div>
 <pre><code>##  [1] &quot;_output.yml&quot;                  &quot;blogdown&quot;                    
 ##  [3] &quot;config.toml&quot;                  &quot;content&quot;                     
 ##  [5] &quot;cu-psych-comp-tutorial.Rproj&quot; &quot;index.Rmd&quot;                   
-##  [7] &quot;public&quot;                       &quot;README.md&quot;                   
-##  [9] &quot;resources&quot;                    &quot;static&quot;                      
-## [11] &quot;themes&quot;</code></pre>
+##  [7] &quot;pollev_figs&quot;                  &quot;public&quot;                      
+##  [9] &quot;README.md&quot;                    &quot;renv&quot;                        
+## [11] &quot;renv.lock&quot;                    &quot;resources&quot;                   
+## [13] &quot;static&quot;                       &quot;themes&quot;</code></pre>
 <p>…as well as in the “Files” tab in the module at the bottom right corner of your RStudio window.</p>
 </div>
 <div id="what-kind-of-file-do-you-have" class="section level3">

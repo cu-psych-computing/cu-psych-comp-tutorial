@@ -11,15 +11,15 @@
   </url>
   
   <url>
+    <loc>/tutorials/python/</loc>
+  </url>
+  
+  <url>
     <loc>/tutorials/r-core/1-programming/</loc>
   </url>
   
   <url>
     <loc>/tutorials/r-core/1-programming/lessonpart0/</loc>
-  </url>
-  
-  <url>
-    <loc>/tutorials/r-core/1-programming/lessonpart1/</loc>
   </url>
   
   <url>
@@ -79,6 +79,42 @@
   </url>
   
   <url>
+    <loc>/tutorials/r-core/1-programming/lessonpart1/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/python/1-r2python-translation/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/python/1-r2python-translation/0-python-r/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/python/1-r2python-translation/1-getting-started/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/python/1-r2python-translation/2-intro-programming/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/python/1-r2python-translation/3-control-flow/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/python/2-datacleaning/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/python/3-datamanipulation/</loc>
+  </url>
+  
+  <url>
+    <loc>/tutorials/python/4-plotting/</loc>
+  </url>
+  
+  <url>
     <loc>/tags/core/</loc>
   </url>
   
@@ -91,11 +127,19 @@
   </url>
   
   <url>
+    <loc>/accessing-files/</loc>
+  </url>
+  
+  <url>
     <loc>/license/</loc>
   </url>
   
   <url>
     <loc>/meetings/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/python/</loc>
   </url>
   
   <url>

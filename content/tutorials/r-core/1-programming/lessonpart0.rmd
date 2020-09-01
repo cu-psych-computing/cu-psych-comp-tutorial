@@ -42,7 +42,7 @@ These documents will cover:
 
 # Links to Files
 
-The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial){target="_blank"}. This particular file is located here: `/content/tutorials/r-core/1-programming/lessonpart0.rmd`.
+The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial){target="_blank"} using [these instructions](/accessing-files/){target="_blank"}. This particular file is located here: `/content/tutorials/r-core/1-programming/lessonpart0.rmd`.
 
 # Working with RStudio
 
@@ -115,12 +115,9 @@ Then, once they're installed on your computer, you again have to tell R to _load
 ```{r, message=FALSE, warning=FALSE}
 # Use library() to load a package ONCE IT'S INSTALLED.
 # You can put the package name as a string
-library("car")
+library("tidyverse")
 # OR unquoted, as a variable name. Some functions don't care whether you use quotes or not, but some do.
-library(moments)
-library(tidyverse)
 library(here)
-library(effects)
 ```
 
 # Working directories, file paths, etc

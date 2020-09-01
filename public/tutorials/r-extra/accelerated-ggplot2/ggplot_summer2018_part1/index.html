@@ -374,6 +374,10 @@ div.sourceCode {
               
             <a class="dropdown-item" href="../../../../tutorials/r-extra/">Additional R Tutorials</a>
               
+            <a class="dropdown-item" href="../../../../tutorials/python/">Introductory Python Tutorial</a>
+              
+            <a class="dropdown-item" href="../../../../accessing-files/">Instructions for Accessing Files</a>
+              
           </div>
         </li>
         
@@ -475,6 +479,7 @@ div.sourceCode {
 </p>
 <hr>
 
+<script src="../../../../rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
 <div id="make-em-graph" class="section level2">
@@ -484,7 +489,7 @@ div.sourceCode {
 </div>
 <div id="links-to-files" class="section level2">
 <h2>Links to Files</h2>
-<p>The files for all tutorials can be downloaded from <a href="https://github.com/cu-psych-computing/cu-psych-comp-tutorial" target="_blank">the Columbia Psychology Scientific Computing GitHub page</a>. This particular file is located here: <code>/content/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part1.rmd</code>.</p>
+<p>The files for all tutorials can be downloaded from <a href="https://github.com/cu-psych-computing/cu-psych-comp-tutorial" target="_blank">the Columbia Psychology Scientific Computing GitHub page</a> using <a href="../../../../accessing-files/" target="_blank">these instructions</a>. This particular file is located here: <code>/content/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part1.rmd</code>.</p>
 </div>
 <div id="load-packages" class="section level2">
 <h2>Load Packages</h2>
@@ -644,10 +649,14 @@ plotB &lt;- ggplot(fakeStudy, aes(x = hand, y = age, color = hand)) +
 
 grid.arrange(plotA, plotB, ncol = 1, heights = c(5,4))</code></pre>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre><code>## Warning: Computation failed in `stat_summary()`:
+## Hmisc package required for this function</code></pre>
 <p><img src="../../../../tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part1_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p>Or we could arrange it a little differently</p>
 <pre class="r"><code>plotC &lt;- grid.arrange(plotA, plotB, ncol = 2)</code></pre>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre><code>## Warning: Computation failed in `stat_summary()`:
+## Hmisc package required for this function</code></pre>
 <p><img src="../../../../tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part1_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>It is also possible to save these arranged plots, just like any other ggplot object</p>
 <pre class="eval"><code>ggsave(plotC, file = &#39;super_cool_plot.png&#39;, height = 5, width = 9)</code></pre>
@@ -708,6 +717,8 @@ ggplot(fakeStudy, aes(x = veg, y = likePlot, color = veg)) +
   labs(x = &#39;Diet&#39;, y = &#39;ggplot liking&#39;, title =&#39;Ggplot preference by diet&#39;) +
   theme(legend.position = &#39;none&#39;) + 
   stat_summary(fun.data = &#39;mean_cl_boot&#39;, position = position_nudge(x =.2))</code></pre>
+<pre><code>## Warning: Computation failed in `stat_summary()`:
+## Hmisc package required for this function</code></pre>
 <p><img src="../../../../tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part1_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>This is a really informative plot! We have all the information a bar graph would show, and way more!</p>
 <p>Soon, we’ll get into methods for making your own custom error bars.</p>
