@@ -23,6 +23,10 @@
   </url>
   
   <url>
+    <loc>/tutorials/r-core/1-programming/lessonpart1/</loc>
+  </url>
+  
+  <url>
     <loc>/tutorials/r-core/1-programming/lessonpart2/</loc>
   </url>
   
@@ -76,10 +80,6 @@
   
   <url>
     <loc>/tutorials/r-extra/rmarkdown/intro-to-rmarkdown/</loc>
-  </url>
-  
-  <url>
-    <loc>/tutorials/r-core/1-programming/lessonpart1/</loc>
   </url>
   
   <url>
