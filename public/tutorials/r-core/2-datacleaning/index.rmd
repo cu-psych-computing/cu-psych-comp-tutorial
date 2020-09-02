@@ -310,7 +310,7 @@ You can always save data frames as a .csv for easy sharing and viewing outside o
 
 ```{r, eval = FALSE}
 # Write data to a .csv
-write_csv(mydata, path = here("content", "tutorials", "r-core", "2-dataCleaning", "Study1_clean.csv"))
+write_csv(mydata, path = here("content", "tutorials", "r-core", "2-dataCleaning", "Study1_Clean.csv"))
 ```
 
 However, you can also save in an R format that lets you save multiple variables/objects in the same file. For example, you might want to have a long and wide format, or one dataframe with all the data and one with just subject information. Saving as a .rda file allows you to save multiple objects at once for easy loading into R. You can also save the outputs of statistical models in these, along with their data.
