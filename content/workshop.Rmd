@@ -80,9 +80,8 @@ Please be sure to complete these surveys before and after the workshop.
 <table class="table table-striped">
 <tr><td><b>9:00a</b> - 10:30a</td><td><a href="/tutorials/python/1-r2python-translation/2-intro-programming/" target="_blank">Intro to Python for R Users</a></td></tr>
 <tr><td>10:30a - 12:00p</td><td><a href="/tutorials/python/2-datacleaning/" target="_blank">Data Cleaning</a></td></tr>
-<tr><td>12:00p - 12:30p</td><td><a href="/tutorials/python/3-datamanipulation/" target="_blank">Data Manipulation</a></td></tr>
-<tr><td>12:30p - 1:00p</td><td>Lunch</td></tr>
-<tr><td>1:00p - 2:00p</td><td>Data Manipulation, cont'd</td></tr>
+<tr><td>12:00p - 12:30p</td><td>Lunch</td></tr>
+<tr><td>12:30p - 2:00p</td><td><a href="/tutorials/python/3-datamanipulation/" target="_blank">Data Manipulation</a></td></tr>
 <tr><td>2:00p - <b>4:00p</b></td><td><a href="/tutorials/python/4-plotting/" target="_blank">Plotting with <code>seaborn</code></a></td></tr>
 <tr><td>After finishing</td><td><a href="https://docs.google.com/forms/d/e/1FAIpQLSe4iqiAev5qqmQfoL7hxFVzlihEKzjthKv0wLOipsjaad88FQ/viewform?usp=sf_link," target="_blank">Post-workshop survey</a></td></tr>
 </table>
