@@ -277,7 +277,7 @@ mydata2 <- read_csv(here("content", "tutorials", "r-core", "2-dataCleaning", "St
 
 mydata <- inner_join(mydata, mydata2, by = "ID")
 
-# Note that mydata has one less row than mydata2 because we removed that outlier. By default, merge will use only cases of the 'by' variable that exist in both dataframes, so it drops that one row from mydata2 when merging. You can use additional arguments to change this if you want to keep all observations from one or both frames, even if it means blank cells.
+# Note that mydata has one less row than mydata2 because we removed that outlier. By default, inner_join will use only cases of the 'by' variable that exist in both dataframes, so it drops that one row from mydata2 when merging. You can use other _join functions if you want to keep all observations from one or both frames, even if it means blank cells.
 ```
 
 ## Reshaping data
