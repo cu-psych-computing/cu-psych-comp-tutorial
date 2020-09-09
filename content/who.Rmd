@@ -56,4 +56,6 @@ The lesson materials for the introductory workshop are the evolving product of s
 
 [Monica Thieu](https://github.com/monicathieu){target="_blank"}
 
+[Anna Vannucci](https://github.com/avannucci){target="_blank"}
+
 [Michelle VanTieghem](https://github.com/mvantieghem){target="_blank"}

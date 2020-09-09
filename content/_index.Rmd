@@ -33,17 +33,18 @@ During the Fall 2020 semester, the [graduate methods support advisors](/who/) wi
 
 This is our core introductory scientfic computing syllabus. The materials here are designed to be suitable for learners with little to no prior programming experience.
 
-### Intro to Programming and Data Cleaning in R
+### Programming and Intro to Data Cleaning in R
 
 <p><a href="/tutorials/r-core/1-programming/lessonpart0/" target="_blank">Programming, Part 0 (Finding your way around RStudio)</a></p>
 <p><a href="/tutorials/r-core/1-programming/lessonpart1/" target="_blank">Programming, Part 1 (Variables, data types, vectors)</a></p>
 <p><a href="/tutorials/r-core/1-programming/lessonpart2/" target="_blank">Programming, Part 2 (Coding strategy, relational & logical operators)</a></p>
 
-### Data Manipulation and Plotting in R
+### Data Cleaning, Data Manipulation, Plotting, and Modeling in R
 
 <p><a href="/tutorials/r-core/2-datacleaning/" target="_blank">Data Cleaning</a></p>
 <p><a href="/tutorials/r-core/3-datamanipulation/" target="_blank">Data Manipulation</a></p>
 <p><a href="/tutorials/r-core/4-plotting/" target="_blank">Plotting with <code>ggplot2</code></a></p>
+<p><a href="/tutorials/r-core/5-modeling/" target="_blank">Modeling</a></p>
 
 ### Intro to Data Cleaning, Manipulation, and Plotting in Python
 

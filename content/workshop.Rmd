@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = FALSE)
 # Fall 2020 Workshop
 
 <div class="highlightsec">
-**Instructors:** Paul A. Bloom, Emily Nakkawita, Jonathan Nicholas, Matt Siegelman, Hannah Tarder-Stoll, Monica Thieu
+**Instructors:** Paul A. Bloom, Ana DiGiovanni, Camille Gasser, Manasi Jayakumar, Emily Nakkawita, Jonathan Nicholas, Matt Siegelman, Ben Silver, Hannah Tarder-Stoll, Monica Thieu, Anna Vannucci
 </div>
 
 ## General Information
@@ -69,10 +69,10 @@ Please be sure to complete these surveys before and after the workshop.
 <h3 style="padding-top: 30px; margin-top: 0;">Session 2: R (9/18/20)</h3>
 <table class="table table-striped">
 <tr><td><b>10:00a</b> - 10:30a</td><td><a href="/tutorials/r-core/2-datacleaning/" target="_blank">Data Cleaning</a></td></tr>
-<tr><td>10:30a - 11:30a</td><td><a href="/tutorials/r-core/3-datamanipulation/" target="_blank">Data Manipulation</a></td></tr>
-<tr><td>11:30a - 12:30p</td><td>Lunch</td></tr>
-<tr><td>12:30p - 1:30p</td><td>Data Manipulation, cont'd</td></tr>
-<tr><td>1:30p - <b>3:30p</b></td><td><a href="/tutorials/r-core/4-plotting/" target="_blank">Plotting with <code>ggplot2</code></a></td></tr>
+<tr><td>10:30a - 12:30p</td><td><a href="/tutorials/r-core/3-datamanipulation/" target="_blank">Data Manipulation</a></td></tr>
+<tr><td>12:30p - 1:00p</td><td>Lunch</td></tr>
+<tr><td>1:00p - 3:00p</td><td><a href="/tutorials/r-core/4-plotting/" target="_blank">Plotting with <code>ggplot2</code></a></td></tr>
+<tr><td>3:00p - <b>4:00p</b></td><td><a href="/tutorials/r-core/5-modeling/" target="_blank">Modeling</code></a></td></tr>
 </table>
 </div>
 <div class="col-md-6">
@@ -80,9 +80,8 @@ Please be sure to complete these surveys before and after the workshop.
 <table class="table table-striped">
 <tr><td><b>9:00a</b> - 10:30a</td><td><a href="/tutorials/python/1-r2python-translation/2-intro-programming/" target="_blank">Intro to Python for R Users</a></td></tr>
 <tr><td>10:30a - 12:00p</td><td><a href="/tutorials/python/2-datacleaning/" target="_blank">Data Cleaning</a></td></tr>
-<tr><td>12:00p - 12:30p</td><td><a href="/tutorials/python/3-datamanipulation/" target="_blank">Data Manipulation</a></td></tr>
-<tr><td>12:30p - 1:00p</td><td>Lunch</td></tr>
-<tr><td>1:00p - 2:00p</td><td>Data Manipulation, cont'd</td></tr>
+<tr><td>12:00p - 12:30p</td><td>Lunch</td></tr>
+<tr><td>12:30p - 2:00p</td><td><a href="/tutorials/python/3-datamanipulation/" target="_blank">Data Manipulation</a></td></tr>
 <tr><td>2:00p - <b>4:00p</b></td><td><a href="/tutorials/python/4-plotting/" target="_blank">Plotting with <code>seaborn</code></a></td></tr>
 <tr><td>After finishing</td><td><a href="https://docs.google.com/forms/d/e/1FAIpQLSe4iqiAev5qqmQfoL7hxFVzlihEKzjthKv0wLOipsjaad88FQ/viewform?usp=sf_link," target="_blank">Post-workshop survey</a></td></tr>
 </table>

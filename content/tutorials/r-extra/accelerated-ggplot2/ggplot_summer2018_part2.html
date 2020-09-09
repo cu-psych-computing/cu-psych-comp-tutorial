@@ -6,7 +6,6 @@ tags: ["extra", "R"]
 weight: 602
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
 <p><em>God grant me the serenity to accept the uncertainty I cannot control; courage to control the uncertainty that I cannot accept; and wisdom to know the difference.</em> -Andrew Gelman</p>
@@ -220,9 +219,7 @@ mod_brms &lt;- brm(data = multi, happy ~ time*netflix + (time|subject), chains =
 <p>With lme4, we can use the effects package to extract model estimates, standard errors, and prediction intervals about the ‘fitted’ regression line given certain levels of our predictor variables. However, it seems that this method does NOT incorporate the observation-level variance in the predictive uncertainty.</p>
 <pre class="r"><code>require(effects)</code></pre>
 <pre><code>## Loading required package: effects</code></pre>
-<pre><code>## Warning: package &#39;effects&#39; was built under R version 3.6.2</code></pre>
 <pre><code>## Loading required package: carData</code></pre>
-<pre><code>## Warning: package &#39;carData&#39; was built under R version 3.6.2</code></pre>
 <pre><code>## lattice theme set by effectsTheme()
 ## See ?effectsTheme for details.</code></pre>
 <pre class="r"><code>effect_time &lt;- as.data.frame(effect(&#39;time:netflix&#39;, mod_lme4, confint=list(alpha = .95)), xlevels = list(time = 0:10, netflix = c(&#39;0&#39;,&#39;1&#39;)))
@@ -471,13 +468,13 @@ spagLmePlot</code></pre>
   dplyr::select(subject, netflix, time, happy, Estimate, `Q2.5`, `Q97.5`)</code></pre>
 <p>We can see now that we can get a dataframe with exactly the same structure as the original data input into the model. We even get predictive uncertainty about each timepoint for each subject. That could be useful later, but might be too much for our spaghetti plot</p>
 <pre class="r"><code>head(predict_subjects_brms)</code></pre>
-<pre><code>##   subject netflix time     happy Estimate     Q2.5    Q97.5
-## 1       1       1    0  72.13179 55.14718 43.62458 66.73616
-## 2       1       1    1  85.60126 58.06104 46.88268 69.43113
-## 3       1       1    2  95.04710 61.08958 50.22286 72.20780
-## 4       1       1    3  94.52285 64.24248 53.13048 75.12568
-## 5       1       1    4 108.86994 67.15215 56.23121 78.09672
-## 6       1       1    5 111.96141 70.23071 59.49224 80.76879</code></pre>
+<pre><code>##   subject netflix time    happy Estimate     Q2.5    Q97.5
+## 1       1       0    0 40.67318 55.14718 43.62458 66.73616
+## 2       1       0    1 55.58007 58.06104 46.88268 69.43113
+## 3       1       0    2 52.67760 61.08958 50.22286 72.20780
+## 4       1       0    3 57.52976 64.24248 53.13048 75.12568
+## 5       1       0    4 54.98400 67.15215 56.23121 78.09672
+## 6       1       0    5 56.06605 70.23071 59.49224 80.76879</code></pre>
 <p>Now, plot just like with lme4</p>
 <pre class="r"><code>spagBrmsPlot &lt;- ggplot(data = predict_interval_brms, aes(x = time, y = Estimate, color = netflix)) +
   geom_point() +
@@ -763,8 +760,9 @@ logitplot1</code></pre>
 <h3>Logistic Regression Spaghetti Plot</h3>
 <p>Now we can use <code>posterior_linpred()</code> again with the <code>transform = TRUE</code> argument and no new data to get predictions for the original datapoints.
 * It seems a bit strange to use posterior_linpred() when we’re predicting for subjects, but posterior_predict() in this case will give us predictions of 0s and 1s, not probabilities – it would be predicting actual outcome values</p>
-<pre class="r"><code>logistic_subject_preds &lt;- posterior_linpred(logistic_rstanarm,transform = TRUE)
-logistic_subject_preds  &lt;- t(cbind(apply(logistic_subject_preds,2, quantile, c(.025, .5, .975)))) 
+<pre class="r"><code>logistic_subject_preds &lt;- posterior_linpred(logistic_rstanarm,transform = TRUE)</code></pre>
+<pre><code>## Instead of posterior_linpred(..., transform=TRUE) please call posterior_epred(), which provides equivalent functionality.</code></pre>
+<pre class="r"><code>logistic_subject_preds  &lt;- t(cbind(apply(logistic_subject_preds,2, quantile, c(.025, .5, .975)))) 
 logistic_subject_preds &lt;- cbind(multi, logistic_subject_preds)
 
 
