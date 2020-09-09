@@ -474,7 +474,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb42-2"><a href="#cb42-2"></a></span>
 <span id="cb42-3"><a href="#cb42-3"></a>mydata &lt;-<span class="st"> </span><span class="kw">inner_join</span>(mydata, mydata2, <span class="dt">by =</span> <span class="st">&quot;ID&quot;</span>)</span>
 <span id="cb42-4"><a href="#cb42-4"></a></span>
-<span id="cb42-5"><a href="#cb42-5"></a><span class="co"># Note that mydata has one less row than mydata2 because we removed that outlier. By default, merge will use only cases of the &#39;by&#39; variable that exist in both dataframes, so it drops that one row from mydata2 when merging. You can use additional arguments to change this if you want to keep all observations from one or both frames, even if it means blank cells.</span></span></code></pre></div>
+<span id="cb42-5"><a href="#cb42-5"></a><span class="co"># Note that mydata has one less row than mydata2 because we removed that outlier. By default, inner_join will use only cases of the &#39;by&#39; variable that exist in both dataframes, so it drops that one row from mydata2 when merging. You can use other _join functions if you want to keep all observations from one or both frames, even if it means blank cells.</span></span></code></pre></div>
 </div>
 <div id="reshaping-data" class="section level2">
 <h2>Reshaping data</h2>
