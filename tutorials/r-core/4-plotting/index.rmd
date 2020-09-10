@@ -29,19 +29,19 @@ We've already done this in the special first chunk up top, so it should run auto
 
 We're going to practice here on a dataset from the 1990 NHANES (National Health and Nutrition Examination Survey). The variables are below. 
 
-Region  -  Geographic region in the USA: Northeast (1), Midwest (2), South (3), and West (4)
+- Region -- Geographic region in the USA: Northeast (1), Midwest (2), South (3), and West (4)
 
-Sex     -  Biological sex: Male (1), Female (2)
+- Sex -- Biological sex: Male (1), Female (2)
 
-Age     -  Age measured in months (we'll convert this to years below)
+- Age -- Age measured in months (we'll convert this to years below)
 
-Urban   -  Residential population density: Metropolital Area (1), Other (2)
+- Urban -- Residential population density: Metropolital Area (1), Other (2)
 
-Weight  -  Weight in pounds
+- Weight -- Weight in pounds
 
-Height  -  Height in inches
+- Height -- Height in inches
 
-BMI     -  BMI, measured in kg/(m^2)
+- BMI -- BMI, measured in kg/(m^2)
 
 ```{r}
 nhanes <- read_csv(here("content", "tutorials", "r-core", "4-plotting", "NHANES1990.csv"))
@@ -56,9 +56,9 @@ nhanes
 
 # Basic `ggplot2` Syntax
 
--`ggplot()` command usage including saving to a variable with `a <- ggplot()`
+- `ggplot()` command usage includes saving to a variable with `a <- ggplot()`
 
--The general format is `ggplot(data, aes(x = [x axis variable], y = [y axis variable])` 
+- The general format is `ggplot(data, aes(x = [x axis variable], y = [y axis variable])` 
     - x and y variables are always specified in this `aes()` subfunction
 
 Run this line of code:
@@ -70,7 +70,7 @@ ggplot(nhanes, aes(x = Age, y = Weight))
   * Axes are set up the way we'd expect, and seem to have sensible values
   * Why is nothing on this graph yet? we haven't put any graphic actually on the axes yet
 
-**We need to tell the `ggplot()` call what kind of graphic to put on the axis**
+**We need to tell the `ggplot()` call what kind of graphic to put on the axis.**
 
   * A lot of the time, the syntax is `geom_[something]`
 
@@ -78,10 +78,19 @@ ggplot(nhanes, aes(x = Age, y = Weight))
 
 ## Scatter plots
 
-Let's do scatter with `geom_point()` first.
+Let's create a scatter plot using `geom_point()` first. The `ggplot()` function generates plots in layers, from "bottom" to "top", and each layer of the plot is separated by the `+` sign.
 
 ```{r}
+# Although you can keep the code all on a single line, like this:
 ggplot(nhanes, aes(x = Age, y = Weight)) + geom_point()
+
+# As you add more and more layers, it can be helpful to add a
+# line break after each `+` sign, like this:
+ggplot(nhanes, aes(x = Age, y = Weight)) +
+  geom_point()
+
+# Note that these plots are identical! The latter format simply
+# makes it easier to read the code at a glance.
 ```
 
 Wow, lots of data points! Maybe we can make the points smaller to see better.
@@ -105,7 +114,9 @@ ageWeightPlot
 ## Histograms
 
 ```{r}
-weightHistogram <- ggplot(nhanes) + geom_histogram(aes(x = Weight), bins = 100, fill = 'purple')
+weightHistogram <- ggplot(nhanes) +
+  geom_histogram(aes(x = Weight), bins = 100, fill = 'purple')
+
 weightHistogram
 ```
 
@@ -113,7 +124,7 @@ weightHistogram
 
 Question: what if we want to look at distribution of weights by region in the nhanes data?
 
-With ggplot, if x is a factor (discrete, not continuous) we can plot dots as a function of the factor.
+With `ggplot2`, if x is a factor (discrete, not continuous) we can plot dots as a function of the factor.
 
 ```{r}
 heightByUrban <- ggplot(nhanes, aes(x = Urban, y = Height)) + 
@@ -122,10 +133,12 @@ heightByUrban <- ggplot(nhanes, aes(x = Urban, y = Height)) +
 heightByUrban
 ```
 
-Woah! So much data, hard to see anything, let's use geom_jitter() with size = .05, width = .1 instead.
+Whoa! So much data, it's hard to see anything. Let's use `geom_jitter()` with size = .05, width = .1 instead.
 
 ```{r}
-heightByUrban <- ggplot(nhanes, aes(x = Urban, y = Height)) + geom_jitter(size = .05, width = .1, height =0, alpha = .1)
+heightByUrban <- ggplot(nhanes, aes(x = Urban, y = Height)) +
+  geom_jitter(size = .05, width = .1, height = 0, alpha = .1)
+
 heightByUrban
 ```
 
@@ -137,11 +150,11 @@ Still a TON of data! Here's a great tool I really like for plotting the density 
 # We can use 'source' to pull bits of code from github, as well as local files
 source("https://gist.githubusercontent.com/benmarwick/2a1bb0133ff568cbe28d/raw/fb53bd97121f7f9ce947837ef1a4c65a73bffb3f/geom_flat_violin.R") 
 
-heightByUrban + geom_flat_violin(
-                   position = position_nudge(x = .15, y = 0), alpha = .7)
+heightByUrban +
+  geom_flat_violin(position = position_nudge(x = .15, y = 0), alpha = .7)
 ```
 
-Now, we can really begin to se the skewedness of these weight distributions.
+Now, we can really begin to see the skewedness of these weight distributions.
 
 ## Summary plots
 
@@ -149,36 +162,48 @@ Plotting data points is all well and good, but what if we want to use our plots 
 
 ```{r}
 weightByRegion <- ggplot(nhanes, aes(x = Region, y = Weight)) + 
-  stat_summary(fun.y= "mean", geom = "point")
+  stat_summary(fun = "mean", geom = "point")
 
+weightByRegion +
+  ylim(0,400)
 
-weightByRegion + ylim(0,400)
-
-
-# People might want to know how to add a confidence interval
+# Here is how to plot the group means with confidence intervals
 weightByRegionConf <- ggplot(nhanes, aes(x = Region, y = Weight)) + 
-  stat_summary(fun.data = "mean_cl_boot", fun.args=list(conf.int=.95))
+  stat_summary(fun.data = "mean_cl_boot", fun.args = list(conf.int = .95))
 
 weightByRegionConf
 ```
 
 It might be useful to look at the summary with the raw data too...just to put any potential region differences in context.
 
+Be sure to note that when we do this, `ggplot()` adds these "layers" to the plot from the bottom up!
+
 ```{r}
+# If we just add the `geom_jitter()` call to the end of the function,
+# the raw data is the last layer added to the plot, which obscures the means!
+rawPlusSummary <- ggplot(nhanes, aes(x = Region, y = Weight)) +
+  stat_summary(fun.data = "mean_cl_boot", fun.args = list(conf.int = .95), color = 'red') +
+  geom_jitter(size = .1, alpha = .1, height = 0, width = .1)
+
+rawPlusSummary
+
+# In this version, we have reversed the ordering of `geom_jitter()` and
+# `stat_summary()` so we can easily see the raw data AND the means
 rawPlusSummary <- ggplot(nhanes, aes(x = Region, y = Weight)) + 
-  stat_summary(fun.data = "mean_cl_boot", fun.args=list(conf.int=.95), color = 'red')  +
-  geom_jitter(size = .1, alpha = .1, height = 0, width = .1) 
+  geom_jitter(size = .1, alpha = .1, height = 0, width = .1) +
+  stat_summary(fun.data = "mean_cl_boot", fun.args = list(conf.int = .95), color = 'red')
 
 rawPlusSummary
 ```
 
-And with the density plots!
+We can also add the density plots!
 
 ```{r}
 rawPlusSummary <- ggplot(nhanes, aes(x = Region, y = Weight)) + 
   geom_jitter(size = .1, alpha = .1, height = 0, width = .1) +
   geom_flat_violin(position = position_nudge(x = .15, y = 0)) +
-  stat_summary(fun.data = "mean_cl_boot", fun.args=list(conf.int=.95), color = 'red', position = position_nudge(x = .2, y = 0))
+  stat_summary(fun.data = "mean_cl_boot", fun.args = list(conf.int = .95),
+               color = 'red', position = position_nudge(x = .2, y = 0))
 
 rawPlusSummary
 ```
@@ -187,7 +212,7 @@ Now that we can visualize the distributions, we can see that weight is bimodally
 
 ## Heatmaps
 
-Sometimes we might want to make a heatmap to look at the value of variable based on a 2d grid of of two other variables.
+Sometimes we might want to make a heatmap to look at the value of variable based on a 2D grid of two other variables.
 
 This is kind of a silly example, but say we wanted to map out the number of observations in our dataset as a factor of region and neighborhood type.
 
@@ -213,7 +238,6 @@ Let's make up some very simple data on the prices of two different items from 19
 years <- 1978:2017
 item1<- rnorm(40,100,5)
 item2 <- 1:40 + rnorm(40,100,5)
-
 
 # Helpful to put it in long form using pivot_longer
 timeFrame <- tibble(years = years, item1 = item1, item2 = item2) %>%
@@ -266,8 +290,8 @@ Notice we've had to reformat a few calls here to adjust the aesthetic mapping...
 
 Let's say we think there might be a linear relationship between height and weight.
 
-We can use `geom_smooth` for this and `method = 'lm` specifically for a linear model
-Also `level = .95` can specify confidence interval about the estimate at each x value.
+We can use `geom_smooth` for this and `method = 'lm'` specifically for a linear model
+Also `level = .95` can specify the 95% confidence interval about the estimate at each x value.
 
 ```{r}
 heightByWeight <- ggplot(nhanes, aes(x = Height, y = Weight)) + 
@@ -293,14 +317,15 @@ heightByWeight
 The `labs()` command can be added to `ggplot2` with different arguments, lke `x`, `y`, or `title` to make the plots clearer.
 
 ```{r}
-heightByUrban + labs(x = 'Neighborhood', y = 'Height in Inches', title = 'Height by Urban Status')
+heightByUrban +
+  labs(x = 'Neighborhood', y = 'Height in Inches', title = 'Height by Urban Status')
 ```
 
-Note, if we want to change labels for FACTORS, not just axes, it's easier to do that using `tidyverse`.
+Note, if we want to change labels for _factors_, not just axes, it's easier to do that using `tidyverse`.
 
 ## Facetting
 
-It's useful to have several plots in a panel sometimes, not just one. 
+It's useful to have several plots in a panel sometimes, rather than just one. 
 
 So for this data set, say we want to plot relationships between height and weight, but by region.
 
@@ -330,12 +355,12 @@ multiFacet
 
 We can color either continuously or discretely, depending on how a variable is represented in R.
 
-We put `col = Height` into the `aes()` function because it's a grouping factor.
+We put `color = Height` into the `aes()` function because it's a grouping factor.
 
 **Continous Example:**
 
 ```{r}
-weightByRegion <- ggplot(nhanes, aes(x = Region, y = Weight, col = Height)) + 
+weightByRegion <- ggplot(nhanes, aes(x = Region, y = Weight, color = Height)) + 
   geom_jitter(width = .1) + 
   labs(x = 'Region of US', y = 'Weight (lbs)', title = 'Weight by Region')
 
@@ -345,28 +370,39 @@ weightByRegion
 **Discrete Example:**
 
 ```{r}
-discretePlot <- ggplot(nhanes, aes(x = Height, y = Weight, col = Region)) + geom_point() 
+discretePlot <- ggplot(nhanes, aes(x = Height, y = Weight, color = Region)) +
+  geom_point() 
+
 discretePlot
 ```
 
-It is EASY to choose your own custom colors (as well as using R presets), but we're not going to get into that right at this moment.
+It is easy to choose your own custom colors (as well as using R presets), but we're not going to get into that right at this moment.
 
 ## Themes
 
-We can use themes to make our plots prettier, and also customize the gridlines a lot. 
+We can use themes to make our plots prettier, and also to customize the gridlines. 
 
 ```{r}
-discretePlot + theme_bw()
-discretePlot + theme_minimal()
-discretePlot+ theme_void()
-discretePlot + theme_classic()
+discretePlot + 
+  theme_bw()
 
-facetPlot + theme_bw() + labs(title = 'Weight by Height and Region')
+discretePlot + 
+  theme_minimal()
+
+discretePlot + 
+  theme_void()
+
+discretePlot + 
+  theme_classic()
+
+facetPlot + 
+  theme_bw() + 
+  labs(title = 'Weight by Height and Region')
 ```
 
 # Saving to Files
 
-`ggsave()` includes arguments for `file` , `plot`, `dpi`, `width`, and `height`.
+`ggsave()` includes arguments for `filename`, `plot`, `dpi`, `width`, and `height` (among other things).
 
 We can use a variety of file formats.
 
