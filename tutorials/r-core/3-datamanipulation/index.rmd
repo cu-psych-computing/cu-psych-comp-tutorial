@@ -26,7 +26,7 @@ This dataset examines the relationship between multitasking and working memory (
 
 ```{r, message = FALSE, warning = FALSE}
 # use read.csv function to open data into R 
-df <- read_csv(here("content", "tutorials", "r-core", "3-datamanipulation", "uncapher_2016_repeated_measures_dataset.csv"))
+df <- read.csv("uncapher_2016_repeated_measures_dataset.csv", stringsAsFactors = F)
 
 # we will continue using tidyverse tools
 # so we have library()-ed tidyverse at the very top of this document
@@ -82,6 +82,9 @@ meanSummary <- df %>%
   summarize(meanHitRate = mean(hitRate, na.rm= T), 
             meanFalseAlarm= mean(faRate, na.rm= T),
             meanDprime = mean(dprime, na.rm = T))
+
+# print out the group summary table
+meanSummary
 ```
 
 We can group data by more than one factor. Let's say we're interested in how levels of ADHD interact with `groupStatus` (multitasking: high or low). We will make a factor for ADHD (mean-split), and add it as a grouping variable.
@@ -126,6 +129,8 @@ SubList
 
 # how many subjects are in this dataframe?
 Nsubs <- length(SubList)
+
+Nsubs
 ```
 
 ## Calculating number of trials per subject
@@ -145,6 +150,8 @@ avgHR <- df %>%
   mutate(avgHR = mean(hitRate, na.rm=T))
 
 # you should now have an avgHR column in df, which will repeat within each subject, but vary across subjects.
+
+avgHR
 ```
 
 # Saving Your Work
@@ -152,21 +159,21 @@ avgHR <- df %>%
 ## Saving tables into .csv files
 
 ```{r}
-basic_descriptives <-  df %>% 
-   # if adhd score is lower than mean, label "low", else label "high""
-   mutate(adhdF = ifelse(adhd < mean(adhd), "Low", "High")) %>%
+basic_descriptives <- df %>% 
   # split the summary statistics by group 
   group_by(adhdF, groupStatus) %>%
   summarize(meanHitRate = mean(hitRate, na.rm= T), 
             meanFalseAlarm= mean(faRate, na.rm= T),
             meanDprime = mean(dprime, na.rm = T))
+
+basic_descriptives
 ```
 
 ```{r, eval = FALSE}
 # use write.csv() or save() to save this out!
 # if you use save, you can combine the full data and descriptives into a tidy package.
-write_csv(basic_descriptives, path = here("content", "tutorials", "r-core", "3-datamanipulation", "myDescriptives.csv"))
-save(basic_descriptives, df, file = here("content", "tutorials",, "r-core", "3-datamanipulation", "StudyData.rda"))
+write.csv(basic_descriptives, file = "myDescriptives.csv")
+save(basic_descriptives, df, file = "StudyData.rda")
 
 # Note: It will automatically save to your working directory unless you specify otherise 
 # remember to check your working directory, use here() 
