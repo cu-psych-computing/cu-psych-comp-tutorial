@@ -94,7 +94,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="familiarizing-yourself-with-the-data" class="section level1">
 <h1>Familiarizing Yourself with the Data</h1>
-<p>Quick review from <a href="/tutorials/r-core/2-datacleaning/">data cleaning</a>: take a look at the basic data structure, number of rows and columns.</p>
+<p>Quick review from <a href="/tutorials/r-core/2-datacleaning/">Data Cleaning</a>: take a look at the basic data structure, number of rows and columns.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># base R functions</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a>df</span></code></pre></div>
 <pre><code>## # A tibble: 136 x 17
@@ -127,7 +127,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <h1>Selecting Relevant Variables</h1>
 <p>Sometimes datasets have many variables that are unnecessary for a given analysis. To simplify your life, and your code, we can select only the given variables we’d like to use for now.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># tidyverse select() function </span></span>
-<span id="cb10-2"><a href="#cb10-2"></a>df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span></span>
 <span id="cb10-3"><a href="#cb10-3"></a><span class="st">  </span><span class="kw">select</span>(subjNum, groupStatus, adhd, hitRate, faRate, dprime)</span></code></pre></div>
 </div>
 <div id="basic-descriptive-statistics" class="section level1">
@@ -151,16 +151,16 @@ First, we will calculate summary info across all data using <code>summarize()</c
 <h1>Grouping data</h1>
 <p>Next, we will learn how to group data based on certain variables of interest.</p>
 <p>We will use the <code>group_by()</code> function in tidyverse, which will automatically group any subsequent actions called on the data.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>meanSummary &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="st">  </span><span class="co"># split the summary statistics by group </span></span>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># Split the summary statistics by group</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>meanSummary &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb13-3"><a href="#cb13-3"></a><span class="st">  </span><span class="kw">group_by</span>(groupStatus) <span class="op">%&gt;%</span></span>
 <span id="cb13-4"><a href="#cb13-4"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">meanHitRate =</span> <span class="kw">mean</span>(hitRate, <span class="dt">na.rm=</span> T), </span>
 <span id="cb13-5"><a href="#cb13-5"></a>            <span class="dt">meanFalseAlarm=</span> <span class="kw">mean</span>(faRate, <span class="dt">na.rm=</span> T),</span>
 <span id="cb13-6"><a href="#cb13-6"></a>            <span class="dt">meanDprime =</span> <span class="kw">mean</span>(dprime, <span class="dt">na.rm =</span> T))</span></code></pre></div>
 <pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <p>We can group data by more than one factor. Let’s say we’re interested in how levels of ADHD interact with <code>groupStatus</code> (multitasking: high or low). We will make a factor for ADHD (mean-split), and add it as a grouping variable.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a> df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="st">   </span><span class="co"># if adhd score is lower than mean, label &quot;low&quot;, else label &quot;high&quot;&quot;</span></span>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># If adhd score is lower than mean, label &quot;low&quot;, else label &quot;high&quot;</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb15-3"><a href="#cb15-3"></a><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">adhdF =</span> <span class="kw">if_else</span>(adhd <span class="op">&lt;</span><span class="st"> </span><span class="kw">mean</span>(adhd), <span class="st">&quot;Low&quot;</span>, <span class="st">&quot;High&quot;</span>)) </span>
 <span id="cb15-4"><a href="#cb15-4"></a></span>
 <span id="cb15-5"><a href="#cb15-5"></a><span class="kw">table</span>(df<span class="op">$</span>adhdF)</span></code></pre></div>
@@ -168,9 +168,10 @@ First, we will calculate summary info across all data using <code>summarize()</c
 ## High  Low 
 ##   66   70</code></pre>
 <p>Then we’ll check how evenly split these groups are.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>df <span class="op">%&gt;%</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a><span class="st">  </span><span class="co"># how many data points are in each group (adhdF x groupStatus)? n() will calculate this for us.</span></span>
-<span id="cb17-3"><a href="#cb17-3"></a><span class="st">  </span><span class="kw">count</span>(adhdF, groupStatus)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># How many data points are in each group (adhdF x groupStatus)?</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="co"># count() will calculate this for us.</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a>df <span class="op">%&gt;%</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a><span class="st">  </span><span class="kw">count</span>(adhdF, groupStatus)</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 3
 ##   adhdF groupStatus     n
 ##   &lt;chr&gt; &lt;chr&gt;       &lt;int&gt;
@@ -180,8 +181,8 @@ First, we will calculate summary info across all data using <code>summarize()</c
 ## 4 Low   LMM            46</code></pre>
 <p>Then we’ll calculate some summary info on these groups.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>df <span class="op">%&gt;%</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="st">    </span><span class="kw">group_by</span>(adhdF, groupStatus) <span class="op">%&gt;%</span></span>
-<span id="cb19-3"><a href="#cb19-3"></a><span class="st">    </span><span class="kw">summarize</span>(<span class="dt">meanHitRate =</span> <span class="kw">mean</span>(hitRate, <span class="dt">na.rm=</span> T), </span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="st">  </span><span class="kw">group_by</span>(adhdF, groupStatus) <span class="op">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">meanHitRate =</span> <span class="kw">mean</span>(hitRate, <span class="dt">na.rm=</span> T), </span>
 <span id="cb19-4"><a href="#cb19-4"></a>            <span class="dt">meanFalseAlarm=</span> <span class="kw">mean</span>(faRate, <span class="dt">na.rm=</span> T),</span>
 <span id="cb19-5"><a href="#cb19-5"></a>            <span class="dt">meanDprime =</span> <span class="kw">mean</span>(dprime, <span class="dt">na.rm =</span> T))</span></code></pre></div>
 <pre><code>## `summarise()` regrouping output by &#39;adhdF&#39; (override with `.groups` argument)</code></pre>
@@ -236,7 +237,8 @@ First, we will calculate summary info across all data using <code>summarize()</c
 <span id="cb27-2"><a href="#cb27-2"></a><span class="st">  </span><span class="kw">group_by</span>(subjNum) <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb27-3"><a href="#cb27-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">avgHR =</span> <span class="kw">mean</span>(hitRate, <span class="dt">na.rm=</span>T))</span>
 <span id="cb27-4"><a href="#cb27-4"></a></span>
-<span id="cb27-5"><a href="#cb27-5"></a><span class="co"># you should now have an avgHR column in df, which will repeat within each subject, but vary across subjects.</span></span></code></pre></div>
+<span id="cb27-5"><a href="#cb27-5"></a><span class="co"># You should now have an avgHR column in df, which will</span></span>
+<span id="cb27-6"><a href="#cb27-6"></a><span class="co"># repeat within each subject, but vary across subjects.</span></span></code></pre></div>
 </div>
 </div>
 <div id="saving-your-work" class="section level1">
@@ -244,23 +246,23 @@ First, we will calculate summary info across all data using <code>summarize()</c
 <div id="saving-tables-into-.csv-files" class="section level2">
 <h2>Saving tables into .csv files</h2>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>basic_descriptives &lt;-<span class="st">  </span>df <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb28-2"><a href="#cb28-2"></a><span class="st">   </span><span class="co"># if adhd score is lower than mean, label &quot;low&quot;, else label &quot;high&quot;&quot;</span></span>
-<span id="cb28-3"><a href="#cb28-3"></a><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">adhdF =</span> <span class="kw">ifelse</span>(adhd <span class="op">&lt;</span><span class="st"> </span><span class="kw">mean</span>(adhd), <span class="st">&quot;Low&quot;</span>, <span class="st">&quot;High&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="st">  </span><span class="co"># if adhd score is lower than mean, label &quot;low&quot;, else label &quot;high&quot;&quot;</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">adhdF =</span> <span class="kw">if_else</span>(adhd <span class="op">&lt;</span><span class="st"> </span><span class="kw">mean</span>(adhd), <span class="st">&quot;Low&quot;</span>, <span class="st">&quot;High&quot;</span>)) <span class="op">%&gt;%</span></span>
 <span id="cb28-4"><a href="#cb28-4"></a><span class="st">  </span><span class="co"># split the summary statistics by group </span></span>
 <span id="cb28-5"><a href="#cb28-5"></a><span class="st">  </span><span class="kw">group_by</span>(adhdF, groupStatus) <span class="op">%&gt;%</span></span>
 <span id="cb28-6"><a href="#cb28-6"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">meanHitRate =</span> <span class="kw">mean</span>(hitRate, <span class="dt">na.rm=</span> T), </span>
 <span id="cb28-7"><a href="#cb28-7"></a>            <span class="dt">meanFalseAlarm=</span> <span class="kw">mean</span>(faRate, <span class="dt">na.rm=</span> T),</span>
 <span id="cb28-8"><a href="#cb28-8"></a>            <span class="dt">meanDprime =</span> <span class="kw">mean</span>(dprime, <span class="dt">na.rm =</span> T))</span></code></pre></div>
 <pre><code>## `summarise()` regrouping output by &#39;adhdF&#39; (override with `.groups` argument)</code></pre>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co"># use write.csv() or save() to save this out!</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a><span class="co"># if you use save, you can combine the full data and descriptives into a tidy package.</span></span>
-<span id="cb30-3"><a href="#cb30-3"></a><span class="kw">write_csv</span>(basic_descriptives, <span class="dt">path =</span> <span class="kw">here</span>(<span class="st">&quot;content&quot;</span>, <span class="st">&quot;tutorials&quot;</span>, <span class="st">&quot;r-core&quot;</span>, <span class="st">&quot;3-datamanipulation&quot;</span>, <span class="st">&quot;myDescriptives.csv&quot;</span>))</span>
-<span id="cb30-4"><a href="#cb30-4"></a><span class="kw">save</span>(basic_descriptives, df, <span class="dt">file =</span> <span class="kw">here</span>(<span class="st">&quot;content&quot;</span>, <span class="st">&quot;tutorials&quot;</span>,, <span class="st">&quot;r-core&quot;</span>, <span class="st">&quot;3-datamanipulation&quot;</span>, <span class="st">&quot;StudyData.rda&quot;</span>))</span>
-<span id="cb30-5"><a href="#cb30-5"></a></span>
-<span id="cb30-6"><a href="#cb30-6"></a><span class="co"># Note: It will automatically save to your working directory unless you specify otherise </span></span>
-<span id="cb30-7"><a href="#cb30-7"></a><span class="co"># remember to check your working directory, use here() </span></span>
-<span id="cb30-8"><a href="#cb30-8"></a><span class="co"># If you don&#39;t want to save into your working directory,</span></span>
-<span id="cb30-9"><a href="#cb30-9"></a><span class="co"># add the path manually &quot;/dir/dir/dir/filename.csv&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co"># To save this out, use write_csv() to save a CSV file (which can open in</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="co"># other programs like Excel) or save() to save a combined file comprising</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a><span class="co"># the full data and descriptives (which can only open in R/RStudio).</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a><span class="kw">write_csv</span>(basic_descriptives, <span class="dt">path =</span> <span class="kw">here</span>(<span class="st">&quot;content&quot;</span>, <span class="st">&quot;tutorials&quot;</span>, <span class="st">&quot;r-core&quot;</span>, <span class="st">&quot;3-datamanipulation&quot;</span>, <span class="st">&quot;myDescriptives.csv&quot;</span>))</span>
+<span id="cb30-5"><a href="#cb30-5"></a><span class="kw">save</span>(basic_descriptives, df, <span class="dt">file =</span> <span class="kw">here</span>(<span class="st">&quot;content&quot;</span>, <span class="st">&quot;tutorials&quot;</span>,, <span class="st">&quot;r-core&quot;</span>, <span class="st">&quot;3-datamanipulation&quot;</span>, <span class="st">&quot;StudyData.rda&quot;</span>))</span>
+<span id="cb30-6"><a href="#cb30-6"></a></span>
+<span id="cb30-7"><a href="#cb30-7"></a><span class="co"># Note: These files will automatically save to your working directory</span></span>
+<span id="cb30-8"><a href="#cb30-8"></a><span class="co"># unless you specify otherwise. To do so, use here() to indicate the</span></span>
+<span id="cb30-9"><a href="#cb30-9"></a><span class="co"># location where you would like to save the file.</span></span></code></pre></div>
 <p><strong>Next:</strong> <a href="/tutorials/r-core/4-plotting/">Plotting (Graphing your data using <code>ggplot2</code>)</a></p>
 </div>
 </div>
