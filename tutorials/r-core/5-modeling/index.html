@@ -598,12 +598,12 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 ## #   adhd &lt;dbl&gt;, bis &lt;dbl&gt;</code></pre>
 <p>Clean up the data for these models.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a> df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st">   </span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="st">    </span><span class="co"># only keep data from the task when distractor was present</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="st">   </span><span class="co"># only keep data from the task when distractor was present</span></span>
 <span id="cb6-3"><a href="#cb6-3"></a><span class="st">   </span>dplyr<span class="op">::</span><span class="kw">filter</span>(numDist <span class="op">==</span><span class="st"> </span><span class="dv">6</span>) <span class="op">%&gt;%</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="st">   </span><span class="co"># only include high or low groups for multitasking.</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="st">   </span><span class="co"># only include high or low groups for multitasking</span></span>
 <span id="cb6-5"><a href="#cb6-5"></a><span class="st">   </span>dplyr<span class="op">::</span><span class="kw">filter</span>(groupStatus <span class="op">!=</span><span class="st"> &quot;&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="st">   </span><span class="co"># if adhd score is lower than mean, label &quot;low&quot;, else label &quot;high&quot;&quot;</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">adhdF =</span> <span class="kw">as.factor</span>(<span class="kw">ifelse</span>(adhd <span class="op">&lt;</span><span class="st"> </span><span class="kw">mean</span>(adhd), <span class="st">&quot;Low ADHD&quot;</span>, <span class="st">&quot;High ADHD&quot;</span>)))</span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="st">   </span><span class="co"># if adhd score is lower than mean, label &quot;low&quot;, else label &quot;high&quot;</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">adhdF =</span> <span class="kw">as.factor</span>(<span class="kw">if_else</span>(adhd <span class="op">&lt;</span><span class="st"> </span><span class="kw">mean</span>(adhd), <span class="st">&quot;Low ADHD&quot;</span>, <span class="st">&quot;High ADHD&quot;</span>)))</span>
 <span id="cb6-8"><a href="#cb6-8"></a>  </span>
 <span id="cb6-9"><a href="#cb6-9"></a><span class="kw">names</span>(df)</span></code></pre></div>
 <pre><code>##  [1] &quot;X1&quot;          &quot;X&quot;           &quot;subjNum&quot;     &quot;groupStatus&quot; &quot;numDist&quot;    
@@ -618,11 +618,13 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <div id="basic-models" class="section level3">
 <h3>Basic models</h3>
 <p>For each model type, there is a different function. Many of these are available in base R.</p>
-<p>T-TEST: <code>t.test()</code>
-CORRELATION: <code>cor.test()</code>
-LINEAR REGRESSION: <code>lm()</code>
-ANOVA: <code>aov()</code></p>
-<p>Each function has their own set of arguments, based on the options available.
+<ul>
+<li>T-TEST: <code>t.test()</code></li>
+<li>CORRELATION: <code>cor.test()</code></li>
+<li>LINEAR REGRESSION: <code>lm()</code></li>
+<li>ANOVA: <code>aov()</code></li>
+</ul>
+<p>Each function has its own set of arguments, based on the options available.
 Always use the <code>?</code> to see more details for the model you’re using.</p>
 <p>The first argument is always the model formula, which follows a standard syntax.</p>
 </div>
@@ -631,7 +633,7 @@ Always use the <code>?</code> to see more details for the model you’re using.<
 <h2>Syntax</h2>
 <div id="basic-model-formula" class="section level3">
 <h3>Basic model formula</h3>
-<p>For any type of model with an IV and DV, there is a common syntax. The “~” delineates the direction of the model, where the DV is always on the left of the ~ and the predictors are always on the right.</p>
+<p>For any type of model with an IV and DV, there is a common syntax. The <code>~</code> delineates the direction of the model, where the DV is always on the left of the ~ and the predictors are always on the right.</p>
 <p><code>Y ~ X</code></p>
 <p>Example of <em>t</em>-test:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">t.test</span>(dprime <span class="op">~</span><span class="st"> </span>adhdF, <span class="dt">data =</span> df)</span></code></pre></div>
@@ -646,7 +648,7 @@ Always use the <code>?</code> to see more details for the model you’re using.<
 ## sample estimates:
 ## mean in group High ADHD  mean in group Low ADHD 
 ##                1.134668                1.027639</code></pre>
-<p><em>When working with a dataframe, you can either index your data with <code>$</code> or provide a second argument in the function, delineating which data your variables come from – the output will be identical. However, we recommend the 2nd option, as it ensures that you will be always working with columns from the same data frame, and is less susceptible to mistakes</em></p>
+<p><em>When working with a dataframe, you can either index your data with <code>$</code> or provide a second argument in the function, delineating which data your variables come from – the output will be identical. However, we recommend the 2nd option, as it ensures that you will be always working with columns from the same data frame, and is less susceptible to mistakes.</em></p>
 <p>Example of a linear regression:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">lm</span>(dprime <span class="op">~</span><span class="st"> </span>adhd, <span class="dt">data =</span> df)</span></code></pre></div>
 <pre><code>## 
@@ -671,7 +673,7 @@ Always use the <code>?</code> to see more details for the model you’re using.<
 </div>
 <div id="to-add-multiple-variables" class="section level3">
 <h3>To add multiple variables</h3>
-<p>(in ANOVA or linear regression), simply add a “+” for each variable on the right of the formula:</p>
+<p>(in ANOVA or linear regression), simply add a <code>+</code> for each variable on the right of the formula:</p>
 <p><code>Y ~ X1 + X2 + X3</code></p>
 <p>Here is a linear model example with 2 predictors (continuous):</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">lm</span>(dprime <span class="op">~</span><span class="st"> </span>adhd <span class="op">+</span><span class="st"> </span>bis, <span class="dt">data =</span> df)</span></code></pre></div>
@@ -697,14 +699,14 @@ Always use the <code>?</code> to see more details for the model you’re using.<
 </div>
 <div id="interactions" class="section level3">
 <h3>Interactions</h3>
-<p>When you want to test the interaction between two variables, add a “:”.
+<p>When you want to test the interaction between two variables, add a <code>:</code>.
 The colon will automatically create an interaction regressor between X1 and X2.
 You still need to add each variable alone to calculate their main effects.</p>
 <p><code>Y ~ X1 + X2 + X1:X2</code></p>
-<p>Alternatively, a shortcut is to use an asterisk "*" that provides a shortcut. It will automatically create an interaction regressor AND the main effects for each variable.</p>
-<p><code>Y ~ X1*X2</code> is identical to <code>Y ~ X1 + X2 + X1:X2</code></p>
+<p>Alternatively, a shortcut is to use an asterisk <code>*</code> that provides a shortcut. It will automatically create an interaction regressor AND the main effects for each variable.</p>
+<p><code>Y ~ X1 * X2</code> is identical to <code>Y ~ X1 + X2 + X1:X2</code></p>
 <p>Example of an interaction between 2 continous variables in linear regression:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">lm</span>(dprime <span class="op">~</span><span class="st"> </span>adhd<span class="op">*</span>bis, <span class="dt">data =</span> df)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">lm</span>(dprime <span class="op">~</span><span class="st"> </span>adhd <span class="op">*</span><span class="st"> </span>bis, <span class="dt">data =</span> df)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = dprime ~ adhd * bis, data = df)
@@ -713,7 +715,7 @@ You still need to add each variable alone to calculate their main effects.</p>
 ## (Intercept)         adhd          bis     adhd:bis  
 ##    2.506924    -0.286411    -0.027917     0.006095</code></pre>
 <p>Example of an interaction between 2 categorical variables in ANOVA:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw">aov</span>(dprime <span class="op">~</span><span class="st"> </span>adhdF<span class="op">*</span>groupStatus, <span class="dt">data =</span> df)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw">aov</span>(dprime <span class="op">~</span><span class="st"> </span>adhdF <span class="op">*</span><span class="st"> </span>groupStatus, <span class="dt">data =</span> df)</span></code></pre></div>
 <pre><code>## Call:
 ##    aov(formula = dprime ~ adhdF * groupStatus, data = df)
 ## 
@@ -724,8 +726,8 @@ You still need to add each variable alone to calculate their main effects.</p>
 ## 
 ## Residual standard error: 0.5216246
 ## Estimated effects may be unbalanced</code></pre>
-<p>In the case where there is no IV/DV (i.e. correlation between 2 continuous variables), there is no “~”.</p>
-<p>Instead there is a “,”" to delineate 2 different variables.</p>
+<p>In the case where there is no IV/DV (i.e., correlation between 2 continuous variables), there is no <code>~</code>.</p>
+<p>Instead there is a <code>,</code> to delineate 2 different variables.</p>
 <p>Example of a correlation:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="kw">cor.test</span>(df<span class="op">$</span>dprime, df<span class="op">$</span>adhd)</span></code></pre></div>
 <pre><code>## 
@@ -743,15 +745,15 @@ You still need to add each variable alone to calculate their main effects.</p>
 </div>
 <div id="output-of-models" class="section level2">
 <h2>Output of models</h2>
-<p>The output of your code will depend on the model type. Linear models have much more information to output relative to t-tests, so they require an additional “summary()” call on the model to see the full results.</p>
+<p>The output of your code will depend on the model type. Linear models have much more information to output relative to <em>t</em>-tests, so they require an additional <code>summary()</code> call on the model to see the full results.</p>
 <div id="linear-models" class="section level3">
 <h3>Linear models</h3>
 <p>The output includes the following:</p>
 <ol style="list-style-type: lower-alpha">
 <li>the formula of your model</li>
 <li>residuals</li>
-<li>coefficients of the model (estimate, st. error, t-value, p-value)</li>
-<li>overall model results (RSE, R-squared, F-statistics, p-value)</li>
+<li>coefficients of the model (estimate, st. error, <em>t</em>-value, <em>p</em>-value)</li>
+<li>overall model results (RSE, <em>R</em>-squared, <em>F</em>-statistics, <em>p</em>-value)</li>
 </ol>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># first, we will save our model object and call it lm1</span></span>
 <span id="cb24-2"><a href="#cb24-2"></a>lm1 &lt;-<span class="st">  </span><span class="kw">lm</span>(dprime <span class="op">~</span><span class="st"> </span>adhd, <span class="dt">data =</span> df)</span>
@@ -776,7 +778,7 @@ You still need to add each variable alone to calculate their main effects.</p>
 ## Multiple R-squared:  0.009974,   Adjusted R-squared:  -0.005027 
 ## F-statistic: 0.6649 on 1 and 66 DF,  p-value: 0.4178</code></pre>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co"># save the model </span></span>
-<span id="cb26-2"><a href="#cb26-2"></a><span class="kw">save</span> (lm1, <span class="dt">file =</span> <span class="st">&quot;my_model.Rda&quot;</span>)</span></code></pre></div>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="kw">save</span>(lm1, <span class="dt">file =</span> <span class="st">&quot;my_model.Rda&quot;</span>)</span></code></pre></div>
 <p>We can index specific components of the output. What if I want to save the coefficients to a table?</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="kw">summary</span>(lm1)<span class="op">$</span>coefficients</span></code></pre></div>
 <pre><code>##               Estimate Std. Error   t value     Pr(&gt;|t|)
@@ -819,7 +821,7 @@ You still need to add each variable alone to calculate their main effects.</p>
 <p><img src="../../../tutorials/r-core/5-modeling/index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>There are many more options you can add to customize the plot!</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="kw">plot</span>(<span class="kw">effect</span>(<span class="st">&quot;adhd&quot;</span>, lm1), <span class="dt">rug =</span> F, <span class="dt">colors =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;ADHD symptoms&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;D-prime&quot;</span>,</span>
-<span id="cb35-2"><a href="#cb35-2"></a>     <span class="dt">axes=</span><span class="kw">list</span>(<span class="dt">grid=</span><span class="ot">TRUE</span>))</span></code></pre></div>
+<span id="cb35-2"><a href="#cb35-2"></a>     <span class="dt">axes =</span> <span class="kw">list</span>(<span class="dt">grid =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
 <p><img src="../../../tutorials/r-core/5-modeling/index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <p>Visualizing continuous x continous interactions:</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="kw">plot</span>(<span class="kw">effect</span>(<span class="st">&quot;adhdF:groupStatus&quot;</span>, a2), <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="dt">colors =</span> <span class="kw">c</span>(<span class="st">&quot;Blue&quot;</span>, <span class="st">&quot;Black&quot;</span>))</span></code></pre></div>
