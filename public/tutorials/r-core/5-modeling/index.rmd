@@ -38,12 +38,12 @@ Clean up the data for these models.
 
 ```{r}
  df <- df %>%   
-    # only keep data from the task when distractor was present
+   # only keep data from the task when distractor was present
    dplyr::filter(numDist == 6) %>%
-   # only include high or low groups for multitasking.
+   # only include high or low groups for multitasking
    dplyr::filter(groupStatus != "") %>%
-   # if adhd score is lower than mean, label "low", else label "high""
-   mutate(adhdF = as.factor(ifelse(adhd < mean(adhd), "Low ADHD", "High ADHD")))
+   # if adhd score is lower than mean, label "low", else label "high"
+   mutate(adhdF = as.factor(if_else(adhd < mean(adhd), "Low ADHD", "High ADHD")))
   
 names(df)
 ```
@@ -56,12 +56,12 @@ names(df)
 
 For each model type, there is a different function. Many of these are available in base R.
 
-T-TEST: `t.test()`
-CORRELATION: `cor.test()`
-LINEAR REGRESSION: `lm()`
-ANOVA: `aov()`
+- T-TEST: `t.test()`
+- CORRELATION: `cor.test()`
+- LINEAR REGRESSION: `lm()`
+- ANOVA: `aov()`
 
-Each function has their own set of arguments, based on the options available. 
+Each function has its own set of arguments, based on the options available. 
 Always use the `?` to see more details for the model you're using.
 
 The first argument is always the model formula, which follows a standard syntax.
@@ -70,7 +70,7 @@ The first argument is always the model formula, which follows a standard syntax.
 
 ### Basic model formula
 
-For any type of model with an IV and DV, there is a common syntax. The "~" delineates the direction of the model, where the DV is always on the left of the ~ and the predictors are always on the right.
+For any type of model with an IV and DV, there is a common syntax. The `~` delineates the direction of the model, where the DV is always on the left of the ~ and the predictors are always on the right.
 
 `Y ~ X`
 
@@ -80,7 +80,7 @@ Example of *t*-test:
 t.test(dprime ~ adhdF, data = df)
 ```
 
-*When working with a dataframe, you can either index your data with `$` or provide a second argument in the function, delineating which data your variables come from -- the output will be identical. However, we recommend the 2nd option, as it ensures that you will be always working with columns from the same data frame, and is less susceptible to mistakes*
+*When working with a dataframe, you can either index your data with `$` or provide a second argument in the function, delineating which data your variables come from -- the output will be identical. However, we recommend the 2nd option, as it ensures that you will be always working with columns from the same data frame, and is less susceptible to mistakes.*
 
 Example of a linear regression:
 
@@ -95,7 +95,7 @@ aov(dprime ~ adhdF, data = df)
 ```
 
 ### To add multiple variables
-(in ANOVA or linear regression), simply add  a "+" for each variable on the right of the formula:
+(in ANOVA or linear regression), simply add  a `+` for each variable on the right of the formula:
 
 `Y ~ X1 + X2 + X3`
 
@@ -113,30 +113,30 @@ aov(dprime ~ adhdF + bis, data = df)
 
 ### Interactions
 
-When you want to test the interaction between two variables, add a ":". 
+When you want to test the interaction between two variables, add a `:`. 
 The colon will automatically create an interaction regressor between X1 and X2.
 You still need to add each variable alone to calculate their main effects. 
 
 `Y ~ X1 + X2 + X1:X2`
 
-Alternatively, a shortcut is to use an asterisk "*" that provides a shortcut. It will automatically create an interaction regressor AND the main effects for each variable.
+Alternatively, a shortcut is to use an asterisk `*` that provides a shortcut. It will automatically create an interaction regressor AND the main effects for each variable.
 
-`Y ~ X1*X2` is identical to `Y ~ X1 + X2 + X1:X2`
+`Y ~ X1 * X2` is identical to `Y ~ X1 + X2 + X1:X2`
 
 Example of an interaction between 2 continous variables in linear regression:
 ```{r}
-lm(dprime ~ adhd*bis, data = df)
+lm(dprime ~ adhd * bis, data = df)
 ```
 
 Example of an interaction between 2 categorical variables in ANOVA:
 
 ```{r}
-aov(dprime ~ adhdF*groupStatus, data = df)
+aov(dprime ~ adhdF * groupStatus, data = df)
 ```
 
-In the case where there is no IV/DV (i.e. correlation between 2 continuous variables), there is no "~".
+In the case where there is no IV/DV (i.e., correlation between 2 continuous variables), there is no `~`.
 
-Instead there is a ","" to delineate 2 different variables.
+Instead there is a `,` to delineate 2 different variables.
 
 Example of a correlation:
 
@@ -146,7 +146,7 @@ cor.test(df$dprime, df$adhd)
 
 ## Output of models 
 
-The output of your code will depend on the model type. Linear models have much more information to output relative to t-tests, so they require an additional "summary()" call on the model to see the full results. 
+The output of your code will depend on the model type. Linear models have much more information to output relative to *t*-tests, so they require an additional `summary()` call on the model to see the full results. 
 
 ### Linear models
 
@@ -154,8 +154,8 @@ The output includes the following:
 
 a) the formula of your model 
 b) residuals
-c) coefficients of the model (estimate, st. error, t-value, p-value)
-d) overall model results (RSE, R-squared, F-statistics, p-value)
+c) coefficients of the model (estimate, st. error, *t*-value, *p*-value)
+d) overall model results (RSE, *R*-squared, *F*-statistics, *p*-value)
 
 ```{r}
 # first, we will save our model object and call it lm1
@@ -163,9 +163,8 @@ lm1 <-  lm(dprime ~ adhd, data = df)
 # then we will ask for the summary of the model results
 summary(lm1)
 
-
 # save the model 
-save (lm1, file = "my_model.Rda")
+save(lm1, file = "my_model.Rda")
 ```
 
 We can index specific components of the output. What if I want to save the coefficients to a table?
@@ -209,16 +208,13 @@ Let's plot the effect of ADHD on dprime from our linear model.
 ```{r}
 # This function requires the X variable in quotes, and the saved model object
 plot(effect("adhd", lm1))
-
 ```
 
 There are many more options you can add to customize the plot! 
 
 ```{r}
-
 plot(effect("adhd", lm1), rug = F, colors = "red", xlab = "ADHD symptoms", ylab = "D-prime",
-     axes=list(grid=TRUE))
-
+     axes = list(grid = TRUE))
 ```
 
 Visualizing continuous x continous interactions:
@@ -237,4 +233,3 @@ For more advanced modeling, you may need to download packages for those model ty
 - `mediation()` for mediations using the `mediate` package
 
 However, the opportunities for modeling in R are endless! There is a package for any kind of model you can think of.
-

@@ -34,7 +34,7 @@ df <- read_csv(here("content", "tutorials", "r-core", "3-datamanipulation", "unc
 
 # Familiarizing Yourself with the Data
 
-Quick review from [data cleaning](/tutorials/r-core/2-datacleaning/): take a look at the basic data structure, number of rows and columns.
+Quick review from [Data Cleaning](/tutorials/r-core/2-datacleaning/): take a look at the basic data structure, number of rows and columns.
 
 ```{r}
 # base R functions
@@ -50,7 +50,7 @@ Sometimes datasets have many variables that are unnecessary for a given analysis
 
 ```{r}
 # tidyverse select() function 
-df <- df %>% 
+df <- df %>%
   select(subjNum, groupStatus, adhd, hitRate, faRate, dprime)
 ```
 
@@ -76,8 +76,8 @@ Next, we will learn how to group data based on certain variables of interest.
 We will use the `group_by()` function in tidyverse, which will automatically group any subsequent actions called on the data. 
 
 ```{r}
+# Split the summary statistics by group
 meanSummary <- df %>% 
-  # split the summary statistics by group 
   group_by(groupStatus) %>%
   summarize(meanHitRate = mean(hitRate, na.rm= T), 
             meanFalseAlarm= mean(faRate, na.rm= T),
@@ -87,8 +87,8 @@ meanSummary <- df %>%
 We can group data by more than one factor. Let's say we're interested in how levels of ADHD interact with `groupStatus` (multitasking: high or low). We will make a factor for ADHD (mean-split), and add it as a grouping variable.
 
 ```{r}
- df <- df %>% 
-   # if adhd score is lower than mean, label "low", else label "high""
+# If adhd score is lower than mean, label "low", else label "high"
+df <- df %>% 
    mutate(adhdF = if_else(adhd < mean(adhd), "Low", "High")) 
 
 table(df$adhdF)
@@ -97,8 +97,9 @@ table(df$adhdF)
 Then we'll check how evenly split these groups are.
 
 ```{r}
+# How many data points are in each group (adhdF x groupStatus)?
+# count() will calculate this for us.
 df %>%
-  # how many data points are in each group (adhdF x groupStatus)? n() will calculate this for us.
   count(adhdF, groupStatus)
 ```
 
@@ -106,8 +107,8 @@ Then we'll calculate some summary info on these groups.
 
 ```{r}
 df %>%
-    group_by(adhdF, groupStatus) %>%
-    summarize(meanHitRate = mean(hitRate, na.rm= T), 
+  group_by(adhdF, groupStatus) %>%
+  summarize(meanHitRate = mean(hitRate, na.rm= T), 
             meanFalseAlarm= mean(faRate, na.rm= T),
             meanDprime = mean(dprime, na.rm = T))
 ```
@@ -144,7 +145,8 @@ avgHR <- df %>%
   group_by(subjNum) %>% 
   mutate(avgHR = mean(hitRate, na.rm=T))
 
-# you should now have an avgHR column in df, which will repeat within each subject, but vary across subjects.
+# You should now have an avgHR column in df, which will
+# repeat within each subject, but vary across subjects.
 ```
 
 # Saving Your Work
@@ -153,8 +155,8 @@ avgHR <- df %>%
 
 ```{r}
 basic_descriptives <-  df %>% 
-   # if adhd score is lower than mean, label "low", else label "high""
-   mutate(adhdF = ifelse(adhd < mean(adhd), "Low", "High")) %>%
+  # if adhd score is lower than mean, label "low", else label "high""
+  mutate(adhdF = if_else(adhd < mean(adhd), "Low", "High")) %>%
   # split the summary statistics by group 
   group_by(adhdF, groupStatus) %>%
   summarize(meanHitRate = mean(hitRate, na.rm= T), 
@@ -163,15 +165,15 @@ basic_descriptives <-  df %>%
 ```
 
 ```{r, eval = FALSE}
-# use write.csv() or save() to save this out!
-# if you use save, you can combine the full data and descriptives into a tidy package.
+# To save this out, use write_csv() to save a CSV file (which can open in
+# other programs like Excel) or save() to save a combined file comprising
+# the full data and descriptives (which can only open in R/RStudio).
 write_csv(basic_descriptives, path = here("content", "tutorials", "r-core", "3-datamanipulation", "myDescriptives.csv"))
 save(basic_descriptives, df, file = here("content", "tutorials",, "r-core", "3-datamanipulation", "StudyData.rda"))
 
-# Note: It will automatically save to your working directory unless you specify otherise 
-# remember to check your working directory, use here() 
-# If you don't want to save into your working directory,
-# add the path manually "/dir/dir/dir/filename.csv"
+# Note: These files will automatically save to your working directory
+# unless you specify otherwise. To do so, use here() to indicate the
+# location where you would like to save the file.
 ```
 
 **Next:** [Plotting (Graphing your data using `ggplot2`)](/tutorials/r-core/4-plotting/)

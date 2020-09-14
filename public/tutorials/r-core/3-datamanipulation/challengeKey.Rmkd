@@ -6,7 +6,7 @@ output: html_document
 # Data challenge for descriptive statistics
 Using the same dataset as the lesson, complete the following exercises. Make sure to reload the .csv file from the folder, don't use the version we were working on during the tutorial if you still have it open.
 
-## 0. Get started by loading data and packages 
+## 0. Get started by loading data and the tidyverse package 
 ```{r}
 library(tidyverse)
 
