@@ -372,7 +372,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <p>In this case, the missing value is the Age value in row 39. You know you have this info somewhere on a paper form, so you go dig it up and want to replace it.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># Directly replace a missing value</span></span>
 <span id="cb22-2"><a href="#cb22-2"></a>mydata &lt;-<span class="st"> </span>mydata <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb22-3"><a href="#cb22-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Age =</span> <span class="kw">if_else</span>(ID <span class="op">==</span><span class="st"> </span><span class="dv">39</span>, 30L, Age))</span></code></pre></div>
+<span id="cb22-3"><a href="#cb22-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Age =</span> <span class="kw">if_else</span>(ID <span class="op">==</span><span class="st"> </span><span class="dv">39</span>, <span class="kw">as.integer</span>(<span class="dv">30</span>), Age))</span></code></pre></div>
 </div>
 <div id="checking-for-correct-values" class="section level2">
 <h2>Checking for correct values</h2>
