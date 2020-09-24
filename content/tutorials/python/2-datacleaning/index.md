@@ -6,26 +6,26 @@ tags: ["core", "python"]
 
 ---
 
-## Goals of this lesson
+## Goals of this Lesson
 
 ### Students will learn:
 
 1. How to open various data types in Python
-2. How to check for missing or problematic data and address issues.
-3. How to filter, rearrange and shape data in preparation for analysis.
+2. How to check for missing or problematic data and address issues
+3. How to filter, rearrange and shape data in preparation for analysis
 
 ## Links to Files
 The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial) using [these instructions](/accessing-files/). This particular file is located here: `/content/tutorials/python/2-datacleaning/index.ipynb`.
 
 ---
-## A quick introduction to Python scientific computing modules
+## A Quick Introduction to Python Scientific Computing Modules
 
 As a programming languge, Python can do quite a lot. For example, it is an extremely popular choice for GUI and web-based application development (Reddit, Google, Facebook), databases (Spotify, Netflix), and scientific computing (NASA, for example, but also us!).
 
 One reason that Python is so widely used is due to its extensive library of third-party modules. Let's start by briefly covering the most important modules for scientific computing, some (but not all) of which we'll be using today.
 
 #### Data Analysis
-- NumPy: The fundamental package for scientific computing in Python. Numpy provides Python with most of the functionality of MATLAB.
+- NumPy: The fundamental package for scientific computing in Python. NumPy provides Python with most of the functionality of MATLAB.
 - SciPy: Provides many user-friendly and efficient numerical routines such as routines for numerical integration, interpolation, optimization, linear algebra and statistics.
 - Pandas: Provides high-performance, easy-to-use data structures and data analysis tools. Pandas provides Python with most of the functionality of R.
 
@@ -33,7 +33,7 @@ One reason that Python is so widely used is due to its extensive library of thir
 - Matplotlib: Python 2D plotting library which produces publication quality figures. The pyplot module provides a MATLAB-like interface and is what most people use.
 - Seaborn: A Python data visualization library based on matplotlib. It provides a high-level interface for drawing attractive and informative statistical graphics.
 
-We'll now import a few of these modules using their standard abbreviations
+We'll now import a few of these modules using their standard abbreviations.
 
 
 ```python
@@ -46,7 +46,7 @@ sns.set_context("poster")
 sns.set(style="ticks",font="Arial",font_scale=2)
 ```
 
-In order to call one of the functions belonging to a particular module, you can use the `.` syntax. For example, numpy has a `mean()` function which will compute the arithmetic mean across an axis. If we wanted to call that function, we would simply write:
+In order to call one of the functions belonging to a particular module, you can use the `.` syntax. For example, `numpy` has a `mean()` function which will compute the arithmetic mean across an axis. If we wanted to call that function, we would simply write:
 
 
 ```python
@@ -60,12 +60,12 @@ np.mean([2,4,6])
 
 
 
-For those coming from R, this is the equivalent of something like `dplyr::filter()`. Python is stricter than R about making sure you specify from which library the function you are using comes from.
+For those coming from R, this is the equivalent of something like `dplyr::filter()`. Python is stricter than R about making sure you specify which library the function you are using comes from.
 
 Now that you're familiar with the basics of modules in Python, let's go ahead and move on to some data cleaning.
 
 ---
-## Python data structures
+## Python Data Structures
 
 There are a few ways that data can be stored and manipulated in Python, some of which you've already covered.
 
@@ -99,7 +99,7 @@ mylist2
 
 
 
-Similar to lists, the numpy module provides the ability to work with n-dimensional arrays for **numerical** data only. We can initialize an array full of zeros using the `np.zeros` function:
+Similar to lists, the `numpy` module provides the ability to work with n-dimensional arrays for **numerical** data only. We can initialize an array full of zeros using the `np.zeros()` function:
 
 
 ```python
@@ -138,7 +138,7 @@ mymatrix
 
 
 
-We won't be working much with numpy arrays directly today, but you should know that they are often a better option than lists when you are working with numerical data.
+We won't be working much with `numpy` arrays directly today, but you should know that they are often a better option than lists when you are working with numerical data.
 
 Today, we will primarily be working with `pandas` dataframes. This object provides functionality that is very similar to dataframes in R. Let's start by converting our empty matrix into a dataframe. We can also give each of our columns more informative names:
 
@@ -230,7 +230,7 @@ mydataframe
 
 
 
-Another way we can create a dataframe is by first creating a **dictionary** and then converting this to a dataframe. A dictionary is another type of data structure used by python. Dictionaries consist of an unordered collection of key-value pairs. Keys are used to index the dictionary in order to access the values associated with that key. Let's start by making a simple dictionary with one key and one value:
+Another way we can create a dataframe is by first creating a **dictionary** and then converting this to a dataframe. A dictionary is another type of data structure used by Python. Dictionaries consist of an unordered collection of key-value pairs. Keys are used to index the dictionary in order to access the values associated with that key. Let's start by making a simple dictionary with one key and one value:
 
 
 ```python
@@ -277,7 +277,7 @@ data
 
 
 
-Similar to how we made a dataframe from our numpy array above, we can easily make a dataframe from this dictionary:
+Similar to how we made a dataframe from our `numpy` array above, we can easily make a dataframe from this dictionary:
 
 
 ```python
@@ -343,7 +343,7 @@ dataframe
 
 
 
-## Reading data into Python
+## Reading Data into Python
 ---
 
 
@@ -358,7 +358,7 @@ This module provides a way to interface with the operating system we are running
 import os
 ```
 
-#### It's always important to check where our working directory is when trying to read data into python
+#### It's always important to check where our working directory is when trying to read data into Python.
 
 
 ```python
@@ -373,7 +373,6 @@ os.getcwd()
 
 
 You can access a list of everything (all files and directories) within your working directory using the `os.listdir()` function...
-
 
 
 ```python
@@ -397,11 +396,11 @@ os.listdir()
 
 
 
-...as well as in the "Files" tab on the lefthand side of the jupyter lab window.
+...as well as in the "Files" tab on the left-hand side of the JupyterLab window.
 
 #### What kind of file do you have?
 
-For .txt, .csv, or any kind of delimited (such as tab-delimited) file, you can use the pandas function `read_table()`:
+For .txt, .csv, or any kind of delimited (such as tab-delimited) file, you can use the `pandas` function `read_table()`:
 
 
 ```python
@@ -413,17 +412,17 @@ For .txt, .csv, or any kind of delimited (such as tab-delimited) file, you can u
 mydata = pd.read_table("Study1.csv", sep=",")
 ```
 
-If you know you have a csv file, another common option is `read_csv`, which has a default comma seperator.
+If you know you have a .csv file, another common option is `read_csv()`, which has a default comma separator.
 
 Remember, all of these commands can have arguments that will help Python make sense of your data. To find out what arguments are possible, you can use the `help()` function like we did above to look at what `read_table()` does.
 
-To do this, just put whatever command you would like to learn about inside of `help()` (e.g. `help(pd.read_table)`). Remember that for functions associated with a particular module you will need to tell python which module they come from using the `.` syntax.
+To do this, just put whatever command you would like to learn about inside of `help()` (e.g. `help(pd.read_table)`). Remember that for functions associated with a particular module you will need to tell Python which module they come from using the `.` syntax.
 
 You can always also Google a function to quickly find this information.
 
 ### Inspecting your data
 
-Now you have data, time to get some results! But wait! Are you sure this data is ok? Doing some basic steps to inspect your data now can save you lots of headaches later, and Python makes it really easy.
+Now that you have data, it's time to get some results! But wait! Are you sure this data is OK? Doing some basic steps to inspect your data now can save you lots of headaches later, and Python makes it really easy.
 
 Start by checking that you have the expected number of rows and columns in your data frame. You can do this by by asking Python:
 
@@ -455,7 +454,7 @@ mydata.columns
 
 
 ```python
-# take a peak at the first few rows
+# take a peek at the first few rows
 mydata.head()
 ```
 
@@ -560,9 +559,9 @@ mydata.head()
 
 ### Rename a variable
 
-Now that we've loaded our data into Python and have made sure it makes sense, we can now start manipulating and cleaning it.
+Now that we've loaded our data into Python and have made sure it makes sense, we can start manipulating and cleaning it.
 
-Look back at your data frame. What is the fifth variable? What does that even mean? Luckily, this is your study and you know that it's a personality questionnaire measuring neuroticism. Let's fix that name and make it more intuitive:
+Look back at your dataframe. What is the fifth variable? What does that even mean? Luckily, this is your study and you know that it's a personality questionnaire measuring neuroticism. Let's fix that name and make it more intuitive:
 
 
 ```python
@@ -781,7 +780,7 @@ mydata.head()
 
 ### Adding a new column 
 
-Often we'll want to add some new data into a dataframe
+Often we'll want to add some new data into a dataframe.
 
 
 ```python
@@ -905,20 +904,20 @@ mydata.head()
 
 
 
-For those coming from R, the python syntax for referencing columns as `df["columnName"]` is roughly equivalent to using the $ operator
+For those coming from R, the Python syntax for referencing columns as `df["columnName"]` is roughly equivalent to using R's `$` operator.
 
 ### Removing Columns
 
-We can remove columns with the `.drop` function
+We can remove columns with the `.drop()` function
 
 
 ```python
 mydata = mydata.drop(['random', 'studyName'], axis = 1)
 ```
 
-## Indexing a dataframe
+## Indexing a Dataframe
 
-Sometimes you might want to look at only a subset of the columns in a dataframe (for example, when there are many variables). Doing this with a pandas dataframe is relatively straightforward:
+Sometimes you might want to look at only a subset of the columns in a dataframe (for example, when there are many variables). Doing this with a `pandas` dataframe is relatively straightforward:
 
 
 ```python
@@ -1050,12 +1049,12 @@ mydata_subset.head()
 
 ### Using .loc and .iloc to index DataFrames
 
-- If we want to pull out or manipulate specific pieces of DataFrames, we can use the .loc and .iloc functions
-- With both functions, the data referenced is always formatted as [selection of rows, selection of columns]
+- If we want to pull out or manipulate specific pieces of dataframes, we can use the `.loc[]` and `.iloc[]` functions.
+- With both functions, the data referenced is always formatted as `[selection of rows, selection of columns]`.
 
-#### .loc takes selections of rows from named columns
+#### `.loc[]` takes selections of rows from named columns.
 
-So, here we're asking for elements 0:2 from the 'Age' column
+So, here we're asking for elements 0:2 from the `Age` column:
 
 
 ```python
@@ -1105,7 +1104,7 @@ mydata.loc[0:2, ['Age']]
 
 
 
-We can also use conditional logic to select rows. Here, we ask for all elements in the 'Age' column that are above 24
+We can also use conditional logic to select rows. Here, we ask for all elements in the `Age` column that are above 24:
 
 
 ```python
@@ -1163,7 +1162,7 @@ mydata.loc[mydata['Age'] > 24, ['Age']]
 
 
 
-#### .iloc takes selections of rows and columns using numeric indices
+#### `.iloc[]` takes selections of rows and columns using numeric indices.
 
 
 ```python
@@ -1875,7 +1874,7 @@ mydata.isnull()
 
 
 
-In this case, the missing value is the Age value in row 38. You know you have this info somewhere on a paper form, so you go dig it up and want to replace it.
+In this case, the missing value is the `Age` value in row 38. You know you have this info somewhere on a paper form, so you go dig it up and want to replace it.
 
 
 
@@ -2061,7 +2060,7 @@ mydata["Age"].hist();
 ```
 
 
-![png](/tutorials/python/2-datacleaning/output_75_0.png)
+![png](output_75_0.png)
 
 
 
@@ -2070,10 +2069,10 @@ mydata["Neuroticism"].hist();
 ```
 
 
-![png](/tutorials/python/2-datacleaning/output_76_0.png)
+![png](output_76_0.png)
 
 
-Looks like we have a potential outlier on the neuroticism score. This could be an entry error, but it could also be a real value that just happens to be really low. This is why data inspection is so important for later analysis -- now you know that value is there, it's up to you to decide how to deal with it.
+Looks like we have a potential outlier on the `Neuroticism` score. This could be an entry error, but it could also be a real value that just happens to be really low. This is why data inspection is so important for later analysis — now that you know that the value is there, it's up to you to decide how to deal with it.
 
 ### Filtering data 
 Let's say we have decided a prori to exclude outliers 3SD above or below the mean. We will first define these boundaries:
@@ -2084,14 +2083,14 @@ upper = np.mean(mydata["Neuroticism"]) + 3*np.std(mydata["Neuroticism"])
 lower = np.mean(mydata["Neuroticism"]) - 3*np.std(mydata["Neuroticism"])
 ```
 
-We can now use conditional indexing to exclude all rows with a Neuroticism score above or below these values:
+We can now use conditional indexing to exclude all rows with a `Neuroticism` score above or below these values:
 
 
 ```python
 mydata = mydata[(mydata["Neuroticism"] > lower) & (mydata["Neuroticism"] < upper)]
 ```
 
-This line says: return only the Neuroticism values greater than the `lower` boundary and less than the `upper` boundary and then save it in the `mydata` variable
+The line above says: return only the `Neuroticism` values greater than the `lower` boundary and less than the `upper` boundary and then save it in the `mydata` variable.
 
 
 ```python
@@ -2112,17 +2111,17 @@ mydata["Neuroticism"].hist();
 ```
 
 
-![png](/tutorials/python/2-datacleaning/output_84_0.png)
+![png](output_84_0.png)
 
 
 ---
-## Getting ready for analysis
+## Getting Ready for Analysis
 
 Now that we've gone through and cleaned up the problems, you can think ahead to how you'll want to use this data.
 
 ### Recoding variables
 
-Sometimes we want to treat categorical variables as factors, but sometimes we want to pretend they're numeric (as in a regression, when binary variables can be coded as 0 and 1). Right now, Condition is coded as a binary numeric variable, but that's not very informative, so you'd rather have the values be descriptive. Here, the function `replace()` is again useful:
+Sometimes we want to treat categorical variables as factors, but sometimes we want to pretend they're numeric (as in a regression, when binary variables can be coded as 0 and 1). Right now, `Condition` is coded as a binary numeric variable, but that's not very informative, so you'd rather have the values be descriptive. Here, the function `replace()` is again useful:
 
 
 ```python
@@ -2194,9 +2193,9 @@ mydata[['Condition','ConditionF']].head()
 
 ### Calculating new variables
 
-You may also want to recalculate or rescale some variables. For example, we can turn Neuroticism into a Z score, or calculate an average response across the four time points.
+You may also want to recalculate or rescale some variables. For example, we can turn `Neuroticism` into a *z*-score, or calculate an average response across the four time points.
 
-To compute a Z score, we can use the `zscore` function from the `scipy.stats` module:
+To compute a *z*-score, we can use the `zscore()` function from the `scipy.stats` module:
 
 
 ```python
@@ -2211,10 +2210,10 @@ mydata['NeuroticismZ'].hist();
 ```
 
 
-![png](/tutorials/python/2-datacleaning/output_90_0.png)
+![png](output_90_0.png)
 
 
-To calculate the means across each day, we can use the `mean` function from pandas on a dataframe that has been indexed to include only data from the four days:
+To calculate the means across each day, we can use the `mean()` function from `pandas` on a dataframe that has been indexed to include only data from the four days:
 
 
 ```python
@@ -2227,7 +2226,7 @@ mydata['DayMean'].hist();
 ```
 
 
-![png](/tutorials/python/2-datacleaning/output_93_0.png)
+![png](output_93_0.png)
 
 
 ### Combining data from multiple sources
@@ -2240,7 +2239,7 @@ Sometimes, data might be spread across multiple files, and you'll want to combin
 mydata2 = pd.read_csv("Study1_Followup.csv")
 ```
 
-We can use the function `merge()` to combine the two dataframes. To make sure the data matches up, we use the `on` argument to specify that IDs should match. That way even if the data is in a different order you will get scores matched together correctly.
+We can use the function `merge()` to combine the two dataframes. To make sure the data matches up, we use the `on` argument to specify that IDs should match. That way even if the data is in a different order, scores will match together correctly.
 
 
 ```python
@@ -2373,7 +2372,7 @@ mydata.head()
 
 ### Shaping data
 
-Finally, you may want to change the layout of your data. Right now, our data frame is in "wide" format, which means that each row is a subject, and each observation gets its own column. For some analyses, you'll need to use "long" format, where each row is an observation, and columns specify things like time and ID to differentiate the observations. For this, we can use the `melt()` function in pandas:
+Finally, you may want to change the layout of your data. Right now, our dataframe is in "wide" format, which means that each row is a subject, and each observation gets its own column. For some analyses, you'll need to use "long" format, where each row is an observation, and columns specify things like `Time` and `ID` to differentiate the observations. For this, we can use the `melt()` function in `pandas`:
 
 
 ```python
@@ -2383,7 +2382,7 @@ for i in value_cols:
     id_cols.remove(i)
 ```
 
-#### Wide --> Long
+#### Wide → Long
 
 
 ```python
@@ -2502,8 +2501,8 @@ mydata_Long.head()
 
 
 
-#### Long --> Wide
-We can go back in the other direction by using the `pivot_table()` function in pandas:
+#### Long → Wide
+We can go back in the other direction by using the `pivot_table()` function in `pandas`:
 
 
 ```python
@@ -2636,7 +2635,7 @@ mydata_Wide.head()
 
 
 ---
-## Saving your work
+## Saving Your Work
 
 Once you've created a data cleaning script like this one, you'll have a record of all the edits you've made on the raw data, and you can recreate your cleaned data just by running the script again. However, it's often easier to save your cleaned data as its own file **(never overwrite the raw data)**, so when you come back to do analysis you don't have to bother with all the cleaning steps. 
 

@@ -472,7 +472,7 @@ div.sourceCode {
 
 </p>
 <hr>
-<h2 id="goals-of-this-lesson">Goals of this lesson</h2>
+<h2 id="goals-of-this-lesson">Goals of this Lesson</h2>
 <h3 id="students-will-learn">Students will learn:</h3>
 <ol>
 <li>How to group and categorize data in Python</li>
@@ -484,13 +484,13 @@ div.sourceCode {
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#8f5902;font-style:italic"># load packages we will be using for this lesson</span>
 <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">pandas</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">pd</span>
 </code></pre></div><hr>
-<h2 id="0-open-dataset-and-load-package">0. Open dataset and load package</h2>
+<h2 id="open-dataset-and-load-package">Open Dataset and Load Package</h2>
 <p>This dataset examines the relationship between multitasking and working memory. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4733435/pdf/nihms712443.pdf">Link here to original paper by Uncapher et al. 2016.</a></p>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#8f5902;font-style:italic"># use pd.read_csv to open data into python</span>
 <span style="color:#000">df</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">pd</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">read_csv</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;uncapher_2016_repeated_measures_dataset.csv&#34;</span><span style="color:#000;font-weight:bold">)</span>
 </code></pre></div><hr>
-<h2 id="1-familiarize-yourself-with-the-data">1. Familiarize yourself with the data</h2>
-<p>Quick review from <a href="dataCleaning/DataCleaning_Code.ipynb">data cleaning</a>: take a look at the basic data structure, number of rows and columns.</p>
+<h2 id="familiarize-yourself-with-the-data">Familiarize Yourself with the Data</h2>
+<p>Quick review from <a href="../../../tutorials/python/2-datacleaning/">Data Cleaning</a>: take a look at the basic data structure, number of rows and columns.</p>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">head</span><span style="color:#000;font-weight:bold">()</span>
 </code></pre></div><div>
 <style scoped>
@@ -643,7 +643,7 @@ div.sourceCode {
       dtype='object')
 </code></pre>
 <hr>
-<h2 id="2-selecting-relevant-variables">2. Selecting relevant variables</h2>
+<h2 id="selecting-relevant-variables">Selecting Relevant Variables</h2>
 <p>Sometimes datasets have many variables that are unnecessary for a given analysis. To simplify your life, and your code, we can select only the given variables we&rsquo;d like to use for now.</p>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">df</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">df</span><span style="color:#000;font-weight:bold">[[</span><span style="color:#4e9a06">&#34;subjNum&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;groupStatus&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;adhd&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;hitRate&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;faRate&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;dprime&#34;</span><span style="color:#000;font-weight:bold">]]</span>
 <span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">head</span><span style="color:#000;font-weight:bold">()</span>
@@ -723,7 +723,7 @@ div.sourceCode {
 </table>
 </div>
 <hr>
-<h2 id="3-basic-descriptives">3. Basic Descriptives</h2>
+<h2 id="basic-descriptives">Basic Descriptives</h2>
 <h3 id="summarizing-data">Summarizing data</h3>
 <p>Let&rsquo;s learn how to make simple tables of summary statistics.
 First, we will calculate summary info across all data using <code>describe()</code>, a useful function for creating summaries. Note that we&rsquo;re not creating a new object for this summary (i.e. not using the <code>=</code> symbol), so this will print but not save.</p>
@@ -822,9 +822,9 @@ First, we will calculate summary info across all data using <code>describe()</co
 </table>
 </div>
 <hr>
-<h2 id="3-grouping-data">3. Grouping data</h2>
+<h2 id="grouping-data">Grouping Data</h2>
 <p>Next, we will learn how to group data based on certain variables of interest.</p>
-<p>We will use the <code>groupby()</code> function in pandas, which will automatically group any subsequent actions called on the data.</p>
+<p>We will use the <code>groupby()</code> function in <code>pandas</code>, which will automatically group any subsequent actions called on the data.</p>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">groupby</span><span style="color:#000;font-weight:bold">([</span><span style="color:#4e9a06">&#34;groupStatus&#34;</span><span style="color:#000;font-weight:bold">])</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">mean</span><span style="color:#000;font-weight:bold">()</span>
 </code></pre></div><div>
 <style scoped>
@@ -879,8 +879,8 @@ First, we will calculate summary info across all data using <code>describe()</co
   </tbody>
 </table>
 </div>
-<p>We can group data by more than one factor. Let&rsquo;s say we&rsquo;re interested in how levels of ADHD interact with <code>groupStatus</code> (multitasking: high or low).</p>
-<p>We will first make a factor for ADHD (median-split), and add it as a grouping variable using the <code>cut()</code> function in pandas:</p>
+<p>We can group data by more than one factor. Let&rsquo;s say we&rsquo;re interested in how levels of <code>adhd</code> interact with <code>groupStatus</code> (multitasking: high or low).</p>
+<p>We will first make a factor for <code>adhd</code> (median-split), and add it as a grouping variable using the <code>cut()</code> function in <code>pandas</code>:</p>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">df</span><span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#34;adhdF&#34;</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">pd</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">cut</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">df</span><span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#34;adhd&#34;</span><span style="color:#000;font-weight:bold">],</span><span style="color:#000">bins</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">labels</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#34;Low&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;High&#34;</span><span style="color:#000;font-weight:bold">])</span>
 </code></pre></div><p>Then we&rsquo;ll check how evenly split these groups are by using <code>groupby()</code> the <code>size()</code> functions:</p>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">groupby</span><span style="color:#000;font-weight:bold">([</span><span style="color:#4e9a06">&#34;groupStatus&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;adhdF&#34;</span><span style="color:#000;font-weight:bold">])</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">size</span><span style="color:#000;font-weight:bold">()</span>
@@ -967,10 +967,10 @@ dtype: int64
 </table>
 </div>
 <h3 id="a-note-on-piping--stringing-commands-together">A note on piping / stringing commands together</h3>
-<p>In R, we often use the pipe <code>%&gt;%</code> to string a series of steps together. We can do the same in python with many functions in a row</p>
+<p>In R, we often use the pipe <code>%&gt;%</code> to string a series of steps together. We can do the same in Python with many functions in a row.</p>
 <p>This is how we&rsquo;re able to take the output of <code>df.groupby([&quot;groupStatus&quot;,&quot;adhdF&quot;])</code> and then <em>send that output</em> into the <code>mean()</code> function</p>
 <hr>
-<h2 id="5-extra-working-with-a-long-dataset">5. Extra: Working with a long dataset</h2>
+<h2 id="extra-working-with-a-long-dataset">Extra: Working with a Long Dataset</h2>
 <p>This is a repeated measures (&ldquo;long&rdquo;) dataset, with multiple rows per subject. This makes things a bit tricker, but we are going to show you some tools for how to work with &ldquo;long&rdquo; datasets.</p>
 <h3 id="how-many-unique-subjects-are-in-the-data">How many unique subjects are in the data?</h3>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">subList</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">df</span><span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#34;subjNum&#34;</span><span style="color:#000;font-weight:bold">]</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">unique</span><span style="color:#000;font-weight:bold">()</span>
@@ -1032,8 +1032,8 @@ dtype: int64
   </tbody>
 </table>
 </div>
-<h3 id="combine-summary-statistics-with-the-full-data-frame">Combine summary statistics with the full data frame</h3>
-<p>For some analyses, you might want to add a higher level variable (e.g. subject average hitRate) alongside your long data. We can do this by summarizing the data in a new data frame and then merging it with the full data.</p>
+<h3 id="combine-summary-statistics-with-the-full-dataframe">Combine summary statistics with the full dataframe</h3>
+<p>For some analyses, you might want to add a higher level variable (e.g., subject average <code>hitRate</code>) alongside your long data. We can do this by summarizing the data in a new dataframe and then merging it with the full data.</p>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">avgHR</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">groupby</span><span style="color:#000;font-weight:bold">([</span><span style="color:#4e9a06">&#34;subjNum&#34;</span><span style="color:#000;font-weight:bold">])[</span><span style="color:#4e9a06">&#34;hitRate&#34;</span><span style="color:#000;font-weight:bold">]</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">mean</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">reset_index</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">name</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;avgHR&#34;</span><span style="color:#000;font-weight:bold">)</span>
 <span style="color:#000">avgHR</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">head</span><span style="color:#000;font-weight:bold">()</span>
 </code></pre></div><div>
@@ -1176,7 +1176,7 @@ dtype: int64
   </tbody>
 </table>
 </div>
-<p>You should now have an avgHR column in df, which will repeat within each subject, but vary across subjects.</p>
+<p>You should now have an <code>avgHR</code> column in <code>df</code>, which will repeat <em>within</em> each subject, but vary <em>across</em> subjects.</p>
 <p><strong>Next:</strong> <a href="../../../tutorials/python/4-plotting/">Plotting in Python</a></p>
 
     </article>
