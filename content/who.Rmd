@@ -24,7 +24,6 @@ knitr::opts_chunk$set(echo = FALSE)
 - <b>Method specialties: </b>surveys, web-based response latency tasks
 - <b>Tool/language specialties: </b>R, generating manuscripts with Papaja, Javascript/HTML customization in Qualtrics, M-Turk, Prolific
 - <b>Favorite NYC neighborhood: </b>Park Slope
-- <b>Office hours: </b>To be announced
 </div>
 
 <div class="col-md-6">
@@ -34,9 +33,10 @@ knitr::opts_chunk$set(echo = FALSE)
 - <b>Method specialties: </b>cognitive tasks (in-person and web-based), neuroimaging, virtual reality
 - <b>Tool/language specialties: </b>R, Python, Unity, Inquisit
 - <b>Favorite NYC neighborhood: </b>Astoria
-- <b>Office hours: </b>To be announced
 </div>
 </div>
+
+Office hours will be held by appointment. Please contact us at [psych-methods-support@columbia.edu](mailto:psych-methods-support@columbia.edu){target="_blank"} to schedule a time that works well for you!
 
 ## Contributors to Scientific Computing Workshop
 
