@@ -6,11 +6,11 @@ tags: ["core", "python"]
 
 ---
 
-## Goals of this lesson
+## Goals of this Lesson
 
 ### Students will learn:
 
-1. How to generate beautiful statistical visualizations in Python using the seaborn package
+1. How to generate beautiful statistical visualizations in Python using the `seaborn` package
 
 ## Links to Files
 The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial) using [these instructions](/accessing-files/). This particular file is located here: `/content/tutorials/python/4-plotting/index.ipynb`.
@@ -27,7 +27,7 @@ sns.set(rc={'figure.figsize':(12,8)})
 ```
 
 ---
-## 1. Load in sample data (NHANES)
+## Load in Sample Data
 We’re going to practice here on a dataset from the 1990 NHANES (National Health and Nutrition Examination Survey). The variables are below:
 
 - Region - Geographic region in the USA: Northeast (1), Midwest (2), South (3), and West (4)
@@ -233,7 +233,7 @@ nhanes.head()
 
 
 ---
-## 2. Scatter Plot 
+## Scatter Plots
 
 `seaborn` makes creating attractive and publication-quality data visualizations possible with single line commands. We'll start with a scatter plot to look at how some of our variables are distributed by using the `scatterplot()` function.
 
@@ -243,10 +243,10 @@ sns.scatterplot(x="Age",y="Weight",data=nhanes);
 ```
 
 
-![png](/tutorials/python/4-plotting/output_10_0.png)
+![png](output_10_0.png)
 
 
-We can also easily represent other dimensions of the data on this place using the `size` of the points. Let's map that to BMI:
+We can also easily represent other dimensions of the data on this place using the `size` of the points. Let's map that to `BMI`:
 
 
 ```python
@@ -254,7 +254,7 @@ sns.scatterplot(x="Age",y="Weight",data=nhanes,size="BMI");
 ```
 
 
-![png](/tutorials/python/4-plotting/output_12_0.png)
+![png](output_12_0.png)
 
 
 We can even add a fourth dimension to this visualization by mapping the color of the points to a categorial variable. Let's now use the `hue` argument to represent each point based on whether it is urban or non-urban:
@@ -265,16 +265,16 @@ sns.scatterplot(x="Age",y="Weight",data=nhanes,size="BMI",hue="Urban");
 ```
 
 
-![png](/tutorials/python/4-plotting/output_14_0.png)
+![png](output_14_0.png)
 
 
-There are lots of ways you can vary and customize this visualization using `seaborn`. The package is very well documented and you can check out references with examples for all functions here: https://seaborn.pydata.org/api.html
+There are lots of ways you can vary and customize this visualization using `seaborn`. The package is very well documented and you can check out references with examples for all functions here: https://seaborn.pydata.org/api.html.
 
 
 ---
-## 3. Histograms and data distributions
+## Histograms and Data Distributions
 
-We can use the `distplot` function to look at both a histogram and an smoothed estimate of the data distribution
+We can use the `distplot()` function to look at both a histogram and an smoothed estimate of the data distribution.
 
 
 ```python
@@ -282,7 +282,7 @@ sns.distplot(nhanes["Weight"]);
 ```
 
 
-![png](/tutorials/python/4-plotting/output_17_0.png)
+![png](output_17_0.png)
 
 
 If we want to look at only a histogram, we can just set the `kde` argument to `False`:
@@ -293,11 +293,11 @@ sns.distplot(nhanes["Weight"],kde=False);
 ```
 
 
-![png](/tutorials/python/4-plotting/output_19_0.png)
+![png](output_19_0.png)
 
 
 ---
-## 4. Jointplots
+## Jointplots
 `seaborn` also has some quick ways to combine both the univariate histogram/density plots and scatter plots from above using `jointplot()`. By default, this fucntion will plot a scatter plot and a histogram for two continuous x and y variables:
 
 
@@ -306,7 +306,7 @@ sns.jointplot(x="Age",y="Weight",data=nhanes);
 ```
 
 
-![png](/tutorials/python/4-plotting/output_21_0.png)
+![png](output_21_0.png)
 
 
 We can also modify it to plot density estimates using the `kind` keyword:
@@ -317,13 +317,13 @@ sns.jointplot(x="Age",y="Weight",data=nhanes,kind="kde");
 ```
 
 
-![png](/tutorials/python/4-plotting/output_23_0.png)
+![png](output_23_0.png)
 
 
 ---
-## 4: Categorical plots
+## Categorical Plots
 
-These types of plots are great for visualizing continuous x continuous data, but there are better ways to look at continuous x categorical data. For example, what if we want to look at the distribution of weights by region?
+The plot types above are great for visualizing continuous x continuous data, but there are better ways to look at continuous x categorical data. For example, what if we want to look at the distribution of weights by region?
 
 One way of doing this is by using the `catplot()` function. By default, this function will plot each data point grouped by our categorical variable with some jittering to help us differentiate points:
 
@@ -333,7 +333,7 @@ sns.catplot(x="Urban",y="Weight",data=nhanes,height=10);
 ```
 
 
-![png](/tutorials/python/4-plotting/output_25_0.png)
+![png](output_25_0.png)
 
 
 It's kind of hard to see how the data is distributed because it is so dense, so let's change the size of the points using the `s` argument as well as the `alpha` value of each point to help with this:
@@ -344,12 +344,12 @@ sns.catplot(x="Urban",y="Weight",data=nhanes,height=10,s=2,alpha=0.2);
 ```
 
 
-![png](/tutorials/python/4-plotting/output_27_0.png)
+![png](output_27_0.png)
 
 
 ### Categorial summary plots
 
-There's still a lot of data here, so it might be easier to visualize this distribution using a summary tool. Fortunately, `catplot` makes it easy to change the type of plot by using the `kind` argument. We can change this plot to a traditional box and whisker plot:
+There's still a lot of data here, so it might be easier to visualize this distribution using a summary tool. Fortunately, `catplot()` makes it easy to change the type of plot by using the `kind` argument. We can change this plot to a traditional box and whisker plot:
 
 
 ```python
@@ -357,7 +357,7 @@ sns.catplot(x="Urban",y="Weight",data=nhanes,height=10,kind="box");
 ```
 
 
-![png](/tutorials/python/4-plotting/output_30_0.png)
+![png](output_30_0.png)
 
 
 ...or also more modern variations like a violin plot:
@@ -368,7 +368,7 @@ sns.catplot(x="Urban",y="Weight",data=nhanes,height=10,kind="violin");
 ```
 
 
-![png](/tutorials/python/4-plotting/output_32_0.png)
+![png](output_32_0.png)
 
 
 Now we can really get a sense of how the weight variable is distributed by urban area.
@@ -381,12 +381,12 @@ sns.catplot(x="Region",y="Weight",data=nhanes,aspect=2,kind="point",join=False);
 ```
 
 
-![png](/tutorials/python/4-plotting/output_35_0.png)
+![png](output_35_0.png)
 
 
 Note that `seaborn` automatically calculates bootstrapped 95% confidence intervals in the representation of uncertainty on this plot.
 
-What if we wanted to put both of these plots on top of each other? seaborn has each of the plot types in catplot() as individual functions (e.g. pointplot() and stripplot()). We can just use both of these functions to plot one on top of the other:
+What if we wanted to put both of these plots on top of each other? `seaborn` has each of the plot types in `catplot()` as individual functions (e.g., `pointplot()` and `stripplot()`). We can just use both of these functions to plot one on top of the other:
 
 
 ```python
@@ -395,11 +395,11 @@ sns.stripplot(x="Urban",y="Weight",data=nhanes,s=2,alpha=0.2);
 ```
 
 
-![png](/tutorials/python/4-plotting/output_38_0.png)
+![png](output_38_0.png)
 
 
 ---
-## 5. Fitting linear models to the data
+## Fitting Linear Models to the Data
 
 Let's say we think there might be a linear relationship between height and weight. We can use the `lmplot()` function to fit and visualize a line. By default, `seaborn` will use a 95% confidence interval on this line.
 
@@ -409,7 +409,7 @@ sns.lmplot(x="Height",y="Weight",data=nhanes,height=8,scatter_kws={'s':2,'alpha'
 ```
 
 
-![png](/tutorials/python/4-plotting/output_40_0.png)
+![png](output_40_0.png)
 
 
 This model looks like it's extending a bit far beyond our actual data points. If we want to constrain the fit to only the the boundaries of our data, we can use the `truncate` argument:
@@ -421,7 +421,7 @@ sns.lmplot(x="Height",y="Weight",data=nhanes,height=8,scatter_kws={'s':2,'alpha'
 ```
 
 
-![png](/tutorials/python/4-plotting/output_42_0.png)
+![png](output_42_0.png)
 
 
 We might also want to break this relationship out by one of our categorical variables. We can do this by using either the `col` or `row` arguments:
@@ -433,7 +433,7 @@ sns.lmplot(x="Height",y="Weight",data=nhanes,height=8,scatter_kws={'s':2,'alpha'
 ```
 
 
-![png](/tutorials/python/4-plotting/output_44_0.png)
+![png](output_44_0.png)
 
 
 We can further differentiate by color as well:
@@ -445,7 +445,7 @@ sns.lmplot(x="Height",y="Weight",data=nhanes,height=8,scatter_kws={'s':2,'alpha'
 ```
 
 
-![png](/tutorials/python/4-plotting/output_46_0.png)
+![png](output_46_0.png)
 
 
 We can also combine `col` with `row` to represent both of our categorical variables:
@@ -457,11 +457,11 @@ sns.lmplot(x="Height",y="Weight",data=nhanes,height=8,scatter_kws={'s':2,'alpha'
 ```
 
 
-![png](/tutorials/python/4-plotting/output_48_0.png)
+![png](output_48_0.png)
 
 
 ---
-## 6. Style
+## Style
 
 You might want to change the default style of plots. `seaborn` makes it easy to set style preferences for all of the plots in your notebook or script using the `set` function.
 
@@ -507,7 +507,7 @@ sns.scatterplot(x="Height",y="Weight",hue="Urban",data=nhanes);
 ```
 
 
-![png](/tutorials/python/4-plotting/output_51_0.png)
+![png](output_51_0.png)
 
 
 
@@ -517,10 +517,10 @@ sns.scatterplot(x="Height",y="Weight",hue="Urban",data=nhanes);
 ```
 
 
-![png](/tutorials/python/4-plotting/output_52_0.png)
+![png](output_52_0.png)
 
 
-Personally, I like to use the `ticks` style, and the `Arial` font, but there are many options you can choose from. You can also use the `despine` function to remove borders from the plot
+Personally, I like to use the `ticks` style, and the `Arial` font, but there are many options you can choose from. You can also use the `despine()` function to remove borders from the plot
 
 
 ```python
@@ -530,11 +530,11 @@ sns.despine();
 ```
 
 
-![png](/tutorials/python/4-plotting/output_54_0.png)
+![png](output_54_0.png)
 
 
 ---
-## 7. Titles and labels
+## Titles and Labels
 
 In order to add a title and create more informative labels, we need to save the plot as an object using the `=` operator. We can then call the `set_{title,ylabel,xlabel}()` functions of this object to make the plots clearer.
 
@@ -548,11 +548,11 @@ sns.despine();
 ```
 
 
-![png](/tutorials/python/4-plotting/output_56_0.png)
+![png](output_56_0.png)
 
 
 ---
-## 8. Saving your plots
+## Saving Your Plots
 
 To save your plot as a file, you can access the `savefig()` function from your plot object:
 
@@ -561,12 +561,12 @@ To save your plot as a file, you can access the `savefig()` function from your p
 myPlot.figure.savefig("newPlotTest.pdf")
 ```
 
-You can save plots in a variety of formats (like jpg or png) but using a vector format like pdf or svg is recommended.
+You can save plots in a variety of formats (like .jpg or .png) but using a vector format like .pdf or .svg is recommended.
 
 ---
-## 9. Heatmaps
+## Heatmaps
 
-Sometimes a heatmap might be useful to look at the value of one variable based on a 2d grid of two other variables.
+Sometimes a heatmap might be useful to look at the value of one variable based on a 2D grid of two other variables.
 
 This is kind of a silly example, but say we wanted to map out the number of observations in our dataset as a factor of region and neighborhood type:
 
@@ -578,13 +578,13 @@ sns.heatmap(nhanesGroup);
 ```
 
 
-![png](/tutorials/python/4-plotting/output_61_0.png)
+![png](output_61_0.png)
 
 
 ---
-## 9. Timeseries Plot
+## Time Series Plot
 
-Lets make up some data on the prices of two different items from 1978-2017:
+Let's make up some data on the prices of two different items from 1978-2017:
 
 
 ```python
@@ -601,14 +601,14 @@ priceData = pd.melt(priceData,id_vars=['years'],var_name="item",value_vars=['ite
 priceData.to_csv("priceData.csv")
 ```
 
-To save some time, I already generated this data. You can go ahead and load it from a csv file:
+To save some time, I already generated this data. You can go ahead and load it from a .csv file:
 
 
 ```python
 priceData = pd.read_csv("priceData.csv")
 ```
 
-The function `lineplot()` can be used to visualize timeseries data using `seaborn`.  It's syntax is exactly like plots we've used above. In addition, this function automatically calculates 95% confidence intervals around each of our datapoints and displays them as a continuous ribbon around the mean line: 
+The function `lineplot()` can be used to visualize time series data using `seaborn`.  Its syntax is exactly like plots we've used above. In addition, this function automatically calculates 95% confidence intervals around each of our datapoints and displays them as a continuous ribbon around the mean line: 
 
 
 ```python
@@ -617,10 +617,10 @@ sns.despine();
 ```
 
 
-![png](/tutorials/python/4-plotting/output_67_0.png)
+![png](output_67_0.png)
 
 
 ---
-## 10. Final points
+## Final Points
 
-While seaborn will get you very far, sometimes you might want to do something it doesn't allow for. Fortunately, seaborn is written on top of a more robust (but less high-level and user friendly) package called `matplotlib`, which is the backbone behind plotting data in Python. While beyond the scope of this tutorial, you can read more about matplotlib here: https://matplotlib.org/ 
+While `seaborn` will get you very far, sometimes you might want to do something it doesn't allow for. Fortunately, `seaborn` is written on top of a more robust (but less high-level and user friendly) package called `matplotlib`, which is the backbone behind plotting data in Python. While beyond the scope of this tutorial, you can read more about `matplotlib` here: https://matplotlib.org/ 

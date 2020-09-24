@@ -170,7 +170,7 @@ In this case, the missing value is the Age value in row 39. You know you have th
 ```{r}
 # Directly replace a missing value
 mydata <- mydata %>% 
-  mutate(Age = if_else(ID == 39, 30L, Age))
+  mutate(Age = if_else(ID == 39, 30, Age))
 ```
 
 ## Checking for correct values

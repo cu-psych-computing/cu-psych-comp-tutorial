@@ -6,7 +6,7 @@ tags: ["core", "python"]
 
 ---
 
-## Goals of this lesson
+## Goals of this Lesson
 
 ### Students will learn:
 
@@ -25,7 +25,7 @@ import pandas as pd
 ```
 
 ---
-## 0. Open dataset and load package
+## Open Dataset and Load Package
 
 This dataset examines the relationship between multitasking and working memory. [Link here to original paper by Uncapher et al. 2016.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4733435/pdf/nihms712443.pdf)
 
@@ -37,10 +37,10 @@ df = pd.read_csv("uncapher_2016_repeated_measures_dataset.csv")
 ```
 
 ---
-## 1. Familiarize yourself with the data
+## Familiarize Yourself with the Data
 
 
-Quick review from [data cleaning](dataCleaning/DataCleaning_Code.ipynb): take a look at the basic data structure, number of rows and columns.
+Quick review from [Data Cleaning](/tutorials/python/2-datacleaning/): take a look at the basic data structure, number of rows and columns.
 
 
 
@@ -223,7 +223,7 @@ df.columns
 
 
 ---
-## 2. Selecting relevant variables
+## Selecting Relevant Variables
 
 Sometimes datasets have many variables that are unnecessary for a given analysis. To simplify your life, and your code, we can select only the given variables we'd like to use for now.
 
@@ -316,7 +316,7 @@ df.head()
 
 
 ---
-## 3. Basic Descriptives
+## Basic Descriptives
 ### Summarizing data
 Let's learn how to make simple tables of summary statistics.
 First, we will calculate summary info across all data using `describe()`, a useful function for creating summaries. Note that we're not creating a new object for this summary (i.e. not using the `=` symbol), so this will print but not save.
@@ -427,12 +427,10 @@ df.describe()
 
 
 ---
-## 3. Grouping data
+## Grouping Data
 Next, we will learn how to group data based on certain variables of interest.
 
-We will use the `groupby()` function in pandas, which will automatically group any subsequent actions called on the data. 
-
-
+We will use the `groupby()` function in `pandas`, which will automatically group any subsequent actions called on the data. 
 
 
 ```python
@@ -498,9 +496,9 @@ df.groupby(["groupStatus"]).mean()
 
 
 
-We can group data by more than one factor. Let's say we're interested in how levels of ADHD interact with `groupStatus` (multitasking: high or low). 
+We can group data by more than one factor. Let's say we're interested in how levels of `adhd` interact with `groupStatus` (multitasking: high or low). 
 
-We will first make a factor for ADHD (median-split), and add it as a grouping variable using the `cut()` function in pandas:
+We will first make a factor for `adhd` (median-split), and add it as a grouping variable using the `cut()` function in `pandas`:
 
 
 
@@ -615,12 +613,12 @@ df.groupby(["groupStatus","adhdF"]).mean()
 
 ### A note on piping / stringing commands together
 
-In R, we often use the pipe `%>%` to string a series of steps together. We can do the same in python with many functions in a row
+In R, we often use the pipe `%>%` to string a series of steps together. We can do the same in Python with many functions in a row.
 
 This is how we're able to take the output of `df.groupby(["groupStatus","adhdF"])` and then *send that output* into the `mean()` function
 
 ---
-## 5. Extra: Working with a long dataset 
+## Extra: Working with a Long Dataset 
 
 
 This is a repeated measures ("long") dataset, with multiple rows per subject. This makes things a bit tricker, but we are going to show you some tools for how to work with "long" datasets.
@@ -707,10 +705,9 @@ nTrialsPerSubj.head()
 
 
 
-### Combine summary statistics with the full data frame
+### Combine summary statistics with the full dataframe
 
-For some analyses, you might want to add a higher level variable (e.g. subject average hitRate) alongside your long data. We can do this by summarizing the data in a new data frame and then merging it with the full data.
-
+For some analyses, you might want to add a higher level variable (e.g., subject average `hitRate`) alongside your long data. We can do this by summarizing the data in a new dataframe and then merging it with the full data.
 
 
 ```python
@@ -874,7 +871,7 @@ df.head()
 
 
 
-You should now have an avgHR column in df, which will repeat within each subject, but vary across subjects.
+You should now have an `avgHR` column in `df`, which will repeat *within* each subject, but vary *across* subjects.
 
 
 **Next:** [Plotting in Python](/tutorials/python/4-plotting/)
