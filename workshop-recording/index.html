@@ -44,7 +44,7 @@
   
 
   
-  <title>Workshop Recording: Session 3 | Columbia Psychology Scientific Computing</title>
+  <title>Workshop Recordings | Columbia Psychology Scientific Computing</title>
   
 
   <style>
@@ -464,69 +464,59 @@ button:focus {
   <div class="container">
     <article>
       
-<script src="../rmarkdown-libs/accessible-code-block/empty-anchor.js"></script>
 
-
-<div id="workshop-recording-session-3" class="section level1">
-<h1>Workshop Recording: Session 3</h1>
-<div class="video-container">
-<div id="player">
-
-</div>
-</div>
-<script>
-  var tag = document.createElement('script');
-
-  tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-  var player;
-  var ytSeconds = 0;
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      height: '390',
-      width: '640',
-      videoId: 'e_F7Diu2EtU',
-      playerVars: { 
-        'color': "white",
-        'showinfo': 0,
-        'rel': 0
-      },
-      events: {
-        'onStateChange': onPlayerStateChange
-      }
-    });
-  }
+  <div class="breadcrumb">
+    
   
-  function onPlayerStateChange(e) {
-    if (e.data == 1 && ytSeconds > 0) {
-      e.target.seekTo(ytSeconds);
-      ytSeconds = 0;
-    }
-  }
+    
   
-  function seekTo(seconds) {
-    if (player.getPlayerState() == 1) {
-      player.seekTo(seconds);
-    }
-    else {
-      ytSeconds = seconds;
-      player.playVideo();
-    }
-  }
-</script>
-<div id="session-3-tutorials" class="section level3">
-<h3>Session 3 Tutorials:</h3>
-<p><em>Click on the timestamp to jump to the beginning of the tutorial.</em></p>
-<ul>
-<li>Intro to Python for R Users: <a href="#" onclick="seekTo(5);">0:00:05</a> [<a href="../tutorials/python/1-r2python-translation/0-python-r/" target="_blank">Part 0 Materials</a>| <a href="../tutorials/python/1-r2python-translation/1-getting-started/" target="_blank">Part 1 Materials</a> | <a href="../tutorials/python/1-r2python-translation/2-intro-programming/" target="_blank">Part 2 Materials</a>]</li>
-<li>Data Cleaning in Python: <a href="#" onclick="seekTo(2727);">0:45:27</a> [<a href="../tutorials/python/2-datacleaning/" target="_blank">Materials</a>]</li>
-<li>Data Manipulation in Python: <a href="#" onclick="seekTo(5909);">1:38:29</a> [<a href="../tutorials/python/3-datamanipulation/" target="_blank">Materials</a>]</li>
-<li>Plotting in Python: <a href="#" onclick="seekTo(7809);">2:10:09</a> [<a href="../tutorials/python/4-plotting/" target="_blank">Materials</a>]</li>
-</ul>
-</div>
-</div>
+
+    <a href="../">Home</a>&nbsp;>&nbsp; 
+  
+
+    Workshop Recordings
+  </div>
+
+
+<h1>Workshop Recordings</h1>
+
+
+
+  <p>
+    <ul>
+      <li><a href="../workshop-recording/session1/">Workshop Recording: Session 1</a>
+      
+      
+      <br>
+      
+      
+      </li>
+    </ul>
+  </p>
+
+  <p>
+    <ul>
+      <li><a href="../workshop-recording/session2/">Workshop Recording: Session 2</a>
+      
+      
+      <br>
+      
+      
+      </li>
+    </ul>
+  </p>
+
+  <p>
+    <ul>
+      <li><a href="../workshop-recording/session3/">Workshop Recording: Session 3</a>
+      
+      
+      <br>
+      
+      
+      </li>
+    </ul>
+  </p>
 
     </article>
   </div>
