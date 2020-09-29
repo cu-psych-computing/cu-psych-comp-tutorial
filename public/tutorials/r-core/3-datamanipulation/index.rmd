@@ -16,9 +16,11 @@ library(here)
 1. Learn how to group and categorize data in R 
 2. Learn how to generate descriptive statistics in R
 
-# Links to Files
+# Links to Files and Video Recording
 
 The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial){target="_blank"} using [these instructions](/accessing-files/){target="_blank"}. This particular file is located here: `/content/tutorials/r-core/3-datamanipulation/index.rmd`.
+
+For a video recording of this tutorial from the Fall 2020 workshop, please visit the <a href="/workshop-recording-session2/" target="_blank">Workshop Recording: Session 2</a> page.
 
 # Load Data
 
