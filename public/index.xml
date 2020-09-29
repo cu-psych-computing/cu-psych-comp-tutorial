@@ -273,28 +273,28 @@ Upcoming To be announced.
     
     <item>
       <title>Workshop Recording: Session 1</title>
-      <link>/workshop-recording-session1/</link>
+      <link>/workshop-recording/session1/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/workshop-recording-session1/</guid>
+      <guid>/workshop-recording/session1/</guid>
       <description>Workshop Recording: Session 1    var tag = document.createElement(&#39;script&#39;); tag.src = &#34;https://www.youtube.com/iframe_api&#34;; var firstScriptTag = document.getElementsByTagName(&#39;script&#39;)[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); var player; var ytSeconds = 0; function onYouTubeIframeAPIReady() { player = new YT.Player(&#39;player&#39;, { height: &#39;390&#39;, width: &#39;640&#39;, videoId: &#39;h52nyfxQ6hc&#39;, playerVars: { &#39;color&#39;: &#34;white&#34;, &#39;showinfo&#39;: 0, &#39;rel&#39;: 0 }, events: { &#39;onStateChange&#39;: onPlayerStateChange } }); } function onPlayerStateChange(e) { if (e.data == 1 &amp;&amp; ytSeconds  0) { e.</description>
     </item>
     
     <item>
       <title>Workshop Recording: Session 2</title>
-      <link>/workshop-recording-session2/</link>
+      <link>/workshop-recording/session2/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/workshop-recording-session2/</guid>
+      <guid>/workshop-recording/session2/</guid>
       <description>Workshop Recording: Session 2    var tag = document.createElement(&#39;script&#39;); tag.src = &#34;https://www.youtube.com/iframe_api&#34;; var firstScriptTag = document.getElementsByTagName(&#39;script&#39;)[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); var player; var ytSeconds = 0; function onYouTubeIframeAPIReady() { player = new YT.Player(&#39;player&#39;, { height: &#39;390&#39;, width: &#39;640&#39;, videoId: &#39;b_8QeK5fIH4&#39;, playerVars: { &#39;color&#39;: &#34;white&#34;, &#39;showinfo&#39;: 0, &#39;rel&#39;: 0 }, events: { &#39;onStateChange&#39;: onPlayerStateChange } }); } function onPlayerStateChange(e) { if (e.data == 1 &amp;&amp; ytSeconds  0) { e.</description>
     </item>
     
     <item>
       <title>Workshop Recording: Session 3</title>
-      <link>/workshop-recording-session3/</link>
+      <link>/workshop-recording/session3/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/workshop-recording-session3/</guid>
+      <guid>/workshop-recording/session3/</guid>
       <description>Workshop Recording: Session 3    var tag = document.createElement(&#39;script&#39;); tag.src = &#34;https://www.youtube.com/iframe_api&#34;; var firstScriptTag = document.getElementsByTagName(&#39;script&#39;)[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); var player; var ytSeconds = 0; function onYouTubeIframeAPIReady() { player = new YT.Player(&#39;player&#39;, { height: &#39;390&#39;, width: &#39;640&#39;, videoId: &#39;e_F7Diu2EtU&#39;, playerVars: { &#39;color&#39;: &#34;white&#34;, &#39;showinfo&#39;: 0, &#39;rel&#39;: 0 }, events: { &#39;onStateChange&#39;: onPlayerStateChange } }); } function onPlayerStateChange(e) { if (e.data == 1 &amp;&amp; ytSeconds  0) { e.</description>
     </item>
     
