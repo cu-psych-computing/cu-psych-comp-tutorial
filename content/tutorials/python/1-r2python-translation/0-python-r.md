@@ -9,6 +9,12 @@ tags: ["core", "R", "python"]
 ![r python](https://www.javaassignmenthelp.com/blog/wp-content/uploads/2019/06/R-Vs-Python-730x410.jpg)
 
 
+# Links to Files and Video Recording
+
+The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial) using [these instructions](/accessing-files/). This particular file is located here: `/content/tutorials/python/1-r2python-translation/0-python-r.ipynb`.
+
+For a video recording of this tutorial from the Fall 2020 workshop, please visit the <a href="/workshop-recording-session3/" target="_blank">Workshop Recording: Session 3</a> page.
+
 # A few quick points:
 
 - Among scientific computing languages the best language for you is the one that *you* find best fits your projects
