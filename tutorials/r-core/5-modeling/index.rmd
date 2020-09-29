@@ -19,9 +19,11 @@ library(effects)
 3. Understand how to obtain model results in R  
 4. Learn how to visualize the results of the models
 
-# Links to Files
+# Links to Files and Video Recording
 
 The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial){target="_blank"} using [these instructions](/accessing-files/){target="_blank"}. This particular file is located here: `/content/tutorials/r-core/5-modeling/index.rmd`.
+
+For a video recording of this tutorial from the Fall 2020 workshop, please visit the <a href="/workshop-recording-session2/" target="_blank">Workshop Recording: Session 2</a> page.
 
 # Load Data
 
