@@ -183,7 +183,9 @@ All models are wrong, but some are useful - George Box
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/python/1-r2python-translation/0-python-r/</guid>
-      <description>A few quick points:  Among scientific computing languages the best language for you is the one that you find best fits your projects We really encourage the use of either R and Python for research computing for several reasons  R and Python are open source! We believe in making scientific computing as accessible to as many people as possible R and Python both have TONS of tools for research computing, lots of documentation, and huge support communities around the world    Neither language is &amp;lsquo;better&amp;rsquo; than the other Depending on your application, one might be better suited R Strengths  Statistical Programming Language Visualization(ggplot) Web apps (shiny) Statistical Model Interpretation  Python Strengths  All purpose programming language Neuroimaging Task design (psychopy, pygame) Machine learning (sklearn, tensorflow, keras) Many programs/web tools have great python APIs Web scraping  For research, helpful to know some of both!</description>
+      <description>Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/1-r2python-translation/0-python-r.ipynb.
+For a video recording of this tutorial from the Fall 2020 workshop, please visit the Workshop Recording: Session 3 page.
+A few quick points:  Among scientific computing languages the best language for you is the one that you find best fits your projects We really encourage the use of either R and Python for research computing for several reasons  R and Python are open source!</description>
     </item>
     
   </channel>
