@@ -18,7 +18,7 @@ As noted at the top of each of our [tutorials](/tutorials/), all files can be do
 
 This page contains instructions for downloading and opening such files. If you experience any issues in completing these steps, feel free to drop us a note at [psych-methods-support@columbia.edu](mailto:psych-methods-support@columbia.edu){target="_blank"}.
 
-## 1. Visit GitHub and Download Zipped Folder
+## Visit GitHub and Download Zipped Folder
 
 ---
 
@@ -40,9 +40,13 @@ Unzip the zipped folder. On a Mac, you can do this by double-clicking on the zip
 
 <p style="text-align:center;"><img src="/images/unzip.png" alt="R is fun" width = "20%" height = "20%"></p>
 
-## 2. Open RStudio Using RProject File
+#### Your next steps will depend on whether you are interested in opening R versus Python files.
+
+## R
 
 ---
+
+### 1. Open RStudio Using RProject File
 
 Next, open the folder that you just unzipped. Inside this folder, you will see a range of folders and files, including a file named `cu-psych-comp-tutorial.Rproj`. The `.Rproj` extension indicates that this is an RProject file. We recommend that you always open RStudio by using an RProject file like this one.
 
@@ -54,9 +58,7 @@ Double-click on the `cu-psych-comp-tutorial.Rproj` file, and RStudio will open. 
 
 (If you didn't use an RProject file to open RStudio, instead of a project name, this upper right corner will simply say "(None)".)
 
-## 3. Open Tutorial File
-
----
+### 2. Open Tutorial File
 
 Finally, you can open the file of interest. As a friendly reminder, the location of this file is specified at the top of each tutorial. To open this file, although you can navigate using the unzipped folder from GitHub (i.e., in the window where you opened the RProject file), you can also use the **Files** tab at the bottom right corner of your RStudio window.
 
@@ -67,3 +69,33 @@ For example, to access the example file (`/content/tutorials/r-core/1-programmin
 Once you have clicked on this file, it will open in RStudio.
 
 ![](/images/file.png)
+
+## Python
+
+---
+
+### 1. Open Jupyter Notebook Using Anaconda Navigator
+
+Next, we will open the folder that you just unzipped using a web application called Jupyter Notebook. To access Jupyter Notebook, open the Anaconda Navigator program on your computer. (If you do not have this program installed, make sure that you followed the Anaconda installation instructions for Python on the workshop <a href="/workshop#Setup/" target="_blank">Setup</a> page.)
+
+In the Anaconda Navigator program, click the Launch button on the Jupyter Notebook card.
+
+![](/images/anaconda-navigator.png)
+
+This should open the Jupyter Notebook web application in your browser, which will look like a list of files and folders.
+
+![](/images/jupyter-notebook.png)
+
+(If you were not able to open Jupyter Notebook using these instructions, you can try a command-line alternative. On Windows, open Command Prompt; on Mac; open Terminal. Then, type <code>jupyter notebook</code> and hit <kbd>Enter</kbd>. If neither set of instructions works for you, please contact us at <a href="mailto:psych-methods-support@columbia.edu" target="_blank">psych-methods-support@columbia.edu</a> for further assistance.)
+
+### 2. Open Tutorial File
+
+Finally, you can open your tutorial file. To open this file, first navigate to the location of your unzipped GitHub folder in the Jupyter Notebook web app. Then, using the Jupyter Notebook interface, find your way to the tutorial file of interest. As a friendly reminder, the location of this file is specified at the top of each tutorial. 
+
+For example, to access the example file (`/content/tutorials/python/1-r2python-translation/1-getting-started.ipynb`), you would click on the `content` folder, then the `tutorials` folder, then the `python` folder, then the `1-r2python-translation` folder, and finally on the `1-getting-started.ipynb` file.
+
+<p style="text-align:center;"><img src="/images/python-open-file.png" alt="R is fun" width = "80%" height = "80%"></p>
+
+Once you have clicked on this file, it will open in a new Jupyter Notebook tab.
+
+![](/images/ipynb-example.png)
