@@ -11,9 +11,11 @@ tags: ["core", "python"]
 - Students will feel comfortable navigating the jupyter notebook layout
 - Students will be able to access their computer's file structure through jupyter notebook
 
-## Links to Files
+## Links to Files and Video Recording
 
 The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial) using [these instructions](/accessing-files/). This particular file is located here: `/content/tutorials/python/1-r2python-translation/1-getting-started.ipynb`.
+
+For a video recording of this tutorial from the Fall 2020 workshop, please visit the <a href="/workshop-recording/session3/" target="_blank">Workshop Recording: Session 3</a> page.
 
 
 ## What is a jupyter notebook anyway?

@@ -20,9 +20,11 @@ Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder
 
 Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things!
 
-# Links to Files
+# Links to Files and Video Recording
 
 The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial){target="_blank"} using [these instructions](/accessing-files/){target="_blank"}. This particular file is located here: `/content/tutorials/r-core/1-programming/lessonpart2.rmd`.
+
+For a video recording of this tutorial from the Fall 2020 workshop, please visit the <a href="/workshop-recording/session1/" target="_blank">Workshop Recording: Session 1</a> page.
 
 # Pseudocode
 

@@ -1,0 +1,68 @@
+---
+title: "Workshop Recording: Session 1"
+author: "Psych Methods Support"
+output:
+  blogdown::html_page:
+    toc: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Workshop Recording: Session 1
+
+<div class="video-container">
+  <div id="player"></div>
+</div>
+
+<script>
+  var tag = document.createElement('script');
+
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var player;
+  var ytSeconds = 0;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+      height: '390',
+      width: '640',
+      videoId: 'h52nyfxQ6hc',
+      playerVars: { 
+        'color': "white",
+        'showinfo': 0,
+        'rel': 0
+      },
+      events: {
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+  
+  function onPlayerStateChange(e) {
+    if (e.data == 1 && ytSeconds > 0) {
+      e.target.seekTo(ytSeconds);
+      ytSeconds = 0;
+    }
+  }
+  
+  function seekTo(seconds) {
+    if (player.getPlayerState() == 1) {
+      player.seekTo(seconds);
+    }
+    else {
+      ytSeconds = seconds;
+      player.playVideo();
+    }
+  }
+</script>
+
+### Session 1 Tutorials:
+
+*Click on the timestamp to jump to the beginning of the tutorial.*
+
+- Programming in R, Part 0: <a href="#" onclick="seekTo(5);">0:00:05</a> [<a href="/tutorials/r-core/1-programming/lessonpart0/" target="_blank">Materials</a>]
+- Programming in R, Part 1: <a href="#" onclick="seekTo(4330);">1:12:10</a> [<a href="/tutorials/r-core/1-programming/lessonpart1/" target="_blank">Materials</a>]
+- Programming in R, Part 2: <a href="#" onclick="seekTo(8016);">2:13:36</a> [<a href="/tutorials/r-core/1-programming/lessonpart2/" target="_blank">Materials</a>]

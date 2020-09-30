@@ -15,9 +15,11 @@ library(here)
 
 ggplot2 is a package in R that allows for highly customizable and pretty plots! Here, were going to learn a few basics of making plots using `ggplot2` that will hopefully get you well on your way to making informative and beautiful data visualizations!
 
-# Links to Files
+# Links to Files and Video Recording
 
 The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial){target="_blank"} using [these instructions](/accessing-files/){target="_blank"}. This particular file is located here: `/content/tutorials/r-core/4-plotting/index.rmd`.
+
+For a video recording of this tutorial from the Fall 2020 workshop, please visit the <a href="/workshop-recording/session2/" target="_blank">Workshop Recording: Session 2</a> page.
 
 # Load Packages and Data
 

@@ -14,8 +14,10 @@ tags: ["core", "python"]
 2. How to check for missing or problematic data and address issues
 3. How to filter, rearrange and shape data in preparation for analysis
 
-## Links to Files
+## Links to Files and Video Recording
 The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial) using [these instructions](/accessing-files/). This particular file is located here: `/content/tutorials/python/2-datacleaning/index.ipynb`.
+
+For a video recording of this tutorial from the Fall 2020 workshop, please visit the <a href="/workshop-recording/session3/" target="_blank">Workshop Recording: Session 3</a> page.
 
 ---
 ## A Quick Introduction to Python Scientific Computing Modules

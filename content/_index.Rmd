@@ -12,13 +12,11 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # Welcome!
 
-**This site is under construction**; please pardon our web dust.
-
 ## Individual Scientific Computing Support
 
 ---
 
-CU psychology graduate students can stop by to chat about using computing tools at any stage of the research process. Use cases include, but are not limited to:
+Columbia University psychology graduate students can stop by to chat about using computing tools at any stage of the research process. Use cases include, but are not limited to:
 
 - Conducting pre-study power analysis
 - Setting up tools for administering tasks in-person and online
@@ -31,27 +29,39 @@ During the Fall 2020 semester, the [graduate methods support advisors](/who/) wi
 
 ---
 
-This is our core introductory scientfic computing syllabus. The materials here are designed to be suitable for learners with little to no prior programming experience.
+This is our core introductory scientfic computing syllabus. The materials here are designed to be suitable for learners with little to no prior programming experience. For more information, please visit <a href="/workshop/">the workshop page</a>.
 
-### Programming and Intro to Data Cleaning in R
+### Session 1: Programming in R
 
-<p><a href="/tutorials/r-core/1-programming/lessonpart0/" target="_blank">Programming, Part 0 (Finding your way around RStudio)</a></p>
-<p><a href="/tutorials/r-core/1-programming/lessonpart1/" target="_blank">Programming, Part 1 (Variables, data types, vectors)</a></p>
-<p><a href="/tutorials/r-core/1-programming/lessonpart2/" target="_blank">Programming, Part 2 (Coding strategy, relational & logical operators)</a></p>
+**Tutorials:**
 
-### Data Cleaning, Data Manipulation, Plotting, and Modeling in R
+- <p><a href="/tutorials/r-core/1-programming/lessonpart0/" target="_blank">Programming, Part 0 (Finding your way around RStudio)</a></p>
+- <p><a href="/tutorials/r-core/1-programming/lessonpart1/" target="_blank">Programming, Part 1 (Variables, data types, vectors)</a></p>
+- <p><a href="/tutorials/r-core/1-programming/lessonpart2/" target="_blank">Programming, Part 2 (Coding strategy, relational & logical operators)</a></p>
 
-<p><a href="/tutorials/r-core/2-datacleaning/" target="_blank">Data Cleaning</a></p>
-<p><a href="/tutorials/r-core/3-datamanipulation/" target="_blank">Data Manipulation</a></p>
-<p><a href="/tutorials/r-core/4-plotting/" target="_blank">Plotting with <code>ggplot2</code></a></p>
-<p><a href="/tutorials/r-core/5-modeling/" target="_blank">Modeling</a></p>
+<a href="/workshop-recording/session1/" target="_blank"><button><i class="fas fa-video"></i>&nbsp;&nbsp;&nbsp;View Recording</button></a>
 
-### Intro to Data Cleaning, Manipulation, and Plotting in Python
+### Session 2: Data Cleaning, Data Manipulation, Plotting, and Modeling in R
 
-<p><a href="/tutorials/python/1-r2python-translation/2-intro-programming/" target="_blank">Intro to Python for R Users</a></p>
-<p><a href="/tutorials/python/2-datacleaning/" target="_blank">Data Cleaning</a></p>
-<p><a href="/tutorials/python/3-datamanipulation/" target="_blank">Data Manipulation</a></p>
-<p><a href="/tutorials/python/4-plotting/" target="_blank">Plotting with <code>seaborn</code></a></p>
+**Tutorials:**
+
+- <p><a href="/tutorials/r-core/2-datacleaning/" target="_blank">Data Cleaning</a></p>
+- <p><a href="/tutorials/r-core/3-datamanipulation/" target="_blank">Data Manipulation</a></p>
+- <p><a href="/tutorials/r-core/4-plotting/" target="_blank">Plotting with <code>ggplot2</code></a></p>
+- <p><a href="/tutorials/r-core/5-modeling/" target="_blank">Modeling</a></p>
+
+<a href="/workshop-recording/session2/" target="_blank"><button><i class="fas fa-video"></i>&nbsp;&nbsp;&nbsp;View Recording</button></a>
+
+### Session 3: Intro to Python, Data Cleaning, Manipulation, and Plotting in Python
+
+**Tutorials:**
+
+- <p><a href="/tutorials/python/1-r2python-translation/2-intro-programming/" target="_blank">Intro to Python for R Users</a></p>
+- <p><a href="/tutorials/python/2-datacleaning/" target="_blank">Data Cleaning</a></p>
+- <p><a href="/tutorials/python/3-datamanipulation/" target="_blank">Data Manipulation</a></p>
+- <p><a href="/tutorials/python/4-plotting/" target="_blank">Plotting with <code>seaborn</code></a></p>
+
+<a href="/workshop-recording/session3/" target="_blank"><button><i class="fas fa-video"></i>&nbsp;&nbsp;&nbsp;View Recording</button></a>
 
 ## Additional Instructional Materials
 
@@ -61,19 +71,19 @@ Many of these materials were originally prepared as presentations for Columbia P
 
 ### Accelerated `ggplot2`
 
-<p><a href="/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part1/" target="_blank">Basic Plotting in `ggplot2`</a></p>
-<p><a href="/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part2/" target="_blank">More Advanced `ggplot2` Plotting (Plotting with models)</a></p>
+- <p><a href="/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part1/" target="_blank">Basic Plotting in `ggplot2`</a></p>
+- <p><a href="/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part2/" target="_blank">More Advanced `ggplot2` Plotting (Plotting with models)</a></p>
 
 ### A Guided Tour of the `tidyverse`
 
-<p><a href="/tutorials/r-extra/tidyverse-guide/tidyguide-1/" target="_blank">Tidy Walkthrough, Part 1 (Data manipulation basics)</a></p>
-<p><a href="/tutorials/r-extra/tidyverse-guide/tidyguide-2/" target="_blank">Tidy Walkthrough, Part 2 (Nested dfs, `map`-ing, and more)</a></p>
+- <p><a href="/tutorials/r-extra/tidyverse-guide/tidyguide-1/" target="_blank">Tidy Walkthrough, Part 1 (Data manipulation basics)</a></p>
+- <p><a href="/tutorials/r-extra/tidyverse-guide/tidyguide-2/" target="_blank">Tidy Walkthrough, Part 2 (Nested dfs, `map`-ing, and more)</a></p>
 
 ### Additional Tutorials
 
-<p><a href="/tutorials/r-extra/data-sim-power/basic-simulation-power/" target="_blank">Basic Data Simulation & Power Analysis</a></p>
-<p><a href="/tutorials/r-extra/brms/multilevel-models-with-brms/" target="_blank">Bayseian Multilevel Modeling with `brms` (Focus on partial pooling)</a></p>
-<p><a href="/tutorials/r-extra/rmarkdown/intro-to-rmarkdown/" target="_blank">Intro to RMarkdown</a></p>
+- <p><a href="/tutorials/r-extra/data-sim-power/basic-simulation-power/" target="_blank">Basic Data Simulation & Power Analysis</a></p>
+- <p><a href="/tutorials/r-extra/brms/multilevel-models-with-brms/" target="_blank">Bayseian Multilevel Modeling with `brms` (Focus on partial pooling)</a></p>
+- <p><a href="/tutorials/r-extra/rmarkdown/intro-to-rmarkdown/" target="_blank">Intro to RMarkdown</a></p>
 
 ---
 

@@ -57,16 +57,18 @@ Please be sure to complete these surveys before and after the workshop.
 <div class="row">
 <div class="col-md-6">
 <h3 style="padding-top: 30px; margin-top: 0;">Session 1: R (9/11/20)</h3>
+<a href="/workshop-recording/session1/" target="_blank" style="padding-bottom:10px"><button class="button-workshop"><i class="fas fa-video"></i>&nbsp;&nbsp;&nbsp;View Recording</button></a>
 <table class="table table-striped">
 <tr><td>Before starting</td><td><a href="https://docs.google.com/forms/d/e/1FAIpQLSchEOWieJF5F391L5-fSC4DBCAJ1hOIbIUWiAWqyfZC9gzBAQ/viewform?usp=sf_link" target="_blank">Pre-workshop survey</a></td></tr>
-<tr><td><b>9:00a</b> - 10:00a</td><td><a href="/tutorials/r-core/1-programming/lessonpart0/" target="_blank">Programming, Part 0</a></td></tr>
-<tr><td>10:00a - 12:30p</td><td><a href="/tutorials/r-core/1-programming/lessonpart1/" target="_blank">Programming, Part 1</a></td></tr>
-<tr><td>12:30p - 1:00p</td><td>Lunch</td></tr>
-<tr><td>1:00p - <b>3:00p</b></td><td><a href="/tutorials/r-core/1-programming/lessonpart2/" target="_blank">Programming, Part 2</a></td></tr>
+<tr><td><b>10:00a</b> - 11:30a</td><td><a href="/tutorials/r-core/1-programming/lessonpart0/" target="_blank">Programming, Part 0</a></td></tr>
+<tr><td>11:30a - 1:00p</td><td><a href="/tutorials/r-core/1-programming/lessonpart1/" target="_blank">Programming, Part 1</a></td></tr>
+<tr><td>1:00p - 2:00p</td><td>Lunch</td></tr>
+<tr><td>2:00p - <b>4:00p</b></td><td><a href="/tutorials/r-core/1-programming/lessonpart2/" target="_blank">Programming, Part 2</a></td></tr>
 </table>
 </div>
 <div class="col-md-6">
 <h3 style="padding-top: 30px; margin-top: 0;">Session 2: R (9/18/20)</h3>
+<a href="/workshop-recording/session2/" target="_blank" style="padding-bottom:10px"><button class="button-workshop"><i class="fas fa-video"></i>&nbsp;&nbsp;&nbsp;View Recording</button></a>
 <table class="table table-striped">
 <tr><td><b>10:00a</b> - 11:15a</td><td><a href="/tutorials/r-core/2-datacleaning/" target="_blank">Data Cleaning</a></td></tr>
 <tr><td>11:15a - 12:30p</td><td><a href="/tutorials/r-core/3-datamanipulation/" target="_blank">Data Manipulation</a></td></tr>
@@ -77,12 +79,13 @@ Please be sure to complete these surveys before and after the workshop.
 </div>
 <div class="col-md-6">
 <h3 style="padding-top: 30px; margin-top: 0;">Session 3: Python (9/25/20)</h3>
+<a href="/workshop-recording/session3/" target="_blank" style="padding-bottom:10px"><button class="button-workshop"><i class="fas fa-video"></i>&nbsp;&nbsp;&nbsp;View Recording</button></a>
 <table class="table table-striped">
-<tr><td><b>9:00a</b> - 10:30a</td><td><a href="/tutorials/python/1-r2python-translation/2-intro-programming/" target="_blank">Intro to Python for R Users</a></td></tr>
-<tr><td>10:30a - 12:00p</td><td><a href="/tutorials/python/2-datacleaning/" target="_blank">Data Cleaning</a></td></tr>
-<tr><td>12:00p - 12:30p</td><td>Lunch</td></tr>
-<tr><td>12:30p - 2:00p</td><td><a href="/tutorials/python/3-datamanipulation/" target="_blank">Data Manipulation</a></td></tr>
-<tr><td>2:00p - <b>4:00p</b></td><td><a href="/tutorials/python/4-plotting/" target="_blank">Plotting with <code>seaborn</code></a></td></tr>
+<tr><td><b>10:00a</b> - 11:30a</td><td><a href="/tutorials/python/1-r2python-translation/2-intro-programming/" target="_blank">Intro to Python for R Users</a></td></tr>
+<tr><td>11:30a - 1:00p</td><td><a href="/tutorials/python/2-datacleaning/" target="_blank">Data Cleaning</a></td></tr>
+<tr><td>1:00p - 1:30p</td><td>Lunch</td></tr>
+<tr><td>1:30p - 2:30p</td><td><a href="/tutorials/python/3-datamanipulation/" target="_blank">Data Manipulation</a></td></tr>
+<tr><td>2:30p - <b>4:00p</b></td><td><a href="/tutorials/python/4-plotting/" target="_blank">Plotting with <code>seaborn</code></a></td></tr>
 <tr><td>After finishing</td><td><a href="https://docs.google.com/forms/d/e/1FAIpQLSe4iqiAev5qqmQfoL7hxFVzlihEKzjthKv0wLOipsjaad88FQ/viewform?usp=sf_link," target="_blank">Post-workshop survey</a></td></tr>
 </table>
 </div>

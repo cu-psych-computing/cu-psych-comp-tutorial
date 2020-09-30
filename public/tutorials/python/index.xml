@@ -16,8 +16,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/python/2-datacleaning/</guid>
-      <description>Goals of this Lesson Students will learn:  How to open various data types in Python How to check for missing or problematic data and address issues How to filter, rearrange and shape data in preparation for analysis  Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/2-datacleaning/index.ipynb.
- A Quick Introduction to Python Scientific Computing Modules As a programming languge, Python can do quite a lot.</description>
+      <description>Goals of this Lesson Students will learn:  How to open various data types in Python How to check for missing or problematic data and address issues How to filter, rearrange and shape data in preparation for analysis  Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/2-datacleaning/index.</description>
     </item>
     
     <item>
@@ -26,8 +25,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/python/3-datamanipulation/</guid>
-      <description>Goals of this Lesson Students will learn:  How to group and categorize data in Python How to generative descriptive statistics in Python  Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/3-datamanipulation/index.ipynb.
- # load packages we will be using for this lesson import pandas as pd  Open Dataset and Load Package This dataset examines the relationship between multitasking and working memory.</description>
+      <description>Goals of this Lesson Students will learn:  How to group and categorize data in Python How to generative descriptive statistics in Python  Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/3-datamanipulation/index.ipynb.
+For a video recording of this tutorial from the Fall 2020 workshop, please visit the Workshop Recording: Session 3 page.</description>
     </item>
     
     <item>
@@ -36,8 +35,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/python/4-plotting/</guid>
-      <description>Goals of this Lesson Students will learn:  How to generate beautiful statistical visualizations in Python using the seaborn package  Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/4-plotting/index.ipynb.
-# load packages we will be using for this lesson import pandas as pd import seaborn as sns import warnings warnings.</description>
+      <description>Goals of this Lesson Students will learn:  How to generate beautiful statistical visualizations in Python using the seaborn package  Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/4-plotting/index.ipynb.
+For a video recording of this tutorial from the Fall 2020 workshop, please visit the Workshop Recording: Session 3 page.</description>
     </item>
     
   </channel>

@@ -20,9 +20,11 @@ Students will learn:
 2. How to check for missing or problematic data and address issues.
 3. How to filter, rearrange and shape data in preparation for analysis. 
 
-# Links to Files
+# Links to Files and Video Recording
 
 The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial){target="_blank"} using [these instructions](/accessing-files/){target="_blank"}. This particular file is located here: `/content/tutorials/r-core/2-datacleaning/index.rmd`.
+
+For a video recording of this tutorial from the Fall 2020 workshop, please visit the <a href="/workshop-recording/session2/" target="_blank">Workshop Recording: Session 2</a> page.
 
 # Install Packages
 

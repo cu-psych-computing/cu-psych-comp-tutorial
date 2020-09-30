@@ -19,6 +19,10 @@
   </url>
   
   <url>
+    <loc>/workshop-recording/</loc>
+  </url>
+  
+  <url>
     <loc>/tutorials/r-core/1-programming/lessonpart0/</loc>
   </url>
   
@@ -147,6 +151,10 @@
   </url>
   
   <url>
+    <loc>/tags/recording/</loc>
+  </url>
+  
+  <url>
     <loc>/resources/</loc>
   </url>
   
@@ -164,6 +172,18 @@
   
   <url>
     <loc>/workshop/</loc>
+  </url>
+  
+  <url>
+    <loc>/workshop-recording/session1/</loc>
+  </url>
+  
+  <url>
+    <loc>/workshop-recording/session2/</loc>
+  </url>
+  
+  <url>
+    <loc>/workshop-recording/session3/</loc>
   </url>
   
 </urlset>

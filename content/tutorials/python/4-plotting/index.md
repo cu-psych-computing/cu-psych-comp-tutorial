@@ -12,8 +12,11 @@ tags: ["core", "python"]
 
 1. How to generate beautiful statistical visualizations in Python using the `seaborn` package
 
-## Links to Files
+## Links to Files and Video Recording
+
 The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial) using [these instructions](/accessing-files/). This particular file is located here: `/content/tutorials/python/4-plotting/index.ipynb`.
+
+For a video recording of this tutorial from the Fall 2020 workshop, please visit the <a href="/workshop-recording/session3/" target="_blank">Workshop Recording: Session 3</a> page.
 
 
 ```python

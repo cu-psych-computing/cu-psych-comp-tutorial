@@ -18,8 +18,10 @@ tags: ["core", "python"]
 - Be able to use arithmetic, relational operators, and lists in Python
 - For those coming from R, be aware of differences across languages, especially in indexing
 
-## Links to Files
+## Links to Files and Video Recording
 The files for all tutorials can be downloaded from [the Columbia Psychology Scientific Computing GitHub page](https://github.com/cu-psych-computing/cu-psych-comp-tutorial) using [these instructions](/accessing-files/). This particular file is located here: `/content/tutorials/python/1-r2python-translation/2-intro-programming.ipynb`.
+
+For a video recording of this tutorial from the Fall 2020 workshop, please visit the <a href="/workshop-recording/session3/" target="_blank">Workshop Recording: Session 3</a> page.
 
 # Variables
 
@@ -276,7 +278,7 @@ mixList
 
 
 
-To find the length of a list we can use the `len()` funtion.
+To find the length of a list we can use the `len()` function.
 
 
 ```python
