@@ -23,9 +23,15 @@ Columbia University psychology graduate students can stop by to chat about using
 - Cleaning and analyzing data
 - Preparing presentations and manuscripts
 
-During the Fall 2020 semester, the [graduate methods support advisors](/who/) will be holding office hours by appointment. To schedule a time that works well for you, or for email support, please contact [psych-methods-support@columbia.edu](mailto:psych-methods-support@columbia.edu){target="_blank"}.
+During the Spring 2021 semester, the [graduate methods support advisors](/who/) will be holding office hours by appointment. To schedule a time that works well for you, or for email support, please contact [psych-methods-support@columbia.edu](mailto:psych-methods-support@columbia.edu){target="_blank"}.
 
-## Scientific Computing Workshop
+## Ongoing Meetings and Workshops
+
+---
+
+Our next workshop, *Creating Websites in Github and R*, is scheduled for January 27th, 2021, at 4 pm. For more information, visit the [Meetings](/meetings/) page.
+
+## Annual Scientific Computing Workshop
 
 ---
 
