@@ -29,7 +29,7 @@ During the Spring 2021 semester, the [graduate methods support advisors](/who/) 
 
 ---
 
-Our next workshop, *Creating Websites in Github and R*, is scheduled for January 27th, 2021, at 4 pm. For more information, visit the [Meetings](/meetings/) page.
+Our next workshop, *Creating Websites in Github and R*, is scheduled for February 10th, 2021, at 4 pm. For more information, visit the [Meetings](/meetings/) page.
 
 ## Annual Scientific Computing Workshop
 
