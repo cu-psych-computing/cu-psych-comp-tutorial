@@ -18,10 +18,24 @@ Come and learn with us at one of our meetings! Topics span various early-interme
 
 ---
 
-**Wednesday, January 27th, 2021 at 4:00pm:** Workshop (Creating a Website with Github and R)
+### Workshop: Creating a Website with Github and R
+
+**Date:** Wednesday, February 10th, 2021 at 4:00pm
+
+**Instructor:** Emily Nakkawita
+
+### Workshop: Confidence Intervals
+
+**Date:** Wednesday, March 17th, 2021 at 4:00pm
+
+**Instructors:** Monica Thieu and Paul Bloom
 
 ## Past
 
 ---
 
-**Wednesday, November 18th, 2020 at 4:00pm:** Round-Table Discussion (Online Experiments)
+### Round-Table Discussion: Online Experiments
+
+**Date:** Wednesday, November 18th, 2020 at 4:00pm
+
+**Moderators:** Hannah Tarder-Stoll and Emily Nakkawita
