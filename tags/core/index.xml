@@ -5,11 +5,7 @@
     <link>/tags/core/</link>
     <description>Recent content in core on Columbia Psychology Scientific Computing</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    
-	<atom:link href="/tags/core/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>en-us</language><atom:link href="/tags/core/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Programming in R</title>
       <link>/tutorials/r-core/1-programming/</link>
@@ -80,6 +76,15 @@
       
       <guid>/tutorials/r-core/5-modeling/</guid>
       <description>code.sourceCode  span { display: inline-block; line-height: 1.25; } code.sourceCode  span { color: inherit; text-decoration: inherit; } code.sourceCode  span:empty { height: 1.2em; } .sourceCode { overflow: visible; } code.sourceCode { white-space: pre; position: relative; } div.sourceCode { margin: 1em 0; } pre.sourceCode { margin: 0; } @media screen { div.sourceCode { overflow: auto; } } @media print { code.sourceCode { white-space: pre-wrap; } code.sourceCode  span { text-indent: -5em; padding-left: 5em; } } pre.</description>
+    </item>
+    
+    <item>
+      <title>Creating a Website with Github and R</title>
+      <link>/tutorials/r-extra/website-github-r/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-extra/website-github-r/</guid>
+      <description>   Workshop Slides    Video Recording    </description>
     </item>
     
     <item>

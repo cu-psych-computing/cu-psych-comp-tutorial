@@ -5,11 +5,7 @@
     <link>/tags/extra/</link>
     <description>Recent content in extra on Columbia Psychology Scientific Computing</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    
-	<atom:link href="/tags/extra/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>en-us</language><atom:link href="/tags/extra/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Accelerated `ggplot2`</title>
       <link>/tutorials/r-extra/accelerated-ggplot2/</link>

@@ -1,0 +1,20 @@
+---
+title: "Creating a Website with Github and R"
+subtitle: "CU Psych Scientific Computing"
+tags: ["core", "R"]
+weight: 1050
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+```
+
+## Workshop Slides
+
+<div class="video-container"><iframe src="https://docs.google.com/presentation/d/e/2PACX-1vS7f238RBFWnVOXC9MR-9O-hwUuQxUxESoi6IWDchp3zAv5-nayYu3TSHx19gsUvQWj1v9vazkjcTDX/embed?start=false&loop=false&delayms=5000" frameborder="0" width="640" height="390" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe></div>
+
+## Video Recording
+
+<div class="video-container" style="margin-bottom:50px"><iframe width="640" height="390" src="https://www.youtube.com/embed/yOWpZ7kw_f0?modestbranding=1&showinfo=0&rel=0&theme=light&color=white" frameborder="0"></iframe></div>
