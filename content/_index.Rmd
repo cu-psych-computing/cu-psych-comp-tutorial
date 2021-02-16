@@ -23,19 +23,19 @@ Columbia University psychology graduate students can stop by to chat about using
 - Cleaning and analyzing data
 - Preparing presentations and manuscripts
 
-During the Spring 2021 semester, the [graduate methods support advisors](/who/) will be holding office hours by appointment. To schedule a time that works well for you, or for email support, please contact [psych-methods-support@columbia.edu](mailto:psych-methods-support@columbia.edu){target="_blank"}.
+During the Spring 2021 semester, the [graduate methods support advisors](/who) will be holding office hours by appointment. To schedule a time that works well for you, or for email support, please contact [psych-methods-support@columbia.edu](mailto:psych-methods-support@columbia.edu){target="_blank"}.
 
 ## Ongoing Meetings and Workshops
 
 ---
 
-Our next workshop, *Creating Websites in Github and R*, is scheduled for February 10th, 2021, at 4 pm. For more information, visit the [Meetings](/meetings/) page.
+Our next workshop, *Certain in your Uncertainty: Exploring Varieties of Error Intervals*, is scheduled for March 17th, 2021, at 4 pm. For more information, visit the [Meetings](/meetings) page.
 
-## Annual Scientific Computing Workshop
+## Annual Introductory Scientific Computing Workshop
 
 ---
 
-This is our core introductory scientfic computing syllabus. The materials here are designed to be suitable for learners with little to no prior programming experience. For more information, please visit <a href="/workshop/">the workshop page</a>.
+This is our core introductory scientfic computing syllabus. The materials here are designed to be suitable for learners with little to no prior programming experience. For more information, please visit <a href="/workshop">the workshop page</a>.
 
 ### Session 1: Programming in R
 
@@ -90,6 +90,7 @@ Many of these materials were originally prepared as presentations for Columbia P
 - <p><a href="/tutorials/r-extra/data-sim-power/basic-simulation-power/" target="_blank">Basic Data Simulation & Power Analysis</a></p>
 - <p><a href="/tutorials/r-extra/brms/multilevel-models-with-brms/" target="_blank">Bayseian Multilevel Modeling with `brms` (Focus on partial pooling)</a></p>
 - <p><a href="/tutorials/r-extra/rmarkdown/intro-to-rmarkdown/" target="_blank">Intro to RMarkdown</a></p>
+- <p><a href="/tutorials/r-extra/website-github-r/" target="_blank">Creating a Website with Github and R</a></p>
 
 ---
 

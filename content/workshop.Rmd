@@ -1,5 +1,5 @@
 ---
-title: "Workshop"
+title: "Introductory Scientific Computing Workshop"
 author: "Psych Methods Support"
 output:
   blogdown::html_page:
@@ -10,7 +10,7 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-# Fall 2020 Workshop
+# Introductory Scientific Computing Workshop (Fall 2020)
 
 <div class="highlightsec">
 **Instructors:** Paul A. Bloom, Ana DiGiovanni, Camille Gasser, Manasi Jayakumar, Emily Nakkawita, Jonathan Nicholas, Matt Siegelman, Ben Silver, Hannah Tarder-Stoll, Monica Thieu, Anna Vannucci

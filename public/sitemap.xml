@@ -87,6 +87,10 @@
   </url>
   
   <url>
+    <loc>/tutorials/r-extra/website-github-r/</loc>
+  </url>
+  
+  <url>
     <loc>/tutorials/python/1-r2python-translation/</loc>
   </url>
   
@@ -135,6 +139,10 @@
   </url>
   
   <url>
+    <loc>/workshop/</loc>
+  </url>
+  
+  <url>
     <loc>/license/</loc>
   </url>
   
@@ -168,10 +176,6 @@
   
   <url>
     <loc>/who/</loc>
-  </url>
-  
-  <url>
-    <loc>/workshop/</loc>
   </url>
   
   <url>
