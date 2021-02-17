@@ -1,7 +1,7 @@
 ---
 title: "Creating a Website with Github and R"
 subtitle: "CU Psych Scientific Computing"
-tags: ["core", "R"]
+tags: ["extra", "R"]
 weight: 1050
 ---
 
