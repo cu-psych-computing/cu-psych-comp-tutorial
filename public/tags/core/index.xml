@@ -79,15 +79,6 @@
     </item>
     
     <item>
-      <title>Creating a Website with Github and R</title>
-      <link>/tutorials/r-extra/website-github-r/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorials/r-extra/website-github-r/</guid>
-      <description>   Workshop Slides    Video Recording    </description>
-    </item>
-    
-    <item>
       <title>R to Python Translation</title>
       <link>/tutorials/python/1-r2python-translation/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
