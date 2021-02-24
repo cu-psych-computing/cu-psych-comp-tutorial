@@ -29,4 +29,34 @@ class: inverse, middle
 # Section starter
 ---
 
-# Analytic vs numeric error intervals
+Niall sez:
+
+--
+
+**Over many theoretical repeated runs of a study, N% of the N% confidence intervals for all runs of the study are expected to overlap with the true parameter.**
+
+--
+
+A single point estimate of the confidence interval does not reflect an N% probability that the true parameter lies within that interval.
+
+---
+
+# Analytical vs numerical error intervals
+
+.pull-left[
+
+- calculated _exactly_ with formulas
+- computationally _fast_
+- wholly reliant on distributional assumptions
+- conservative _(smaller)_ estimate of the true error
+
+]
+
+.pull-right[
+
+- calculated _approximately_ by resampling
+- computationally _slower_
+- less reliant on distributional assumptions
+- liberal _(larger)_ estimate of the true error
+
+]
