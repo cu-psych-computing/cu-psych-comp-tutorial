@@ -24,9 +24,11 @@ options(htmltools.dir.version = FALSE)
 Beginning slide
 
 ---
+
 class: inverse, middle
 
 # Section starter
+
 ---
 
 Niall sez:
@@ -60,3 +62,11 @@ A single point estimate of the confidence interval does not reflect an N% probab
 - liberal _(larger)_ estimate of the true error
 
 ]
+
+---
+
+class: inverse, middle
+
+# Visualization
+
+---
