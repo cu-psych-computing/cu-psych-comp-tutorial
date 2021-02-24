@@ -1,0 +1,32 @@
+---
+title: "Presentation Ninja"
+subtitle: "⚔<br/>with xaringan"
+author: "Monica Thieu & Paul Bloom"
+institute: "Dept of Psychology, Columbia University"
+date: "2021-03-10 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    css: ["theme.css", "fonts.css"]
+    lib_dir: libs
+    nature:
+      highlightLanguage: r
+      highlightStyle: solarized-light
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+require(tidyverse)
+require(magrittr)
+options(htmltools.dir.version = FALSE)
+```
+
+Beginning slide
+
+---
+class: inverse, middle
+
+# Section starter
+---
+
+# Analytic vs numeric error intervals

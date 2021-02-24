@@ -1,0 +1,12 @@
+---
+title: "Fill in this title about error intervals"
+subtitle: "CU Psych Scientific Computing"
+tags: ["extra", "R"]
+weight: 1060
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+iframe the slides in here
