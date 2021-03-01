@@ -15,16 +15,354 @@ class: center, middle, inverse, title-slide
 ## ⚔<br/>with xaringan
 ### Monica Thieu &amp; Paul Bloom
 ### Dept of Psychology, Columbia University
-### 2021-03-10 (updated: 2021-02-23)
+### 2021-03-10 (updated: 2021-03-01)
 
 ---
 
 
 
 
-Beginning slide
+# Outline
+
+--
+
+First, we'll review error intervals based on _how they're calculated._
+
+--
+
+Then, we'll explore different techniques for visualizing those intervals.
 
 ---
+
+class: inverse, middle
+
+# Two different types of error intervals
+
+---
+
+.pull-left[
+
+## Analytical intervals
+
+- calculated _exactly_ with **formulas**
+- computationally _fast_
+- _wholly_ reliant on distributional assumptions
+- conservative _(smaller)_ estimate of the true error
+
+]
+
+.pull-right[
+
+## Numerical intervals
+
+- calculated _approximately_ over many **iterations**
+- computationally _slower_
+- _less_ reliant on distributional assumptions
+- liberal _(larger)_ estimate of the true error
+
+]
+
+---
+
+class: inverse, middle
+
+# Analytical error intervals
+
+--
+
+- Ordinary least squares intervals
+
+--
+
+- Maximum likelihood intervals
+
+---
+
+## OLS intervals
+
+This encompasses the parameter estimates and standard errors calculated from _ordinary least squares regressions._
+
+--
+
+Remember, OLS regressions capture a [variety](https://lindeloev.github.io/tests-as-linear/) of statistical scenarios (t-tests, correlations, ANOVAs, and more).
+
+--
+
+In general, the error intervals we can get from these tests are a **standard error of the parameter estimate** and its associated **confidence interval.**
+
+--
+
+These values are directly related to one another by the following general formula:
+
+`$$CI_p = \overline{T} \pm q_{p} \times SE$$`
+
+--
+
+In most cases, the distance from the test statistic to one CI bound is equal to the standard error times the critical value for the desired confidence level.
+
+--
+
+If we assume a 95% confidence interval, and that the sampling distribution of the test statistic is _t_-distributed or normally distributed, the CI is approximately equal to the test statistic `\(\pm\)` 2 SEs.
+
+---
+
+Don't forget! Niall sez:
+
+--
+
+**Over many theoretical repeated runs of a study, N% of the N% confidence intervals for all runs of the study are expected to overlap with the true parameter.**
+
+--
+
+A single calculation of the N% confidence interval does _not_ reflect an N% probability that the true parameter lies within that interval.
+
+---
+
+## ML intervals
+
+--
+
+Maximum likelihood models can fit multilevel data, or other data that cannot readily be modeled with ordinary least squares regression.
+
+--
+
+ML models, like those from `lme4`, produce standard errors by taking the second derivative of the parameter log-likelihood function with respect to the parameter of interest, `\(\theta\)`, at the value of the maximum-likelihood estimate of said parameter, `\(\hat{\theta}\)`.
+
+--
+
+When the log-likelihood function is estimated well, ML standard errors are a good approximation of the standard deviation of the sampling distribution for multilevel model coefficients.
+
+--
+
+However, if ML estimation _fails to converge_ on a set of parameter estimates, this may mean that the log-likelihood function _violates the assumptions needed_ to consider the SE a valid estimate.
+
+--
+
+See [Penn State STAT 504 Spring 2005 lecture slides](https://personal.psu.edu/abs12/stat504/Lecture/lec3_4up.pdf) for further reference.
+
+---
+
+class: inverse, middle
+
+# Numerical intervals
+
+--
+
+- Bootstrapping
+
+--
+
+- Permutation testing
+
+--
+
+- Bayesian Monte Carlo sampling
+
+---
+
+## Bootstrapping
+
+Randomly resample complete observations from the base dataset with replacement many times, calculating the test statistic once for every resample. Collate all estimates of the test statistic across bootstrap iterations into a sampling distribution.
+
+If the resulting sampling distribution is normal, the bootstrapped standard error is equal to the **standard deviation of the sampling distribution.**
+
+If the resulting sampling distribution is asymmetrical (and not normal), the lower and upper bounds of bootstrapped standard error interval can be calculated by taking the **16% and 84% percentiles of the sampling distribution.** (If the sampling distribution is symmetrical but not normal, this is equivalent to taking the middle 68% of the distribution.)
+
+--
+
+A sampling distribution can be bootstrapped for _basically any_ test statistic, no matter how complex its calculation is. Thus, bootstrapping is especially useful in cases where the test statistic might not have a normal sampling distribution, and analytical intervals might be inappropriate.
+
+---
+
+## Permutation testing
+
+Permute (shuffle) observations (recombining different x and y observations) from the base dataset many times, calculating the test statistic once for every shuffle. Collate all estimates of the test statistic across shuffle iterations into a sampling distribution.
+
+---
+
+## Bayesian Monte Carlo sampling
+
+---
+
+class: inverse, middle
+
+# Visualization
+
+---
+
+The purpose of any graph, error bars or not, is to **communicate a statistical result to its viewers.**
+
+Try to _balance_ between **matching** visual features to your key results _and_ **accommodating** viewers' graph-reading heuristics.
+
+--
+
+Perhaps the biggest heuristic to consider is that _people tend to use error bars as a visual marker of statistical significance._
+
+--
+
+It's hard to completely disabuse people of their tendency to look for a yes-or-no answer, but we can do some things to help prevent this heuristic from leading people to erroneous conclusions.
+
+---
+
+# General best practices
+
+---
+
+When you can, show raw data beneath the summary points and error bars.
+
+
+
+.pull-left[
+
+![](slides_files/figure-html/unnamed-chunk-2-1.svg)&lt;!-- --&gt;
+
+]
+
+.pull-right[
+
+![](slides_files/figure-html/unnamed-chunk-3-1.svg)&lt;!-- --&gt;
+
+]
+
+---
+
+Default to _not_ showing crossbars on error bars unless they make the visual comparison easier.
+
+---
+
+Where appropriate, choose error visualizations that highlight the density of the error distribution.
+
+Error bars may lead people to view the data in a binary way. Specifically, error bars may lead people to treat the sampling distribution within the shown error bar as uniform and ignore the sampling distribution outside the error bar.
+
+---
+
+# Various scenarios
+
+---
+
+## Comparing a test statistic to a constant
+
+When comparing a test statistic against a constant (often 0), show the CI. Accommodate the heuristic that "if the error bar clears 0, the results are 'significant'."
+
+**This is a surprisingly powerful method for turning complicated test statistics into digestible visualizations.**
+
+---
+
+### Test statistic vs. constant: Analytical
+
+
+
+.pull-left[
+
+![](slides_files/figure-html/unnamed-chunk-5-1.svg)&lt;!-- --&gt;
+
+]
+
+.pull-right[
+
+![](slides_files/figure-html/unnamed-chunk-6-1.svg)&lt;!-- --&gt;
+
+]
+
+---
+
+### Test statistic vs. constant: Numerical
+
+In addition to the methods for plotting analytical sampling error, a new error visualization becomes available with a physical sampling distribution: a plot of the sampling distribution itself.
+
+
+
+---
+
+If you have the space for it, you can show a histogram:
+
+![](slides_files/figure-html/unnamed-chunk-8-1.svg)&lt;!-- --&gt;
+
+---
+
+Or a density plot:
+
+![](slides_files/figure-html/unnamed-chunk-9-1.svg)&lt;!-- --&gt;
+
+---
+
+In some situations, showing a violin plot of the sampling distribution can be an "upgraded" version of just showing a vertical error bar with a point estimate of a test statistic.
+
+The `draw_quantiles` argument of `geom_violin()` allows easy plotting of particular percentiles of the sampling distribution.
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-10-1.svg" height="100%" /&gt;
+
+---
+
+## Comparing two test statistics to each other
+
+### Option 1: Compare the difference to 0
+
+Pro: 
+
+- Analytical: This method allows you to use the SE provided by `lm()` without having to worry about finding the correct formula. If your regression is specified correctly, `lm()` will pool your SE for you!
+- Numerical: By calculating a single sampling distribution of _differences,_ you can get a more accurate (and often slightly smaller) SE.
+
+Con: While it's still on the scale of the data, this method obscures the values of the two test statistics.
+
+Per the previous example, you can show these errors with a CI bar or sampling distribution.
+
+---
+
+## Comparing two test statistics to each other
+
+### Option 2: Compare the values to each other
+
+When comparing two test statistics against each other, show the standard errors of each one. Accommodate the heuristic that "if the error bars clear each other, the results are 'significant'."
+
+It's not a perfect heuristic, but showing longer CIs is likely to lead people to underestimate your effect size (not fair to you!).
+
+---
+
+## Ordered data at discrete levels of x
+
+For variables where you have measurements at discrete points along a continuous variable, an error ribbon will help to remind people that there is also uncertainty between the measurement points.
+
+(It will not accurately represent the true uncertainty of the interpolation, but it's better than nothing.)
+
+As with the prior methods, use standard errors when comparing two conditions against each other, and CIs when comparing a condition against 0 or another constant.
+
+.pull-left[
+
+![](slides_files/figure-html/unnamed-chunk-11-1.svg)&lt;!-- --&gt;
+
+```
+## mapping: y = ~mean_y 
+## geom_point: na.rm = FALSE
+## stat_identity: na.rm = FALSE
+## position_identity
+```
+
+]
+
+--
+
+.pull-right[
+
+![](slides_files/figure-html/unnamed-chunk-12-1.svg)&lt;!-- --&gt;
+
+]
+
+---
+
+## Regression slope
+
+In the simplest case, plot the raw data with a regression slope and error ribbon on top.
+
+### Regression slope: Analytical
+
+Be aware that calling `geom_smooth(method = "lm")` on data split by a categorical variable will plot CIs for _simple effect regressions fit separately to subsets of data, **not** for the multiple regression interaction fit to all the data._ 
+
+### Regression slope: Numerical
+
+We like using "spaghetti error bars" to show a sampling distribution of regression lines.
+
+This method leverages transparency/opacity as an additional visual heuristic for the density of the distribution, and helps avoid the binary appearance of error ribbons.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

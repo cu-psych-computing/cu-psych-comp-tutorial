@@ -19,46 +19,47 @@ output:
 require(tidyverse)
 require(magrittr)
 options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, dev = "svglite")
+
+se <- function (x, ...) {return (sd(x, ...)/sqrt(length(x)))}
 ```
 
-Beginning slide
+# Outline
+
+--
+
+First, we'll review error intervals based on _how they're calculated._
+
+--
+
+Then, we'll explore different techniques for visualizing those intervals.
 
 ---
 
 class: inverse, middle
 
-# Section starter
+# Two different types of error intervals
 
 ---
-
-Niall sez:
-
---
-
-**Over many theoretical repeated runs of a study, N% of the N% confidence intervals for all runs of the study are expected to overlap with the true parameter.**
-
---
-
-A single point estimate of the confidence interval does not reflect an N% probability that the true parameter lies within that interval.
-
----
-
-# Analytical vs numerical error intervals
 
 .pull-left[
 
-- calculated _exactly_ with formulas
+## Analytical intervals
+
+- calculated _exactly_ with **formulas**
 - computationally _fast_
-- wholly reliant on distributional assumptions
+- _wholly_ reliant on distributional assumptions
 - conservative _(smaller)_ estimate of the true error
 
 ]
 
 .pull-right[
 
-- calculated _approximately_ by resampling
+## Numerical intervals
+
+- calculated _approximately_ over many **iterations**
 - computationally _slower_
-- less reliant on distributional assumptions
+- _less_ reliant on distributional assumptions
 - liberal _(larger)_ estimate of the true error
 
 ]
@@ -67,6 +68,386 @@ A single point estimate of the confidence interval does not reflect an N% probab
 
 class: inverse, middle
 
+# Analytical error intervals
+
+--
+
+- Ordinary least squares intervals
+
+--
+
+- Maximum likelihood intervals
+
+---
+
+## OLS intervals
+
+This encompasses the parameter estimates and standard errors calculated from _ordinary least squares regressions._
+
+--
+
+Remember, OLS regressions capture a [variety](https://lindeloev.github.io/tests-as-linear/) of statistical scenarios (t-tests, correlations, ANOVAs, and more).
+
+--
+
+In general, the error intervals we can get from these tests are a **standard error of the parameter estimate** and its associated **confidence interval.**
+
+--
+
+These values are directly related to one another by the following general formula:
+
+$$CI_p = \overline{T} \pm q_{p} \times SE$$
+
+--
+
+In most cases, the distance from the test statistic to one CI bound is equal to the standard error times the critical value for the desired confidence level.
+
+--
+
+If we assume a 95% confidence interval, and that the sampling distribution of the test statistic is _t_-distributed or normally distributed, the CI is approximately equal to the test statistic $\pm$ 2 SEs.
+
+---
+
+Don't forget! Niall sez:
+
+--
+
+**Over many theoretical repeated runs of a study, N% of the N% confidence intervals for all runs of the study are expected to overlap with the true parameter.**
+
+--
+
+A single calculation of the N% confidence interval does _not_ reflect an N% probability that the true parameter lies within that interval.
+
+---
+
+## ML intervals
+
+--
+
+Maximum likelihood models can fit multilevel data, or other data that cannot readily be modeled with ordinary least squares regression.
+
+--
+
+ML models, like those from `lme4`, produce standard errors by taking the second derivative of the parameter log-likelihood function with respect to the parameter of interest, $\theta$, at the value of the maximum-likelihood estimate of said parameter, $\hat{\theta}$.
+
+--
+
+When the log-likelihood function is estimated well, ML standard errors are a good approximation of the standard deviation of the sampling distribution for multilevel model coefficients.
+
+--
+
+However, if ML estimation _fails to converge_ on a set of parameter estimates, this may mean that the log-likelihood function _violates the assumptions needed_ to consider the SE a valid estimate.
+
+--
+
+See [Penn State STAT 504 Spring 2005 lecture slides](https://personal.psu.edu/abs12/stat504/Lecture/lec3_4up.pdf) for further reference.
+
+---
+
+class: inverse, middle
+
+# Numerical intervals
+
+--
+
+- Bootstrapping
+
+--
+
+- Permutation testing
+
+--
+
+- Bayesian Monte Carlo sampling
+
+---
+
+## Bootstrapping
+
+Randomly resample complete observations from the base dataset with replacement many times, calculating the test statistic once for every resample. Collate all estimates of the test statistic across bootstrap iterations into a sampling distribution.
+
+If the resulting sampling distribution is normal, the bootstrapped standard error is equal to the **standard deviation of the sampling distribution.**
+
+If the resulting sampling distribution is asymmetrical (and not normal), the lower and upper bounds of bootstrapped standard error interval can be calculated by taking the **16% and 84% percentiles of the sampling distribution.** (If the sampling distribution is symmetrical but not normal, this is equivalent to taking the middle 68% of the distribution.)
+
+--
+
+A sampling distribution can be bootstrapped for _basically any_ test statistic, no matter how complex its calculation is. Thus, bootstrapping is especially useful in cases where the test statistic might not have a normal sampling distribution, and analytical intervals might be inappropriate.
+
+---
+
+## Permutation testing
+
+Permute (shuffle) observations (recombining different x and y observations) from the base dataset many times, calculating the test statistic once for every shuffle. Collate all estimates of the test statistic across shuffle iterations into a sampling distribution.
+
+---
+
+## Bayesian Monte Carlo sampling
+
+---
+
+class: inverse, middle
+
 # Visualization
 
 ---
+
+The purpose of any graph, error bars or not, is to **communicate a statistical result to its viewers.**
+
+Try to _balance_ between **matching** visual features to your key results _and_ **accommodating** viewers' graph-reading heuristics.
+
+--
+
+Perhaps the biggest heuristic to consider is that _people tend to use error bars as a visual marker of statistical significance._
+
+--
+
+It's hard to completely disabuse people of their tendency to look for a yes-or-no answer, but we can do some things to help prevent this heuristic from leading people to erroneous conclusions.
+
+---
+
+# General best practices
+
+---
+
+When you can, show raw data beneath the summary points and error bars.
+
+```{r}
+sim <- crossing(obs = 1:20, x = 1:3) %>% 
+  mutate(y = x + rnorm(n(), 0, 0.5))
+
+sim_summary <- sim %>%
+  group_by(x) %>% 
+  summarize(mean_y = mean(y), sd_y = sd(y), se_y = se(y))
+```
+
+.pull-left[
+
+```{r}
+this_plot <- sim_summary %>% 
+  ggplot(aes(x = x, y = mean_y)) +
+  geom_line() +
+  geom_point(aes(y = mean_y))
+
+this_plot
+```
+
+]
+
+.pull-right[
+
+```{r}
+sim_summary %>% 
+  ggplot(aes(x = x, y = mean_y)) +
+  geom_jitter(aes(y = y),
+              data = sim,
+              alpha = 0.2, width = 0.05, height = 0) +
+  geom_line() +
+  geom_point(aes(y = mean_y))
+```
+
+]
+
+---
+
+Default to _not_ showing crossbars on error bars unless they make the visual comparison easier.
+
+---
+
+Where appropriate, choose error visualizations that highlight the density of the error distribution.
+
+Error bars may lead people to view the data in a binary way. Specifically, error bars may lead people to treat the sampling distribution within the shown error bar as uniform and ignore the sampling distribution outside the error bar.
+
+---
+
+# Various scenarios
+
+---
+
+## Comparing a test statistic to a constant
+
+When comparing a test statistic against a constant (often 0), show the CI. Accommodate the heuristic that "if the error bar clears 0, the results are 'significant'."
+
+**This is a surprisingly powerful method for turning complicated test statistics into digestible visualizations.**
+
+---
+
+### Test statistic vs. constant: Analytical
+
+```{r}
+n_obs <- 50
+effect_size <- 0.5
+d <- tibble(y = rnorm(n_obs, effect_size, 1))
+
+d_s <- d %>% 
+  summarize(across(y, list(mean = mean, sd = sd, se = se))) %>% 
+  mutate(y_rank = dense_rank(y_mean))
+
+plot_base <- d_s %>% 
+  ggplot(aes(x = 1, y = y_mean)) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_hline(yintercept = effect_size, color = "seagreen3", linetype = "dashed") +
+  geom_errorbar(aes(ymin = y_mean - qt(.975, n_obs-1)*y_se,
+                    ymax = y_mean + qt(.975, n_obs-1)*y_se),
+                width = 0)
+```
+
+.pull-left[
+
+```{r}
+plot_base +
+  geom_point()
+```
+
+]
+
+.pull-right[
+
+```{r}
+plot_base +
+  geom_errorbar(aes(ymin = y_mean - y_se,
+                    ymax = y_mean + y_se),
+                width = 0,
+                size = 1) +
+  geom_point()
+```
+
+]
+
+---
+
+### Test statistic vs. constant: Numerical
+
+In addition to the methods for plotting analytical sampling error, a new error visualization becomes available with a physical sampling distribution: a plot of the sampling distribution itself.
+
+```{r}
+d_b <- d %>%
+  rsample::bootstraps(times = 500) %>%
+  mutate(boot_mean = map_dbl(splits, ~.x %>%
+                               as.data.frame() %>%
+                               pull(y) %>%
+                               mean()))
+```
+
+---
+
+If you have the space for it, you can show a histogram:
+
+```{r}
+d_b %>% 
+  ggplot(aes(x = boot_mean)) +
+  geom_histogram(bins = 30) +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  geom_vline(xintercept = effect_size, color = "seagreen3", linetype = "dashed")
+```
+
+---
+
+Or a density plot:
+
+```{r}
+d_b %>% 
+  ggplot(aes(x = boot_mean)) +
+  geom_density(outline.type = "full") +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  geom_vline(xintercept = effect_size, color = "seagreen3", linetype = "dashed")
+```
+
+---
+
+In some situations, showing a violin plot of the sampling distribution can be an "upgraded" version of just showing a vertical error bar with a point estimate of a test statistic.
+
+The `draw_quantiles` argument of `geom_violin()` allows easy plotting of particular percentiles of the sampling distribution.
+
+```{r, out.height="100%", fig.asp = 5}
+d_b %>% 
+  ggplot(aes(x = 1, y = boot_mean)) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_hline(yintercept = effect_size, color = "seagreen3", linetype = "dashed") +
+  geom_violin(alpha = 0.5, draw_quantiles = c(.025, .975)) +
+  geom_point(aes(y = y_mean),
+             data = d_s)
+```
+
+---
+
+## Comparing two test statistics to each other
+
+### Option 1: Compare the difference to 0
+
+Pro: 
+
+- Analytical: This method allows you to use the SE provided by `lm()` without having to worry about finding the correct formula. If your regression is specified correctly, `lm()` will pool your SE for you!
+- Numerical: By calculating a single sampling distribution of _differences,_ you can get a more accurate (and often slightly smaller) SE.
+
+Con: While it's still on the scale of the data, this method obscures the values of the two test statistics.
+
+Per the previous example, you can show these errors with a CI bar or sampling distribution.
+
+---
+
+## Comparing two test statistics to each other
+
+### Option 2: Compare the values to each other
+
+When comparing two test statistics against each other, show the standard errors of each one. Accommodate the heuristic that "if the error bars clear each other, the results are 'significant'."
+
+It's not a perfect heuristic, but showing longer CIs is likely to lead people to underestimate your effect size (not fair to you!).
+
+---
+
+## Ordered data at discrete levels of x
+
+For variables where you have measurements at discrete points along a continuous variable, an error ribbon will help to remind people that there is also uncertainty between the measurement points.
+
+(It will not accurately represent the true uncertainty of the interpolation, but it's better than nothing.)
+
+As with the prior methods, use standard errors when comparing two conditions against each other, and CIs when comparing a condition against 0 or another constant.
+
+.pull-left[
+
+```{r}
+sim_summary %>% 
+  ggplot(aes(x = x, y = mean_y)) +
+  geom_jitter(aes(y = y),
+              data = sim,
+              alpha = 0.2, width = 0.05, height = 0) +
+  geom_line() +
+  geom_errorbar(aes(ymin = mean_y - se_y, ymax = mean_y + se_y), width = 0)
+  geom_point(aes(y = mean_y))
+```
+
+]
+
+--
+
+.pull-right[
+
+```{r}
+sim_summary %>% 
+  ggplot(aes(x = x, y = mean_y)) +
+  geom_jitter(aes(y = y),
+              data = sim,
+              alpha = 0.2, width = 0.05, height = 0) +
+  geom_line() +
+  geom_ribbon(aes(ymin = mean_y - se_y, ymax = mean_y + se_y), alpha = 0.2) +
+  geom_point(aes(y = mean_y))
+```
+
+]
+
+---
+
+## Regression slope
+
+In the simplest case, plot the raw data with a regression slope and error ribbon on top.
+
+### Regression slope: Analytical
+
+Be aware that calling `geom_smooth(method = "lm")` on data split by a categorical variable will plot CIs for _simple effect regressions fit separately to subsets of data, **not** for the multiple regression interaction fit to all the data._ 
+
+### Regression slope: Numerical
+
+We like using "spaghetti error bars" to show a sampling distribution of regression lines.
+
+This method leverages transparency/opacity as an additional visual heuristic for the density of the distribution, and helps avoid the binary appearance of error ribbons.
