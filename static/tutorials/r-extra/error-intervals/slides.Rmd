@@ -197,29 +197,17 @@ class: inverse, middle
 
 ---
 
-The purpose of any graph, error bars or not, is to **make a comparison.**
+class: center, middle
 
-Try to _balance_ between **matching** visual features to your key results _and_ **accommodating** viewers' graph-reading heuristics.
-
---
-
-Perhaps the biggest heuristic to consider is that _people tend to use error bars as a visual marker of statistical significance._ Concerns about significance aside, we can try to accommodate this.
-
---
-
-When comparing a test statistic against a constant (often 0), show the CI. Accommodate the heuristic that "if the error bar clears 0, the results are 'significant'."
-
-**This is a surprisingly powerful method for turning complicated test statistics into digestible visualizations.**
-
---
-
-TODO: Show example of when error bar maps on to the comparison of interest vs. when it does not
+The purpose of any graph, error bars or not, is to **make a comparison.** Error bars can serve that goal by making your comparison of interest as salient as possible.
 
 ---
 
 # General best practices
 
 ---
+
+## General best practices
 
 When you can, show raw data beneath the summary points and error bars.
 
@@ -228,23 +216,43 @@ When you can, show raw data beneath the summary points and error bars.
 # Bias the data in some kind of way such that the covariate partially explains the DV
 # Add a few outliers
 
-sim <- crossing(obs = 1:20, x = 1:3) %>% 
-  mutate(y = x + rnorm(n(), 0, 0.5))
+random_age <- function (race) {
+  
+  # .2 (10-20) + .4 (20-30) + .3 (30-60) + .1 (60-80)
+  
+  if (race == "euro_am") {
+    prob_breakdowns <- c(.2, .4, .3/3, .1/2)
+  } else if (race == "as_am") {
+    prob_breakdowns <- c(.2, .55, .2/3, .05/2)
+  }
+  
+  tens <- sample(seq(10, 70, 10),
+                 size = 1,
+                 replace = TRUE,
+                 prob = rep(prob_breakdowns, times = c(1, 1, 3, 2)))
+  
+  ones <- sample(0:9,
+                 size = 1,
+                 replace = TRUE)
+  
+  return (as.integer(tens + ones))
+}
 
-sim_summary <- sim %>%
-  group_by(x) %>% 
-  summarize(mean_y = mean(y), sd_y = sd(y), se_y = se(y))
+# This counts id from 1:n separately for the two races, so that number is the n per group
+d <- crossing(id = 1:60, race = c("euro_am", "as_am")) %>% 
+  mutate(age = map_int(race, random_age),
+         age_scaled = (age-25)/10,
+         race = factor(race, levels = c("euro_am", "as_am")),
+         intercept = 0,
+         beta_race = -0.5,
+         beta_age = -0.15,
+         emo = intercept + beta_race*(race == "as_am") + beta_age*age_scaled + rt(n(), df = 5))
 ```
 
 .pull-left[
 
 ```{r}
-this_plot <- sim_summary %>% 
-  ggplot(aes(x = x, y = mean_y)) +
-  geom_line() +
-  geom_point(aes(y = mean_y))
 
-this_plot
 ```
 
 ]
@@ -252,18 +260,14 @@ this_plot
 .pull-right[
 
 ```{r}
-sim_summary %>% 
-  ggplot(aes(x = x, y = mean_y)) +
-  geom_jitter(aes(y = y),
-              data = sim,
-              alpha = 0.2, width = 0.05, height = 0) +
-  geom_line() +
-  geom_point(aes(y = mean_y))
+
 ```
 
 ]
 
 ---
+
+## General best practices
 
 Use crossbars on the ends of error bars _thoughtfully,_ if at all.
 
@@ -271,11 +275,29 @@ TODO: Put graphs underneath
 
 ---
 
+## General best practices
+
 Where appropriate, choose error visualizations that highlight the density of the error distribution.
 
 Error bars may lead people to view the data in a binary way. Specifically, error bars may lead people to treat the sampling distribution within the shown error bar as uniform and ignore the sampling distribution outside the error bar.
 
 TODO: examples of histogram, violin, fat-skinny error bars
+
+---
+
+## General best practices
+
+For better or worse, _people tend to use error bars as a visual marker of statistical significance._ Try to **accommodate** this tendency while remaining faithful to your comparison of interest.
+
+--
+
+Choose whether to show errors +- 1 SE, +- 1 CI, or something else to _highlight the size of your effect of interest._
+
+--
+
+For example, when comparing a test statistic against a 0, show the CI. Accommodate the heuristic that "if the error bar clears 0, the results are 'significant'."
+
+TODO: Show example of when error bar maps on to the comparison of interest vs. when it does not
 
 ---
 
@@ -287,149 +309,41 @@ TODO: examples of histogram, violin, fat-skinny error bars
 
 ---
 
-### Test statistic vs. 0: Analytical
+## OLS regression with one binary predictor variable
 
-```{r}
-n_obs <- 50
-effect_size <- 0.5
-d <- tibble(y = rnorm(n_obs, effect_size, 1))
-
-d_s <- d %>% 
-  summarize(across(y, list(mean = mean, sd = sd, se = se))) %>% 
-  mutate(y_rank = dense_rank(y_mean))
-
-plot_base <- d_s %>% 
-  ggplot(aes(x = 1, y = y_mean)) +
-  geom_hline(yintercept = 0, linetype = "dashed") +
-  geom_hline(yintercept = effect_size, color = "seagreen3", linetype = "dashed") +
-  geom_errorbar(aes(ymin = y_mean - qt(.975, n_obs-1)*y_se,
-                    ymax = y_mean + qt(.975, n_obs-1)*y_se),
-                width = 0)
-```
-
-.pull-left[
-
-```{r}
-plot_base +
-  geom_point()
-```
-
-]
-
-.pull-right[
-
-```{r}
-plot_base +
-  geom_errorbar(aes(ymin = y_mean - y_se,
-                    ymax = y_mean + y_se),
-                width = 0,
-                size = 1) +
-  geom_point()
-```
-
-]
-
----
-
-### Test statistic vs. constant: Numerical
-
-In addition to the methods for plotting analytical sampling error, a new error visualization becomes available with a physical sampling distribution: a plot of the sampling distribution itself.
-
-```{r}
-d_b <- d %>%
-  rsample::bootstraps(times = 500) %>%
-  mutate(boot_mean = map_dbl(splits, ~.x %>%
-                               as.data.frame() %>%
-                               pull(y) %>%
-                               mean()))
-```
-
----
-
-If you have the space for it, you can show a histogram:
-
-```{r}
-d_b %>% 
-  ggplot(aes(x = boot_mean)) +
-  geom_histogram(bins = 30) +
-  geom_vline(xintercept = 0, linetype = "dashed") +
-  geom_vline(xintercept = effect_size, color = "seagreen3", linetype = "dashed")
-```
-
----
-
-Or a density plot:
-
-```{r}
-d_b %>% 
-  ggplot(aes(x = boot_mean)) +
-  geom_density(outline.type = "full") +
-  geom_vline(xintercept = 0, linetype = "dashed") +
-  geom_vline(xintercept = effect_size, color = "seagreen3", linetype = "dashed")
-```
-
----
-
-In some situations, showing a violin plot of the sampling distribution can be an "upgraded" version of just showing a vertical error bar with a point estimate of a test statistic.
-
-The `draw_quantiles` argument of `geom_violin()` allows easy plotting of particular percentiles of the sampling distribution.
-
-```{r, out.height="100%", fig.asp = 5}
-d_b %>% 
-  ggplot(aes(x = 1, y = boot_mean)) +
-  geom_hline(yintercept = 0, linetype = "dashed") +
-  geom_hline(yintercept = effect_size, color = "seagreen3", linetype = "dashed") +
-  geom_violin(alpha = 0.5, draw_quantiles = c(.025, .975)) +
-  geom_point(aes(y = y_mean),
-             data = d_s)
-```
-
----
-
-## Comparing two test statistics to each other
-
-### Option 1: Compare the difference to 0
+### Option 1: Compare difference to 0
 
 Pro: 
 
 - Analytical: This method allows you to use the SE provided by `lm()` without having to worry about finding the correct formula. If your regression is specified correctly, `lm()` will pool your SE for you!
 - Numerical: By calculating a single sampling distribution of _differences,_ you can get a more accurate (and often slightly smaller) SE.
 
-Con: While it's still on the scale of the data, this method obscures the values of the two test statistics.
-
-Per the previous example, you can show these errors with a CI bar or sampling distribution.
+Con: While it's still on the scale of the data, this method obscures the values of the two group means.
 
 ---
 
-## Comparing two test statistics to each other
+## OLS regression with one binary predictor variable
 
-### Option 2: Compare the values to each other
+### Option 2: Compare conditions to each other
 
-When comparing two test statistics against each other, show the standard errors of each one. Accommodate the heuristic that "if the error bars clear each other, the results are 'significant'."
+[REVISE/REMOVE THIS TEXT?] When comparing two test statistics against each other, show the standard errors of each one. Accommodate the heuristic that "if the error bars clear each other, the results are 'significant'."
 
 It's not a perfect heuristic, but showing longer CIs is likely to lead people to underestimate your effect size (not fair to you!).
 
 ---
 
-## Ordered data at discrete levels of x
+## OLS multiple regression
 
-For variables where you have measurements at discrete points along a continuous variable, an error ribbon will help to remind people that there is also uncertainty between the measurement points.
+In the simplest case, plot the raw data with a regression slope and error ribbon on top.
+
+Even for variables where you have measurements at discrete points along a continuous variable, an error ribbon will help to remind people that there is also uncertainty between the measurement points.
 
 (It will not accurately represent the true uncertainty of the interpolation, but it's better than nothing.)
-
-As with the prior methods, use standard errors when comparing two conditions against each other, and CIs when comparing a condition against 0 or another constant.
 
 .pull-left[
 
 ```{r}
-sim_summary %>% 
-  ggplot(aes(x = x, y = mean_y)) +
-  geom_jitter(aes(y = y),
-              data = sim,
-              alpha = 0.2, width = 0.05, height = 0) +
-  geom_line() +
-  geom_errorbar(aes(ymin = mean_y - se_y, ymax = mean_y + se_y), width = 0)
-  geom_point(aes(y = mean_y))
+
 ```
 
 ]
@@ -439,29 +353,70 @@ sim_summary %>%
 .pull-right[
 
 ```{r}
-sim_summary %>% 
-  ggplot(aes(x = x, y = mean_y)) +
-  geom_jitter(aes(y = y),
-              data = sim,
-              alpha = 0.2, width = 0.05, height = 0) +
-  geom_line() +
-  geom_ribbon(aes(ymin = mean_y - se_y, ymax = mean_y + se_y), alpha = 0.2) +
-  geom_point(aes(y = mean_y))
+
 ```
 
 ]
 
 ---
 
-## Regression slope
+Be aware that calling `geom_smooth(method = "lm")` on data split by a categorical variable will plot CIs for _simple effect regressions fit separately to subsets of data, **not** for the multiple regression interaction fit to all the data._
 
-In the simplest case, plot the raw data with a regression slope and error ribbon on top.
+---
 
-### Regression slope: Analytical
+## Bootstrapping
 
-Be aware that calling `geom_smooth(method = "lm")` on data split by a categorical variable will plot CIs for _simple effect regressions fit separately to subsets of data, **not** for the multiple regression interaction fit to all the data._ 
+In addition to the methods for plotting analytical sampling error, a new error visualization becomes available with a physical sampling distribution: a plot of the sampling distribution itself.
 
-### Regression slope: Numerical
+```{r}
+d_b <- d %>%
+  rsample::bootstraps(times = 500) %>%
+  rename(iteration = id) %>% 
+  # rsample automatically labels the iterations as "Bootstrap%03d"
+  # want these just to be integers pls
+  mutate(iteration = as.integer(str_sub(iteration, start = -3L)),
+         # rsample stores the splits as special "splits" objects
+         # which don't take up the same amount of memory as a fully resampled dataframe
+         # so you need to call as.data.frame on them before you run the model
+         coefs_boot = map(splits, ~.x %>%
+                            as.data.frame() %>%
+                            lm(emo ~ race * age_scaled, data = .) %>%
+                            broom::tidy())) %>% 
+  # drop the split objects, don't need the resampled data anymore
+  select(-splits) %>% 
+  # et voila, all your model parameters in a dataframe that's long by bootstrap iteration
+  unnest(coefs_boot)
+```
+
+---
+
+If you have the space for it, you can show a histogram:
+
+```{r}
+
+```
+
+---
+
+Or a density plot:
+
+```{r}
+
+```
+
+---
+
+In some situations, showing a violin plot of the sampling distribution can be an "upgraded" version of just showing a vertical error bar with a point estimate of a test statistic.
+
+The `draw_quantiles` argument of `geom_violin()` allows easy plotting of particular percentiles of the sampling distribution.
+
+```{r, out.height="100%", fig.asp = 5}
+
+```
+
+---
+
+## Bayesian regression
 
 We like using "spaghetti error bars" to show a sampling distribution of regression lines.
 
