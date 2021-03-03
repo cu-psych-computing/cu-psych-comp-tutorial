@@ -49,7 +49,6 @@ class: inverse, middle
 - calculated _exactly_ with **formulas**
 - computationally _fast_
 - _wholly_ reliant on distributional assumptions
-- conservative _(smaller)_ estimate of the true error
 
 ]
 
@@ -59,10 +58,18 @@ class: inverse, middle
 
 - calculated _approximately_ over many **iterations**
 - computationally _slower_
-- _less_ reliant on distributional assumptions
-- liberal _(larger)_ estimate of the true error
+- _less_ reliant on distributional assumptions (and can work in the absence of assumptions!)
 
 ]
+
+--
+
+In the majority of cases, errors should agree when estimated using either method. In general, we recommend taking more time to estimate numerical intervals _unless:_
+
+- You are confident that distributional assumptions will hold
+- It is temporally/computationally infeasible to estimate numerical intervals
+
+TODO: note regularly that we like methods that make you look at your data/intermediate outputs
 
 ---
 
@@ -96,7 +103,7 @@ In general, the error intervals we can get from these tests are a **standard err
 
 These values are directly related to one another by the following general formula:
 
-$$CI_p = \overline{T} \pm q_{p} \times SE$$
+$$CI_p = \overline{T} \pm t_{crit} \times SE$$
 
 --
 
@@ -108,7 +115,7 @@ If we assume a 95% confidence interval, and that the sampling distribution of th
 
 ---
 
-Don't forget! Niall sez:
+Don't forget! Dr. Niall Bolger sez:
 
 --
 
@@ -121,6 +128,8 @@ A single calculation of the N% confidence interval does _not_ reflect an N% prob
 ---
 
 ## ML intervals
+
+TODO: Incorporate photo of parameter landscape to hammer home that when you don't know the landscape you can't take the second derivative
 
 --
 
@@ -154,10 +163,6 @@ class: inverse, middle
 
 --
 
-- Permutation testing
-
---
-
 - Bayesian Monte Carlo sampling
 
 ---
@@ -166,19 +171,19 @@ class: inverse, middle
 
 Randomly resample complete observations from the base dataset with replacement many times, calculating the test statistic once for every resample. Collate all estimates of the test statistic across bootstrap iterations into a sampling distribution.
 
+TODO: say it's important to LOOK at the bootstrapping distribution
+
 If the resulting sampling distribution is normal, the bootstrapped standard error is equal to the **standard deviation of the sampling distribution.**
 
 If the resulting sampling distribution is asymmetrical (and not normal), the lower and upper bounds of bootstrapped standard error interval can be calculated by taking the **16% and 84% percentiles of the sampling distribution.** (If the sampling distribution is symmetrical but not normal, this is equivalent to taking the middle 68% of the distribution.)
 
---
+---
+
+### Statistics you can bootstrap:
 
 A sampling distribution can be bootstrapped for _basically any_ test statistic, no matter how complex its calculation is. Thus, bootstrapping is especially useful in cases where the test statistic might not have a normal sampling distribution, and analytical intervals might be inappropriate.
 
----
-
-## Permutation testing
-
-Permute (shuffle) observations (recombining different x and y observations) from the base dataset many times, calculating the test statistic once for every shuffle. Collate all estimates of the test statistic across shuffle iterations into a sampling distribution.
+TODO: List things you can bootstrap
 
 ---
 
@@ -192,17 +197,23 @@ class: inverse, middle
 
 ---
 
-The purpose of any graph, error bars or not, is to **communicate a statistical result to its viewers.**
+The purpose of any graph, error bars or not, is to **make a comparison.**
 
 Try to _balance_ between **matching** visual features to your key results _and_ **accommodating** viewers' graph-reading heuristics.
 
 --
 
-Perhaps the biggest heuristic to consider is that _people tend to use error bars as a visual marker of statistical significance._
+Perhaps the biggest heuristic to consider is that _people tend to use error bars as a visual marker of statistical significance._ Concerns about significance aside, we can try to accommodate this.
 
 --
 
-It's hard to completely disabuse people of their tendency to look for a yes-or-no answer, but we can do some things to help prevent this heuristic from leading people to erroneous conclusions.
+When comparing a test statistic against a constant (often 0), show the CI. Accommodate the heuristic that "if the error bar clears 0, the results are 'significant'."
+
+**This is a surprisingly powerful method for turning complicated test statistics into digestible visualizations.**
+
+--
+
+TODO: Show example of when error bar maps on to the comparison of interest vs. when it does not
 
 ---
 
@@ -213,6 +224,10 @@ It's hard to completely disabuse people of their tendency to look for a yes-or-n
 When you can, show raw data beneath the summary points and error bars.
 
 ```{r}
+# TODO: Simulate dataset with 2 between-subjects conditions (european-american vs asian-american), one DV (emotional expression), one sensible covariate (age?)
+# Bias the data in some kind of way such that the covariate partially explains the DV
+# Add a few outliers
+
 sim <- crossing(obs = 1:20, x = 1:3) %>% 
   mutate(y = x + rnorm(n(), 0, 0.5))
 
@@ -250,7 +265,9 @@ sim_summary %>%
 
 ---
 
-Default to _not_ showing crossbars on error bars unless they make the visual comparison easier.
+Use crossbars on the ends of error bars _thoughtfully,_ if at all.
+
+TODO: Put graphs underneath
 
 ---
 
@@ -258,21 +275,19 @@ Where appropriate, choose error visualizations that highlight the density of the
 
 Error bars may lead people to view the data in a binary way. Specifically, error bars may lead people to treat the sampling distribution within the shown error bar as uniform and ignore the sampling distribution outside the error bar.
 
+TODO: examples of histogram, violin, fat-skinny error bars
+
 ---
 
 # Various scenarios
 
 ---
 
-## Comparing a test statistic to a constant
-
-When comparing a test statistic against a constant (often 0), show the CI. Accommodate the heuristic that "if the error bar clears 0, the results are 'significant'."
-
-**This is a surprisingly powerful method for turning complicated test statistics into digestible visualizations.**
+## Two-sample t-test
 
 ---
 
-### Test statistic vs. constant: Analytical
+### Test statistic vs. 0: Analytical
 
 ```{r}
 n_obs <- 50
