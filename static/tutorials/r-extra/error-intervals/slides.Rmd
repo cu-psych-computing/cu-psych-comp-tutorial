@@ -18,6 +18,8 @@ output:
 ```{r setup, include=FALSE}
 require(tidyverse)
 require(magrittr)
+library(tidybayes)
+library(rstanarm)
 source('https://gist.githubusercontent.com/benmarwick/2a1bb0133ff568cbe28d/raw/fb53bd97121f7f9ce947837ef1a4c65a73bffb3f/geom_flat_violin.R')
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(echo = FALSE, dev = "svglite")
@@ -136,10 +138,6 @@ A single calculation of the N% confidence interval does _not_ reflect an N% prob
 --
 
 So, _you can make a confidence interval, but you can't be confident in your interval_ - Dr. Niall Bolger
-
---
-
-![mischief_meme](data:image/jpeg;base64,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)
 
 
 ---
@@ -482,10 +480,10 @@ ggplot(d, aes(x = race, y = emo)) +
 
 
 ```{r,results='hide'}
-m1 = rstanarm::stan_glm(data = d, emo ~ race)
-m1_draws = as.data.frame(m1)
-m1_draws_summary = m1_draws %>%
-  summarise(median = quantile(raceas_am, probs = 0.5),
+m_bayes = rstanarm::stan_glm(data = d, emo ~ race)
+m_bayes_draws = as.data.frame(m_bayes)
+m_bayes_draws_summary = m_bayes_draws %>%
+  summarise(mean_est = mean(raceas_am),
             lwr_80 = quantile(raceas_am, probs = .1),
             upr_80 = quantile(raceas_am, probs = .9),
             lwr_99 = quantile(raceas_am, probs = .005),
@@ -495,12 +493,12 @@ m1_draws_summary = m1_draws %>%
 .pull-right[
 
 ```{r}
-ggplot(m1_draws) +
+ggplot(m_bayes_draws) +
   geom_vline(xintercept = 0, lty = 2, color = 'blue') +
   geom_density(aes(x = raceas_am), fill = 'purple', color = 'purple', alpha = .5) +
-  geom_errorbarh(data = m1_draws_summary, aes(y = 0, xmin = lwr_80, xmax = upr_80), height = 0, lwd = 2) +
-  geom_errorbarh(data = m1_draws_summary, aes(y = 0, xmin = lwr_99, xmax = upr_99), height = 0, lwd = 1) +
-  geom_point(data = m1_draws_summary, aes(y = 0, x = median), size = 3) +
+  geom_errorbarh(data = m_bayes_draws_summary, aes(y = 0, xmin = lwr_80, xmax = upr_80), height = 0, lwd = 2) +
+  geom_errorbarh(data = m_bayes_draws_summary, aes(y = 0, xmin = lwr_99, xmax = upr_99), height = 0, lwd = 1) +
+  geom_point(data = m_bayes_draws_summary, aes(y = 0, x = mean_est), size = 3) +
   theme_bw() +
   labs(x = 'Estimated Mean Difference In Emotional Expression\nAsian-American > European American', 
        y = 'Relative Density',
@@ -514,7 +512,6 @@ ggplot(m1_draws) +
 ## Example: comparing two groups
 
 * Here, we want to know whether emotional expression differs in our sample between European-American and Asian-American participant
-* We also think we might want to covary for age in this analysis since it isn't an experimental design
 * We'll use *regression* and generate uncertainty intervals for our parameters of interest
 
 
@@ -528,15 +525,41 @@ ggplot(m1_draws) +
 * It's quick, and you might already be familiar with `lm()` mdoel syntax
 * Estimation might not be accurate if OLS assumptions aren't met
 * We don't get as much detailed info on the uncertainty
-* We get a *confidence* interval so we can't be confident in it
+* We get a *confidence* interval, so we can't be confident in it
 
 
 ---
 
 ## Option 1: OLS regression with one binary predictor variable
 
+--
+Run model
 
-```{r}
+```
+m_ols = lm(data = d, emo ~ race)
+```
+--
+
+
+Get confidence intervals for the difference between groups
+```
+ols_interval_80 = confint(m_ols, 'raceas_am', level=0.80)
+ols_interval_99 = confint(m_ols, 'raceas_am', level=0.99)
+```
+
+--
+
+Get predictions for the mean of each group
+```
+prediction_grid= expand.grid(race = c('euro_am', 'as_am'))
+prediction_frame_ols = predict(m_ols, newdata = prediction_grid, interval = 'confidence') %>%
+  data.frame() %>% cbind(., prediction_grid)
+```  
+  
+---
+
+
+```{r, results='hide'}
 m_ols = lm(data = d, emo ~ race)
 summary(m_ols)
 
@@ -554,66 +577,48 @@ ols_summary = data.frame(lwr_80 = ols_interval_80[1],
                          upr_99 = ols_interval_99[2],
                          mean_est = m_ols$coefficients[2])
 
+```
 
 
-ggplot(data = prediction_frame_ols, aes(x = race, y = fit, color = race)) +
+```{r, fig.height=5}
+ols_a = ggplot(data = prediction_frame_ols, aes(x = race, y = fit, color = race)) +
   geom_point() +
+  geom_hline(yintercept = 0, lty = 2) + 
+  geom_jitter(data = d, aes(x = race, y = emo), height = 0, width = .05, alpha = .3) +
   geom_errorbar(aes(ymin = lwr, ymax = upr), width = 0) +
+  theme_bw() + 
   theme(legend.position = 'none') +
-  scale_color_brewer(palette = 'Set1')
+  scale_color_brewer(palette = 'Set1') +
+  labs(x = '', y = 'Emotional Expression', title = 'Does not show key comparison')
+
+
+ols_b = ggplot(ols_summary, aes(x = '', y = mean_est)) +
+  geom_point() +
+  geom_hline(yintercept = 0, lty = 2) + 
+  geom_errorbar(aes(ymin = lwr_80, ymax = upr_80),  width = 0, lwd = 3, alpha = .5) +
+  geom_errorbar(aes(ymin = lwr_99, ymax = upr_99),  width = 0, lwd = 1, alpha = .5) +
+  theme_bw() +
+  labs(x = '', y = 'Estimated Mean Difference In Emotional Expression\nAsian-American > European American', title = 'Shows key comparison')
+
+cowplot::plot_grid(ols_a, ols_b)
 ```
-
-
-
-
-## OLS multiple regression
-
-In the simplest case, plot the raw data with a regression slope and error ribbon on top.
-
-Even for variables where you have measurements at discrete points along a continuous variable, an error ribbon will help to remind people that there is also uncertainty between the measurement points.
-
-(It will not accurately represent the true uncertainty of the interpolation, but it's better than nothing.)
-
-.pull-left[
-
-```{r}
-
-```
-
-]
-
---
-
-.pull-right[
-
-```{r}
-
-```
-
-]
 
 ---
 
-Be aware that calling `geom_smooth(method = "lm")` on data split by a categorical variable will plot CIs for _simple effect regressions fit separately to subsets of data, **not** for the multiple regression interaction fit to all the data._
+## Option 2: Bootstrapping
 
----
+Once we use numeric methods we have an additional bonus: access to the full sampling distribution for all parameters of interest
 
-## Bootstrapping
-
-In addition to the methods for plotting analytical sampling error, a new error visualization becomes available with a physical sampling distribution: a plot of the sampling distribution itself.
-
-```{r}
+```
 d_b <- d %>%
-  rsample::bootstraps(times = 50) %>%
-  rename(iteration = id) %>% 
+  rsample::bootstraps(times = 500) %>% rename(iteration = id) %>% 
   # rsample automatically labels the iterations as "Bootstrap%03d"
   # want these just to be integers pls
   mutate(iteration = as.integer(str_sub(iteration, start = -3L)),
          # rsample stores the splits as special "splits" objects
          # which don't take up the same amount of memory as a fully resampled dataframe
          # so you need to call as.data.frame on them before you run the model
-         coefs_boot = map(splits, ~.x %>%
-                            as.data.frame() %>%
+         coefs_boot = map(splits, ~.x %>% as.data.frame() %>%
                             lm(emo ~ race * age_scaled, data = .) %>%
                             broom::tidy())) %>% 
   # drop the split objects, don't need the resampled data anymore
@@ -624,9 +629,39 @@ d_b <- d %>%
 
 ---
 
-If you have the space for it, you can show a histogram:
 
 ```{r}
+d_b <- d %>%
+  rsample::bootstraps(times = 500) %>%
+  rename(iteration = id) %>% 
+  # rsample automatically labels the iterations as "Bootstrap%03d"
+  # want these just to be integers pls
+  mutate(iteration = as.integer(str_sub(iteration, start = -3L)),
+         # rsample stores the splits as special "splits" objects
+         # which don't take up the same amount of memory as a fully resampled dataframe
+         # so you need to call as.data.frame on them before you run the model
+         coefs_boot = map(splits, ~.x %>%
+                            as.data.frame() %>%
+                            lm(emo ~ race, data = .) %>%
+                            broom::tidy())) %>% 
+  # drop the split objects, don't need the resampled data anymore
+  select(-splits) %>% 
+  # et voila, all your model parameters in a dataframe that's long by bootstrap iteration
+  unnest(coefs_boot)
+```
+
+We really care about the `estimate` where `term == raceas_am`  here, but we could bootstrap any quantity we want
+
+```{r}
+head(d_b)
+```
+
+
+---
+
+This full distribution of boostrapped estimates for the `raceas_am` term is really what we want
+
+```
 d_b %>%
   dplyr::filter(term == "raceas_am") %>%
   ggplot(data = ., aes(x = estimate)) +
@@ -636,34 +671,280 @@ d_b %>%
   theme_bw()
 ```
 
----
 
-Or a density plot:
-
-```{r}
+```{r, fig.height=2}
 d_b %>%
   dplyr::filter(term == "raceas_am") %>%
   ggplot(data = ., aes(x = estimate)) +
-  geom_density() +
-  geom_vline(xintercept = 0) +
+  geom_histogram(bins = 50) +
+  geom_vline(xintercept = 0, lty = 2) +
   labs(x = 'Bootstrapped estimates of the mean differerence in emotional expression\nAsian-American > European American', y = 'count') +
   theme_bw()
 ```
 
 ---
 
-In some situations, showing a violin plot of the sampling distribution can be an "upgraded" version of just showing a vertical error bar with a point estimate of a test statistic.
+Summarizing the bootstrap distribution
+```{r}
+d_b_summary = d_b %>%
+  dplyr::filter(term == "raceas_am") %>%
+  summarise(mean_est = mean(estimate),
+            lwr_80 = quantile(estimate, probs = .1),
+            upr_80 = quantile(estimate, probs = .9),
+            lwr_99 = quantile(estimate, probs = .005),
+            upr_99 = quantile(estimate, probs = .995)) 
+```
 
-The `draw_quantiles` argument of `geom_violin()` allows easy plotting of particular percentiles of the sampling distribution.
-
-```{r, out.height="100%", fig.asp = 5}
-
+```
+d_b_summary = d_b %>%
+  dplyr::filter(term == "raceas_am") %>%
+  summarise(mean_est = mean(estimate),
+            lwr_80 = quantile(estimate, probs = .1),
+            upr_80 = quantile(estimate, probs = .9),
+            lwr_99 = quantile(estimate, probs = .005),
+            upr_99 = quantile(estimate, probs = .995)) 
 ```
 
 ---
 
-## Bayesian regression
+```{r, fig.height=5}
+boot_b = ggplot(d_b_summary) +
+  geom_hline(yintercept = 0, lty = 2, color = 'blue') +
+  geom_flat_violin(data = dplyr::filter(d_b, term == 'raceas_am'),  aes(x = '', y = estimate), fill = 'purple', color = 'purple', alpha = .5) +
+  geom_errorbar(data = d_b_summary, aes(x = '', ymin = lwr_80, ymax = upr_80), width = 0, lwd = 3, alpha = .5) +
+  geom_errorbar(data = d_b_summary, aes(x = '', ymin = lwr_99, ymax = upr_99), width = 0, lwd = 1) +
+  geom_point(data = d_b_summary, aes(x = '', y = mean_est), size = 3) +
+  theme_bw() +
+  labs(y = 'Estimated Mean Difference In Emotional Expression\nAsian-American > European American', 
+       x = '', 
+       title = 'Conf. Interval from Bootstrap')
 
-We like using "spaghetti error bars" to show a sampling distribution of regression lines.
 
-This method leverages transparency/opacity as an additional visual heuristic for the density of the distribution, and helps avoid the binary appearance of error ribbons.
+get_plot_limits <- function(plot) {
+    gb = ggplot_build(plot)
+    xmin = gb$layout$panel_params[[1]]$x.range[1]
+    xmax = gb$layout$panel_params[[1]]$x.range[2]
+    ymin = gb$layout$panel_params[[1]]$y.range[1]
+    ymax = gb$layout$panel_params[[1]]$y.range[2]
+    list(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax)
+}
+lims_for_align = get_plot_limits(boot_b)
+
+
+cowplot::plot_grid(ols_b + 
+                     ylim(lims_for_align$ymin, lims_for_align$ymax) + labs(title = 'Conf. Interval from OLS'), 
+                   boot_b +  ylim(lims_for_align$ymin, lims_for_align$ymax), 
+                   align = 'h', axis = 'bt')
+```
+
+---
+
+## Option 3: Bayesian regression
+
+Run the Bayesian regression in `rstanarm` -- equivalent syntax to `lm()`
+```
+m_bayes = rstanarm::stan_glm(data = d, emo ~ race)
+```
+--
+
+Extract posterior draws to a dataframe
+```
+m_bayes_draws = as.data.frame(m_bayes)
+```
+
+--
+
+Inspect posterior draws
+```{r}
+head(m_bayes_draws)
+```
+---
+
+Summarize posterior distribution
+
+```
+m_bayes_draws_summary = m_bayes_draws %>%
+  summarise(mean_est = mean(raceas_am),
+            lwr_80 = quantile(raceas_am, probs = .1),
+            upr_80 = quantile(raceas_am, probs = .9),
+            lwr_99 = quantile(raceas_am, probs = .005),
+            upr_99 = quantile(raceas_am, probs = .995)) 
+```
+---
+
+## Comparing analytical, bootstrap, and bayesian intervals
+
+* In many settings, these methods will give similar results
+* If there are discrepancies, _we almost always trust the numerical methods more_ 
+
+```{r, fig.height=3}
+d_b_summary$type = 'Bootstrap'
+ols_summary$type = 'OLS'
+m_bayes_draws_summary$type = 'Bayesian MCMC'
+
+model_summaries = rbind(d_b_summary, ols_summary, m_bayes_draws_summary)
+
+
+ggplot(model_summaries, aes(x = type, y= mean_est, color = type)) +
+  geom_errorbar(aes(ymin = lwr_80, ymax = upr_80), width= 0, lwd = 2) +
+  geom_errorbar(aes(ymin = lwr_99, ymax = upr_99), width= 0) +
+  geom_point(size = 2, color = 'black') +
+  labs(x = 'Interval Type', y = 'Estimated Mean Difference In Emotional Expression\nAsian-American > European American') +
+  theme_bw() +
+  theme(legend.position = 'none')
+
+
+```
+---
+
+Only numerical methods will allow you to inspect the whole sampling distribution in detail though
+
+```{r, fig.height = 5}
+boot_bayes_full_dist = rbind(m_bayes_draws %>% dplyr::select(estimate = raceas_am) %>%
+    mutate(type = 'Bayesian MCMC'), 
+  d_b %>% dplyr::filter(term == 'raceas_am') %>% dplyr::select(estimate) %>%
+    mutate(type = 'Bootstrap'))
+
+dplyr::filter(model_summaries) %>%
+  ggplot(data =., aes(x = type, y= mean_est, color = type)) +
+  geom_errorbar(aes(ymin = lwr_80, ymax = upr_80), width= 0, lwd = 2) +
+  geom_errorbar(aes(ymin = lwr_99, ymax = upr_99), width= 0) +
+  geom_point(size = 2, color = 'black') +
+  labs(x = 'Interval Type', y = 'Estimated Mean Difference In Emotional Expression\nAsian-American > European American') +
+  theme_bw() +
+  theme(legend.position = 'none') +
+  geom_flat_violin(data = boot_bayes_full_dist, aes(x = type, y = estimate), position = position_nudge(.05)) 
+```
+
+
+---
+
+## What about a continuous x variable?
+
+Let's run another Bayesian model looking at emotional expression as a function of age
+
+```{r, results='hide'}
+mod_cont = rstanarm::stan_glm(emo ~ age, data = d)
+age_grid = expand.grid(age = min(d$age):max(d$age))
+age_predictions = tidybayes::linpred_draws(model = mod_cont, newdata = age_grid) %>%
+  dplyr::select(-.chain, -.iteration)
+```
+
+```
+mod_cont = rstanarm::stan_glm(emo ~ age, data = d)
+```
+--
+
+Then we can get draws of the linear predictor with respect to age
+
+```
+age_grid = expand.grid(age = min(d$age):max(d$age))
+age_predictions = tidybayes::linpred_draws(model = mod_cont, newdata = age_grid)
+```
+
+---
+
+```{r}
+head(age_predictions)
+```
+
+---
+
+
+```{r}
+age_prediction_summary = age_predictions %>%
+  group_by(age) %>%
+  summarise(mean_est = mean(.value),
+            lwr_80 = quantile(.value, probs = .1),
+            upr_80 = quantile(.value, probs = .9),
+            lwr_99 = quantile(.value, probs = .005),
+            upr_99 = quantile(.value, probs = .995)) 
+```
+
+.pull-left[
+
+Spaghetti! 
+```{r}
+age_predictions %>%
+  dplyr::filter(.draw < 500) %>%
+  ggplot(data = ., aes(x = age, y = .value, group=.draw)) +
+  geom_hline(yintercept = 0, lty = 2, color = 'red') +
+  geom_line(alpha = .3) +
+  theme_bw() +
+  labs(x = 'Age (years)', y = 'Estimated Emotional Expression', title = 'Discrete Posterior Draws Represent Uncertainty') +
+  geom_line(data = age_prediction_summary, aes(x = age, y = mean_est, group = NA), lwd = 2, color = 'purple')
+
+```
+]
+
+
+.pull-right[
+
+Ribbons! 
+```{r}
+ggplot(age_prediction_summary, aes(x = age, y = mean_est)) +
+  geom_hline(yintercept = 0, lty = 2, color = 'red') +
+  geom_line() +
+  geom_ribbon(aes(ymin = lwr_80, ymax = upr_80), alpha = .3) +
+  geom_ribbon(aes(ymin = lwr_99, ymax = upr_99), alpha = .2) +
+  theme_bw() +
+  labs(x = 'Age (years)', y = 'Estimated Emotional Expression', title = 'Ribbons for 80% and 99% uncertainty')
+```
+
+]
+
+---
+
+.pull-left[
+
+Spaghetti + raw data! 
+```{r}
+age_predictions %>%
+  dplyr::filter(.draw < 500) %>%
+  ggplot(data = ., aes(x = age, y = .value, group=.draw)) +
+  geom_hline(yintercept = 0, lty = 2, color = 'red') +
+  geom_line(alpha = .3) +
+  theme_bw() +
+  labs(x = 'Age (years)', y = 'Estimated Emotional Expression', title = 'Discrete Posterior Draws Represent Uncertainty') +
+  geom_line(data = age_prediction_summary, aes(x = age, y = mean_est, group = NA), lwd = 2, color = 'purple') +
+  geom_point(data = d, aes(x = age, y = emo, group = NA), alpha = .5)
+
+```
+]
+
+
+.pull-right[
+
+Ribbons + raw data! 
+```{r}
+ggplot(age_prediction_summary, aes(x = age, y = mean_est)) +
+  geom_hline(yintercept = 0, lty = 2, color = 'red') +
+  geom_line() +
+  geom_ribbon(aes(ymin = lwr_80, ymax = upr_80), alpha = .3) +
+  geom_ribbon(aes(ymin = lwr_99, ymax = upr_99), alpha = .2) +
+  theme_bw() +
+  labs(x = 'Age (years)', y = 'Estimated Emotional Expression', title = 'Ribbons for 80% and 99% uncertainty') +
+  geom_point(data = d, aes(x = age, y = emo, group = NA), alpha = .5)
+```
+
+]
+
+
+---
+
+## Discussion Points
+
+* We *always* want to make sure we quantify uncertainty for the key comparison of interest
+* It is also good to plot and quantify uncertainty from multiple angles (i.e. group means vs. difference)
+* Visualizing your raw data helps you understand your uncertainty
+* Numeric methods are almost always a good idea if feasible
+
+---
+
+
+## Code Implementation
+
+We did *not* focus on the syntax behind working with these uncertainty intervals as much, but you can find all code for this presentation on the Columbia Psych Computing [Website](https://cu-psych-computing.github.io/cu-psych-comp-tutorial/tutorials/r-extra/) & [Github](https://github.com/cu-psych-computing/cu-psych-comp-tutorial/tree/master/static/tutorials/r-extra)
+
+
+
