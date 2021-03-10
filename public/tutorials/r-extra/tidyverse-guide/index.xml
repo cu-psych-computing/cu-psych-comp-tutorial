@@ -5,7 +5,11 @@
     <link>/tutorials/r-extra/tidyverse-guide/</link>
     <description>Recent content in A Guided Tour of the `tidyverse` on Columbia Psychology Scientific Computing</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="/tutorials/r-extra/tidyverse-guide/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    
+	<atom:link href="/tutorials/r-extra/tidyverse-guide/index.xml" rel="self" type="application/rss+xml" />
+    
+    
     <item>
       <title>Tidy Walkthrough, Part 1</title>
       <link>/tutorials/r-extra/tidyverse-guide/tidyguide-1/</link>

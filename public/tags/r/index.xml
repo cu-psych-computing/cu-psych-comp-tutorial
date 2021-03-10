@@ -5,7 +5,11 @@
     <link>/tags/r/</link>
     <description>Recent content in R on Columbia Psychology Scientific Computing</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    
+	<atom:link href="/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    
+    
     <item>
       <title>Programming in R</title>
       <link>/tutorials/r-core/1-programming/</link>
@@ -170,7 +174,16 @@ All models are wrong, but some are useful - George Box
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/website-github-r/</guid>
-      <description>   Workshop Slides    Video Recording    </description>
+      <description>  Workshop Slides    Video Recording    </description>
+    </item>
+    
+    <item>
+      <title>Exploring Varieties of Error Intervals</title>
+      <link>/tutorials/r-extra/error-intervals/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/r-extra/error-intervals/</guid>
+      <description>  Workshop Slides    </description>
     </item>
     
     <item>
