@@ -1,5 +1,5 @@
 ---
-title: "Fill in this title about error intervals"
+title: "Exploring Varieties of Error Intervals"
 subtitle: "CU Psych Scientific Computing"
 tags: ["extra", "R"]
 weight: 1060
@@ -9,4 +9,8 @@ weight: 1060
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-iframe the slides in here
+## Workshop Slides
+
+Slides can also be viewed fullscreen [here.](slides.html)
+
+<div class="video-container"><iframe src="slides.html" frameborder="0" width="640" height="480" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe></div>
