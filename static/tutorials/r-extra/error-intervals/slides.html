@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 ## ⚔<br/>with xaringan
 ### Monica Thieu &amp; Paul Bloom
 ### Dept of Psychology, Columbia University
-### 2021-03-10 (updated: 2021-03-01)
+### 2021-03-10 (updated: 2021-03-10)
 
 ---
 
@@ -42,12 +42,12 @@ class: inverse, middle
 
 .pull-left[
 
+
 ## Analytical intervals
 
 - calculated _exactly_ with **formulas**
 - computationally _fast_
 - _wholly_ reliant on distributional assumptions
-- conservative _(smaller)_ estimate of the true error
 
 ]
 
@@ -57,14 +57,28 @@ class: inverse, middle
 
 - calculated _approximately_ over many **iterations**
 - computationally _slower_
-- _less_ reliant on distributional assumptions
-- liberal _(larger)_ estimate of the true error
+- _less_ reliant on distributional assumptions (and can work in the absence of assumptions!)
 
 ]
+
+--
+
+In the majority of cases, errors should agree when estimated using either method. In general, we recommend taking more time to estimate numerical intervals _unless:_
+
+- You are confident that distributional assumptions will hold
+- It is temporally/computationally infeasible to estimate numerical intervals
+
+**Note:** one advantage to using numerical methods is that they will cause you to more carefully consider assumptions you can choose to make about your data &amp; intermediate outputs
 
 ---
 
 class: inverse, middle
+
+## How can we be confident in our intervals? 
+
+![yo_dawg_meme](https://memegenerator.net/img/instances/64796890.jpg)
+
+---
 
 # Analytical error intervals
 
@@ -94,7 +108,7 @@ In general, the error intervals we can get from these tests are a **standard err
 
 These values are directly related to one another by the following general formula:
 
-`$$CI_p = \overline{T} \pm q_{p} \times SE$$`
+`$$CI_p = \overline{T} \pm t_{crit} \times SE$$`
 
 --
 
@@ -106,7 +120,7 @@ If we assume a 95% confidence interval, and that the sampling distribution of th
 
 ---
 
-Don't forget! Niall sez:
+Don't forget! Dr. Niall Bolger sez:
 
 --
 
@@ -116,11 +130,16 @@ Don't forget! Niall sez:
 
 A single calculation of the N% confidence interval does _not_ reflect an N% probability that the true parameter lies within that interval.
 
+--
+
+So, _you can make a confidence interval, but you can't be confident in your interval_ - Dr. Niall Bolger
+
+
 ---
 
 ## ML intervals
 
---
+
 
 Maximum likelihood models can fit multilevel data, or other data that cannot readily be modeled with ordinary least squares regression.
 
@@ -142,6 +161,37 @@ See [Penn State STAT 504 Spring 2005 lecture slides](https://personal.psu.edu/ab
 
 ---
 
+## Drawbacks with Analytical Intervals: The "Mountain" Problem
+
+
+OLS &amp; ML estimation assume that paramters are normally distributed
+
+--
+
+
+Imagine estimating the contour of a mountain using two different strategies
+  * Hiking up to the peak of a mountain &amp; getting one measurement of the steepness of the slope on your way up
+  * Putting on a blindfold and randomly walking around the mountain for days, repeatedly recording your height above sea level
+  
+--
+
+&lt;img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Multivariate_Gaussian.png/1024px-Multivariate_Gaussian.png" alt="drawing" width="500" height = "275"/&gt;
+
+---
+
+## What if your mountain looks like this?
+
+![non normal mountain 1](https://media.springernature.com/original/springer-static/image/chp%3A10.1007%2F978-3-319-27284-9_9/MediaObjects/393463_1_En_9_Fig1_HTML.gif)
+
+---
+
+## Or this?
+
+![non normal mountain 1](https://miro.medium.com/max/1454/1*s1Uk0_3NY1DXrRWcb17QMQ.png)
+
+
+---
+
 class: inverse, middle
 
 # Numerical intervals
@@ -149,10 +199,6 @@ class: inverse, middle
 --
 
 - Bootstrapping
-
---
-
-- Permutation testing
 
 --
 
@@ -164,25 +210,74 @@ class: inverse, middle
 
 Randomly resample complete observations from the base dataset with replacement many times, calculating the test statistic once for every resample. Collate all estimates of the test statistic across bootstrap iterations into a sampling distribution.
 
-If the resulting sampling distribution is normal, the bootstrapped standard error is equal to the **standard deviation of the sampling distribution.**
 
-If the resulting sampling distribution is asymmetrical (and not normal), the lower and upper bounds of bootstrapped standard error interval can be calculated by taking the **16% and 84% percentiles of the sampling distribution.** (If the sampling distribution is symmetrical but not normal, this is equivalent to taking the middle 68% of the distribution.)
+![boostrap](https://yashuseth.files.wordpress.com/2017/12/bootstrap.png)
 
---
-
-A sampling distribution can be bootstrapped for _basically any_ test statistic, no matter how complex its calculation is. Thus, bootstrapping is especially useful in cases where the test statistic might not have a normal sampling distribution, and analytical intervals might be inappropriate.
 
 ---
 
-## Permutation testing
+### Statistics you can bootstrap:
 
-Permute (shuffle) observations (recombining different x and y observations) from the base dataset many times, calculating the test statistic once for every shuffle. Collate all estimates of the test statistic across shuffle iterations into a sampling distribution.
+* You can bootstrap _basically any_ test statistic, no matter how complex
+* Especially useful where the test statistic might not have a normal sampling distribution, and analytical intervals might be inappropriate.
+
+  * Mean, median, standard deviation of a distribution
+  * Regression coefficients
+  * Prediction performance (accuracy, F1, AUC, R2)
+  * Unsupervised learning (PCA, clustering)
+  * Reliability (ICC) or intra-item consistency
+  * Tree-based models (i.e. 'bagging' in a random forrest)
+  
+&lt;img src="https://advstats.psychstat.org/book/images/bootstrap.svg" alt="drawing" width="800" height = "250"/&gt;
 
 ---
 
 ## Bayesian Monte Carlo sampling
 
+"Hiker + blindfold" 
+
+&lt;img src="https://mc-stan.org/images/feature/wide_ensemble.png" alt="drawing" width="800" height = "250"/&gt;
+
+--
+
+* Similar to bootstrapping, can estimate _any test statistic_ with _any distribution_
+* Can also incorporate _priors_
+* With R or python, we commonly implement MCMC sampling using [Stan](https://mc-stan.org/) on the back end
+  * Packages [brms](https://cran.r-project.org/web/packages/brms/index.html) and [rstanarm](https://cran.r-project.org/web/packages/rstanarm/index.html) allow us to do this for regressions using the same R syntax as `lm()` and `lmer()`
+
 ---
+
+## Why use Bayesian Monte Carlo methods?
+
+Analytical approaches _will_ fail you sooner or later
+```
+Warning messages:
+1: In checkConv(attr(opt, "derivs"), optpar,ctrl=controlpar,ctrl=controlcheckConv, 
+: unable to evaluate scaled gradient
+2: In checkConv(attr(opt, "derivs"), optpar,ctrl=controlpar,ctrl=controlcheckConv, 
+: Model failed to converge: degenerate Hessian with 1 negative eigenvalues
+```
+
+--
+
+* Bayesian inference with weakly informative priors can keep estimates reasonable
+* Especially for models with _many_ parameters like multilevel models, Bayesian priors + MCMC provide the constraints necessary
+* telling the hiker "On the side of the mountain there most likely there isn't a 1-foot diameter pit that goes all the way to the center of the earth"
+  
+  
+---
+
+
+## Bayesian intervals: can you be confident in them?
+
+* Yes! Bayesian models estimate `\(P(parameters|data)\)`
+* So, intervals based on the model's posterior distribution can be thought of as intervals where "the model is N% sure that the true value of the parameter is"
+* For this reason, hip &amp; alternative Bayesians usually use phrases that aren't 'confidence intervals', like _Credible Intervals_ , _Posterior Intervals_, _Uncertainty Intervals_, or _Highest Posterior Density Interval (HPDI)_
+
+
+
+---
+
 
 class: inverse, middle
 
@@ -190,17 +285,9 @@ class: inverse, middle
 
 ---
 
-The purpose of any graph, error bars or not, is to **communicate a statistical result to its viewers.**
+class: center, middle
 
-Try to _balance_ between **matching** visual features to your key results _and_ **accommodating** viewers' graph-reading heuristics.
-
---
-
-Perhaps the biggest heuristic to consider is that _people tend to use error bars as a visual marker of statistical significance._
-
---
-
-It's hard to completely disabuse people of their tendency to look for a yes-or-no answer, but we can do some things to help prevent this heuristic from leading people to erroneous conclusions.
+The purpose of any graph, error bars or not, is to **make a comparison.** Error bars can serve that goal by making your comparison of interest as salient as possible.
 
 ---
 
@@ -208,7 +295,10 @@ It's hard to completely disabuse people of their tendency to look for a yes-or-n
 
 ---
 
+## General best practices
+
 When you can, show raw data beneath the summary points and error bars.
+
 
 
 
@@ -226,31 +316,35 @@ When you can, show raw data beneath the summary points and error bars.
 
 ---
 
-Default to _not_ showing crossbars on error bars unless they make the visual comparison easier.
+## General best practices
+
+Use crossbars on the ends of error bars _thoughtfully,_ if at all.
+
+--
+
+Choose whether to show errors +- 1 SE, +-2 SE, 80% CI, 90%, 95% CI, 99% CI, or something else to _highlight the size of your effect of interest._
 
 ---
+
+## General best practices
 
 Where appropriate, choose error visualizations that highlight the density of the error distribution.
 
+
+
+
+
+
+![](slides_files/figure-html/unnamed-chunk-4-1.svg)&lt;!-- --&gt;
+
+
+---
+
 Error bars may lead people to view the data in a binary way. Specifically, error bars may lead people to treat the sampling distribution within the shown error bar as uniform and ignore the sampling distribution outside the error bar.
 
----
+Error bars below show 80% and 99% intervals. 
 
-# Various scenarios
-
----
-
-## Comparing a test statistic to a constant
-
-When comparing a test statistic against a constant (often 0), show the CI. Accommodate the heuristic that "if the error bar clears 0, the results are 'significant'."
-
-**This is a surprisingly powerful method for turning complicated test statistics into digestible visualizations.**
-
----
-
-### Test statistic vs. constant: Analytical
-
-
+--
 
 .pull-left[
 
@@ -258,111 +352,317 @@ When comparing a test statistic against a constant (often 0), show the CI. Accom
 
 ]
 
+
 .pull-right[
 
 ![](slides_files/figure-html/unnamed-chunk-6-1.svg)&lt;!-- --&gt;
-
 ]
 
 ---
 
-### Test statistic vs. constant: Numerical
+## General best practices
 
-In addition to the methods for plotting analytical sampling error, a new error visualization becomes available with a physical sampling distribution: a plot of the sampling distribution itself.
-
-
-
----
-
-If you have the space for it, you can show a histogram:
-
-![](slides_files/figure-html/unnamed-chunk-8-1.svg)&lt;!-- --&gt;
-
----
-
-Or a density plot:
-
-![](slides_files/figure-html/unnamed-chunk-9-1.svg)&lt;!-- --&gt;
-
----
-
-In some situations, showing a violin plot of the sampling distribution can be an "upgraded" version of just showing a vertical error bar with a point estimate of a test statistic.
-
-The `draw_quantiles` argument of `geom_violin()` allows easy plotting of particular percentiles of the sampling distribution.
-
-&lt;img src="slides_files/figure-html/unnamed-chunk-10-1.svg" height="100%" /&gt;
-
----
-
-## Comparing two test statistics to each other
-
-### Option 1: Compare the difference to 0
-
-Pro: 
-
-- Analytical: This method allows you to use the SE provided by `lm()` without having to worry about finding the correct formula. If your regression is specified correctly, `lm()` will pool your SE for you!
-- Numerical: By calculating a single sampling distribution of _differences,_ you can get a more accurate (and often slightly smaller) SE.
-
-Con: While it's still on the scale of the data, this method obscures the values of the two test statistics.
-
-Per the previous example, you can show these errors with a CI bar or sampling distribution.
-
----
-
-## Comparing two test statistics to each other
-
-### Option 2: Compare the values to each other
-
-When comparing two test statistics against each other, show the standard errors of each one. Accommodate the heuristic that "if the error bars clear each other, the results are 'significant'."
-
-It's not a perfect heuristic, but showing longer CIs is likely to lead people to underestimate your effect size (not fair to you!).
-
----
-
-## Ordered data at discrete levels of x
-
-For variables where you have measurements at discrete points along a continuous variable, an error ribbon will help to remind people that there is also uncertainty between the measurement points.
-
-(It will not accurately represent the true uncertainty of the interpolation, but it's better than nothing.)
-
-As with the prior methods, use standard errors when comparing two conditions against each other, and CIs when comparing a condition against 0 or another constant.
-
-.pull-left[
-
-![](slides_files/figure-html/unnamed-chunk-11-1.svg)&lt;!-- --&gt;
-
-```
-## mapping: y = ~mean_y 
-## geom_point: na.rm = FALSE
-## stat_identity: na.rm = FALSE
-## position_identity
-```
-
-]
+For better or worse, _people tend to use error bars as a visual marker of statistical significance._ Try to **accommodate** this tendency while remaining faithful to your comparison of interest.
 
 --
 
+For example, when comparing a test statistic against a 0, show the CI. Accommodate the heuristic that "if the error bar clears 0, the results are 'significant'."
+
+.pull-left[
+
+![](slides_files/figure-html/unnamed-chunk-7-1.svg)&lt;!-- --&gt;
+
+]
+
+
+
+
 .pull-right[
 
-![](slides_files/figure-html/unnamed-chunk-12-1.svg)&lt;!-- --&gt;
+![](slides_files/figure-html/unnamed-chunk-9-1.svg)&lt;!-- --&gt;
+
+]
+
+---
+ 
+## Example: comparing two groups
+
+* Here, we want to know whether emotional expression differs in our sample between European-American and Asian-American participant
+* We'll use *regression* and generate uncertainty intervals for our parameters of interest
+
+
+---
+
+
+
+## Option 1: OLS regression with one binary predictor variable
+
+* This method allows you to use the SE provided by `lm()` without having to worry about finding the correct formula. 
+* It's quick, and you might already be familiar with `lm()` mdoel syntax
+* Estimation might not be accurate if OLS assumptions aren't met
+* We don't get as much detailed info on the uncertainty
+* We get a *confidence* interval, so we can't be confident in it
+
+
+---
+
+## Option 1: OLS regression with one binary predictor variable
+
+--
+Run model
+
+```
+m_ols = lm(data = d, emo ~ race)
+```
+--
+
+
+Get confidence intervals for the difference between groups
+```
+ols_interval_80 = confint(m_ols, 'raceas_am', level=0.80)
+ols_interval_99 = confint(m_ols, 'raceas_am', level=0.99)
+```
+
+--
+
+Get predictions for the mean of each group
+```
+prediction_grid= expand.grid(race = c('euro_am', 'as_am'))
+prediction_frame_ols = predict(m_ols, newdata = prediction_grid, interval = 'confidence') %&gt;%
+  data.frame() %&gt;% cbind(., prediction_grid)
+```  
+  
+---
+
+
+
+
+
+![](slides_files/figure-html/unnamed-chunk-11-1.svg)&lt;!-- --&gt;
+
+---
+
+## Option 2: Bootstrapping
+
+Once we use numeric methods we have an additional bonus: access to the full sampling distribution for all parameters of interest
+
+```
+d_b &lt;- d %&gt;%
+  rsample::bootstraps(times = 500) %&gt;% rename(iteration = id) %&gt;% 
+  # rsample automatically labels the iterations as "Bootstrap%03d"
+  # want these just to be integers pls
+  mutate(iteration = as.integer(str_sub(iteration, start = -3L)),
+         # rsample stores the splits as special "splits" objects
+         # which don't take up the same amount of memory as a fully resampled dataframe
+         # so you need to call as.data.frame on them before you run the model
+         coefs_boot = map(splits, ~.x %&gt;% as.data.frame() %&gt;%
+                            lm(emo ~ race * age_scaled, data = .) %&gt;%
+                            broom::tidy())) %&gt;% 
+  # drop the split objects, don't need the resampled data anymore
+  select(-splits) %&gt;% 
+  # et voila, all your model parameters in a dataframe that's long by bootstrap iteration
+  unnest(coefs_boot)
+```
+
+---
+
+
+
+
+We really care about the `estimate` where `term == raceas_am`  here, but we could bootstrap any quantity we want
+
+
+```
+## # A tibble: 6 x 6
+##   iteration term        estimate std.error statistic p.value
+##       &lt;int&gt; &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1         1 (Intercept)  -0.264      0.144   -1.84    0.0681
+## 2         1 raceas_am    -0.196      0.189   -1.04    0.302 
+## 3         2 (Intercept)  -0.341      0.187   -1.83    0.0704
+## 4         2 raceas_am    -0.0246     0.279   -0.0884  0.930 
+## 5         3 (Intercept)  -0.129      0.161   -0.804   0.423 
+## 6         3 raceas_am    -0.0458     0.233   -0.196   0.845
+```
+
+
+---
+
+This full distribution of boostrapped estimates for the `raceas_am` term is really what we want
+
+```
+d_b %&gt;%
+  dplyr::filter(term == "raceas_am") %&gt;%
+  ggplot(data = ., aes(x = estimate)) +
+  geom_histogram(bins = 50) +
+  geom_vline(xintercept = 0) +
+  labs(x = 'Bootstrapped estimates of the mean differerence in emotional expression\nAsian-American &gt; European American', y = 'count') +
+  theme_bw()
+```
+
+
+![](slides_files/figure-html/unnamed-chunk-14-1.svg)&lt;!-- --&gt;
+
+---
+
+Summarizing the bootstrap distribution
+
+
+```
+d_b_summary = d_b %&gt;%
+  dplyr::filter(term == "raceas_am") %&gt;%
+  summarise(mean_est = mean(estimate),
+            lwr_80 = quantile(estimate, probs = .1),
+            upr_80 = quantile(estimate, probs = .9),
+            lwr_99 = quantile(estimate, probs = .005),
+            upr_99 = quantile(estimate, probs = .995)) 
+```
+
+---
+
+![](slides_files/figure-html/unnamed-chunk-16-1.svg)&lt;!-- --&gt;
+
+---
+
+## Option 3: Bayesian regression
+
+Run the Bayesian regression in `rstanarm` -- equivalent syntax to `lm()`
+```
+m_bayes = rstanarm::stan_glm(data = d, emo ~ race)
+```
+--
+
+Extract posterior draws to a dataframe
+```
+m_bayes_draws = as.data.frame(m_bayes)
+```
+
+--
+
+Inspect posterior draws
+
+```
+##    (Intercept)   raceas_am    sigma
+## 1  0.011525732 -0.47611875 1.352799
+## 2 -0.238451302 -0.18768410 1.437119
+## 3 -0.009920767 -0.18225474 1.468166
+## 4 -0.124548952 -0.27101821 1.433276
+## 5 -0.252410187  0.06184317 1.484872
+## 6 -0.073118299 -0.28351642 1.417531
+```
+---
+
+Summarize posterior distribution
+
+```
+m_bayes_draws_summary = m_bayes_draws %&gt;%
+  summarise(mean_est = mean(raceas_am),
+            lwr_80 = quantile(raceas_am, probs = .1),
+            upr_80 = quantile(raceas_am, probs = .9),
+            lwr_99 = quantile(raceas_am, probs = .005),
+            upr_99 = quantile(raceas_am, probs = .995)) 
+```
+---
+
+## Comparing analytical, bootstrap, and bayesian intervals
+
+* In many settings, these methods will give similar results
+* If there are discrepancies, _we almost always trust the numerical methods more_ 
+
+![](slides_files/figure-html/unnamed-chunk-18-1.svg)&lt;!-- --&gt;
+---
+
+Only numerical methods will allow you to inspect the whole sampling distribution in detail though
+
+![](slides_files/figure-html/unnamed-chunk-19-1.svg)&lt;!-- --&gt;
+
+
+---
+
+## What about a continuous x variable?
+
+Let's run another Bayesian model looking at emotional expression as a function of age
+
+
+
+```
+mod_cont = rstanarm::stan_glm(emo ~ age, data = d)
+```
+--
+
+Then we can get draws of the linear predictor with respect to age
+
+```
+age_grid = expand.grid(age = min(d$age):max(d$age))
+age_predictions = tidybayes::linpred_draws(model = mod_cont, newdata = age_grid)
+```
+
+---
+
+
+```
+## # A tibble: 6 x 4
+## # Groups:   age, .row [1]
+##     age  .row .draw  .value
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;
+## 1    10     1     1  0.415 
+## 2    10     1     2  0.217 
+## 3    10     1     3  0.0821
+## 4    10     1     4  0.616 
+## 5    10     1     5 -0.0218
+## 6    10     1     6  0.116
+```
+
+---
+
+
+
+
+.pull-left[
+
+Spaghetti! 
+![](slides_files/figure-html/unnamed-chunk-23-1.svg)&lt;!-- --&gt;
+]
+
+
+.pull-right[
+
+Ribbons! 
+![](slides_files/figure-html/unnamed-chunk-24-1.svg)&lt;!-- --&gt;
 
 ]
 
 ---
 
-## Regression slope
+.pull-left[
 
-In the simplest case, plot the raw data with a regression slope and error ribbon on top.
+Spaghetti + raw data! 
+![](slides_files/figure-html/unnamed-chunk-25-1.svg)&lt;!-- --&gt;
+]
 
-### Regression slope: Analytical
 
-Be aware that calling `geom_smooth(method = "lm")` on data split by a categorical variable will plot CIs for _simple effect regressions fit separately to subsets of data, **not** for the multiple regression interaction fit to all the data._ 
+.pull-right[
 
-### Regression slope: Numerical
+Ribbons + raw data! 
+![](slides_files/figure-html/unnamed-chunk-26-1.svg)&lt;!-- --&gt;
 
-We like using "spaghetti error bars" to show a sampling distribution of regression lines.
+]
 
-This method leverages transparency/opacity as an additional visual heuristic for the density of the distribution, and helps avoid the binary appearance of error ribbons.
+
+---
+
+## Discussion Points
+
+* We *always* want to make sure we quantify uncertainty for the key comparison of interest
+* It is also good to plot and quantify uncertainty from multiple angles (i.e. group means vs. difference)
+* Visualizing your raw data helps you understand your uncertainty
+* Numeric methods are almost always a good idea if feasible
+
+---
+
+
+## Code Implementation
+
+We did *not* focus on the syntax behind working with these uncertainty intervals as much, but you can find all code for this presentation on the Columbia Psych Computing [Website](https://cu-psych-computing.github.io/cu-psych-comp-tutorial/tutorials/r-extra/) &amp; [Github](https://github.com/cu-psych-computing/cu-psych-comp-tutorial/tree/master/static/tutorials/r-extra)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
