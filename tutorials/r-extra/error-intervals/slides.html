@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Certain in Your Uncertainty</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Monica Thieu &amp; Paul Bloom" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+    <link rel="stylesheet" href="fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Certain in Your Uncertainty
+## Exploring Varieties of Error Intervals
+### Monica Thieu &amp; Paul Bloom
+### Dept of Psychology, Columbia University
+### 2021-03-10 (updated: 2021-03-10)
+
+---
+
+
+
+
+# Outline
+
+--
+
+First, we'll review error intervals based on _how they're calculated._
+
+--
+
+Then, we'll explore different techniques for visualizing those intervals.
+
+---
+
+class: inverse, middle
+
+# Two different types of error intervals
+
+---
+
+.pull-left[
+
+
+## Analytical intervals
+
+- calculated _exactly_ with **formulas**
+- computationally _fast_
+- _wholly_ reliant on distributional assumptions
+
+]
+
+.pull-right[
+
+## Numerical intervals
+
+- calculated _approximately_ over many **iterations**
+- computationally _slower_
+- _less_ reliant on distributional assumptions (and can work in the absence of assumptions!)
+
+]
+
+--
+
+In the majority of cases, errors should agree when estimated using either method. In general, we recommend taking more time to estimate numerical intervals _unless:_
+
+--
+
+- You are confident that distributional assumptions will hold
+
+--
+
+- It is temporally/computationally infeasible to estimate numerical intervals
+
+--
+
+**Note:** one advantage to using numerical methods is that they encourage you to more carefully consider assumptions you might make about your data &amp; intermediate outputs.
+
+---
+
+class: inverse, middle
+
+# Analytical error intervals
+
+--
+
+- Ordinary least squares intervals
+
+--
+
+- Maximum likelihood intervals
+
+---
+
+## OLS intervals
+
+This encompasses the parameter estimates and standard errors calculated from _ordinary least squares regressions._
+
+--
+
+Remember, OLS regressions capture a [variety](https://lindeloev.github.io/tests-as-linear/) of statistical scenarios (t-tests, correlations, ANOVAs, and more).
+
+.center[![tests-as-linear-models-cheat-sheet](https://lindeloev.github.io/tests-as-linear/linear_tests_cheat_sheet.png)]
+
+---
+
+## OLS intervals
+
+In general, the error intervals we can get from these tests are a **standard error of the parameter estimate** and its associated **confidence interval.**
+
+--
+
+These values are directly related to one another by the following general formula:
+
+`$$CI_p = \hat{\beta} \pm t_{crit} \times SE$$`
+
+--
+
+In most cases, the distance from the test statistic to one CI bound is equal to the standard error times the critical value for the desired confidence level.
+
+--
+
+If we assume a 95% confidence interval, and that the sampling distribution of the test statistic is _t_-distributed or normally distributed, the CI is approximately equal to the test statistic `\(\pm\)` 2 SEs.
+
+---
+
+## OLS intervals
+
+Don't forget! Dr. Niall Bolger sez:
+
+--
+
+**Over many theoretical repeated runs of a study, N% of the N% confidence intervals for all runs of the study are expected to overlap with the true parameter.**
+
+--
+
+A single calculation of the N% confidence interval does _not_ reflect an N% probability that the true parameter lies within that interval.
+
+--
+
+"So, you can _make_ a confidence interval, but you _can't be confident_ in your interval." - Dr. Niall Bolger
+
+---
+
+background-image: url("https://memegenerator.net/img/instances/64796890.jpg")
+background-position: center
+background-size: contain
+
+---
+
+## ML intervals
+
+Maximum likelihood models can fit multilevel data, or other data that cannot readily be modeled with ordinary least squares regression.
+
+--
+
+ML models, like those from `lme4`, produce standard errors by taking the second derivative of the parameter log-likelihood function with respect to the parameter of interest, `\(\theta\)`, at the value of the maximum-likelihood estimate of said parameter, `\(\hat{\theta}\)`.
+
+--
+
+.center[&lt;img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Multivariate_Gaussian.png/1024px-Multivariate_Gaussian.png" alt="drawing" width="500" height = "275"/&gt;]
+
+---
+
+## ML intervals
+
+When the log-likelihood function is estimated well, ML standard errors are a good approximation of the standard deviation of the sampling distribution for multilevel model coefficients.
+
+--
+
+However, if ML estimation _fails to converge_ on a set of parameter estimates, this may mean that the log-likelihood function _violates the assumptions needed_ to consider the SE a valid estimate.
+
+.center[![scary-lmer-convergence-warning](https://datascienceplus.com/wp-content/uploads/2016/05/lesson6_screenshot2.png)]
+
+--
+
+See [Penn State STAT 504 Spring 2005 lecture slides](https://personal.psu.edu/abs12/stat504/Lecture/lec3_4up.pdf) for further reference from a math-y perspective.
+
+---
+
+### Drawbacks of analytical intervals: The "mountain" problem
+
+ML estimation in particular works so fast by assuming that parameter likelihood functions are _normally_ distributed.
+
+--
+
+Imagine estimating the contour of a mountain using two different strategies:
+
+--
+
+- Hiking up to the peak of a mountain &amp; taking a single measurement of the steepness of the slope on your way up
+
+--
+
+- Putting on a blindfold and randomly walking around the mountain for days, repeatedly recording your height above sea level
+  
+--
+
+.center[&lt;img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Multivariate_Gaussian.png/1024px-Multivariate_Gaussian.png" alt="drawing" width="500" height = "275"/&gt;]
+
+---
+
+#### What if your mountain looks like this?
+
+.center[![non normal mountain 1](https://media.springernature.com/original/springer-static/image/chp%3A10.1007%2F978-3-319-27284-9_9/MediaObjects/393463_1_En_9_Fig1_HTML.gif)]
+
+---
+
+#### Or this?
+
+.center[![non normal mountain 2](https://miro.medium.com/max/1454/1*s1Uk0_3NY1DXrRWcb17QMQ.png)]
+
+--
+
+If this is what your mountain really looks like, assuming its shape is likely to lead you astray.
+
+---
+
+class: inverse, middle
+
+# Numerical intervals
+
+--
+
+- Bootstrapping
+
+--
+
+- Bayesian Monte Carlo sampling
+
+---
+
+## Bootstrapping
+
+--
+
+In bootstrapping, we randomly resample complete observations from the base dataset _with replacement_ many times, calculating the test statistic once for every resample.
+
+We then collate all estimates of the test statistic across bootstrap iterations into a sampling distribution.
+
+--
+
+.center[![bootstrap](https://yashuseth.files.wordpress.com/2017/12/bootstrap.png)]
+
+---
+
+### Statistics you can bootstrap
+
+You can bootstrap a sampling distribution for _basically any_ test statistic, _no matter how complex._ Some examples:
+
+--
+
+- Mean, median, standard deviation of a distribution
+
+--
+
+- Regression coefficients
+
+--
+
+- Prediction performance (accuracy, F1, AUC, R2)
+
+--
+
+- Unsupervised learning (PCA, clustering)
+
+--
+
+- Reliability (ICC) or intra-item consistency
+
+--
+
+- Tree-based models (i.e. 'bagging' in a random forest)
+
+--
+
+- Second-order correlations (i.e. RSA)
+
+---
+
+### Statistics you can bootstrap
+
+Bootstrapping is especially useful where analytical intervals might be inappropriate or unavailable:
+
+--
+
+where the test statistic might not have a normal sampling distribution, 
+
+--
+
+and/or where the estimator of the test statistic doesn't already return an analytical standard error.
+  
+.center[&lt;img src="https://advstats.psychstat.org/book/images/bootstrap.svg" alt="drawing" width="800" height = "250"/&gt;]
+
+---
+
+background-image: url("https://mc-stan.org/images/feature/wide_ensemble.png")
+background-position: center
+
+## Bayesian Monte Carlo sampling
+
+The "blindfolded hiker measuring a mountain" conceptually describes this pretty well.
+
+--
+
+Similar to bootstrapping, Bayesian Markov chain Monte Carlo (MCMC) sampling can estimate nearly _any test statistic_ with _any distribution._
+
+--
+
+It isn't exclusively assumption-free, though. Bayesian MCMC sampling can also incorporate _priors_.
+
+--
+
+With R or Python, we commonly implement MCMC sampling using [Stan](https://mc-stan.org/) on the back end.
+
+The [brms](https://cran.r-project.org/web/packages/brms/index.html) and [rstanarm](https://cran.r-project.org/web/packages/rstanarm/index.html) packages allow us to run Stan regressions using the same R syntax as `lm()` and `lmer()`.
+
+---
+
+### Why use Bayesian Monte Carlo methods?
+
+Analytical approaches _will_ fail you sooner or later...
+
+```
+Warning messages:
+1: In checkConv(attr(opt, "derivs"), optpar,ctrl=controlpar,ctrl=controlcheckConv, 
+: unable to evaluate scaled gradient
+2: In checkConv(attr(opt, "derivs"), optpar,ctrl=controlpar,ctrl=controlcheckConv, 
+: Model failed to converge: degenerate Hessian with 1 negative eigenvalues
+```
+
+---
+
+### Why use Bayesian Monte Carlo methods?
+
+Bayesian modeling with weakly informative priors can keep estimates reasonable _without_ biasing your model to find an effect.
+
+--
+
+Especially for models with _many_ parameters like multilevel models, Bayesian priors + MCMC provide the structure necessary for models to estimate at all.
+
+--
+
+Weakly informative priors are like telling your hiker, "On the side of the mountain there most likely isn't a 1-foot diameter pit that goes all the way to the center of the earth."
+
+---
+
+### Bayesian intervals: can you be "confident" in them?
+
+--
+
+Yes! Bayesian models estimate `\(P(\theta|data)\)`.
+
+--
+
+So, error intervals based on the model's posterior distribution can be thought of as intervals where "the _model_ is N% sure that the true value of the parameter is within this interval."
+
+--
+
+For this reason, hip &amp; alternative Bayesians usually use phrases that aren't 'confidence intervals', like **credible intervals, posterior intervals, uncertainty intervals,** or **highest posterior density intervals (HPDIs).**
+
+---
+
+class: inverse, middle
+
+# Visualization
+
+---
+
+class: center, middle
+
+The purpose of any graph, error bars or not, is to **make a comparison.** Error bars can serve that goal by making your comparison of interest as salient as possible.
+
+---
+
+class: inverse, middle
+
+# General best practices
+
+---
+
+## General best practices
+
+When you can, show raw data beneath the summary points and error bars.
+
+
+
+
+.pull-left[
+
+![](slides_files/figure-html/unnamed-chunk-2-1.svg)&lt;!-- --&gt;
+
+]
+
+.pull-right[
+
+![](slides_files/figure-html/unnamed-chunk-3-1.svg)&lt;!-- --&gt;
+
+]
+
+---
+
+## General best practices
+
+Use crossbars on the ends of error bars _thoughtfully,_ if at all.
+
+--
+
+Choose whether to show errors +- 1 SE, +-2 SE, 80% CI, 90%, 95% CI, 99% CI, or something else to _highlight the size of your effect of interest._
+
+---
+
+## General best practices
+
+Where appropriate, choose error visualizations that highlight the density of the error distribution.
+
+![](slides_files/figure-html/unnamed-chunk-4-1.svg)&lt;!-- --&gt;
+
+---
+
+Error bars may lead people to view the data in a binary way. Specifically, error bars may lead people to treat the sampling distribution within the shown error bar as _uniform_ and ignore the sampling distribution outside the error bar.
+
+--
+
+One way to minimize this is to show stacked error bars at multiple interval sizes.
+
+--
+
+For example, the error bars below show 80% and 99% intervals.
+
+--
+
+.pull-left[
+
+![](slides_files/figure-html/unnamed-chunk-5-1.svg)&lt;!-- --&gt;
+
+]
+
+.pull-right[
+
+![](slides_files/figure-html/unnamed-chunk-6-1.svg)&lt;!-- --&gt;
+
+]
+
+---
+
+## General best practices
+
+For better or worse, _people tend to use error bars as a visual marker of statistical significance._ Try to **accommodate** this tendency while remaining faithful to your comparison of interest.
+
+--
+
+For example, when comparing a test statistic against a 0, show the CI. Accommodate the heuristic that "if the error bar clears 0, the results are 'significant'."
+
+![](slides_files/figure-html/unnamed-chunk-7-1.svg)&lt;!-- --&gt;
+
+---
+
+class: inverse, middle
+ 
+# Example: comparing two group means
+
+---
+
+## Example: comparing two group means
+
+In this simulated dataset, we want to know whether emotional expression differs in our sample between European-American and Asian-American participants across the lifespan.
+
+--
+
+We'll use _regression,_ and generate uncertainty intervals for our parameters of interest.
+
+---
+
+### Option 1: OLS regression with one binary predictor variable
+
+This method allows you to use the SE provided by `lm()` without having to worry about finding the correct formula. 
+
+It's quick, and you might already be familiar with `lm()` model syntax.
+
+--
+
+However...
+
+--
+
+* Estimation might not be accurate if OLS assumptions aren't met
+* We don't get as much detailed info on the uncertainty
+* We get a *confidence* interval, so we can't be confident in it
+
+---
+
+### Option 1: OLS regression with one binary predictor variable
+
+--
+
+First, we run the model with `lm()`.
+
+
+```r
+m_ols = lm(emo ~ race, data = d)
+```
+
+--
+
+Then, we can use `confint()` to get confidence intervals for `raceas_am`, the parameter measuring the difference between groups.
+
+
+```r
+# use confint() to pull the stuff
+ols_interval_80 = confint(m_ols, 'raceas_am', level=0.80)
+ols_interval_99 = confint(m_ols, 'raceas_am', level=0.99)
+# Put them together in a tibble to plot
+ols_summary = tibble(lwr_80 = ols_interval_80[1], 
+                     upr_80 = ols_interval_80[2], 
+                     lwr_99 = ols_interval_99[1],
+                     upr_99 = ols_interval_99[2],
+                     mean_est = m_ols$coefficients[2])
+```
+
+---
+
+### Option 1: OLS regression with one binary predictor variable
+
+Finally, we get predictions for the mean of each group using `predict` on our `lm` object.
+
+(FYI: `predict(interval = 'confidence', level = .95)` will give you the 95% CI of the individual group means, but you'd need to run it multiple times to get intervals at different sizes like we did above.)
+
+
+```r
+prediction_grid = crossing(race = c('euro_am', 'as_am'))
+prediction_frame_ols = predict(m_ols,
+                               newdata = prediction_grid,
+                               interval = 'confidence') %&gt;%
+  as_tibble() %&gt;%
+  bind_cols(prediction_grid)
+```
+  
+---
+
+### Option 1: OLS regression with one binary predictor variable
+
+![](slides_files/figure-html/unnamed-chunk-11-1.svg)&lt;!-- --&gt;
+
+---
+
+### Option 2: Bootstrapping
+
+Once we use numeric methods we have an additional bonus: access to the full sampling distribution for all parameters of interest.
+
+
+```r
+d_b &lt;- d %&gt;%
+  rsample::bootstraps(times = 500) %&gt;%
+  rename(iteration = id) %&gt;% 
+  # rsample automatically labels the iterations as "Bootstrap%03d"
+  # want these just to be integers pls
+  mutate(iteration = as.integer(str_sub(iteration, start = -3L)),
+         # rsample stores the splits as special "splits" objects
+         # which take up less memory than a whole df
+         # so you need to call as.data.frame before you do stuff
+         coefs_boot = map(splits, ~.x %&gt;% as.data.frame() %&gt;%
+                            lm(emo ~ race * age_scaled, data = .) %&gt;%
+                            broom::tidy())) %&gt;% 
+  # drop the split objects, don't need the resampled data anymore
+  select(-splits) %&gt;% 
+  # voila, all your model parameters long by bootstrap iteration
+  unnest(coefs_boot)
+```
+
+---
+
+### Option 2: Bootstrapping
+
+We really care about the `estimate` where `term == raceas_am` here, but we could bootstrap any value we might want out of this model.
+
+
+```
+## # A tibble: 6 x 6
+##   iteration term                 estimate std.error statistic p.value
+##       &lt;int&gt; &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1         1 (Intercept)            0.163     0.148      1.10  0.273  
+## 2         1 raceas_am             -0.655     0.210     -3.11  0.00233
+## 3         1 age_scaled            -0.0666    0.0894    -0.745 0.458  
+## 4         1 raceas_am:age_scaled  -0.105     0.123     -0.853 0.395  
+## 5         2 (Intercept)            0.256     0.175      1.46  0.146  
+## 6         2 raceas_am             -0.805     0.247     -3.26  0.00145
+```
+
+---
+
+### Option 2: Bootstrapping
+
+This full distribution of bootstrapped estimates for the `raceas_am` term is really what we want.
+
+![](slides_files/figure-html/unnamed-chunk-14-1.svg)&lt;!-- --&gt;
+
+---
+
+### Option 2: Bootstrapping
+
+Summarizing the bootstrap distribution mainly requires using `quantile()` to get percentile intervals.
+
+
+```r
+d_b_summary = d_b %&gt;%
+  dplyr::filter(term == "raceas_am") %&gt;%
+  summarise(mean_est = mean(estimate),
+            lwr_80 = quantile(estimate, probs = .1),
+            upr_80 = quantile(estimate, probs = .9),
+            lwr_99 = quantile(estimate, probs = .005),
+            upr_99 = quantile(estimate, probs = .995)) 
+```
+
+---
+
+### Option 2: Bootstrapping
+
+And we can directly plot the sampling distribution with the error bars.
+
+![](slides_files/figure-html/unnamed-chunk-16-1.svg)&lt;!-- --&gt;
+
+---
+
+### Option 3: Bayesian regression
+
+First, we run the Bayesian regression in `rstanarm`, using the same formula syntax as `lm()`.
+
+
+```r
+m_bayes = rstanarm::stan_glm(emo ~ race, data = d)
+```
+
+--
+
+Then, we extract posterior draws of all the model coefficients to a dataframe.
+
+
+```r
+m_bayes_draws = as.data.frame(m_bayes)
+```
+
+--
+
+Next, we inspect the posterior draws.
+
+
+```
+##   (Intercept)   raceas_am    sigma
+## 1 -0.13551032 -0.19912006 1.301904
+## 2 -0.05845289 -0.25996339 1.283347
+## 3 -0.12925125 -0.18156910 1.358506
+## 4  0.07489990 -0.34752271 1.308190
+## 5 -0.26366083 -0.16565233 1.304665
+## 6 -0.23441468  0.05512109 1.419456
+```
+
+---
+
+### Option 3: Bayesian regression
+
+Finally, we use `quantile()` to summarize the posterior distribution by taking percentile intervals.
+
+
+```r
+m_bayes_draws_summary = m_bayes_draws %&gt;%
+  summarise(mean_est = mean(raceas_am),
+            lwr_80 = quantile(raceas_am, probs = .1),
+            upr_80 = quantile(raceas_am, probs = .9),
+            lwr_99 = quantile(raceas_am, probs = .005),
+            upr_99 = quantile(raceas_am, probs = .995)) 
+```
+
+(We did the same thing for our bootstrap sampling distibution too. This same strategy works for any numerical interval.)
+
+---
+
+### Option 3: Bayesian regression
+
+We can plot the model-estimated difference much like before, but this time we have a full posterior interval for that difference.
+
+![](slides_files/figure-html/unnamed-chunk-21-1.svg)&lt;!-- --&gt;
+
+---
+
+## Comparing analytical, bootstrap, and Bayesian intervals
+
+In many settings, these methods will give similar results. (This is good! It means simplifying assumptions are usually okay.)
+
+--
+
+If there are discrepancies, though, _we almost always trust the numerical methods more._
+
+![](slides_files/figure-html/unnamed-chunk-22-1.svg)&lt;!-- --&gt;
+
+---
+
+This is partially because only numerical methods will allow you to inspect the whole sampling distribution in detail.
+
+![](slides_files/figure-html/unnamed-chunk-23-1.svg)&lt;!-- --&gt;
+
+---
+
+## What about a continuous x variable?
+
+Let's run another Bayesian model looking at emotional expression as a function of age.
+
+
+```r
+mod_cont = rstanarm::stan_glm(emo ~ age, data = d)
+```
+
+--
+
+Then we can pull draws of the linear predictor with respect to age.
+
+
+```r
+age_predictions = tidybayes::linpred_draws(model = mod_cont,
+                                           newdata = crossing(age = min(d$age):max(d$age))) %&gt;%
+  dplyr::select(-.chain, -.iteration)
+```
+
+--
+
+
+```
+## # A tibble: 4 x 4
+## # Groups:   age, .row [1]
+##     age  .row .draw .value
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;
+## 1    12     1     1  0.440
+## 2    12     1     2 -0.111
+## 3    12     1     3  0.237
+## 4    12     1     4 -0.101
+```
+
+---
+
+
+
+.pull-left[
+
+A big benefit of numerical intervals for regression slopes is that you can show "spaghetti" intervals, or a random set of posterior estimates of the regression slope.
+
+![](slides_files/figure-html/unnamed-chunk-28-1.svg)&lt;!-- --&gt;
+
+
+Opacity in the spaghetti lines helps communicate posterior density!
+
+]
+
+.pull-right[
+
+Sometimes spaghetti intervals are too intense, though.
+
+In those cases, well-chosen error ribbons will work well, though you lose information about posterior density.
+
+![](slides_files/figure-html/unnamed-chunk-29-1.svg)&lt;!-- --&gt;
+
+]
+
+---
+
+Both spaghetti and ribbon intervals can (and should!) be shown on top of the raw data.
+
+.pull-left[
+
+![](slides_files/figure-html/unnamed-chunk-30-1.svg)&lt;!-- --&gt;
+]
+
+.pull-right[
+
+![](slides_files/figure-html/unnamed-chunk-31-1.svg)&lt;!-- --&gt;
+
+]
+
+---
+
+# Key points
+
+--
+
+We _always_ want to make sure we quantify uncertainty for the **key comparison of interest.**
+
+--
+
+It is also good to plot and quantify uncertainty from multiple angles (i.e. group means vs. difference), in case the key comparison of interest doesn't jump out at first.
+
+--
+
+Visualizing your raw data helps you understand your uncertainty.
+
+--
+
+Numeric methods are almost always a good idea, if feasible.
+
+---
+
+# Code implementation
+
+We did _not_ focus on the syntax behind working with these uncertainty intervals as much, but you can find all code for this presentation on the Columbia Psych Computing [Website](https://cu-psych-computing.github.io/cu-psych-comp-tutorial/tutorials/r-extra/) &amp; [Github](https://github.com/cu-psych-computing/cu-psych-comp-tutorial/tree/master/static/tutorials/r-extra/)
+
+---
+
+# Additional links
+
+Paper: [Payton, Greenstone, &amp; Schenker (2003) Overlapping confidence intervals or standard error intervals: What do they mean in terms of statistical significance? ](https://bioone.org/journals/journal-of-insect-science/volume-3/issue-34/031.003.3401/Overlapping-confidence-intervals-or-standard-error-intervals--What-do/10.1673/031.003.3401.full)
+
+Why an 83% CI lends itself to "if two error bars don't touch, the effect is significant at alpha = 0.5":
+
+- [Chris Said's blog](https://chris-said.io/2014/12/01/independent-t-tests-and-the-83-confidence-interval-a-useful-trick-for-eyeballing-your-data/)
+- [Statistics by Jim](https://statisticsbyjim.com/hypothesis-testing/confidence-intervals-compare-means/)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightLanguage": "r",
+"highlightStyle": "solarized-light",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

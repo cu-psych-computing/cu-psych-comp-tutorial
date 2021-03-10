@@ -5,7 +5,11 @@
     <link>/tags/recording/</link>
     <description>Recent content in recording on Columbia Psychology Scientific Computing</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="/tags/recording/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    
+	<atom:link href="/tags/recording/index.xml" rel="self" type="application/rss+xml" />
+    
+    
     <item>
       <title>Workshop Recordings</title>
       <link>/workshop-recording/</link>
