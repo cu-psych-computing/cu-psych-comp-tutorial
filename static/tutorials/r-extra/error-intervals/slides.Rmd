@@ -24,6 +24,8 @@ source('https://gist.githubusercontent.com/benmarwick/2a1bb0133ff568cbe28d/raw/f
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(echo = FALSE, dev = "svglite")
 
+set.seed(42069)
+
 se <- function (x, ...) {return (sd(x, ...)/sqrt(length(x)))}
 ```
 
@@ -570,8 +572,16 @@ We'll use _regression,_ and generate uncertainty intervals for our parameters of
 
 ### Option 1: OLS regression with one binary predictor variable
 
-* This method allows you to use the SE provided by `lm()` without having to worry about finding the correct formula. 
-* It's quick, and you might already be familiar with `lm()` mdoel syntax
+This method allows you to use the SE provided by `lm()` without having to worry about finding the correct formula. 
+
+It's quick, and you might already be familiar with `lm()` model syntax.
+
+--
+
+However...
+
+--
+
 * Estimation might not be accurate if OLS assumptions aren't met
 * We don't get as much detailed info on the uncertainty
 * We get a *confidence* interval, so we can't be confident in it
@@ -1008,6 +1018,17 @@ Numeric methods are almost always a good idea, if feasible.
 
 ---
 
-# Code Implementation
+# Code implementation
 
 We did _not_ focus on the syntax behind working with these uncertainty intervals as much, but you can find all code for this presentation on the Columbia Psych Computing [Website](https://cu-psych-computing.github.io/cu-psych-comp-tutorial/tutorials/r-extra/) & [Github](https://github.com/cu-psych-computing/cu-psych-comp-tutorial/tree/master/static/tutorials/r-extra/)
+
+---
+
+# Additional links
+
+Paper: [Payton, Greenstone, & Schenker (2003) Overlapping confidence intervals or standard error intervals: What do they mean in terms of statistical significance? ](https://bioone.org/journals/journal-of-insect-science/volume-3/issue-34/031.003.3401/Overlapping-confidence-intervals-or-standard-error-intervals--What-do/10.1673/031.003.3401.full)
+
+Why an 83% CI lends itself to "if two error bars don't touch, the effect is significant at alpha = 0.5":
+
+- [Chris Said's blog](https://chris-said.io/2014/12/01/independent-t-tests-and-the-83-confidence-interval-a-useful-trick-for-eyeballing-your-data/)
+- [Statistics by Jim](https://statisticsbyjim.com/hypothesis-testing/confidence-intervals-compare-means/)

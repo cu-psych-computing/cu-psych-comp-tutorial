@@ -475,8 +475,16 @@ We'll use _regression,_ and generate uncertainty intervals for our parameters of
 
 ### Option 1: OLS regression with one binary predictor variable
 
-* This method allows you to use the SE provided by `lm()` without having to worry about finding the correct formula. 
-* It's quick, and you might already be familiar with `lm()` mdoel syntax
+This method allows you to use the SE provided by `lm()` without having to worry about finding the correct formula. 
+
+It's quick, and you might already be familiar with `lm()` model syntax.
+
+--
+
+However...
+
+--
+
 * Estimation might not be accurate if OLS assumptions aren't met
 * We don't get as much detailed info on the uncertainty
 * We get a *confidence* interval, so we can't be confident in it
@@ -570,14 +578,14 @@ We really care about the `estimate` where `term == raceas_am` here, but we could
 
 ```
 ## # A tibble: 6 x 6
-##   iteration term                 estimate std.error statistic  p.value
-##       &lt;int&gt; &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1         1 (Intercept)           -0.626      0.180    -3.48  0.000708
-## 2         1 raceas_am              0.307      0.248     1.24  0.219   
-## 3         1 age_scaled            -0.0216     0.114    -0.190 0.850   
-## 4         1 raceas_am:age_scaled   0.236      0.176     1.34  0.183   
-## 5         2 (Intercept)            0.131      0.199     0.660 0.511   
-## 6         2 raceas_am             -0.759      0.283    -2.68  0.00844
+##   iteration term                 estimate std.error statistic p.value
+##       &lt;int&gt; &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1         1 (Intercept)            0.163     0.148      1.10  0.273  
+## 2         1 raceas_am             -0.655     0.210     -3.11  0.00233
+## 3         1 age_scaled            -0.0666    0.0894    -0.745 0.458  
+## 4         1 raceas_am:age_scaled  -0.105     0.123     -0.853 0.395  
+## 5         2 (Intercept)            0.256     0.175      1.46  0.146  
+## 6         2 raceas_am             -0.805     0.247     -3.26  0.00145
 ```
 
 ---
@@ -640,12 +648,12 @@ Next, we inspect the posterior draws.
 
 ```
 ##   (Intercept)   raceas_am    sigma
-## 1  -0.4824526 -0.01250961 1.509150
-## 2  -0.1098479 -0.79891397 1.439223
-## 3   0.0817584 -1.08932114 1.444167
-## 4  -0.2744790 -0.73862163 1.494457
-## 5  -0.2553121 -0.58631521 1.496269
-## 6  -0.1763312 -0.67660577 1.367973
+## 1 -0.13551032 -0.19912006 1.301904
+## 2 -0.05845289 -0.25996339 1.283347
+## 3 -0.12925125 -0.18156910 1.358506
+## 4  0.07489990 -0.34752271 1.308190
+## 5 -0.26366083 -0.16565233 1.304665
+## 6 -0.23441468  0.05512109 1.419456
 ```
 
 ---
@@ -722,10 +730,10 @@ age_predictions = tidybayes::linpred_draws(model = mod_cont,
 ## # Groups:   age, .row [1]
 ##     age  .row .draw .value
 ##   &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;
-## 1    10     1     1 -0.415
-## 2    10     1     2 -0.298
-## 3    10     1     3 -0.229
-## 4    10     1     4 -0.508
+## 1    12     1     1  0.440
+## 2    12     1     2 -0.111
+## 3    12     1     3  0.237
+## 4    12     1     4 -0.101
 ```
 
 ---
@@ -790,9 +798,20 @@ Numeric methods are almost always a good idea, if feasible.
 
 ---
 
-# Code Implementation
+# Code implementation
 
 We did _not_ focus on the syntax behind working with these uncertainty intervals as much, but you can find all code for this presentation on the Columbia Psych Computing [Website](https://cu-psych-computing.github.io/cu-psych-comp-tutorial/tutorials/r-extra/) &amp; [Github](https://github.com/cu-psych-computing/cu-psych-comp-tutorial/tree/master/static/tutorials/r-extra/)
+
+---
+
+# Additional links
+
+Paper: [Payton, Greenstone, &amp; Schenker (2003) Overlapping confidence intervals or standard error intervals: What do they mean in terms of statistical significance? ](https://bioone.org/journals/journal-of-insect-science/volume-3/issue-34/031.003.3401/Overlapping-confidence-intervals-or-standard-error-intervals--What-do/10.1673/031.003.3401.full)
+
+Why an 83% CI lends itself to "if two error bars don't touch, the effect is significant at alpha = 0.5":
+
+- [Chris Said's blog](https://chris-said.io/2014/12/01/independent-t-tests-and-the-83-confidence-interval-a-useful-trick-for-eyeballing-your-data/)
+- [Statistics by Jim](https://statisticsbyjim.com/hypothesis-testing/confidence-intervals-compare-means/)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
