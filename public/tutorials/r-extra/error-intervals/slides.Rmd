@@ -1,0 +1,1034 @@
+---
+title: "Certain in Your Uncertainty"
+subtitle: "Exploring Varieties of Error Intervals"
+author: "Monica Thieu & Paul Bloom"
+institute: "Dept of Psychology, Columbia University"
+date: "2021-03-10 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    css: ["theme.css", "fonts.css"]
+    lib_dir: libs
+    nature:
+      highlightLanguage: r
+      highlightStyle: solarized-light
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+require(tidyverse)
+require(magrittr)
+library(tidybayes)
+library(rstanarm)
+source('https://gist.githubusercontent.com/benmarwick/2a1bb0133ff568cbe28d/raw/fb53bd97121f7f9ce947837ef1a4c65a73bffb3f/geom_flat_violin.R')
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, dev = "svglite")
+
+set.seed(42069)
+
+se <- function (x, ...) {return (sd(x, ...)/sqrt(length(x)))}
+```
+
+# Outline
+
+--
+
+First, we'll review error intervals based on _how they're calculated._
+
+--
+
+Then, we'll explore different techniques for visualizing those intervals.
+
+---
+
+class: inverse, middle
+
+# Two different types of error intervals
+
+---
+
+.pull-left[
+
+
+## Analytical intervals
+
+- calculated _exactly_ with **formulas**
+- computationally _fast_
+- _wholly_ reliant on distributional assumptions
+
+]
+
+.pull-right[
+
+## Numerical intervals
+
+- calculated _approximately_ over many **iterations**
+- computationally _slower_
+- _less_ reliant on distributional assumptions (and can work in the absence of assumptions!)
+
+]
+
+--
+
+In the majority of cases, errors should agree when estimated using either method. In general, we recommend taking more time to estimate numerical intervals _unless:_
+
+--
+
+- You are confident that distributional assumptions will hold
+
+--
+
+- It is temporally/computationally infeasible to estimate numerical intervals
+
+--
+
+**Note:** one advantage to using numerical methods is that they encourage you to more carefully consider assumptions you might make about your data & intermediate outputs.
+
+---
+
+class: inverse, middle
+
+# Analytical error intervals
+
+--
+
+- Ordinary least squares intervals
+
+--
+
+- Maximum likelihood intervals
+
+---
+
+## OLS intervals
+
+This encompasses the parameter estimates and standard errors calculated from _ordinary least squares regressions._
+
+--
+
+Remember, OLS regressions capture a [variety](https://lindeloev.github.io/tests-as-linear/) of statistical scenarios (t-tests, correlations, ANOVAs, and more).
+
+.center[![tests-as-linear-models-cheat-sheet](https://lindeloev.github.io/tests-as-linear/linear_tests_cheat_sheet.png)]
+
+---
+
+## OLS intervals
+
+In general, the error intervals we can get from these tests are a **standard error of the parameter estimate** and its associated **confidence interval.**
+
+--
+
+These values are directly related to one another by the following general formula:
+
+$$CI_p = \hat{\beta} \pm t_{crit} \times SE$$
+
+--
+
+In most cases, the distance from the test statistic to one CI bound is equal to the standard error times the critical value for the desired confidence level.
+
+--
+
+If we assume a 95% confidence interval, and that the sampling distribution of the test statistic is _t_-distributed or normally distributed, the CI is approximately equal to the test statistic $\pm$ 2 SEs.
+
+---
+
+## OLS intervals
+
+Don't forget! Dr. Niall Bolger sez:
+
+--
+
+**Over many theoretical repeated runs of a study, N% of the N% confidence intervals for all runs of the study are expected to overlap with the true parameter.**
+
+--
+
+A single calculation of the N% confidence interval does _not_ reflect an N% probability that the true parameter lies within that interval.
+
+--
+
+"So, you can _make_ a confidence interval, but you _can't be confident_ in your interval." - Dr. Niall Bolger
+
+---
+
+background-image: url("https://memegenerator.net/img/instances/64796890.jpg")
+background-position: center
+background-size: contain
+
+---
+
+## ML intervals
+
+Maximum likelihood models can fit multilevel data, or other data that cannot readily be modeled with ordinary least squares regression.
+
+--
+
+ML models, like those from `lme4`, produce standard errors by taking the second derivative of the parameter log-likelihood function with respect to the parameter of interest, $\theta$, at the value of the maximum-likelihood estimate of said parameter, $\hat{\theta}$.
+
+--
+
+.center[<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Multivariate_Gaussian.png/1024px-Multivariate_Gaussian.png" alt="drawing" width="500" height = "275"/>]
+
+---
+
+## ML intervals
+
+When the log-likelihood function is estimated well, ML standard errors are a good approximation of the standard deviation of the sampling distribution for multilevel model coefficients.
+
+--
+
+However, if ML estimation _fails to converge_ on a set of parameter estimates, this may mean that the log-likelihood function _violates the assumptions needed_ to consider the SE a valid estimate.
+
+.center[![scary-lmer-convergence-warning](https://datascienceplus.com/wp-content/uploads/2016/05/lesson6_screenshot2.png)]
+
+--
+
+See [Penn State STAT 504 Spring 2005 lecture slides](https://personal.psu.edu/abs12/stat504/Lecture/lec3_4up.pdf) for further reference from a math-y perspective.
+
+---
+
+### Drawbacks of analytical intervals: The "mountain" problem
+
+ML estimation in particular works so fast by assuming that parameter likelihood functions are _normally_ distributed.
+
+--
+
+Imagine estimating the contour of a mountain using two different strategies:
+
+--
+
+- Hiking up to the peak of a mountain & taking a single measurement of the steepness of the slope on your way up
+
+--
+
+- Putting on a blindfold and randomly walking around the mountain for days, repeatedly recording your height above sea level
+  
+--
+
+.center[<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Multivariate_Gaussian.png/1024px-Multivariate_Gaussian.png" alt="drawing" width="500" height = "275"/>]
+
+---
+
+#### What if your mountain looks like this?
+
+.center[![non normal mountain 1](https://media.springernature.com/original/springer-static/image/chp%3A10.1007%2F978-3-319-27284-9_9/MediaObjects/393463_1_En_9_Fig1_HTML.gif)]
+
+---
+
+#### Or this?
+
+.center[![non normal mountain 2](https://miro.medium.com/max/1454/1*s1Uk0_3NY1DXrRWcb17QMQ.png)]
+
+--
+
+If this is what your mountain really looks like, assuming its shape is likely to lead you astray.
+
+---
+
+class: inverse, middle
+
+# Numerical intervals
+
+--
+
+- Bootstrapping
+
+--
+
+- Bayesian Monte Carlo sampling
+
+---
+
+## Bootstrapping
+
+--
+
+In bootstrapping, we randomly resample complete observations from the base dataset _with replacement_ many times, calculating the test statistic once for every resample.
+
+We then collate all estimates of the test statistic across bootstrap iterations into a sampling distribution.
+
+--
+
+.center[![bootstrap](https://yashuseth.files.wordpress.com/2017/12/bootstrap.png)]
+
+---
+
+### Statistics you can bootstrap
+
+You can bootstrap a sampling distribution for _basically any_ test statistic, _no matter how complex._ Some examples:
+
+--
+
+- Mean, median, standard deviation of a distribution
+
+--
+
+- Regression coefficients
+
+--
+
+- Prediction performance (accuracy, F1, AUC, R2)
+
+--
+
+- Unsupervised learning (PCA, clustering)
+
+--
+
+- Reliability (ICC) or intra-item consistency
+
+--
+
+- Tree-based models (i.e. 'bagging' in a random forest)
+
+--
+
+- Second-order correlations (i.e. RSA)
+
+---
+
+### Statistics you can bootstrap
+
+Bootstrapping is especially useful where analytical intervals might be inappropriate or unavailable:
+
+--
+
+where the test statistic might not have a normal sampling distribution, 
+
+--
+
+and/or where the estimator of the test statistic doesn't already return an analytical standard error.
+  
+.center[<img src="https://advstats.psychstat.org/book/images/bootstrap.svg" alt="drawing" width="800" height = "250"/>]
+
+---
+
+background-image: url("https://mc-stan.org/images/feature/wide_ensemble.png")
+background-position: center
+
+## Bayesian Monte Carlo sampling
+
+The "blindfolded hiker measuring a mountain" conceptually describes this pretty well.
+
+--
+
+Similar to bootstrapping, Bayesian Markov chain Monte Carlo (MCMC) sampling can estimate nearly _any test statistic_ with _any distribution._
+
+--
+
+It isn't exclusively assumption-free, though. Bayesian MCMC sampling can also incorporate _priors_.
+
+--
+
+With R or Python, we commonly implement MCMC sampling using [Stan](https://mc-stan.org/) on the back end.
+
+The [brms](https://cran.r-project.org/web/packages/brms/index.html) and [rstanarm](https://cran.r-project.org/web/packages/rstanarm/index.html) packages allow us to run Stan regressions using the same R syntax as `lm()` and `lmer()`.
+
+---
+
+### Why use Bayesian Monte Carlo methods?
+
+Analytical approaches _will_ fail you sooner or later...
+
+```
+Warning messages:
+1: In checkConv(attr(opt, "derivs"), optpar,ctrl=controlpar,ctrl=controlcheckConv, 
+: unable to evaluate scaled gradient
+2: In checkConv(attr(opt, "derivs"), optpar,ctrl=controlpar,ctrl=controlcheckConv, 
+: Model failed to converge: degenerate Hessian with 1 negative eigenvalues
+```
+
+---
+
+### Why use Bayesian Monte Carlo methods?
+
+Bayesian modeling with weakly informative priors can keep estimates reasonable _without_ biasing your model to find an effect.
+
+--
+
+Especially for models with _many_ parameters like multilevel models, Bayesian priors + MCMC provide the structure necessary for models to estimate at all.
+
+--
+
+Weakly informative priors are like telling your hiker, "On the side of the mountain there most likely isn't a 1-foot diameter pit that goes all the way to the center of the earth."
+
+---
+
+### Bayesian intervals: can you be "confident" in them?
+
+--
+
+Yes! Bayesian models estimate $P(\theta|data)$.
+
+--
+
+So, error intervals based on the model's posterior distribution can be thought of as intervals where "the _model_ is N% sure that the true value of the parameter is within this interval."
+
+--
+
+For this reason, hip & alternative Bayesians usually use phrases that aren't 'confidence intervals', like **credible intervals, posterior intervals, uncertainty intervals,** or **highest posterior density intervals (HPDIs).**
+
+---
+
+class: inverse, middle
+
+# Visualization
+
+---
+
+class: center, middle
+
+The purpose of any graph, error bars or not, is to **make a comparison.** Error bars can serve that goal by making your comparison of interest as salient as possible.
+
+---
+
+class: inverse, middle
+
+# General best practices
+
+---
+
+## General best practices
+
+When you can, show raw data beneath the summary points and error bars.
+
+```{r}
+random_age <- function (race) {
+  
+  # .2 (10-20) + .4 (20-30) + .3 (30-60) + .1 (60-80)
+  
+  if (race == "euro_am") {
+    prob_breakdowns <- c(.2, .4, .3/3, .1/2)
+  } else if (race == "as_am") {
+    prob_breakdowns <- c(.2, .55, .2/3, .05/2)
+  }
+  
+  tens <- sample(seq(10, 70, 10),
+                 size = 1,
+                 replace = TRUE,
+                 prob = rep(prob_breakdowns, times = c(1, 1, 3, 2)))
+  
+  ones <- sample(0:9,
+                 size = 1,
+                 replace = TRUE)
+  
+  return (as.integer(tens + ones))
+}
+
+# This counts id from 1:n separately for the two races, so that number is the n per group
+d <- crossing(id = 1:60, race = c("euro_am", "as_am")) %>% 
+  mutate(age = map_int(race, random_age),
+         age_scaled = (age-25)/10,
+         race = factor(race, levels = c("euro_am", "as_am")),
+         intercept = 0,
+         beta_race = -0.5,
+         beta_age = -0.15,
+         emo = intercept + beta_race*(race == "as_am") + beta_age*age_scaled + rt(n(), df = 5))
+
+```
+
+
+.pull-left[
+
+```{r, fig.height=7}
+ggplot(d, aes(x = race, y = emo)) +
+  stat_summary(color = 'red', fun.data = mean_cl_boot) +
+  labs(y = 'Emotional Expression', title = 'Without raw data') +
+  theme_bw()
+```
+
+]
+
+.pull-right[
+
+```{r, fig.height=7}
+ggplot(d, aes(x = race, y = emo)) +
+  geom_jitter(height = 0, width = .05) +
+  stat_summary(color = 'red', fun.data = mean_cl_boot) +
+  labs(y = 'Emotional Expression', title = 'With raw data') +
+  theme_bw()
+```
+
+]
+
+---
+
+## General best practices
+
+Use crossbars on the ends of error bars _thoughtfully,_ if at all.
+
+--
+
+Choose whether to show errors +- 1 SE, +-2 SE, 80% CI, 90%, 95% CI, 99% CI, or something else to _highlight the size of your effect of interest._
+
+---
+
+## General best practices
+
+Where appropriate, choose error visualizations that highlight the density of the error distribution.
+
+```{r, fig.height = 4}
+example_data = tibble(dist = c(rnorm(n = 1000, mean = 0),
+                               rnorm(n = 500, mean = 5, sd = 4))) %>% 
+  mutate(group = rbernoulli(n(), p = .5)) %>%
+  mutate(group = ifelse(group == 1, 'Experiment', 'Control'))
+
+example_data_summary = example_data %>%
+  group_by(group) %>%
+  summarise(median = quantile(dist, probs = 0.5),
+            lwr_80 = quantile(dist, probs = .1),
+            upr_80 = quantile(dist, probs = .9),
+            lwr_99 = quantile(dist, probs = .005),
+            upr_99 = quantile(dist, probs = .995)) 
+
+ggplot(example_data, aes(x = dist)) +
+  geom_histogram(bins = 50)
+```
+
+---
+
+Error bars may lead people to view the data in a binary way. Specifically, error bars may lead people to treat the sampling distribution within the shown error bar as _uniform_ and ignore the sampling distribution outside the error bar.
+
+--
+
+One way to minimize this is to show stacked error bars at multiple interval sizes.
+
+--
+
+For example, the error bars below show 80% and 99% intervals.
+
+--
+
+.pull-left[
+
+```{r}
+ggplot(example_data_summary, aes(x = group, y = median, color = group)) +
+  geom_errorbar(aes(ymin = lwr_99, ymax = upr_99), width = 0, lwd = 1, alpha = .5) +
+  geom_errorbar(aes(ymin = lwr_80, ymax = upr_80), width = 0, lwd = 3, alpha = .5) +
+  geom_point(size = 4) +
+  theme_bw() +
+  labs(y = 'Outcome') +
+  theme(legend.position = 'none') +
+  scale_color_brewer(palette = 'Set1')
+
+```
+
+]
+
+.pull-right[
+
+```{r}
+ggplot(example_data_summary, aes(x = group, y = median, color = group)) +
+  geom_errorbar(aes(ymin = lwr_99, ymax = upr_99), width = 0, lwd = 1, alpha = .5) +
+  geom_errorbar(aes(ymin = lwr_80, ymax = upr_80), width = 0, lwd = 3, alpha = .5) +
+  geom_point(size = 4) +
+  geom_flat_violin(aes(x = group, y = dist, fill = group),
+                   data = example_data,
+                   position = position_nudge(.1),
+                   alpha = .3) +
+  theme_bw() +
+  labs(y = 'Outcome') +
+  theme(legend.position = 'none') +
+  scale_color_brewer(palette = 'Set1') +
+  scale_fill_brewer(palette = 'Set1')
+```
+
+]
+
+---
+
+## General best practices
+
+For better or worse, _people tend to use error bars as a visual marker of statistical significance._ Try to **accommodate** this tendency while remaining faithful to your comparison of interest.
+
+--
+
+For example, when comparing a test statistic against a 0, show the CI. Accommodate the heuristic that "if the error bar clears 0, the results are 'significant'."
+
+```{r, fig.asp = 0.5}
+ggplot(d, aes(x = race, y = emo)) +
+  geom_jitter(height = 0, width = .05) +
+  stat_summary(color = 'red', fun.data = mean_cl_boot) +
+  labs(y = 'Emotional Expression', title = 'Visualizing Each Group On Original Scale of The Data') +
+  theme_bw()
+```
+
+---
+
+class: inverse, middle
+ 
+# Example: comparing two group means
+
+---
+
+## Example: comparing two group means
+
+In this simulated dataset, we want to know whether emotional expression differs in our sample between European-American and Asian-American participants across the lifespan.
+
+--
+
+We'll use _regression,_ and generate uncertainty intervals for our parameters of interest.
+
+---
+
+### Option 1: OLS regression with one binary predictor variable
+
+This method allows you to use the SE provided by `lm()` without having to worry about finding the correct formula. 
+
+It's quick, and you might already be familiar with `lm()` model syntax.
+
+--
+
+However...
+
+--
+
+* Estimation might not be accurate if OLS assumptions aren't met
+* We don't get as much detailed info on the uncertainty
+* We get a *confidence* interval, so we can't be confident in it
+
+---
+
+### Option 1: OLS regression with one binary predictor variable
+
+--
+
+First, we run the model with `lm()`.
+
+```{r, echo = TRUE}
+m_ols = lm(emo ~ race, data = d)
+```
+
+--
+
+Then, we can use `confint()` to get confidence intervals for `raceas_am`, the parameter measuring the difference between groups.
+
+```{r, echo = TRUE}
+# use confint() to pull the stuff
+ols_interval_80 = confint(m_ols, 'raceas_am', level=0.80)
+ols_interval_99 = confint(m_ols, 'raceas_am', level=0.99)
+# Put them together in a tibble to plot
+ols_summary = tibble(lwr_80 = ols_interval_80[1], 
+                     upr_80 = ols_interval_80[2], 
+                     lwr_99 = ols_interval_99[1],
+                     upr_99 = ols_interval_99[2],
+                     mean_est = m_ols$coefficients[2])
+```
+
+---
+
+### Option 1: OLS regression with one binary predictor variable
+
+Finally, we get predictions for the mean of each group using `predict` on our `lm` object.
+
+(FYI: `predict(interval = 'confidence', level = .95)` will give you the 95% CI of the individual group means, but you'd need to run it multiple times to get intervals at different sizes like we did above.)
+
+```{r, echo = TRUE}
+prediction_grid = crossing(race = c('euro_am', 'as_am'))
+prediction_frame_ols = predict(m_ols,
+                               newdata = prediction_grid,
+                               interval = 'confidence') %>%
+  as_tibble() %>%
+  bind_cols(prediction_grid)
+```
+  
+---
+
+### Option 1: OLS regression with one binary predictor variable
+
+```{r, fig.height=5}
+ols_a = ggplot(data = prediction_frame_ols, aes(x = race, y = fit, color = race)) +
+  geom_point() +
+  geom_hline(yintercept = 0, lty = 2) + 
+  geom_jitter(aes(x = race, y = emo), data = d, height = 0, width = .05, alpha = .3) +
+  geom_errorbar(aes(ymin = lwr, ymax = upr), width = 0) +
+  theme_bw() + 
+  theme(legend.position = 'none') +
+  scale_color_brewer(palette = 'Set1') +
+  labs(x = '', y = 'Emotional Expression', title = 'Does not show key comparison')
+
+
+ols_b = ggplot(ols_summary, aes(x = '', y = mean_est)) +
+  geom_point() +
+  geom_hline(yintercept = 0, lty = 2) + 
+  geom_errorbar(aes(ymin = lwr_99, ymax = upr_99), width = 0, lwd = 1, alpha = .5) +
+  geom_errorbar(aes(ymin = lwr_80, ymax = upr_80), width = 0, lwd = 3, alpha = .5) +
+  theme_bw() +
+  labs(x = '', y = 'Estimated Mean Difference In Emotional Expression\nAsian-American > European American', title = 'Shows key comparison')
+
+cowplot::plot_grid(ols_a, ols_b)
+```
+
+---
+
+### Option 2: Bootstrapping
+
+Once we use numeric methods we have an additional bonus: access to the full sampling distribution for all parameters of interest.
+
+```{r, echo = TRUE}
+d_b <- d %>%
+  rsample::bootstraps(times = 500) %>%
+  rename(iteration = id) %>% 
+  # rsample automatically labels the iterations as "Bootstrap%03d"
+  # want these just to be integers pls
+  mutate(iteration = as.integer(str_sub(iteration, start = -3L)),
+         # rsample stores the splits as special "splits" objects
+         # which take up less memory than a whole df
+         # so you need to call as.data.frame before you do stuff
+         coefs_boot = map(splits, ~.x %>% as.data.frame() %>%
+                            lm(emo ~ race * age_scaled, data = .) %>%
+                            broom::tidy())) %>% 
+  # drop the split objects, don't need the resampled data anymore
+  select(-splits) %>% 
+  # voila, all your model parameters long by bootstrap iteration
+  unnest(coefs_boot)
+```
+
+---
+
+### Option 2: Bootstrapping
+
+We really care about the `estimate` where `term == raceas_am` here, but we could bootstrap any value we might want out of this model.
+
+```{r}
+head(d_b)
+```
+
+---
+
+### Option 2: Bootstrapping
+
+This full distribution of bootstrapped estimates for the `raceas_am` term is really what we want.
+
+```{r, fig.height=2}
+d_b %>%
+  dplyr::filter(term == "raceas_am") %>%
+  ggplot(data = ., aes(x = estimate)) +
+  geom_histogram(bins = 50) +
+  geom_vline(xintercept = 0, lty = 2) +
+  labs(x = 'Bootstrapped estimates of the mean differerence in emotional expression\nAsian-American > European American', y = 'count') +
+  theme_bw()
+```
+
+---
+
+### Option 2: Bootstrapping
+
+Summarizing the bootstrap distribution mainly requires using `quantile()` to get percentile intervals.
+
+```{r, echo = TRUE}
+d_b_summary = d_b %>%
+  dplyr::filter(term == "raceas_am") %>%
+  summarise(mean_est = mean(estimate),
+            lwr_80 = quantile(estimate, probs = .1),
+            upr_80 = quantile(estimate, probs = .9),
+            lwr_99 = quantile(estimate, probs = .005),
+            upr_99 = quantile(estimate, probs = .995)) 
+```
+
+---
+
+### Option 2: Bootstrapping
+
+And we can directly plot the sampling distribution with the error bars.
+
+```{r, fig.height=5}
+boot_b = ggplot(d_b_summary) +
+  geom_hline(yintercept = 0, lty = 2, color = 'blue') +
+  geom_flat_violin(aes(x = '', y = estimate),
+                   data = dplyr::filter(d_b, term == 'raceas_am'),
+                   fill = 'purple', color = 'purple', alpha = .5) +
+  geom_errorbar(aes(x = '', ymin = lwr_99, ymax = upr_99), width = 0, lwd = 1) +
+  geom_errorbar(aes(x = '', ymin = lwr_80, ymax = upr_80), width = 0, lwd = 3, alpha = .5) +
+  geom_point(aes(x = '', y = mean_est), size = 3) +
+  theme_bw() +
+  labs(y = 'Estimated Mean Difference In Emotional Expression\nAsian-American > European American', 
+       x = '', 
+       title = 'CI from Bootstrap')
+
+
+get_plot_limits <- function(plot) {
+    gb = ggplot_build(plot)
+    xmin = gb$layout$panel_params[[1]]$x.range[1]
+    xmax = gb$layout$panel_params[[1]]$x.range[2]
+    ymin = gb$layout$panel_params[[1]]$y.range[1]
+    ymax = gb$layout$panel_params[[1]]$y.range[2]
+    list(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax)
+}
+lims_for_align = get_plot_limits(boot_b)
+
+cowplot::plot_grid(ols_b + 
+                     ylim(lims_for_align$ymin, lims_for_align$ymax) +
+                     labs(title = 'CI from OLS'), 
+                   boot_b + ylim(lims_for_align$ymin, lims_for_align$ymax), 
+                   align = 'h', axis = 'bt')
+```
+
+---
+
+### Option 3: Bayesian regression
+
+First, we run the Bayesian regression in `rstanarm`, using the same formula syntax as `lm()`.
+
+```{r,results = 'hide', echo = TRUE}
+m_bayes = rstanarm::stan_glm(emo ~ race, data = d)
+```
+
+--
+
+Then, we extract posterior draws of all the model coefficients to a dataframe.
+
+```{r, echo = TRUE}
+m_bayes_draws = as.data.frame(m_bayes)
+```
+
+--
+
+Next, we inspect the posterior draws.
+
+```{r}
+head(m_bayes_draws)
+```
+
+---
+
+### Option 3: Bayesian regression
+
+Finally, we use `quantile()` to summarize the posterior distribution by taking percentile intervals.
+
+```{r, echo = TRUE}
+m_bayes_draws_summary = m_bayes_draws %>%
+  summarise(mean_est = mean(raceas_am),
+            lwr_80 = quantile(raceas_am, probs = .1),
+            upr_80 = quantile(raceas_am, probs = .9),
+            lwr_99 = quantile(raceas_am, probs = .005),
+            upr_99 = quantile(raceas_am, probs = .995)) 
+```
+
+(We did the same thing for our bootstrap sampling distibution too. This same strategy works for any numerical interval.)
+
+---
+
+### Option 3: Bayesian regression
+
+We can plot the model-estimated difference much like before, but this time we have a full posterior interval for that difference.
+
+```{r, fig.asp = 0.6}
+ggplot(m_bayes_draws) +
+  geom_vline(xintercept = 0, lty = 2, color = 'blue') +
+  geom_density(aes(x = raceas_am), fill = 'purple', color = 'purple', alpha = .5) +
+  geom_errorbarh(data = m_bayes_draws_summary,
+                 aes(y = 0, xmin = lwr_99, xmax = upr_99),
+                 height = 0, lwd = 1) +
+  geom_errorbarh(data = m_bayes_draws_summary,
+                 aes(y = 0, xmin = lwr_80, xmax = upr_80),
+                 height = 0, lwd = 2) +
+  geom_point(data = m_bayes_draws_summary,
+             aes(y = 0, x = mean_est), size = 3) +
+  theme_bw() +
+  labs(x = 'Estimated Mean Difference In Emotional Expression\nAsian-American > European American', 
+       y = 'Relative Density',
+       title = 'Distribution for the effect of interest')
+```
+
+---
+
+## Comparing analytical, bootstrap, and Bayesian intervals
+
+In many settings, these methods will give similar results. (This is good! It means simplifying assumptions are usually okay.)
+
+--
+
+If there are discrepancies, though, _we almost always trust the numerical methods more._
+
+```{r, fig.height=3}
+model_summaries = bind_rows(Bootstrap = d_b_summary,
+                            OLS = ols_summary,
+                            `Bayesian MCMC` = m_bayes_draws_summary,
+                            .id = "type")
+
+ggplot(model_summaries, aes(x = type, y= mean_est, color = type)) +
+  geom_hline(yintercept = 0, linetype = "dotted") +
+  geom_errorbar(aes(ymin = lwr_99, ymax = upr_99), width = 0) +
+  geom_errorbar(aes(ymin = lwr_80, ymax = upr_80), width = 0, lwd = 2) +
+  geom_point(size = 2, color = 'black') +
+  labs(x = 'Interval Type', y = 'Estimated Mean Difference\nIn Emotional Expression\nAsian-American > European American') +
+  theme_bw() +
+  theme(legend.position = 'none')
+```
+
+---
+
+This is partially because only numerical methods will allow you to inspect the whole sampling distribution in detail.
+
+```{r, fig.height = 5}
+boot_bayes_full_dist = bind_rows(`Bayesian MCMC` = m_bayes_draws %>%
+                                   dplyr::select(estimate = raceas_am), 
+                                 Bootstrap = d_b %>%
+                                   dplyr::filter(term == 'raceas_am') %>%
+                                   dplyr::select(estimate),
+                                 .id = "type")
+
+model_summaries %>%
+  ggplot(data = ., aes(x = type, y = mean_est, color = type)) +
+  geom_errorbar(aes(ymin = lwr_99, ymax = upr_99), width = 0) +
+  geom_errorbar(aes(ymin = lwr_80, ymax = upr_80), width = 0, lwd = 2) +
+  geom_point(size = 2, color = 'black') +
+  geom_flat_violin(aes(x = type, y = estimate), data = boot_bayes_full_dist, position = position_nudge(.05)) +
+  labs(x = 'Interval Type', y = 'Estimated Mean Difference In Emotional Expression\nAsian-American > European American') +
+  theme_bw() +
+  theme(legend.position = 'none')
+```
+
+---
+
+## What about a continuous x variable?
+
+Let's run another Bayesian model looking at emotional expression as a function of age.
+
+```{r, echo = TRUE, results='hide'}
+mod_cont = rstanarm::stan_glm(emo ~ age, data = d)
+```
+
+--
+
+Then we can pull draws of the linear predictor with respect to age.
+
+```{r, echo = TRUE, message=FALSE}
+age_predictions = tidybayes::linpred_draws(model = mod_cont,
+                                           newdata = crossing(age = min(d$age):max(d$age))) %>%
+  dplyr::select(-.chain, -.iteration)
+```
+
+--
+
+```{r}
+head(age_predictions, n = 4)
+```
+
+---
+
+```{r}
+age_prediction_summary = age_predictions %>%
+  group_by(age) %>%
+  summarise(mean_est = mean(.value),
+            lwr_80 = quantile(.value, probs = .1),
+            upr_80 = quantile(.value, probs = .9),
+            lwr_99 = quantile(.value, probs = .005),
+            upr_99 = quantile(.value, probs = .995))
+```
+
+.pull-left[
+
+A big benefit of numerical intervals for regression slopes is that you can show "spaghetti" intervals, or a random set of posterior estimates of the regression slope.
+
+```{r}
+age_predictions %>%
+  nest(data = -.draw) %>% 
+  sample_n(500) %>% 
+  unnest(data) %>% 
+  ggplot(data = ., aes(x = age, y = .value, group = .draw)) +
+  geom_hline(yintercept = 0, lty = 2, color = 'red') +
+  geom_line(alpha = .1) +
+  geom_line(aes(x = age, y = mean_est, group = NA),
+            data = age_prediction_summary,
+            lwd = 2, color = 'purple') +
+  theme_bw() +
+  labs(x = 'Age (years)', y = 'Estimated Emotional Expression', title = 'Discrete Posterior Draws Represent Uncertainty')
+```
+
+
+Opacity in the spaghetti lines helps communicate posterior density!
+
+]
+
+.pull-right[
+
+Sometimes spaghetti intervals are too intense, though.
+
+In those cases, well-chosen error ribbons will work well, though you lose information about posterior density.
+
+```{r}
+ggplot(age_prediction_summary, aes(x = age, y = mean_est)) +
+  geom_hline(yintercept = 0, lty = 2, color = 'red') +
+  geom_ribbon(aes(ymin = lwr_99, ymax = upr_99), alpha = .2) +
+  geom_ribbon(aes(ymin = lwr_80, ymax = upr_80), alpha = .3) +
+  geom_line() +
+  theme_bw() +
+  labs(x = 'Age (years)', y = 'Estimated Emotional Expression', title = 'Ribbons for 80% and 99% uncertainty')
+```
+
+]
+
+---
+
+Both spaghetti and ribbon intervals can (and should!) be shown on top of the raw data.
+
+.pull-left[
+
+```{r}
+age_predictions %>%
+  nest(data = -.draw) %>% 
+  sample_n(500) %>% 
+  unnest(data) %>% 
+  ggplot(data = ., aes(x = age, y = .value, group = .draw)) +
+  geom_hline(yintercept = 0, lty = 2, color = 'red') +
+  geom_line(alpha = .1) +
+  theme_bw() +
+  labs(x = 'Age (years)', y = 'Estimated Emotional Expression', title = 'Discrete Posterior Draws Represent Uncertainty') +
+  geom_line(data = age_prediction_summary, aes(x = age, y = mean_est, group = NA), lwd = 2, color = 'purple') +
+  geom_point(data = d, aes(x = age, y = emo, group = NA), alpha = .5)
+
+```
+]
+
+.pull-right[
+
+```{r}
+ggplot(age_prediction_summary, aes(x = age, y = mean_est)) +
+  geom_hline(yintercept = 0, lty = 2, color = 'red') +
+  geom_ribbon(aes(ymin = lwr_99, ymax = upr_99), alpha = .2) +
+  geom_ribbon(aes(ymin = lwr_80, ymax = upr_80), alpha = .3) +
+  geom_line() +
+  geom_point(data = d, aes(x = age, y = emo, group = NA), alpha = .5) +
+  theme_bw() +
+  labs(x = 'Age (years)', y = 'Estimated Emotional Expression', title = 'Ribbons for 80% and 99% uncertainty')
+```
+
+]
+
+---
+
+# Key points
+
+--
+
+We _always_ want to make sure we quantify uncertainty for the **key comparison of interest.**
+
+--
+
+It is also good to plot and quantify uncertainty from multiple angles (i.e. group means vs. difference), in case the key comparison of interest doesn't jump out at first.
+
+--
+
+Visualizing your raw data helps you understand your uncertainty.
+
+--
+
+Numeric methods are almost always a good idea, if feasible.
+
+---
+
+# Code implementation
+
+We did _not_ focus on the syntax behind working with these uncertainty intervals as much, but you can find all code for this presentation on the Columbia Psych Computing [Website](https://cu-psych-computing.github.io/cu-psych-comp-tutorial/tutorials/r-extra/) & [Github](https://github.com/cu-psych-computing/cu-psych-comp-tutorial/tree/master/static/tutorials/r-extra/)
+
+---
+
+# Additional links
+
+Paper: [Payton, Greenstone, & Schenker (2003) Overlapping confidence intervals or standard error intervals: What do they mean in terms of statistical significance? ](https://bioone.org/journals/journal-of-insect-science/volume-3/issue-34/031.003.3401/Overlapping-confidence-intervals-or-standard-error-intervals--What-do/10.1673/031.003.3401.full)
+
+Why an 83% CI lends itself to "if two error bars don't touch, the effect is significant at alpha = 0.5":
+
+- [Chris Said's blog](https://chris-said.io/2014/12/01/independent-t-tests-and-the-83-confidence-interval-a-useful-trick-for-eyeballing-your-data/)
+- [Statistics by Jim](https://statisticsbyjim.com/hypothesis-testing/confidence-intervals-compare-means/)
