@@ -5,11 +5,7 @@
     <link>/tutorials/r-core/</link>
     <description>Recent content in Introductory R Tutorial on Columbia Psychology Scientific Computing</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    
-	<atom:link href="/tutorials/r-core/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>en-us</language><atom:link href="/tutorials/r-core/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Data Cleaning</title>
       <link>/tutorials/r-core/2-datacleaning/</link>

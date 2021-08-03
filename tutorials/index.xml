@@ -5,10 +5,6 @@
     <link>/tutorials/</link>
     <description>Recent content in Tutorials on Columbia Psychology Scientific Computing</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    
-	<atom:link href="/tutorials/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>en-us</language><atom:link href="/tutorials/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

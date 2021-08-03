@@ -5,11 +5,7 @@
     <link>/</link>
     <description>Recent content in Home on Columbia Psychology Scientific Computing</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>en-us</language><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Programming, Part 0</title>
       <link>/tutorials/r-core/1-programming/lessonpart0/</link>
@@ -156,7 +152,8 @@ All models are wrong, but some are useful - George Box
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/error-intervals/</guid>
-      <description>  Workshop Slides    </description>
+      <description>  Workshop Slides Slides can also be viewed fullscreen here.
+   </description>
     </item>
     
     <item>
@@ -289,7 +286,7 @@ Instructor: Emily Nakkawita</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/who/</guid>
-      <description>Who We Are 2020 - 2021 Graduate Methods Support Advisors Emily Nakkawita  Research interests: how goal pursuit processes differ based on individuals’ unique motivational orientations Method specialties: surveys, web-based response latency tasks Tool/language specialties: R, generating manuscripts with Papaja, Javascript/HTML customization in Qualtrics, M-Turk, Prolific Favorite NYC neighborhood: Park Slope   Hannah Tarder-Stoll  Research interests: how memory is flexibly used to predict future events at different timescales Method specialties: cognitive tasks (in-person and web-based), neuroimaging, virtual reality Tool/language specialties: R, Python, Unity, Inquisit Favorite NYC neighborhood: Astoria    Office hours will be held by appointment.</description>
+      <description>Who We Are 2021 - 2022 Graduate Methods Support Advisors Emily Nakkawita  Research interests: how goal pursuit processes differ based on individuals’ unique motivational orientations Method specialties: surveys, web-based response latency tasks Tool/language specialties: R, generating manuscripts with Papaja, Javascript/HTML customization in Qualtrics, M-Turk, Prolific Favorite NYC neighborhood: Park Slope   Hannah Tarder-Stoll  Research interests: how memory is flexibly used to predict future events at different timescales Method specialties: cognitive tasks (in-person and web-based), neuroimaging, virtual reality Tool/language specialties: R, Python, Unity, Inquisit Favorite NYC neighborhood: Astoria    Office hours will be held by appointment.</description>
     </item>
     
     <item>
