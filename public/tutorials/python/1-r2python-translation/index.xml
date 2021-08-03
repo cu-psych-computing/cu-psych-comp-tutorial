@@ -5,11 +5,7 @@
     <link>/tutorials/python/1-r2python-translation/</link>
     <description>Recent content in R to Python Translation on Columbia Psychology Scientific Computing</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    
-	<atom:link href="/tutorials/python/1-r2python-translation/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>en-us</language><atom:link href="/tutorials/python/1-r2python-translation/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Choosing Between R and Python</title>
       <link>/tutorials/python/1-r2python-translation/0-python-r/</link>
