@@ -5,11 +5,7 @@
     <link>/tags/python/</link>
     <description>Recent content in Python on Columbia Psychology Scientific Computing</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    
-	<atom:link href="/tags/python/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>en-us</language><atom:link href="/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>R to Python Translation</title>
       <link>/tutorials/python/1-r2python-translation/</link>
