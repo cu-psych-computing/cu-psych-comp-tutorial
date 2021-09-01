@@ -19,6 +19,14 @@ Come and learn with us at one of our meetings! Topics span various early-interme
 ---
 
 ### Workshop
+_**Stay tuned!**_
+
+
+## Past
+
+---
+
+### Workshop
 
 _**Certain in Your Uncertainty: Exploring Varieties of Error Intervals**_
 
@@ -26,13 +34,10 @@ _**Certain in Your Uncertainty: Exploring Varieties of Error Intervals**_
 
 **Date:** Wednesday, March 10th, 2021 at 3:00pm
 
-**Workshop Link:** [Zoom](https://columbiauniversity.zoom.us/j/98662849158)
+**Workshop Materials:** <a href="/tutorials/r-extra/error-intervals/">See tutorial page</a></p>
 
-## Past
+<br/>
 
----
-
-### Workshop
 
 _**Creating a Website with Github and R**_
 
@@ -41,6 +46,8 @@ _**Creating a Website with Github and R**_
 **Date:** Wednesday, February 10th, 2021 at 4:00pm
 
 **Workshop Materials:** <a href="/tutorials/r-extra/website-github-r/">See tutorial page</a></p>
+
+
 
 ### Round-Table Discussion
 
