@@ -1,197 +1,101 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
     <loc>/tutorials/r-core/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/r-extra/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/python/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/r-core/1-programming/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/workshop-recording/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/r-core/1-programming/lessonpart0/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/r-core/1-programming/lessonpart1/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/r-core/1-programming/lessonpart2/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/r-core/2-datacleaning/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/r-core/3-datamanipulation/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/r-core/4-plotting/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/r-core/5-modeling/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/r-extra/accelerated-ggplot2/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part1/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part2/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/r-extra/tidyverse-guide/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/r-extra/tidyverse-guide/tidyguide-1/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/r-extra/tidyverse-guide/tidyguide-2/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/r-extra/data-sim-power/basic-simulation-power/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/r-extra/brms/multilevel-models-with-brms/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/r-extra/rmarkdown/intro-to-rmarkdown/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/r-extra/website-github-r/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/r-extra/error-intervals/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/python/1-r2python-translation/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/python/1-r2python-translation/0-python-r/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/python/1-r2python-translation/1-getting-started/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/python/1-r2python-translation/2-intro-programming/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/python/1-r2python-translation/3-control-flow/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/python/2-datacleaning/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/python/3-datamanipulation/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/python/4-plotting/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/core/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/extra/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/accessing-files/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/workshop/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/license/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/meetings/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/python/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/r/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/recording/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/resources/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tutorials/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/who/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/workshop-recording/session1/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/workshop-recording/session2/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/workshop-recording/session3/</loc>
   </url>
-  
 </urlset>
