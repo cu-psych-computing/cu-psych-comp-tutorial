@@ -12,31 +12,31 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # Who We Are
 
-## 2021 - 2022 Graduate Methods Support Advisors
+## 2021 - 2022 Graduate Methods Support
 
 ---
 
 <div class="row">
 <div class="col-md-6">
-### Emily Nakkawita
+### Jacob Edwards
 
-<p style="text-align:center;"><img src="/images/emily.jpg"></p>
+<p style="text-align:center;"><img src="/images/jacob.jpg"></p>
 
-- <b>Research interests: </b>how goal pursuit processes differ based on individuals' unique motivational orientations
-- <b>Method specialties: </b>surveys, web-based response latency tasks
-- <b>Tool/language specialties: </b>R, generating manuscripts with Papaja, Javascript/HTML customization in Qualtrics, M-Turk, Prolific
-- <b>Favorite NYC neighborhood: </b>Park Slope
+- <b>Research interests: </b>neural control of social communication
+- <b>Method specialties: </b>electrophysiology, histology & neuroanatomy, audio signal processing
+- <b>Tool/language specialties: </b>MATLAB, R, Python
+- <b>Favorite NYC restaurant: </b>Jin Ramen
 </div>
 
 <div class="col-md-6">
-### Hannah Tarder-Stoll
+### Wangjing Yu
 
-<p style="text-align:center;"><img src="/images/hannah.jpg"></p>
+<p style="text-align:center;"><img src="/images/wangjing.jpg"></p>
 
-- <b>Research interests: </b>how memory is flexibly used to predict future events at different timescales
-- <b>Method specialties: </b>cognitive tasks (in-person and web-based), neuroimaging, virtual reality
-- <b>Tool/language specialties: </b>R, Python, Unity, Inquisit
-- <b>Favorite NYC neighborhood: </b>Astoria
+- <b>Research interests: </b>human learning and memory
+- <b>Method specialties: </b>cognitive tasks (in-person and web-based), neuroimaging
+- <b>Tool/language specialties: </b>R, Python, Gorilla, Inquisit
+- <b>Favorite NYC restaurant: </b>Saigon Shack
 </div>
 </div>
 
