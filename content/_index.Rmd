@@ -23,13 +23,15 @@ Columbia University psychology graduate students can stop by to chat about using
 - Cleaning and analyzing data
 - Preparing presentations and manuscripts
 
-During the Spring 2021 semester, the [graduate methods support advisors](/who) will be holding office hours by appointment. To schedule a time that works well for you, or for email support, please contact [psych-methods-support@columbia.edu](mailto:psych-methods-support@columbia.edu){target="_blank"}.
+During the 2021-2022 school year, the [graduate methods support advisors](/who) will be holding office hours by appointment. To schedule a time that works well for you, or for email support, please contact [psych-methods-support@columbia.edu](mailto:psych-methods-support@columbia.edu){target="_blank"}.
 
 ## Ongoing Meetings and Workshops
 
 ---
 
-Our next workshop, **Certain in Your Uncertainty: Exploring Varieties of Error Intervals**, is scheduled for **Wednesday, March 10th, 2021, at 3:00pm**. For more information, visit the [Meetings](/meetings) page.
+The Introductory Scientific Computing Workshop is beginning soon! The first session is Friday, September 17. Check <a href="/workshop">the workshop page</a> for more information.
+
+Keep an eye on the [Meetings](/meetings) page for upcoming workshops and events throughout the school year.
 
 ## Annual Introductory Scientific Computing Workshop
 
@@ -45,7 +47,7 @@ This is our core introductory scientfic computing syllabus. The materials here a
 - <p><a href="/tutorials/r-core/1-programming/lessonpart1/" target="_blank">Programming, Part 1 (Variables, data types, vectors)</a></p>
 - <p><a href="/tutorials/r-core/1-programming/lessonpart2/" target="_blank">Programming, Part 2 (Coding strategy, relational & logical operators)</a></p>
 
-<a href="/workshop-recording/session1/" target="_blank"><button><i class="fas fa-video"></i>&nbsp;&nbsp;&nbsp;View Recording</button></a>
+<a href="/workshop-recording/session1/" target="_blank"><button><i class="fas fa-video"></i>&nbsp;&nbsp;&nbsp;View Fall 2020 Recording</button></a>
 
 ### Session 2: Data Cleaning, Data Manipulation, Plotting, and Modeling in R
 
@@ -56,7 +58,7 @@ This is our core introductory scientfic computing syllabus. The materials here a
 - <p><a href="/tutorials/r-core/4-plotting/" target="_blank">Plotting with <code>ggplot2</code></a></p>
 - <p><a href="/tutorials/r-core/5-modeling/" target="_blank">Modeling</a></p>
 
-<a href="/workshop-recording/session2/" target="_blank"><button><i class="fas fa-video"></i>&nbsp;&nbsp;&nbsp;View Recording</button></a>
+<a href="/workshop-recording/session2/" target="_blank"><button><i class="fas fa-video"></i>&nbsp;&nbsp;&nbsp;View Fall 2020 Recording</button></a>
 
 ### Session 3: Intro to Python, Data Cleaning, Manipulation, and Plotting in Python
 
@@ -67,7 +69,7 @@ This is our core introductory scientfic computing syllabus. The materials here a
 - <p><a href="/tutorials/python/3-datamanipulation/" target="_blank">Data Manipulation</a></p>
 - <p><a href="/tutorials/python/4-plotting/" target="_blank">Plotting with <code>seaborn</code></a></p>
 
-<a href="/workshop-recording/session3/" target="_blank"><button><i class="fas fa-video"></i>&nbsp;&nbsp;&nbsp;View Recording</button></a>
+<a href="/workshop-recording/session3/" target="_blank"><button><i class="fas fa-video"></i>&nbsp;&nbsp;&nbsp;View Fall 2020 Recording</button></a>
 
 ## Additional Instructional Materials
 
