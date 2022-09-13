@@ -23,7 +23,7 @@
       <guid>/tutorials/python/1-r2python-translation/0-python-r/</guid>
       <description>Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/1-r2python-translation/0-python-r.ipynb.
 For a video recording of this tutorial from the Fall 2020 workshop, please visit the Workshop Recording: Session 3 page.
-A few quick points: Among scientific computing languages the best language for you is the one that you find best fits your projects We really encourage the use of either R and Python for research computing for several reasons R and Python are open source!</description>
+A few quick points:  Among scientific computing languages the best language for you is the one that you find best fits your projects We really encourage the use of either R and Python for research computing for several reasons  R and Python are open source!</description>
     </item>
     
     <item>
@@ -32,7 +32,7 @@ A few quick points: Among scientific computing languages the best language for y
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/python/1-r2python-translation/1-getting-started/</guid>
-      <description>Goals: Students will feel comfortable navigating the jupyter notebook layout Students will be able to access their computer&amp;rsquo;s file structure through jupyter notebook Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/1-r2python-translation/1-getting-started.ipynb.
+      <description>Goals:  Students will feel comfortable navigating the jupyter notebook layout Students will be able to access their computer&amp;rsquo;s file structure through jupyter notebook  Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/1-r2python-translation/1-getting-started.ipynb.
 For a video recording of this tutorial from the Fall 2020 workshop, please visit the Workshop Recording: Session 3 page.</description>
     </item>
     
@@ -42,7 +42,7 @@ For a video recording of this tutorial from the Fall 2020 workshop, please visit
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/python/1-r2python-translation/2-intro-programming/</guid>
-      <description>Disclaimer! This intro programming tutorial in Python is NOT nearly as comprehensive as the intro programming tutorial in R. If you have never programmed in any language before, this tutorial may skip key pieces of information. Instead, the goal of this tutorial is to provide some key pieces of &amp;rsquo;translation&amp;rsquo; information for people with some programming experience who would like to use Python. Goals of this Lesson Students will: Understand and be comfortable working with the basic data types in Python Be able to use arithmetic, relational operators, and lists in Python For those coming from R, be aware of differences across languages, especially in indexing Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions.</description>
+      <description>Disclaimer!  This intro programming tutorial in Python is NOT nearly as comprehensive as the intro programming tutorial in R. If you have never programmed in any language before, this tutorial may skip key pieces of information. Instead, the goal of this tutorial is to provide some key pieces of &amp;lsquo;translation&amp;rsquo; information for people with some programming experience who would like to use Python.  Goals of this Lesson Students will:  Understand and be comfortable working with the basic data types in Python Be able to use arithmetic, relational operators, and lists in Python For those coming from R, be aware of differences across languages, especially in indexing  Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions.</description>
     </item>
     
     <item>
@@ -51,8 +51,8 @@ For a video recording of this tutorial from the Fall 2020 workshop, please visit
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/python/1-r2python-translation/3-control-flow/</guid>
-      <description>Goals of this lesson Students will learn: How to use if/else and for loops in python How to indent code correctly in python Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/1-r2python-translation/3-control-flow.ipynb.
-Indenting in python Python, unlike R, is strict about indentation! Indentations in python often have bearing on the order in which they are executed, and switching indentation can change how code runs (or break it) Coming from R, indentation might seem annoying at first, but eventually this can help with code readability Ultimately, python is trying to help us stay organized If statements If statements in python are the equivalent of the following English: &amp;ldquo;If condition X is met, then do action Y&amp;rdquo; If statements in python consist of the following syntax if (condition X): actions.</description>
+      <description>Goals of this lesson Students will learn:  How to use if/else and for loops in python How to indent code correctly in python  Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/1-r2python-translation/3-control-flow.ipynb.
+Indenting in python  Python, unlike R, is strict about indentation! Indentations in python often have bearing on the order in which they are executed, and switching indentation can change how code runs (or break it) Coming from R, indentation might seem annoying at first, but eventually this can help with code readability Ultimately, python is trying to help us stay organized  If statements  If statements in python are the equivalent of the following English: &amp;ldquo;If condition X is met, then do action Y&amp;rdquo; If statements in python consist of the following syntax  if (condition X):actions.</description>
     </item>
     
     <item>
@@ -61,8 +61,7 @@ Indenting in python Python, unlike R, is strict about indentation! Indentations 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/python/2-datacleaning/</guid>
-      <description>Goals of this Lesson Students will learn: How to open various data types in Python How to check for missing or problematic data and address issues How to filter, rearrange and shape data in preparation for analysis Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/2-datacleaning/index.ipynb.
-For a video recording of this tutorial from the Fall 2020 workshop, please visit the Workshop Recording: Session 3 page.</description>
+      <description>Goals of this Lesson Students will learn:  How to open various data types in Python How to check for missing or problematic data and address issues How to filter, rearrange and shape data in preparation for analysis  Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/2-datacleaning/index.</description>
     </item>
     
     <item>
@@ -71,7 +70,7 @@ For a video recording of this tutorial from the Fall 2020 workshop, please visit
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/python/3-datamanipulation/</guid>
-      <description>Goals of this Lesson Students will learn: How to group and categorize data in Python How to generative descriptive statistics in Python Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/3-datamanipulation/index.ipynb.
+      <description>Goals of this Lesson Students will learn:  How to group and categorize data in Python How to generative descriptive statistics in Python  Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/3-datamanipulation/index.ipynb.
 For a video recording of this tutorial from the Fall 2020 workshop, please visit the Workshop Recording: Session 3 page.</description>
     </item>
     
@@ -81,7 +80,7 @@ For a video recording of this tutorial from the Fall 2020 workshop, please visit
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/python/4-plotting/</guid>
-      <description>Goals of this Lesson Students will learn: How to generate beautiful statistical visualizations in Python using the seaborn package Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/4-plotting/index.ipynb.
+      <description>Goals of this Lesson Students will learn:  How to generate beautiful statistical visualizations in Python using the seaborn package  Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/4-plotting/index.ipynb.
 For a video recording of this tutorial from the Fall 2020 workshop, please visit the Workshop Recording: Session 3 page.</description>
     </item>
     

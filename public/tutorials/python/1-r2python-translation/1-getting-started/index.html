@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
-  <meta name="generator" content="Hugo 0.102.3" />
+  <meta name="generator" content="Hugo 0.87.0" />
 
   
   <meta name="description" content="CU Psychology Scientific Computing">
@@ -542,20 +542,20 @@ button:focus {
 <li>In the &lsquo;Cell&rsquo; menu, there are also options for running all cells, or all cells below/above the current one</li>
 <li>Cells can also have comments where the line starts with <code>#</code> &ndash; these are not run</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#ce5c00;font-weight:bold">+</span><span style="color:#0000cf;font-weight:bold">2</span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Here&#39;s a comment</span>
-</span></span></code></pre></div><pre><code>4
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#ce5c00;font-weight:bold">+</span><span style="color:#0000cf;font-weight:bold">2</span>
+<span style="color:#8f5902;font-style:italic"># Here&#39;s a comment</span>
+</code></pre></div><pre><code>4
 </code></pre>
 <h2 id="you-can-also-add-images">You can also add images</h2>
 <p><img src="https://echanclarityinsights.github.io/images/2018-12-26/cat-meme.jpg" alt="Jupyter Meme"></p>
 <h1 id="loading-modules">Loading modules</h1>
 <p>Regular python can do a lot, but one of the main reasons why it is used so much is that there are many <strong>modules</strong>, or build-on sets of functions, that are extremely helpful. Similarly to how in R we load packages, we can load these modules for use using the <code>import</code> command.</p>
 <p>For the purposes of these tutorials, we&rsquo;ll use these modules a lot. Although not strictly necessary, there are standard abbreviations for importing some of these modules</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">numpy</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">np</span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">pandas</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">pd</span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">matplotlib.pyplot</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">plt</span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">seaborn</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">sns</span>
-</span></span></code></pre></div><p>We will discuss some of these modules in more detail as we get to later sections</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">numpy</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">np</span>
+<span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">pandas</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">pd</span>
+<span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">matplotlib.pyplot</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">plt</span>
+<span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">seaborn</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">sns</span>
+</code></pre></div><p>We will discuss some of these modules in more detail as we get to later sections</p>
 <h1 id="navigating-files-using-jupyter-notebooks">Navigating files using jupyter notebooks</h1>
 <p>There are a few ways you start jupyter notebooks running:</p>
 <ul>
@@ -588,14 +588,14 @@ button:focus {
 </ul>
 <h4 id="the-os-module">The <code>os</code> module</h4>
 <p>In order to get information about files that are available to us to read into Python, we will be working with the <code>os</code> module. This module provides a way to interface with the operating system we are running Python on (Windows, Mac, or Linux). Let&rsquo;s start by first loading this module:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">os</span>
-</span></span></code></pre></div><h4 id="whats-your-working-directory-and-where-is-the-file-you-want">What&rsquo;s your working directory and where is the file you want?</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">os</span>
+</code></pre></div><h4 id="whats-your-working-directory-and-where-is-the-file-you-want">What&rsquo;s your working directory and where is the file you want?</h4>
 <p>Your working directory is the directory (and subdirectories) where the files you&rsquo;re working with are stored. You can check your working directory using <code>os.getcwd()</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000">os</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">getcwd</span><span style="color:#000;font-weight:bold">()</span>
-</span></span></code></pre></div><pre><code>'/Users/emily/Documents/GitHub/cu-psych-comp-tutorial/content/tutorials/python/1-r2python-translation'
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">os</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">getcwd</span><span style="color:#000;font-weight:bold">()</span>
+</code></pre></div><pre><code>'/Users/emily/Documents/GitHub/cu-psych-comp-tutorial/content/tutorials/python/1-r2python-translation'
 </code></pre>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000">os</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">listdir</span><span style="color:#000;font-weight:bold">()</span>
-</span></span></code></pre></div><pre><code>['1-getting-started.md',
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">os</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">listdir</span><span style="color:#000;font-weight:bold">()</span>
+</code></pre></div><pre><code>['1-getting-started.md',
  '.DS_Store',
  '0-python-r.ipynb',
  '2-intro-programming.ipynb',
