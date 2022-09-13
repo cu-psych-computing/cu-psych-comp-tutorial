@@ -21,7 +21,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part1/</guid>
-      <description>Make ’em Graph Welcome! This tutorial will cover some basics of scatter plots, time series data, and some alternatives to bar graphs (for categorical predictors and continuous outcomes). It will also go over a few handy things along the way, such as making graphs with multiple panels, and aesthetic mapping for clearer plots.
+      <description>Make ’em GraphWelcome! This tutorial will cover some basics of scatter plots, time series data, and some alternatives to bar graphs (for categorical predictors and continuous outcomes). It will also go over a few handy things along the way, such as making graphs with multiple panels, and aesthetic mapping for clearer plots.
 Note: All examples here will be with simulated data, so that as we are making our plots we can be aware of the TRUE data generating processes and assess how well our graphs represent these.</description>
     </item>
     
@@ -33,7 +33,7 @@ Note: All examples here will be with simulated data, so that as we are making ou
       <guid>/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part2/</guid>
       <description>God grant me the serenity to accept the uncertainty I cannot control; courage to control the uncertainty that I cannot accept; and wisdom to know the difference. -Andrew Gelman
 All models are wrong, but some are useful - George Box
-1) Overview Welcome! This tutorial will cover some aspects of plotting modeled data within the context of multilevel (or ‘mixed-effects’) regression models. Specifically, we’ll be using the lme4, brms, and rstanarm packages to model and ggplot to display the model predictions.</description>
+1) OverviewWelcome! This tutorial will cover some aspects of plotting modeled data within the context of multilevel (or ‘mixed-effects’) regression models. Specifically, we’ll be using the lme4, brms, and rstanarm packages to model and ggplot to display the model predictions.</description>
     </item>
     
     <item>
@@ -51,7 +51,7 @@ All models are wrong, but some are useful - George Box
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/tidyverse-guide/tidyguide-1/</guid>
-      <description>Goals for this vignette Demonstrate (what I think are) key first-level features of the tidyverse Illustrate psychology use cases for tidyverse functions Hopefully convince you to join the cult of tidy We shall do this by walking through various use cases you might encounter with your data. I’ll jump in with specific examples of functions when appropriate, to highlight solutions for particular situations you might run into with your own data.</description>
+      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; }code.sourceCode  span { color: inherit; text-decoration: inherit; }code.sourceCode  span:empty { height: 1.2em; }.sourceCode { overflow: visible; }code.sourceCode { white-space: pre; position: relative; }div.sourceCode { margin: 1em 0; }pre.sourceCode { margin: 0; }@media screen {div.sourceCode { overflow: auto; }}@media print {code.sourceCode { white-space: pre-wrap; }code.sourceCode  span { text-indent: -5em; padding-left: 5em; }}pre.</description>
     </item>
     
     <item>
@@ -60,8 +60,7 @@ All models are wrong, but some are useful - George Box
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/tidyverse-guide/tidyguide-2/</guid>
-      <description>Goals for this vignette Hello (again)! This is a continuation of our tour through base tidyverse (see Part 1 here). Our goals are the same as before:
-Demonstrate (what I think are) key first-level features of the tidyverse Illustrate psychology use cases for tidyverse functions Hopefully convince you to join the cult of tidy This time, we’ll be moving ahead to some more complex use cases utilizing some more advanced programming tactics.</description>
+      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; }code.sourceCode  span { color: inherit; text-decoration: inherit; }code.sourceCode  span:empty { height: 1.2em; }.sourceCode { overflow: visible; }code.sourceCode { white-space: pre; position: relative; }div.sourceCode { margin: 1em 0; }pre.sourceCode { margin: 0; }@media screen {div.sourceCode { overflow: auto; }}@media print {code.sourceCode { white-space: pre-wrap; }code.sourceCode  span { text-indent: -5em; padding-left: 5em; }}pre.</description>
     </item>
     
     <item>
@@ -70,8 +69,8 @@ Demonstrate (what I think are) key first-level features of the tidyverse Illustr
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/data-sim-power/basic-simulation-power/</guid>
-      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/r-extra/data-sim-power/basic-simulation-power.rmd.
-Why Simulate? Simulation is an extremely useful tool, because we can create ground truth by which to test our models. If we know the true process by which the data are generated, we can check whether our models are doing well at recovering this truth.</description>
+      <description>Links to FilesThe files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/r-extra/data-sim-power/basic-simulation-power.rmd.
+Why Simulate?Simulation is an extremely useful tool, because we can create ground truth by which to test our models. If we know the true process by which the data are generated, we can check whether our models are doing well at recovering this truth.</description>
     </item>
     
     <item>
@@ -80,8 +79,8 @@ Why Simulate? Simulation is an extremely useful tool, because we can create grou
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/brms/multilevel-models-with-brms/</guid>
-      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/r-extra/brms/multilevel-models-with-brms.rmd.
-0) Goals for this vignette Give a quick intro to multilevel modeling and Bayesian inference Show a use case with Brms and some helpful syntax for demonstrating what this model does Hopefully, convince you to use multilevel modeling and Bayesian approaches for your stats 1) Why multilevel modeling?</description>
+      <description>Links to FilesThe files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/r-extra/brms/multilevel-models-with-brms.rmd.
+0) Goals for this vignetteGive a quick intro to multilevel modeling and Bayesian inferenceShow a use case with Brms and some helpful syntax for demonstrating what this model doesHopefully, convince you to use multilevel modeling and Bayesian approaches for your stats1) Why multilevel modeling?</description>
     </item>
     
     <item>
@@ -90,9 +89,7 @@ Why Simulate? Simulation is an extremely useful tool, because we can create grou
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/rmarkdown/intro-to-rmarkdown/</guid>
-      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/r-extra/rmarkdown/intro-to-rmarkdown.rmd.
-Getting started To work with R Markdown, if necessary:
-Install R Install the latest version of RStudio Install the latest version of the knitr package: install.packages(&#34;knitr&#34;) If you’re looking for a quick reference to R Markdown formatting, I strongly suggest you check out this helpful cheat sheet!</description>
+      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; }code.sourceCode  span { color: inherit; text-decoration: inherit; }code.sourceCode  span:empty { height: 1.2em; }.sourceCode { overflow: visible; }code.sourceCode { white-space: pre; position: relative; }div.sourceCode { margin: 1em 0; }pre.sourceCode { margin: 0; }@media screen {div.sourceCode { overflow: auto; }}@media print {code.sourceCode { white-space: pre-wrap; }code.sourceCode  span { text-indent: -5em; padding-left: 5em; }}pre.</description>
     </item>
     
     <item>
@@ -101,7 +98,7 @@ Install R Install the latest version of RStudio Install the latest version of th
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/website-github-r/</guid>
-      <description> Workshop Slides Video Recording </description>
+      <description>Workshop SlidesVideo Recording</description>
     </item>
     
     <item>
@@ -110,7 +107,8 @@ Install R Install the latest version of RStudio Install the latest version of th
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/error-intervals/</guid>
-      <description>Workshop Slides Slides can also be viewed fullscreen here.</description>
+      <description>Workshop SlidesSlides can also be viewed fullscreen here.
+</description>
     </item>
     
   </channel>
