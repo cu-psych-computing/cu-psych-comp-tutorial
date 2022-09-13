@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
-  <meta name="generator" content="Hugo 0.87.0" />
+  <meta name="generator" content="Hugo 0.102.3" />
 
   
   <meta name="description" content="CU Psychology Scientific Computing">
@@ -518,18 +518,18 @@ button:focus {
 <h2 id="links-to-files-and-video-recording">Links to Files and Video Recording</h2>
 <p>The files for all tutorials can be downloaded from <a href="https://github.com/cu-psych-computing/cu-psych-comp-tutorial">the Columbia Psychology Scientific Computing GitHub page</a> using <a href="../../../accessing-files/">these instructions</a>. This particular file is located here: <code>/content/tutorials/python/3-datamanipulation/index.ipynb</code>.</p>
 <p>For a video recording of this tutorial from the Fall 2020 workshop, please visit the <a href="../../../workshop-recording/session3/" target="_blank">Workshop Recording: Session 3</a> page.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#8f5902;font-style:italic"># load packages we will be using for this lesson</span>
-<span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">pandas</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">pd</span>
-</code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># load packages we will be using for this lesson</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">pandas</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">pd</span>
+</span></span></code></pre></div><hr>
 <h2 id="open-dataset-and-load-package">Open Dataset and Load Package</h2>
 <p>This dataset examines the relationship between multitasking and working memory. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4733435/pdf/nihms712443.pdf">Link here to original paper by Uncapher et al. 2016.</a></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#8f5902;font-style:italic"># use pd.read_csv to open data into python</span>
-<span style="color:#000">df</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">pd</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">read_csv</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;uncapher_2016_repeated_measures_dataset.csv&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># use pd.read_csv to open data into python</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">df</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">pd</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">read_csv</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;uncapher_2016_repeated_measures_dataset.csv&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><hr>
 <h2 id="familiarize-yourself-with-the-data">Familiarize Yourself with the Data</h2>
 <p>Quick review from <a href="../../../tutorials/python/2-datacleaning/">Data Cleaning</a>: take a look at the basic data structure, number of rows and columns.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">head</span><span style="color:#000;font-weight:bold">()</span>
-</code></pre></div><div>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">head</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -670,11 +670,11 @@ button:focus {
   </tbody>
 </table>
 </div>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">shape</span>
-</code></pre></div><pre><code>(136, 17)
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">shape</span>
+</span></span></code></pre></div><pre><code>(136, 17)
 </code></pre>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">columns</span>
-</code></pre></div><pre><code>Index(['subjNum', 'groupStatus', 'numDist', 'conf', 'hitCount', 'allOldCount',
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">columns</span>
+</span></span></code></pre></div><pre><code>Index(['subjNum', 'groupStatus', 'numDist', 'conf', 'hitCount', 'allOldCount',
        'rtHit', 'faCount', 'allNewCount', 'rtFA', 'distPresent', 'hitRate',
        'faRate', 'dprime', 'mmi', 'adhd', 'bis'],
       dtype='object')
@@ -682,9 +682,9 @@ button:focus {
 <hr>
 <h2 id="selecting-relevant-variables">Selecting Relevant Variables</h2>
 <p>Sometimes datasets have many variables that are unnecessary for a given analysis. To simplify your life, and your code, we can select only the given variables we&rsquo;d like to use for now.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">df</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">df</span><span style="color:#000;font-weight:bold">[[</span><span style="color:#4e9a06">&#34;subjNum&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;groupStatus&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;adhd&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;hitRate&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;faRate&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;dprime&#34;</span><span style="color:#000;font-weight:bold">]]</span>
-<span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">head</span><span style="color:#000;font-weight:bold">()</span>
-</code></pre></div><div>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000">df</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">df</span><span style="color:#000;font-weight:bold">[[</span><span style="color:#4e9a06">&#34;subjNum&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;groupStatus&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;adhd&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;hitRate&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;faRate&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;dprime&#34;</span><span style="color:#000;font-weight:bold">]]</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">head</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -764,8 +764,8 @@ button:focus {
 <h3 id="summarizing-data">Summarizing data</h3>
 <p>Let&rsquo;s learn how to make simple tables of summary statistics.
 First, we will calculate summary info across all data using <code>describe()</code>, a useful function for creating summaries. Note that we&rsquo;re not creating a new object for this summary (i.e. not using the <code>=</code> symbol), so this will print but not save.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">describe</span><span style="color:#000;font-weight:bold">()</span>
-</code></pre></div><div>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">describe</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -862,8 +862,8 @@ First, we will calculate summary info across all data using <code>describe()</co
 <h2 id="grouping-data">Grouping Data</h2>
 <p>Next, we will learn how to group data based on certain variables of interest.</p>
 <p>We will use the <code>groupby()</code> function in <code>pandas</code>, which will automatically group any subsequent actions called on the data.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">groupby</span><span style="color:#000;font-weight:bold">([</span><span style="color:#4e9a06">&#34;groupStatus&#34;</span><span style="color:#000;font-weight:bold">])</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">mean</span><span style="color:#000;font-weight:bold">()</span>
-</code></pre></div><div>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">groupby</span><span style="color:#000;font-weight:bold">([</span><span style="color:#4e9a06">&#34;groupStatus&#34;</span><span style="color:#000;font-weight:bold">])</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">mean</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -918,10 +918,10 @@ First, we will calculate summary info across all data using <code>describe()</co
 </div>
 <p>We can group data by more than one factor. Let&rsquo;s say we&rsquo;re interested in how levels of <code>adhd</code> interact with <code>groupStatus</code> (multitasking: high or low).</p>
 <p>We will first make a factor for <code>adhd</code> (median-split), and add it as a grouping variable using the <code>cut()</code> function in <code>pandas</code>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">df</span><span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#34;adhdF&#34;</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">pd</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">cut</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">df</span><span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#34;adhd&#34;</span><span style="color:#000;font-weight:bold">],</span><span style="color:#000">bins</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">labels</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#34;Low&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;High&#34;</span><span style="color:#000;font-weight:bold">])</span>
-</code></pre></div><p>Then we&rsquo;ll check how evenly split these groups are by using <code>groupby()</code> the <code>size()</code> functions:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">groupby</span><span style="color:#000;font-weight:bold">([</span><span style="color:#4e9a06">&#34;groupStatus&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;adhdF&#34;</span><span style="color:#000;font-weight:bold">])</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">size</span><span style="color:#000;font-weight:bold">()</span>
-</code></pre></div><pre><code>groupStatus  adhdF
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000">df</span><span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#34;adhdF&#34;</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">pd</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">cut</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">df</span><span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#34;adhd&#34;</span><span style="color:#000;font-weight:bold">],</span><span style="color:#000">bins</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">labels</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#34;Low&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;High&#34;</span><span style="color:#000;font-weight:bold">])</span>
+</span></span></code></pre></div><p>Then we&rsquo;ll check how evenly split these groups are by using <code>groupby()</code> the <code>size()</code> functions:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">groupby</span><span style="color:#000;font-weight:bold">([</span><span style="color:#4e9a06">&#34;groupStatus&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;adhdF&#34;</span><span style="color:#000;font-weight:bold">])</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">size</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></div><pre><code>groupStatus  adhdF
 HMM          Low      24
              High     44
 LMM          Low      46
@@ -929,8 +929,8 @@ LMM          Low      46
 dtype: int64
 </code></pre>
 <p>Then we&rsquo;ll calculate some summary info about these groups:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">groupby</span><span style="color:#000;font-weight:bold">([</span><span style="color:#4e9a06">&#34;groupStatus&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;adhdF&#34;</span><span style="color:#000;font-weight:bold">])</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">mean</span><span style="color:#000;font-weight:bold">()</span>
-</code></pre></div><div>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">groupby</span><span style="color:#000;font-weight:bold">([</span><span style="color:#4e9a06">&#34;groupStatus&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;adhdF&#34;</span><span style="color:#000;font-weight:bold">])</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">mean</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -1010,15 +1010,15 @@ dtype: int64
 <h2 id="extra-working-with-a-long-dataset">Extra: Working with a Long Dataset</h2>
 <p>This is a repeated measures (&ldquo;long&rdquo;) dataset, with multiple rows per subject. This makes things a bit tricker, but we are going to show you some tools for how to work with &ldquo;long&rdquo; datasets.</p>
 <h3 id="how-many-unique-subjects-are-in-the-data">How many unique subjects are in the data?</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">subList</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">df</span><span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#34;subjNum&#34;</span><span style="color:#000;font-weight:bold">]</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">unique</span><span style="color:#000;font-weight:bold">()</span>
-<span style="color:#000">nSubs</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">subList</span><span style="color:#000;font-weight:bold">)</span>
-<span style="color:#000">nSubs</span>
-</code></pre></div><pre><code>68
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000">subList</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">df</span><span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#34;subjNum&#34;</span><span style="color:#000;font-weight:bold">]</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">unique</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">nSubs</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">subList</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">nSubs</span>
+</span></span></code></pre></div><pre><code>68
 </code></pre>
 <h3 id="how-many-trials-were-there-per-subject">How many trials were there per subject?</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">nTrialsPerSubj</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">groupby</span><span style="color:#000;font-weight:bold">([</span><span style="color:#4e9a06">&#34;subjNum&#34;</span><span style="color:#000;font-weight:bold">])</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">size</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">reset_index</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">name</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;nTrials&#34;</span><span style="color:#000;font-weight:bold">)</span>
-<span style="color:#000">nTrialsPerSubj</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">head</span><span style="color:#000;font-weight:bold">()</span>
-</code></pre></div><div>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000">nTrialsPerSubj</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">groupby</span><span style="color:#000;font-weight:bold">([</span><span style="color:#4e9a06">&#34;subjNum&#34;</span><span style="color:#000;font-weight:bold">])</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">size</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">reset_index</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">name</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;nTrials&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">nTrialsPerSubj</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">head</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -1071,9 +1071,9 @@ dtype: int64
 </div>
 <h3 id="combine-summary-statistics-with-the-full-dataframe">Combine summary statistics with the full dataframe</h3>
 <p>For some analyses, you might want to add a higher level variable (e.g., subject average <code>hitRate</code>) alongside your long data. We can do this by summarizing the data in a new dataframe and then merging it with the full data.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">avgHR</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">groupby</span><span style="color:#000;font-weight:bold">([</span><span style="color:#4e9a06">&#34;subjNum&#34;</span><span style="color:#000;font-weight:bold">])[</span><span style="color:#4e9a06">&#34;hitRate&#34;</span><span style="color:#000;font-weight:bold">]</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">mean</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">reset_index</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">name</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;avgHR&#34;</span><span style="color:#000;font-weight:bold">)</span>
-<span style="color:#000">avgHR</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">head</span><span style="color:#000;font-weight:bold">()</span>
-</code></pre></div><div>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000">avgHR</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">groupby</span><span style="color:#000;font-weight:bold">([</span><span style="color:#4e9a06">&#34;subjNum&#34;</span><span style="color:#000;font-weight:bold">])[</span><span style="color:#4e9a06">&#34;hitRate&#34;</span><span style="color:#000;font-weight:bold">]</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">mean</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">reset_index</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">name</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;avgHR&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">avgHR</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">head</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -1124,9 +1124,9 @@ dtype: int64
   </tbody>
 </table>
 </div>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">df</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">merge</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">avgHR</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">on</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;subjNum&#34;</span><span style="color:#000;font-weight:bold">)</span>
-<span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">head</span><span style="color:#000;font-weight:bold">()</span>
-</code></pre></div><div>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000">df</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">merge</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">avgHR</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">on</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;subjNum&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">df</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">head</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></div><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;

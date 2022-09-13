@@ -10,10 +10,10 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-# Introductory Scientific Computing Workshop (Fall 2022)
+# Introductory Scientific Computing Workshop  (Fall 2022)
 
 <div class="highlightsec">
-**Instructors:** Cheyenne Wakeland-Hart, John Andrew Chwe, + others TBD
+**Instructors:** Cheyenne Wakeland-Hart, John Andrew Chwe, + others TBD 
 </div>
 
 ## General Information

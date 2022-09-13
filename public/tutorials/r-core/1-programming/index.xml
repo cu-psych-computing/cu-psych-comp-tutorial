@@ -12,7 +12,9 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/1-programming/lessonpart0/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; }code.sourceCode  span { color: inherit; text-decoration: inherit; }code.sourceCode  span:empty { height: 1.2em; }.sourceCode { overflow: visible; }code.sourceCode { white-space: pre; position: relative; }div.sourceCode { margin: 1em 0; }pre.sourceCode { margin: 0; }@media screen {div.sourceCode { overflow: auto; }}@media print {code.sourceCode { white-space: pre-wrap; }code.sourceCode  span { text-indent: -5em; padding-left: 5em; }}pre.</description>
+      <description>Welcome to the CU Psychology Scientific Computing workshop!
+Programming is telling a computer to do some action to some input info to get output info that you want. When it comes to working with data in R, programming is how we tell R to load data, process it, plot it, fit models to it, and so on (everything!).
+In this first section of our tutorial, we will learn about this info that goes in and out, as well as the actions that transform info into what we want.</description>
     </item>
     
     <item>
@@ -21,7 +23,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/1-programming/lessonpart1/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; }code.sourceCode  span { color: inherit; text-decoration: inherit; }code.sourceCode  span:empty { height: 1.2em; }.sourceCode { overflow: visible; }code.sourceCode { white-space: pre; position: relative; }div.sourceCode { margin: 1em 0; }pre.sourceCode { margin: 0; }@media screen {div.sourceCode { overflow: auto; }}@media print {code.sourceCode { white-space: pre-wrap; }code.sourceCode  span { text-indent: -5em; padding-left: 5em; }}pre.</description>
+      <description>Welcome (back) to the CU Psychology Scientific Computing Workshop! As a reminder, the documents for the introduction to programming cover the following:
+Programming, Part 0: Finding your way around RStudio Programming, Part 1: Variables, data types, vectors (this document!) Programming, Part 2: Coding strategy, relational &amp;amp; logical operators Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions.</description>
     </item>
     
     <item>
@@ -30,7 +33,9 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/1-programming/lessonpart2/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; }code.sourceCode  span { color: inherit; text-decoration: inherit; }code.sourceCode  span:empty { height: 1.2em; }.sourceCode { overflow: visible; }code.sourceCode { white-space: pre; position: relative; }div.sourceCode { margin: 1em 0; }pre.sourceCode { margin: 0; }@media screen {div.sourceCode { overflow: auto; }}@media print {code.sourceCode { white-space: pre-wrap; }code.sourceCode  span { text-indent: -5em; padding-left: 5em; }}pre.</description>
+      <description>Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder, the documents for the introduction to programming cover the following:
+Programming, Part 0: Finding your way around RStudio Programming, Part 1: Variables, data types, vectors Programming, Part 2: Coding strategy, relational &amp;amp; logical operators (this document!) Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things!
+Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions.</description>
     </item>
     
   </channel>
