@@ -12,8 +12,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/workshop-recording/session1/</guid>
-      <description> Workshop Recording: Session 1 Session 1 Tutorials: Click on the timestamp to jump to the beginning of the tutorial.
-Programming in R, Part 0: 0:00:05 [Materials] Programming in R, Part 1: 1:12:10 [Materials] Programming in R, Part 2: 2:13:36 [Materials] </description>
+      <description>Workshop Recording: Session 1var tag = document.createElement(&#39;script&#39;);tag.src = &#34;https://www.youtube.com/iframe_api&#34;;var firstScriptTag = document.getElementsByTagName(&#39;script&#39;)[0];firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);var player;var ytSeconds = 0;function onYouTubeIframeAPIReady() {player = new YT.Player(&#39;player&#39;, {height: &#39;390&#39;,width: &#39;640&#39;,videoId: &#39;h52nyfxQ6hc&#39;,playerVars: { &#39;color&#39;: &#34;white&#34;,&#39;showinfo&#39;: 0,&#39;rel&#39;: 0},events: {&#39;onStateChange&#39;: onPlayerStateChange}});}function onPlayerStateChange(e) {if (e.data == 1 &amp;&amp; ytSeconds  0) {e.</description>
     </item>
     
     <item>
@@ -22,8 +21,7 @@ Programming in R, Part 0: 0:00:05 [Materials] Programming in R, Part 1: 1:12:10 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/workshop-recording/session2/</guid>
-      <description> Workshop Recording: Session 2 Session 2 Tutorials: Click on the timestamp to jump to the beginning of the tutorial.
-Data Cleaning in R: 0:00:05 [Materials] Data Manipulation in R: 1:13:40 [Materials] Plotting in R: 1:48:41 [Materials] Modeling in R: 3:23:47 [Materials] </description>
+      <description>Workshop Recording: Session 2var tag = document.createElement(&#39;script&#39;);tag.src = &#34;https://www.youtube.com/iframe_api&#34;;var firstScriptTag = document.getElementsByTagName(&#39;script&#39;)[0];firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);var player;var ytSeconds = 0;function onYouTubeIframeAPIReady() {player = new YT.Player(&#39;player&#39;, {height: &#39;390&#39;,width: &#39;640&#39;,videoId: &#39;b_8QeK5fIH4&#39;,playerVars: { &#39;color&#39;: &#34;white&#34;,&#39;showinfo&#39;: 0,&#39;rel&#39;: 0},events: {&#39;onStateChange&#39;: onPlayerStateChange}});}function onPlayerStateChange(e) {if (e.data == 1 &amp;&amp; ytSeconds  0) {e.</description>
     </item>
     
     <item>
@@ -32,8 +30,7 @@ Data Cleaning in R: 0:00:05 [Materials] Data Manipulation in R: 1:13:40 [Materia
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/workshop-recording/session3/</guid>
-      <description> Workshop Recording: Session 3 Session 3 Tutorials: Click on the timestamp to jump to the beginning of the tutorial.
-Intro to Python for R Users: 0:00:05 [Part 0 Materials| Part 1 Materials | Part 2 Materials] Data Cleaning in Python: 0:45:27 [Materials] Data Manipulation in Python: 1:38:29 [Materials] Plotting in Python: 2:10:09 [Materials] </description>
+      <description>Workshop Recording: Session 3var tag = document.createElement(&#39;script&#39;);tag.src = &#34;https://www.youtube.com/iframe_api&#34;;var firstScriptTag = document.getElementsByTagName(&#39;script&#39;)[0];firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);var player;var ytSeconds = 0;function onYouTubeIframeAPIReady() {player = new YT.Player(&#39;player&#39;, {height: &#39;390&#39;,width: &#39;640&#39;,videoId: &#39;e_F7Diu2EtU&#39;,playerVars: { &#39;color&#39;: &#34;white&#34;,&#39;showinfo&#39;: 0,&#39;rel&#39;: 0},events: {&#39;onStateChange&#39;: onPlayerStateChange}});}function onPlayerStateChange(e) {if (e.data == 1 &amp;&amp; ytSeconds  0) {e.</description>
     </item>
     
   </channel>
