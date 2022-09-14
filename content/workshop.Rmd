@@ -13,7 +13,8 @@ knitr::opts_chunk$set(echo = FALSE)
 # Introductory Scientific Computing Workshop (Fall 2021)
 
 <div class="highlightsec">
-**Instructors:** Paul A. Bloom, Camille Gasser, Manasi Jayakumar, Emily Nakkawita, Jonathan Nicholas, Ben Silver, Hannah Tarder-Stoll, Monica Thieu
+
+**Instructors:** Cheyenne Wakeland-Hart, John Andrew Chwe
 </div>
 
 ## General Information
@@ -56,38 +57,14 @@ Please be sure to complete these surveys before and after the workshop.
 
 <div class="row">
 <div class="col-md-6">
-<h3 style="padding-top: 30px; margin-top: 0;">Session 1: R (9/17/21)</h3>
-<a href="/workshop-recording/session1/" target="_blank" style="padding-bottom:10px"><button class="button-workshop"><i class="fas fa-video"></i>&nbsp;&nbsp;&nbsp;View Recording of Virtual Workshop 2020</button></a>
-<table class="table table-striped">
-<tr><td>Before starting</td><td><a href="https://docs.google.com/forms/d/e/1FAIpQLSdgyb8vJ1YVitQSwbm9jG6nvN0qvUTHGlYgVhiBl27Caml3LA/viewform?usp=sf_link" target="_blank">Pre-workshop survey</a></td></tr>
-<tr><td><b>10:00a</b> - 11:30a</td><td><a href="/tutorials/r-core/1-programming/lessonpart0/" target="_blank">Programming, Part 0</a></td></tr>
-<tr><td>11:30a - 1:00p</td><td><a href="/tutorials/r-core/1-programming/lessonpart1/" target="_blank">Programming, Part 1</a></td></tr>
-<tr><td>1:00p - 2:00p</td><td>Lunch</td></tr>
-<tr><td>2:00p - <b>4:00p</b></td><td><a href="/tutorials/r-core/1-programming/lessonpart2/" target="_blank">Programming, Part 2</a></td></tr>
-</table>
-</div>
-<div class="col-md-6">
-<h3 style="padding-top: 30px; margin-top: 0;">Session 2: R (9/24/21)</h3>
-<a href="/workshop-recording/session2/" target="_blank" style="padding-bottom:10px"><button class="button-workshop"><i class="fas fa-video"></i>&nbsp;&nbsp;&nbsp;View Recording of Virtual Workshop 2020</button></a>
-<table class="table table-striped">
-<tr><td><b>10:00a</b> - 11:15a</td><td><a href="/tutorials/r-core/2-datacleaning/" target="_blank">Data Cleaning</a></td></tr>
-<tr><td>11:15a - 12:30p</td><td><a href="/tutorials/r-core/3-datamanipulation/" target="_blank">Data Manipulation</a></td></tr>
-<tr><td>12:30p - 1:00p</td><td>Lunch</td></tr>
-<tr><td>1:00p - 3:00p</td><td><a href="/tutorials/r-core/4-plotting/" target="_blank">Plotting with <code>ggplot2</code></a></td></tr>
-<tr><td>3:00p - <b>4:00p</b></td><td><a href="/tutorials/r-core/5-modeling/" target="_blank">Modeling</code></a></td></tr>
-</table>
-</div>
-<div class="col-md-6">
-<h3 style="padding-top: 30px; margin-top: 0;">Session 3: Python (10/1/21)</h3>
+
+<h3 style="padding-top: 30px; margin-top: 0;">Session 1: Python (9/30/22) 9:00am - 1:00pm</h3>
 <a href="/workshop-recording/session3/" target="_blank" style="padding-bottom:10px"><button class="button-workshop"><i class="fas fa-video"></i>&nbsp;&nbsp;&nbsp;View Recording of Virtual Workshop 2020</button></a>
-<table class="table table-striped">
-<tr><td><b>10:00a</b> - 11:30a</td><td><a href="/tutorials/python/1-r2python-translation/2-intro-programming/" target="_blank">Intro to Python for R Users</a></td></tr>
-<tr><td>11:30a - 1:00p</td><td><a href="/tutorials/python/2-datacleaning/" target="_blank">Data Cleaning</a></td></tr>
-<tr><td>1:00p - 1:30p</td><td>Lunch</td></tr>
-<tr><td>1:30p - 2:30p</td><td><a href="/tutorials/python/3-datamanipulation/" target="_blank">Data Manipulation</a></td></tr>
-<tr><td>2:30p - <b>4:00p</b></td><td><a href="/tutorials/python/4-plotting/" target="_blank">Plotting with <code>seaborn</code></a></td></tr>
-<tr><td>After finishing</td><td><a href="https://docs.google.com/forms/d/e/1FAIpQLSe4iqiAev5qqmQfoL7hxFVzlihEKzjthKv0wLOipsjaad88FQ/viewform?usp=sf_link," target="_blank">Post-workshop survey</a></td></tr>
-</table>
+</div>
+<div class="col-md-6">
+<h3 style="padding-top: 30px; margin-top: 0;">Session 2: R (9/30/22) 2:00pm - 5:00pm</h3>
+<a href="/workshop-recording/session1/" target="_blank" style="padding-bottom:10px"><button class="button-workshop"><i class="fas fa-video"></i>&nbsp;&nbsp;&nbsp;View Recording of Virtual Workshop 2020 Pt 1</button></a>
+<a href="/workshop-recording/session2/" target="_blank" style="padding-bottom:10px"><button class="button-workshop"><i class="fas fa-video"></i>&nbsp;&nbsp;&nbsp;View Recording of Virtual Workshop 2020 Pt 2</button></a>
 </div>
 </div>
 
