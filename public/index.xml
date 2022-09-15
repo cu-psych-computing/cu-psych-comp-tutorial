@@ -12,21 +12,9 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/1-programming/lessonpart0/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; }
-code.sourceCode  span { color: inherit; text-decoration: inherit; }
-code.sourceCode  span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode  span { text-indent: -5em; padding-left: 5em; }
-}
-pre.</description>
+      <description>Welcome to the CU Psychology Scientific Computing workshop!
+Programming is telling a computer to do some action to some input info to get output info that you want. When it comes to working with data in R, programming is how we tell R to load data, process it, plot it, fit models to it, and so on (everything!).
+In this first section of our tutorial, we will learn about this info that goes in and out, as well as the actions that transform info into what we want.</description>
     </item>
     
     <item>
@@ -35,21 +23,8 @@ pre.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/1-programming/lessonpart1/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; }
-code.sourceCode  span { color: inherit; text-decoration: inherit; }
-code.sourceCode  span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode  span { text-indent: -5em; padding-left: 5em; }
-}
-pre.</description>
+      <description>Welcome (back) to the CU Psychology Scientific Computing Workshop! As a reminder, the documents for the introduction to programming cover the following:
+Programming, Part 0: Finding your way around RStudio Programming, Part 1: Variables, data types, vectors (this document!) Programming, Part 2: Coding strategy, relational &amp;amp; logical operators Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions.</description>
     </item>
     
     <item>
@@ -58,21 +33,9 @@ pre.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/1-programming/lessonpart2/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; }
-code.sourceCode  span { color: inherit; text-decoration: inherit; }
-code.sourceCode  span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode  span { text-indent: -5em; padding-left: 5em; }
-}
-pre.</description>
+      <description>Welcome (back) to the CU Psychology Scientific Computing workshop! As a reminder, the documents for the introduction to programming cover the following:
+Programming, Part 0: Finding your way around RStudio Programming, Part 1: Variables, data types, vectors Programming, Part 2: Coding strategy, relational &amp;amp; logical operators (this document!) Now that you know (some of) what kinds of things R can manipulate, we will get into actually manipulating things!
+Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions.</description>
     </item>
     
     <item>
@@ -81,21 +44,8 @@ pre.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/2-datacleaning/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; }
-code.sourceCode  span { color: inherit; text-decoration: inherit; }
-code.sourceCode  span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode  span { text-indent: -5em; padding-left: 5em; }
-}
-pre.</description>
+      <description>Goals of This Lesson Students will learn:
+How to open various data types in R How to check for missing or problematic data and address issues. How to filter, rearrange and shape data in preparation for analysis. Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/r-core/2-datacleaning/index.rmd.</description>
     </item>
     
     <item>
@@ -104,21 +54,8 @@ pre.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/3-datamanipulation/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; }
-code.sourceCode  span { color: inherit; text-decoration: inherit; }
-code.sourceCode  span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode  span { text-indent: -5em; padding-left: 5em; }
-}
-pre.</description>
+      <description>Goals of This Lesson Learn how to group and categorize data in R Learn how to generate descriptive statistics in R Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/r-core/3-datamanipulation/index.rmd.
+For a video recording of this tutorial from the Fall 2020 workshop, please visit the Workshop Recording: Session 2 page.</description>
     </item>
     
     <item>
@@ -127,21 +64,8 @@ pre.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/4-plotting/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; }
-code.sourceCode  span { color: inherit; text-decoration: inherit; }
-code.sourceCode  span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode  span { text-indent: -5em; padding-left: 5em; }
-}
-pre.</description>
+      <description>What Is This Tutorial? What’s ggplot2? ggplot2 is a package in R that allows for highly customizable and pretty plots! Here, were going to learn a few basics of making plots using ggplot2 that will hopefully get you well on your way to making informative and beautiful data visualizations!
+Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions.</description>
     </item>
     
     <item>
@@ -150,21 +74,9 @@ pre.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-core/5-modeling/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; }
-code.sourceCode  span { color: inherit; text-decoration: inherit; }
-code.sourceCode  span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode  span { text-indent: -5em; padding-left: 5em; }
-}
-pre.</description>
+      <description>Goals of This Lesson Learn about functions and syntax for models in R Practice examples of different model types Understand how to obtain model results in R
+Learn how to visualize the results of the models Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/r-core/5-modeling/index.rmd.
+For a video recording of this tutorial from the Fall 2020 workshop, please visit the Workshop Recording: Session 2 page.</description>
     </item>
     
     <item>
@@ -173,8 +85,7 @@ pre.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part1/</guid>
-      <description>Make ’em Graph
-Welcome! This tutorial will cover some basics of scatter plots, time series data, and some alternatives to bar graphs (for categorical predictors and continuous outcomes). It will also go over a few handy things along the way, such as making graphs with multiple panels, and aesthetic mapping for clearer plots.
+      <description>Make ’em Graph Welcome! This tutorial will cover some basics of scatter plots, time series data, and some alternatives to bar graphs (for categorical predictors and continuous outcomes). It will also go over a few handy things along the way, such as making graphs with multiple panels, and aesthetic mapping for clearer plots.
 Note: All examples here will be with simulated data, so that as we are making our plots we can be aware of the TRUE data generating processes and assess how well our graphs represent these.</description>
     </item>
     
@@ -186,8 +97,7 @@ Note: All examples here will be with simulated data, so that as we are making ou
       <guid>/tutorials/r-extra/accelerated-ggplot2/ggplot_summer2018_part2/</guid>
       <description>God grant me the serenity to accept the uncertainty I cannot control; courage to control the uncertainty that I cannot accept; and wisdom to know the difference. -Andrew Gelman
 All models are wrong, but some are useful - George Box
-1) Overview
-Welcome! This tutorial will cover some aspects of plotting modeled data within the context of multilevel (or ‘mixed-effects’) regression models. Specifically, we’ll be using the lme4, brms, and rstanarm packages to model and ggplot to display the model predictions.</description>
+1) Overview Welcome! This tutorial will cover some aspects of plotting modeled data within the context of multilevel (or ‘mixed-effects’) regression models. Specifically, we’ll be using the lme4, brms, and rstanarm packages to model and ggplot to display the model predictions.</description>
     </item>
     
     <item>
@@ -196,21 +106,7 @@ Welcome! This tutorial will cover some aspects of plotting modeled data within t
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/tidyverse-guide/tidyguide-1/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; }
-code.sourceCode  span { color: inherit; text-decoration: inherit; }
-code.sourceCode  span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode  span { text-indent: -5em; padding-left: 5em; }
-}
-pre.</description>
+      <description>Goals for this vignette Demonstrate (what I think are) key first-level features of the tidyverse Illustrate psychology use cases for tidyverse functions Hopefully convince you to join the cult of tidy We shall do this by walking through various use cases you might encounter with your data. I’ll jump in with specific examples of functions when appropriate, to highlight solutions for particular situations you might run into with your own data.</description>
     </item>
     
     <item>
@@ -219,21 +115,8 @@ pre.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/tidyverse-guide/tidyguide-2/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; }
-code.sourceCode  span { color: inherit; text-decoration: inherit; }
-code.sourceCode  span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode  span { text-indent: -5em; padding-left: 5em; }
-}
-pre.</description>
+      <description>Goals for this vignette Hello (again)! This is a continuation of our tour through base tidyverse (see Part 1 here). Our goals are the same as before:
+Demonstrate (what I think are) key first-level features of the tidyverse Illustrate psychology use cases for tidyverse functions Hopefully convince you to join the cult of tidy This time, we’ll be moving ahead to some more complex use cases utilizing some more advanced programming tactics.</description>
     </item>
     
     <item>
@@ -242,11 +125,8 @@ pre.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/data-sim-power/basic-simulation-power/</guid>
-      <description>Links to Files
-The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/r-extra/data-sim-power/basic-simulation-power.rmd.
-
-Why Simulate?
-Simulation is an extremely useful tool, because we can create ground truth by which to test our models. If we know the true process by which the data are generated, we can check whether our models are doing well at recovering this truth.</description>
+      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/r-extra/data-sim-power/basic-simulation-power.rmd.
+Why Simulate? Simulation is an extremely useful tool, because we can create ground truth by which to test our models. If we know the true process by which the data are generated, we can check whether our models are doing well at recovering this truth.</description>
     </item>
     
     <item>
@@ -255,17 +135,8 @@ Simulation is an extremely useful tool, because we can create ground truth by wh
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/brms/multilevel-models-with-brms/</guid>
-      <description>Links to Files
-The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/r-extra/brms/multilevel-models-with-brms.rmd.
-
-0) Goals for this vignette
-
-Give a quick intro to multilevel modeling and Bayesian inference
-Show a use case with Brms and some helpful syntax for demonstrating what this model does
-Hopefully, convince you to use multilevel modeling and Bayesian approaches for your stats
-
-
-1) Why multilevel modeling?</description>
+      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/r-extra/brms/multilevel-models-with-brms.rmd.
+0) Goals for this vignette Give a quick intro to multilevel modeling and Bayesian inference Show a use case with Brms and some helpful syntax for demonstrating what this model does Hopefully, convince you to use multilevel modeling and Bayesian approaches for your stats 1) Why multilevel modeling?</description>
     </item>
     
     <item>
@@ -274,21 +145,9 @@ Hopefully, convince you to use multilevel modeling and Bayesian approaches for y
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/rmarkdown/intro-to-rmarkdown/</guid>
-      <description>code.sourceCode  span { display: inline-block; line-height: 1.25; }
-code.sourceCode  span { color: inherit; text-decoration: inherit; }
-code.sourceCode  span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode  span { text-indent: -5em; padding-left: 5em; }
-}
-pre.</description>
+      <description>Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/r-extra/rmarkdown/intro-to-rmarkdown.rmd.
+Getting started To work with R Markdown, if necessary:
+Install R Install the latest version of RStudio Install the latest version of the knitr package: install.packages(&#34;knitr&#34;) If you’re looking for a quick reference to R Markdown formatting, I strongly suggest you check out this helpful cheat sheet!</description>
     </item>
     
     <item>
@@ -297,17 +156,7 @@ pre.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/website-github-r/</guid>
-      <description>
-
-Workshop Slides
-
-
-
-Video Recording
-
-
-
-</description>
+      <description> Workshop Slides Video Recording </description>
     </item>
     
     <item>
@@ -316,14 +165,7 @@ Video Recording
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/r-extra/error-intervals/</guid>
-      <description>
-
-Workshop Slides
-Slides can also be viewed fullscreen here.
-
-
-
-</description>
+      <description>Workshop Slides Slides can also be viewed fullscreen here.</description>
     </item>
     
     <item>
@@ -334,7 +176,7 @@ Slides can also be viewed fullscreen here.
       <guid>/tutorials/python/1-r2python-translation/0-python-r/</guid>
       <description>Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/1-r2python-translation/0-python-r.ipynb.
 For a video recording of this tutorial from the Fall 2020 workshop, please visit the Workshop Recording: Session 3 page.
-A few quick points:  Among scientific computing languages the best language for you is the one that you find best fits your projects We really encourage the use of either R and Python for research computing for several reasons  R and Python are open source!</description>
+A few quick points: Among scientific computing languages the best language for you is the one that you find best fits your projects We really encourage the use of either R and Python for research computing for several reasons R and Python are open source!</description>
     </item>
     
     <item>
@@ -343,7 +185,7 @@ A few quick points:  Among scientific computing languages the best language for 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/python/1-r2python-translation/1-getting-started/</guid>
-      <description>Goals:  Students will feel comfortable navigating the jupyter notebook layout Students will be able to access their computer&amp;rsquo;s file structure through jupyter notebook  Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/1-r2python-translation/1-getting-started.ipynb.
+      <description>Goals: Students will feel comfortable navigating the jupyter notebook layout Students will be able to access their computer&amp;rsquo;s file structure through jupyter notebook Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/1-r2python-translation/1-getting-started.ipynb.
 For a video recording of this tutorial from the Fall 2020 workshop, please visit the Workshop Recording: Session 3 page.</description>
     </item>
     
@@ -353,7 +195,7 @@ For a video recording of this tutorial from the Fall 2020 workshop, please visit
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/python/1-r2python-translation/2-intro-programming/</guid>
-      <description>Disclaimer!  This intro programming tutorial in Python is NOT nearly as comprehensive as the intro programming tutorial in R. If you have never programmed in any language before, this tutorial may skip key pieces of information. Instead, the goal of this tutorial is to provide some key pieces of &amp;lsquo;translation&amp;rsquo; information for people with some programming experience who would like to use Python.  Goals of this Lesson Students will:  Understand and be comfortable working with the basic data types in Python Be able to use arithmetic, relational operators, and lists in Python For those coming from R, be aware of differences across languages, especially in indexing  Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions.</description>
+      <description>Disclaimer! This intro programming tutorial in Python is NOT nearly as comprehensive as the intro programming tutorial in R. If you have never programmed in any language before, this tutorial may skip key pieces of information. Instead, the goal of this tutorial is to provide some key pieces of &amp;rsquo;translation&amp;rsquo; information for people with some programming experience who would like to use Python. Goals of this Lesson Students will: Understand and be comfortable working with the basic data types in Python Be able to use arithmetic, relational operators, and lists in Python For those coming from R, be aware of differences across languages, especially in indexing Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions.</description>
     </item>
     
     <item>
@@ -362,9 +204,8 @@ For a video recording of this tutorial from the Fall 2020 workshop, please visit
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/python/1-r2python-translation/3-control-flow/</guid>
-      <description>Goals of this lesson Students will learn:  How to use if/else and for loops in python How to indent code correctly in python  Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/1-r2python-translation/3-control-flow.ipynb.
-Indenting in python  Python, unlike R, is strict about indentation! Indentations in python often have bearing on the order in which they are executed, and switching indentation can change how code runs (or break it) Coming from R, indentation might seem annoying at first, but eventually this can help with code readability Ultimately, python is trying to help us stay organized  If statements  If statements in python are the equivalent of the following English: &amp;ldquo;If condition X is met, then do action Y&amp;rdquo; If statements in python consist of the following syntax  if (condition X):
-actions.</description>
+      <description>Goals of this lesson Students will learn: How to use if/else and for loops in python How to indent code correctly in python Links to Files The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/1-r2python-translation/3-control-flow.ipynb.
+Indenting in python Python, unlike R, is strict about indentation! Indentations in python often have bearing on the order in which they are executed, and switching indentation can change how code runs (or break it) Coming from R, indentation might seem annoying at first, but eventually this can help with code readability Ultimately, python is trying to help us stay organized If statements If statements in python are the equivalent of the following English: &amp;ldquo;If condition X is met, then do action Y&amp;rdquo; If statements in python consist of the following syntax if (condition X): actions.</description>
     </item>
     
     <item>
@@ -373,7 +214,8 @@ actions.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/python/2-datacleaning/</guid>
-      <description>Goals of this Lesson Students will learn:  How to open various data types in Python How to check for missing or problematic data and address issues How to filter, rearrange and shape data in preparation for analysis  Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/2-datacleaning/index.</description>
+      <description>Goals of this Lesson Students will learn: How to open various data types in Python How to check for missing or problematic data and address issues How to filter, rearrange and shape data in preparation for analysis Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/2-datacleaning/index.ipynb.
+For a video recording of this tutorial from the Fall 2020 workshop, please visit the Workshop Recording: Session 3 page.</description>
     </item>
     
     <item>
@@ -382,7 +224,7 @@ actions.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/python/3-datamanipulation/</guid>
-      <description>Goals of this Lesson Students will learn:  How to group and categorize data in Python How to generative descriptive statistics in Python  Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/3-datamanipulation/index.ipynb.
+      <description>Goals of this Lesson Students will learn: How to group and categorize data in Python How to generative descriptive statistics in Python Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/3-datamanipulation/index.ipynb.
 For a video recording of this tutorial from the Fall 2020 workshop, please visit the Workshop Recording: Session 3 page.</description>
     </item>
     
@@ -392,7 +234,7 @@ For a video recording of this tutorial from the Fall 2020 workshop, please visit
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tutorials/python/4-plotting/</guid>
-      <description>Goals of this Lesson Students will learn:  How to generate beautiful statistical visualizations in Python using the seaborn package  Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/4-plotting/index.ipynb.
+      <description>Goals of this Lesson Students will learn: How to generate beautiful statistical visualizations in Python using the seaborn package Links to Files and Video Recording The files for all tutorials can be downloaded from the Columbia Psychology Scientific Computing GitHub page using these instructions. This particular file is located here: /content/tutorials/python/4-plotting/index.ipynb.
 For a video recording of this tutorial from the Fall 2020 workshop, please visit the Workshop Recording: Session 3 page.</description>
     </item>
     
@@ -402,8 +244,7 @@ For a video recording of this tutorial from the Fall 2020 workshop, please visit
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/accessing-files/</guid>
-      <description>Instructions for Accessing Tutorial Files
-As noted at the top of each of our tutorials, all files can be downloaded from the Columbia Psychology Scientific Computing GitHub page. In these notes, we list where the specific RMarkdown file for that tutorial is located (e.g., /content/tutorials/r-core/1-programming/lessonpart0.rmd).
+      <description>Instructions for Accessing Tutorial Files As noted at the top of each of our tutorials, all files can be downloaded from the Columbia Psychology Scientific Computing GitHub page. In these notes, we list where the specific RMarkdown file for that tutorial is located (e.g., /content/tutorials/r-core/1-programming/lessonpart0.rmd).
 This page contains instructions for downloading and opening such files. If you experience any issues in completing these steps, feel free to drop us a note at psych-methods-support@columbia.</description>
     </item>
     
@@ -413,12 +254,9 @@ This page contains instructions for downloading and opening such files. If you e
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/workshop/</guid>
-      <description>Introductory Scientific Computing Workshop (Fall 2021)
-Instructors: Paul A. Bloom, Camille Gasser, Manasi Jayakumar, Emily Nakkawita, Jonathan Nicholas, Ben Silver, Hannah Tarder-Stoll, Monica Thieu
-
-General Information
-This workshop develops and teaches the scientific computing skills needed to conduct psychological research. Its target audience is researchers who have little to no prior computational experience, and its lessons are psychology-specific, building on learners’ existing knowledge to enable them to quickly apply skills learned to their own research.</description>
-
+      <description>Introductory Scientific Computing Workshop (Fall 2022) Instructors: Cheyenne Wakeland-Hart, John Andrew Chwe
+General Information This workshop develops and teaches the scientific computing skills needed to conduct psychological research. Its target audience is researchers who have little to no prior computational experience, and its lessons are psychology-specific, building on learners’ existing knowledge to enable them to quickly apply skills learned to their own research.
+Who: The course is aimed at graduate, postbac, and undergraduate students, as well as other researchers.</description>
     </item>
     
     <item>
@@ -427,15 +265,10 @@ This workshop develops and teaches the scientific computing skills needed to con
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/license/</guid>
-      <description>License
-Instructional Material
-All CU Psych Computing instructional material is made available under the Creative Commons Attribution license. The following is a human-readable summary of (and not a substitute for) the full legal text of the CC BY 4.0 license.
+      <description>License Instructional Material All CU Psych Computing instructional material is made available under the Creative Commons Attribution license. The following is a human-readable summary of (and not a substitute for) the full legal text of the CC BY 4.0 license.
 You are free:
-
-to Share—copy and redistribute the material in any medium or format
-to Adapt—remix, transform, and build upon the material
-
-for any purpose, even commercially.</description>
+to Share—copy and redistribute the material in any medium or format to Adapt—remix, transform, and build upon the material for any purpose, even commercially.
+The licensor cannot revoke these freedoms as long as you follow the license terms.</description>
     </item>
     
     <item>
@@ -444,20 +277,13 @@ for any purpose, even commercially.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/meetings/</guid>
-      <description>Meetings
-Come and learn with us at one of our meetings! Topics span various early-intermediate to advanced strategies for asking psychological research questions using scientific computing tools.
-Upcoming
-Workshop
-Stay tuned!
-
-
-Past
-Workshop
-Certain in Your Uncertainty: Exploring Varieties of Error Intervals
+      <description>Meetings Come and learn with us at one of our meetings! Topics span various early-intermediate to advanced strategies for asking psychological research questions using scientific computing tools.
+Upcoming Workshop Stay tuned!
+Past Workshop Certain in Your Uncertainty: Exploring Varieties of Error Intervals
 Instructors: Monica Thieu and Paul Bloom
 Date: Wednesday, March 10th, 2021 at 3:00pm
-Workshop Materials: See tutorial page
-Creating a Website with Github and R</description>
+Workshop Materials: See tutorial page Creating a Website with Github and R
+Instructor: Emily Nakkawita</description>
     </item>
     
     <item>
@@ -466,26 +292,7 @@ Creating a Website with Github and R</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/resources/</guid>
-      <description>Resources
-Columbia-Specific Resources
-
-Columbia Psychology scientific computing users Slack group
-
-
-Full, Freestanding General-Use R Tutorials
-Mainly base R tutorials
-
-Cookbook for R: Basics of data cleaning, analysis and graphing
-
-
-Tidyverse tutorials
-
-Hadley Wickham’s R for Data Science online textbook
-Michael C. Frank’s psychology-specific tidyverse tutorial, adapted from R for Data Science
-
-
-Syllabi for courses taught in R
-You can work along with these; course materials should be linked in the syllabi.</description>
+      <description>Resources Columbia-Specific Resources Columbia Psychology scientific computing users Slack group Full, Freestanding General-Use R Tutorials Mainly base R tutorials Cookbook for R: Basics of data cleaning, analysis and graphing Tidyverse tutorials Hadley Wickham’s R for Data Science online textbook Michael C. Frank’s psychology-specific tidyverse tutorial, adapted from R for Data Science Syllabi for courses taught in R You can work along with these; course materials should be linked in the syllabi.</description>
     </item>
     
     <item>
@@ -494,26 +301,7 @@ You can work along with these; course materials should be linked in the syllabi.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/who/</guid>
-      <description>Who We Are
-2021 - 2022 Graduate Methods Support
-Jacob Edwards
-
-Research interests: neural control of social communication
-Method specialties: electrophysiology, histology &amp;amp; neuroanatomy, audio signal processing
-Tool/language specialties: MATLAB, R, Python
-Favorite NYC restaurant: Jin Ramen
-
-
-Wangjing Yu
-
-Research interests: human learning and memory
-Method specialties: cognitive tasks (in-person and web-based), neuroimaging
-Tool/language specialties: R, Python, Gorilla, Inquisit
-Favorite NYC restaurant: Saigon Shack
-
-
-
-Office hours will be held by appointment.</description>
+      <description>Who We Are 2022 - 2023 Graduate Methods Support Cheyenne Wakeland-Hart Research interests: Human memory Method specialties: tDCS,Large-scale web-based behavioral experiments Tool/language specialties: R, Matlab, Gorilla, MTurk, Python Favorite NYC restaurant: NR John Andrew Chwe Research interests: Social vision, Social neuroscience Method specialties: Web-based behavioral experiments, Neuroimaging Tool/language specialties: Python, R, Javascript, Bash Favorite NYC restaurant: KazuNori Office hours will be held by appointment. Please contact us at psych-methods-support@columbia.edu to schedule a time that works well for you!</description>
     </item>
     
     <item>
@@ -522,33 +310,8 @@ Office hours will be held by appointment.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/workshop-recording/session1/</guid>
-      <description>Workshop Recording: Session 1
-
-
-
-var tag = document.createElement(&#39;script&#39;);
-tag.src = &#34;https://www.youtube.com/iframe_api&#34;;
-var firstScriptTag = document.getElementsByTagName(&#39;script&#39;)[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-var player;
-var ytSeconds = 0;
-function onYouTubeIframeAPIReady() {
-player = new YT.Player(&#39;player&#39;, {
-height: &#39;390&#39;,
-width: &#39;640&#39;,
-videoId: &#39;h52nyfxQ6hc&#39;,
-playerVars: { &#39;color&#39;: &#34;white&#34;,
-&#39;showinfo&#39;: 0,
-&#39;rel&#39;: 0
-},
-events: {
-&#39;onStateChange&#39;: onPlayerStateChange
-}
-});
-}
-function onPlayerStateChange(e) {
-if (e.data == 1 &amp;&amp; ytSeconds  0) {
-e.</description>
+      <description> Workshop Recording: Session 1 Session 1 Tutorials: Click on the timestamp to jump to the beginning of the tutorial.
+Programming in R, Part 0: 0:00:05 [Materials] Programming in R, Part 1: 1:12:10 [Materials] Programming in R, Part 2: 2:13:36 [Materials] </description>
     </item>
     
     <item>
@@ -557,33 +320,8 @@ e.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/workshop-recording/session2/</guid>
-      <description>Workshop Recording: Session 2
-
-
-
-var tag = document.createElement(&#39;script&#39;);
-tag.src = &#34;https://www.youtube.com/iframe_api&#34;;
-var firstScriptTag = document.getElementsByTagName(&#39;script&#39;)[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-var player;
-var ytSeconds = 0;
-function onYouTubeIframeAPIReady() {
-player = new YT.Player(&#39;player&#39;, {
-height: &#39;390&#39;,
-width: &#39;640&#39;,
-videoId: &#39;b_8QeK5fIH4&#39;,
-playerVars: { &#39;color&#39;: &#34;white&#34;,
-&#39;showinfo&#39;: 0,
-&#39;rel&#39;: 0
-},
-events: {
-&#39;onStateChange&#39;: onPlayerStateChange
-}
-});
-}
-function onPlayerStateChange(e) {
-if (e.data == 1 &amp;&amp; ytSeconds  0) {
-e.</description>
+      <description> Workshop Recording: Session 2 Session 2 Tutorials: Click on the timestamp to jump to the beginning of the tutorial.
+Data Cleaning in R: 0:00:05 [Materials] Data Manipulation in R: 1:13:40 [Materials] Plotting in R: 1:48:41 [Materials] Modeling in R: 3:23:47 [Materials] </description>
     </item>
     
     <item>
@@ -592,33 +330,8 @@ e.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/workshop-recording/session3/</guid>
-      <description>Workshop Recording: Session 3
-
-
-
-var tag = document.createElement(&#39;script&#39;);
-tag.src = &#34;https://www.youtube.com/iframe_api&#34;;
-var firstScriptTag = document.getElementsByTagName(&#39;script&#39;)[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-var player;
-var ytSeconds = 0;
-function onYouTubeIframeAPIReady() {
-player = new YT.Player(&#39;player&#39;, {
-height: &#39;390&#39;,
-width: &#39;640&#39;,
-videoId: &#39;e_F7Diu2EtU&#39;,
-playerVars: { &#39;color&#39;: &#34;white&#34;,
-&#39;showinfo&#39;: 0,
-&#39;rel&#39;: 0
-},
-events: {
-&#39;onStateChange&#39;: onPlayerStateChange
-}
-});
-}
-function onPlayerStateChange(e) {
-if (e.data == 1 &amp;&amp; ytSeconds  0) {
-e.</description>
+      <description> Workshop Recording: Session 3 Session 3 Tutorials: Click on the timestamp to jump to the beginning of the tutorial.
+Intro to Python for R Users: 0:00:05 [Part 0 Materials| Part 1 Materials | Part 2 Materials] Data Cleaning in Python: 0:45:27 [Materials] Data Manipulation in Python: 1:38:29 [Materials] Plotting in Python: 2:10:09 [Materials] </description>
     </item>
     
   </channel>
