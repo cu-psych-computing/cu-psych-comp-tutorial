@@ -12,31 +12,31 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # Who We Are
 
-## 2021 - 2022 Graduate Methods Support
+## 2022 - 2023 Graduate Methods Support
 
 ---
 
 <div class="row">
 <div class="col-md-6">
-### Jacob Edwards
+### Cheyenne Wakeland-Hart
 
-<p style="text-align:center;"><img src="/images/jacob.jpg"></p>
+<p style="text-align:center;"><img src="/images/chey.png"></p>
 
-- <b>Research interests: </b>neural control of social communication
-- <b>Method specialties: </b>electrophysiology, histology & neuroanatomy, audio signal processing
-- <b>Tool/language specialties: </b>MATLAB, R, Python
-- <b>Favorite NYC restaurant: </b>Jin Ramen
+- <b>Research interests: </b> Human memory
+- <b>Method specialties: </b> tDCS,Large-scale web-based behavioral experiments 
+- <b>Tool/language specialties: </b> R, Matlab, Gorilla, MTurk, Python
+- <b>Favorite NYC restaurant: </b> NR
 </div>
 
 <div class="col-md-6">
-### Wangjing Yu
+### John Andrew Chwe
 
-<p style="text-align:center;"><img src="/images/wangjing.jpg"></p>
+<p style="text-align:center;"><img src="/images/jac.jpg"></p>
 
-- <b>Research interests: </b>human learning and memory
-- <b>Method specialties: </b>cognitive tasks (in-person and web-based), neuroimaging
-- <b>Tool/language specialties: </b>R, Python, Gorilla, Inquisit
-- <b>Favorite NYC restaurant: </b>Saigon Shack
+- <b>Research interests: </b>Social vision, Social neuroscience
+- <b>Method specialties: </b>Web-based behavioral experiments, Neuroimaging
+- <b>Tool/language specialties: </b>Python, R, Javascript, Bash
+- <b>Favorite NYC restaurant: </b>KazuNori
 </div>
 </div>
 
@@ -63,3 +63,7 @@ The lesson materials for the introductory workshop are the evolving product of s
 [Anna Vannucci](https://github.com/avannucci){target="_blank"}
 
 [Michelle VanTieghem](https://github.com/mvantieghem){target="_blank"}
+
+[Jacob Edwards](https://github.com/amnion){target="_blank"}
+
+[Wangjing Yu](https://github.com/YuWangjing){target="_blank"}
